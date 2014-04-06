@@ -1389,8 +1389,8 @@ function new_discount_amount(){
                                                     <input type="hidden" name="seleted_row_id" id="seleted_row_id">
                                                     <input type="hidden" name="stock_quty" id="stock_quty">
                                                     <input type="hidden" name="discount" id="discount">
-                                                    <input type="text" name="old_discount" id="old_discount">
-                                                    <input type="text" name="old_tax" id="old_tax">
+                                                    <input type="hidden" name="old_discount" id="old_discount">
+                                                    <input type="hidden" name="old_tax" id="old_tax">
                                                         </div>
                                                 
                                                  <div class="col col-lg-1" style="padding:1px;width: 160px;">
