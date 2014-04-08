@@ -862,19 +862,19 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
     $("#parsley_reg #grand_total").val(0)
 
 
-console.log($('#parsley_reg #total_amount').val());
+console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
 if($('#parsley_reg #total_amount').val()==0){
       $('#parsley_reg #total_amount').val(total-parseFloat(old_total));
 }else{
-     console.log($('#parsley_reg #total_amount').val());
-     if(total==old_total){
-         $('#parsley_reg #total_amount').val(parseFloat($('#parsley_reg #total_amount').val()));
-     }else{
-    $('#parsley_reg #total_amount').val(parseFloat($('#parsley_reg #total_amount').val())+total-old_total);
-    console.log($('#parsley_reg #total_amount').val()+total-old_total);
+   console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
+     if(total!=old_total){
+         console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
+         var amount=$('#parsley_reg #total_amount').val()+total-old_total;
+    $('#parsley_reg #total_amount').val();
+   console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total+'/'+amount);
      }
 }
-
+ 
 if(tax_Inclusive==1){
 if($('#parsley_reg #total_tax').val()==0){
       $('#parsley_reg #total_tax').val(tax);
