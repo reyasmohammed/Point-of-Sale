@@ -166,6 +166,7 @@
                        
                 $('#parsley_reg #item_id').val(guid);
                 $('#parsley_reg #sku').val($('#parsley_reg #items').select2('data').value);
+                $('#parsley_reg #stock_id').val($('#parsley_reg #items').select2('data').sid);
                 $('#parsley_reg #item_name').val($('#parsley_reg #items').select2('data').text);
                 $('#parsley_reg #price').val($('#parsley_reg #items').select2('data').price);
                 $('#parsley_reg #stock_quty').val($('#parsley_reg #items').select2('data').quty);
@@ -239,6 +240,7 @@
                       $.each(data, function(index, item){
                         results.push({
                           id: item.i_guid,
+                          sid: item.guid,
                           text: item.name,
                           value: item.code,
                           image: item.image,
@@ -862,16 +864,17 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
     $("#parsley_reg #grand_total").val(0)
 
 
-console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
+
 if($('#parsley_reg #total_amount').val()==0){
       $('#parsley_reg #total_amount').val(total-parseFloat(old_total));
 }else{
-   console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
+   
      if(total!=old_total){
-         console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total);
-         var amount=$('#parsley_reg #total_amount').val()+total-old_total;
+     
+         var amount=parseFloat($('#parsley_reg #total_amount').val())+parseFloat(total)-parseFloat(old_total)
+          amount=amount.toFixed(point);
     $('#parsley_reg #total_amount').val();
-   console.log($('#parsley_reg #total_amount').val()+'/'+total+'/'+old_total+'/'+amount);
+  $('#parsley_reg #total_amount').val(amount)
      }
 }
  
@@ -899,6 +902,7 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
    
 
   var  name=$('#parsley_reg #item_name').val();
+  var  stock=$('#parsley_reg #stock_id').val();
   var  sku=$('#parsley_reg #sku').val();
   var  quty=$('#parsley_reg #quantity').val();
   if($('#parsley_reg #free').val()!=""){
@@ -936,12 +940,9 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
    $('#newly_added').append('<div id="newly_added_items_list_'+items_id+'"> \n\
 \n\
 <input type="hidden" name="new_item_id[]" value="'+items_id+'"  id="new_item_id_'+items_id+'">\n\
+<input type="hidden" name="new_item_stock_id[]" value="'+stock+'"  id="new_item_id_'+items_id+'">\n\
 <input type="hidden" name="new_item_quty[]" value="'+quty+'" id="new_item_quty_'+items_id+'"> \n\
-<input type="hidden" name="new_item_free[]" value="'+free+'" id="new_item_free_'+items_id+'">\n\
 <input type="hidden" name="new_item_price[]" value="'+price+'" id="new_item_price_'+items_id+'">\n\
-<input type="hidden" name="new_item_discount[]" value="'+discount+'" id="new_item_discount_'+items_id+'">\n\
-<input type="hidden" name="new_item_discount_per[]" value="'+per+'" id="new_item_discount_per_'+items_id+'">\n\
-<input type="hidden" name="new_item_tax[]" value="'+tax+'" id="new_item_tax_'+items_id+'">\n\
 <input type="hidden" name="new_item_total[]"  value="'+parseFloat(quty)*parseFloat(price)+'" id="new_item_total_'+items_id+'">\n\
 </div>');
  
@@ -963,6 +964,7 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
 '<input type="hidden" name="index" id="index">\n\
 <input type="hidden" name="item_name" id="row_item_name" value="'+name+'">\n\
 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
+<input type="hidden" name="items_stock_id[]" id="items__stock_id" value="'+stock+'">\n\
 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
 <input type="hidden" name="items_free[]" value="'+free+'" id="items_free">\n\
@@ -1169,6 +1171,7 @@ function new_discount_amount(){
     var total=parseFloat($("#parsley_reg #total_amount").val());
     if($("#parsley_reg #id_discount").val()!="" && $("#parsley_reg #id_discount").val()!=0){
             var discount=(total*parseFloat($("#parsley_reg #id_discount").val()))/100;
+            discount=discount.toFixed(point);
               $("#parsley_reg #discount_amount").val(discount);
     }else{
         var  discount=$('discount_amount').val();
@@ -1363,7 +1366,7 @@ function new_discount_amount(){
          
                     <div class="row small_inputs" >
                         <div class="col col-lg-12">
-                            <div class="row" style="padding-top: 1px;margin-left: 20px;">
+                            <div class="row" style="padding-top: 1px;">
                                  
                                   
                                                 <div class="col col-sm-1" style="padding:1px; width: 190px;">
@@ -1388,6 +1391,7 @@ function new_discount_amount(){
                                                     <input type="hidden" name="sku" id="sku">
                                                     <input type="hidden" name="seleted_row_id" id="seleted_row_id">
                                                     <input type="hidden" name="stock_quty" id="stock_quty">
+                                                    <input type="hidden" name="stock_id" id="stock_id">
                                                     <input type="hidden" name="discount" id="discount">
                                                     <input type="hidden" name="old_discount" id="old_discount">
                                                     <input type="hidden" name="old_tax" id="old_tax">
