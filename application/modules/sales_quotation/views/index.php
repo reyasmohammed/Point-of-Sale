@@ -940,8 +940,9 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
    $('#newly_added').append('<div id="newly_added_items_list_'+items_id+'"> \n\
 \n\
 <input type="hidden" name="new_item_id[]" value="'+items_id+'"  id="new_item_id_'+items_id+'">\n\
-<input type="hidden" name="new_item_stock_id[]" value="'+stock+'"  id="new_item_id_'+items_id+'">\n\
+<input type="hidden" name="new_item_stock_id[]" value="'+stock+'"  id="new_item_stock_id_'+items_id+'">\n\
 <input type="hidden" name="new_item_quty[]" value="'+quty+'" id="new_item_quty_'+items_id+'"> \n\
+<input type="hidden" name="new_item_discount[]" value="'+per+'" id="new_item_discount_id_'+items_id+'"> \n\
 <input type="hidden" name="new_item_price[]" value="'+price+'" id="new_item_price_'+items_id+'">\n\
 <input type="hidden" name="new_item_total[]"  value="'+parseFloat(quty)*parseFloat(price)+'" id="new_item_total_'+items_id+'">\n\
 </div>');
@@ -1068,12 +1069,24 @@ function edit_order_item(guid){
     }
      $("#parsley_reg #items").select2('data', {id:guid,text:$('#selected_item_table #new_item_row_id_'+guid+' #row_item_name').val() });
 
+         net_amount();
          
         
 
 }
 function delete_order_item(guid){
     var net=$('#selected_item_table #new_item_row_id_'+guid+' #items_total').val();
+    var dis=$('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val();
+    var items_tax_inclusive=$('#selected_item_table #new_item_row_id_'+guid+' #items_tax_inclusive').val();
+    if(items_tax_inclusive==1){
+        var quty=$('#selected_item_table #new_item_row_id_'+guid+' #items_quty').val();
+        var price=$('#selected_item_table #new_item_row_id_'+guid+' #items_price').val();
+        var value=$('#selected_item_table #new_item_row_id_'+guid+' #items_tax_value').val();
+        var tax=parseFloat(quty)*parseFloat(price)*parseFloat(value)/100;
+         $('#parsley_reg #total_tax').val(parseFloat($('#parsley_reg #total_tax').val())-tax);
+    }
+    
+    $('#parsley_reg #total_item_discount_amount').val(parseFloat($('#parsley_reg #total_item_discount_amount').val())-parseFloat(dis));
     var total=$("#parsley_reg #total_amount").val();
     $("#parsley_reg #total_amount").val(parseFloat(total)-parseFloat(net));
     $("#parsley_reg #demo_total_amount").val(parseFloat(total)-parseFloat(net));
@@ -1091,6 +1104,10 @@ function delete_order_item(guid){
     if(document.getElementById('newly_added_items_list_'+guid)){
         $('#newly_added_items_list_'+guid).remove();
     }
+    if($("#parsley_reg #total_amount").val()==0 || $("#parsley_reg #total_amount").val()==""){
+        $("#parsley_reg #demo_grand_total").val(0)
+        $("#parsley_reg #grand_total").val(0)
+    }
 }
 function clear_inputs(){
   $('#parsley_reg #item_name').val('');
@@ -1099,7 +1116,6 @@ function clear_inputs(){
   $('#parsley_reg #free').val('');
   $('#parsley_reg #total').val('');
   $('#parsley_reg #sub_total').val('');
-  $('#parsley_reg #cost').val('');
   $('#parsley_reg #price').val('');
   $('#parsley_reg #mrp').val('');
   $('#parsley_reg #tax').val('');
@@ -1115,7 +1131,7 @@ function clear_inputs(){
   $('#parsley_reg #dummy_discount').val('')
   $("#parsley_reg #items").select2('data', {id:'',text: 'Search Item'});
   $('#parsley_reg #items').select2('open');
-   
+   $('#parsley_reg #tax').val('');
          window.setTimeout(function ()
     {
        //$('#parsley_reg #delivery_date').focus();
@@ -1310,7 +1326,7 @@ function new_discount_amount(){
                                                                      <?php $discount=array('name'=>'discount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'id_discount',
-                                                                                         'maxlength'=>3,
+                                                                                         
                                                                                          'onkeyup'=>'new_discount_amount()',
                                                                                         'onKeyPress'=>"new_discount(event);return numbersonly(event)",
                                                                                         'value'=>set_value('discount'));
@@ -1656,7 +1672,7 @@ function new_discount_amount(){
                                                        <label for="" >&nbsp;</label>	
                                                        <a href="javascript:save_new_order()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
                                                   </div>
-                                              <div class="form_sep " id="update_button" style=" margin-top: 0 !important;padding-left: 50px">
+                                              <div class="form_sep " id="update_button" style=" margin-top: 0 !important;">
                                                        <label for="" >&nbsp;</label>	
                                                        <a href="javascript:update_order()" class="btn btn-default"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
                                                   </div>

@@ -68,7 +68,7 @@ class Sales extends CI_Model{
      
      }
      function get_sales_quotation($guid){
-         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_quotation.*,sales_quotation_x_items.quty ,sales_quotation_x_items.price,sales_quotation_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_quotation')->where('sales_quotation.guid',$guid);
+         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_quotation.*,sales_quotation_x_items.quty ,sales_quotation_x_items.stock_id ,sales_quotation_x_items.discount as item_discount,sales_quotation_x_items.price,sales_quotation_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_quotation')->where('sales_quotation.guid',$guid);
          $this->db->join('sales_quotation_x_items', "sales_quotation_x_items.quotation_id = sales_quotation.guid  ",'left');
          $this->db->join('items', "items.guid=sales_quotation_x_items.item AND sales_quotation_x_items.quotation_id='".$guid."' ",'left');
          $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_quotation_x_items.item  ",'left');
@@ -90,7 +90,7 @@ class Sales extends CI_Model{
      }
      function delete_order_item($guid){      
           $this->db->where('guid',$guid);
-          $this->db->update('sales_quotation_x_items',array('delete_status'=>1));
+          $this->db->delete('sales_quotation_x_items');
      }
      function approve_order($guid){
          $this->db->where('guid',$guid);
@@ -107,7 +107,7 @@ class Sales extends CI_Model{
             }
             
      }
-     function add_sales_quotation($guid,$item,$quty,$stock,$i){
+     function add_sales_quotation($guid,$item,$quty,$stock,$discount,$i){
          
          $this->db->select()->from('stock')->where('guid',$stock);
          $sql=  $this->db->get();
@@ -116,9 +116,13 @@ class Sales extends CI_Model{
          {
              $price=$row->price;
          }
-         $this->db->insert('sales_quotation_x_items',array('guid'=>  md5($i.$guid.$item),'price'=>$price,'item'=>$item,'quty'=>$quty,'quotation_id'=>$guid));
+         $this->db->insert('sales_quotation_x_items',array('stock_id'=>$stock,'guid'=>  md5($i.$guid.$item),'discount'=>$discount,'price'=>$price,'item'=>$item,'quty'=>$quty,'quotation_id'=>$guid));
          
                
+     }
+     function update_quotation($guid,$quty){
+         $this->db->where('guid',$guid);
+         $this->db->update('sales_quotation_x_items',array('quty'=>$quty));
      }
     
 }
