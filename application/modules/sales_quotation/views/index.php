@@ -1042,7 +1042,8 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
        $('#parsley_reg #items').select2('open');
         }
         }
-       
+      new_grand_total(); 
+      new_discount_amount();
 }
 function edit_order_item(guid){
     $('#parsley_reg #item_name').val($('#selected_item_table #new_item_row_id_'+guid+' #row_item_name').val());

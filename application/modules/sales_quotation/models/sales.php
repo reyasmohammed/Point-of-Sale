@@ -94,11 +94,11 @@ class Sales extends CI_Model{
      }
      function approve_order($guid){
          $this->db->where('guid',$guid);
-         $this->db->update('sales_quotation',array('order_status'=>1));
+         $this->db->update('sales_quotation',array('quotation_status'=>1));
         
      }
      function  check_approve($guid){
-          $this->db->select()->from('sales_quotation')->where('guid',$guid)->where('order_status',1);
+          $this->db->select()->from('sales_quotation')->where('guid',$guid)->where('quotation_status',1);
             $sql=  $this->db->get();
             if($sql->num_rows()>0){
                return FALSE;
