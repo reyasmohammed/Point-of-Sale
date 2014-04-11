@@ -699,6 +699,7 @@ function add_new_quty(e){
     function net_amount(){
       if(isNaN($('#parsley_reg #discount').val())){
                 $('#parsley_reg #discount').val(0);
+                $('#parsley_reg #item_discount').val(0);
             }
         if(isNaN($('#parsley_reg #stock_quty').val()) || isNaN($('#parsley_reg #quantity').val())){
             if(isNaN($('#parsley_reg #stock_quty').val())){
@@ -710,9 +711,11 @@ function add_new_quty(e){
            
            if(isNaN($('#parsley_reg #discount').val())){
                 $('#parsley_reg #discount').val(0);
+                $('#parsley_reg #item_discount').val(0);
             }
             if($('#discount').val()==""){
                 $('#parsley_reg #discount').val(0);
+                $('#parsley_reg #item_discount').val(0);
             }
          
                  if($('#parsley_reg #discount').val()!="" && $('#parsley_reg #discount').val()!=0){
@@ -752,12 +755,17 @@ function add_new_quty(e){
                  }
                  
                    
-                
-                   
-                 
-                   
+                    
             
         }
+        if(isNaN($('#parsley_reg #tax').val())){
+                
+                $('#parsley_reg #tax').val(0);
+            }
+        if(isNaN($('#parsley_reg #item_discount').val())){
+                
+                $('#parsley_reg #item_discount').val(0);
+            }
     }
 function copy_items(){
 
@@ -898,6 +906,8 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
     
     
     clear_inputs();
+    $('#parsley_reg #tax').val(0);
+    $('#parsley_reg #item_discount').val(0);
 }else{
    
 
@@ -1024,7 +1034,8 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
     
     
     clear_inputs();
-    
+    $('#parsley_reg #tax').val(0);
+    $('#parsley_reg #item_discount').val(0);
       }  
         
         
@@ -1044,6 +1055,8 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
         }
       new_grand_total(); 
       new_discount_amount();
+      $('#parsley_reg #tax').val(0);
+    $('#parsley_reg #item_discount').val(0);
 }
 function edit_order_item(guid){
     $('#parsley_reg #item_name').val($('#selected_item_table #new_item_row_id_'+guid+' #row_item_name').val());
@@ -1132,11 +1145,12 @@ function clear_inputs(){
   $('#parsley_reg #dummy_discount').val('')
   $("#parsley_reg #items").select2('data', {id:'',text: 'Search Item'});
   $('#parsley_reg #items').select2('open');
-   $('#parsley_reg #tax').val('');
+   
          window.setTimeout(function ()
     {
        //$('#parsley_reg #delivery_date').focus();
-    $('#parsley_reg #extra_elements').val('');
+       $('#parsley_reg #tax').val(0);
+    $('#parsley_reg #item_discount').val(0);
     }, 0);
 }
 function new_grand_total(){

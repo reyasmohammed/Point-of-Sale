@@ -275,7 +275,7 @@ function sales_quotation_approve(guid){
                                     }
                                   
                                     }
-                                    console.log(quty*price)
+                                    
                                    if(data[i]['tax_Inclusive']==1){
                                      var tax=(parseFloat(quty)*parseFloat(price))*tax_value/100;
                                     
