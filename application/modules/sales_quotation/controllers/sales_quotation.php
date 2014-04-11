@@ -300,7 +300,7 @@ function sales_quotation_approve(){
      }
     }
 function order_number(){
-       $data[]= $this->posnic->posnic_master_max('sales')    ;
+       $data[]= $this->posnic->posnic_master_max('sales_quotation')    ;
        echo json_encode($data);
 }
 /*
