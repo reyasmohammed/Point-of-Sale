@@ -539,5 +539,7 @@ $lang['credit_days']='Credit Days';
   $lang['po_free']='PO Free';
   $lang['cancel_quty']='Cancled Qty';
   $lang['cancel_free']='Cancled Free';
+  $lang['delivery_note']='Delivery Note';
+  
   
 ?>﻿
