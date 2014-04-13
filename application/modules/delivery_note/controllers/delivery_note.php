@@ -15,7 +15,7 @@ class Delivery_note extends CI_Controller{
         
         
     }
-    // goods Receiving Note data table
+    // goods delivery  Note data table
     function data_table(){
         $aColumns = array( 'delivery_note_guid','po_no','po_no','delivery_note_no','c_name','s_name','delivery_note_date','total_items','total_amt','delivery_note_active','delivery_note_active','guid' );	
 	$start = "";
