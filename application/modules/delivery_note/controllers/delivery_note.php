@@ -10,6 +10,7 @@ class Delivery_note extends CI_Controller{
         $this->load->view('template/branch',$this->posnic->branches());
         $data['active']='delivery_note';
         $this->load->view('index',$data);
+        
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
         
