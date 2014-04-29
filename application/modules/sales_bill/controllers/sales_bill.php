@@ -51,13 +51,13 @@ class Sales_bill extends CI_Controller{
 				
 			}
 					   
-			$this->load->model('grn')	   ;
+			$this->load->model('sales')	   ;
                         
-			 $rResult1 = $this->grn->get($end,$start,$like,$this->session->userdata['branch_id']);
+			 $rResult1 = $this->sales->get($end,$start,$like,$this->session->userdata['branch_id']);
 		   
-		$iFilteredTotal =$this->grn->count($this->session->userdata['branch_id']);
+		$iFilteredTotal =$this->sales->count($this->session->userdata['branch_id']);
 		
-		$iTotal =$this->grn->count($this->session->userdata['branch_id']);
+		$iTotal =$this->sales->count($this->session->userdata['branch_id']);
 		
 		$output1 = array(
 			"sEcho" => intval($_GET['sEcho']),
@@ -107,9 +107,9 @@ function save(){
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                 $value=array('grn_no'=>$grn_no,'date'=>$grn_date,'po'=>$po,'remark'=>$remark,'note'=>$note);
-                $guid=   $this->posnic->posnic_add_record($value,'grn');
-                $this->load->model('grn');
-                $this->grn->update_grn_status($po);
+                $guid=   $this->posnic->posnic_add_record($value,'sales');
+                $this->load->model('sales');
+                $this->sales->update_grn_status($po);
                 $quty=  $this->input->post('receive_quty');
                 $free=  $this->input->post('receive_free');
                 $items=  $this->input->post('items');
@@ -117,13 +117,13 @@ function save(){
            
                 for($i=0;$i<count($items);$i++){
           
-                        $item_value=array('grn'=>$guid,'item'=>$items[$i],'quty'=>$quty[$i],'free'=>$free[$i]);
+                        $item_value=array('sales'=>$guid,'item'=>$items[$i],'quty'=>$quty[$i],'free'=>$free[$i]);
                         $this->posnic->posnic_add_record($item_value,'grn_x_items');
-                        $this->load->model('grn');
-                        $this->grn->update_item_receving($po_item[$i],$quty[$i],$free[$i]);
-                        //$this->grn->add_stock($items[$i],$quty[$i]+$free[$i],$po_item[$i],$this->session->userdata['branch_id']);
+                        $this->load->model('sales');
+                        $this->sales->update_item_receving($po_item[$i],$quty[$i],$free[$i]);
+                        //$this->sales->add_stock($items[$i],$quty[$i]+$free[$i],$po_item[$i],$this->session->userdata['branch_id']);
                 }
-                $this->posnic->posnic_master_increment_max('grn')  ;
+                $this->posnic->posnic_master_increment_max('sales')  ;
                  echo 'TRUE';
     
                 }else{
@@ -151,7 +151,7 @@ function save(){
                 $value=array('date'=>$grn_date,'remark'=>$remark,'note'=>$note);
                 $guid=  $this->input->post('grn_guid');
                 $update_where=array('guid'=>$guid);
-                $this->posnic->posnic_update_record($value,$update_where,'grn');          
+                $this->posnic->posnic_update_record($value,$update_where,'sales');          
                 $quty=  $this->input->post('receive_quty');
                 $grn_item_guid=  $this->input->post('grn_items_guid');
                 $free=  $this->input->post('receive_free');
@@ -160,8 +160,8 @@ function save(){
            
                 for($i=0;$i<count($items);$i++){
           
-                        $this->load->model('grn');
-                        $this->grn->update_grn_items_quty($grn_item_guid[$i],$quty[$i],$free[$i],$items[$i],$po_item[$i]);
+                        $this->load->model('sales');
+                        $this->sales->update_grn_items_quty($grn_item_guid[$i],$quty[$i],$free[$i],$items[$i],$po_item[$i]);
                       
                 }
                     
@@ -179,10 +179,10 @@ function save(){
 }
         
 
-function search_purchase_order(){
+function search_sales_order(){
         $search= $this->input->post('term');
-        $this->load->model('grn');
-        $data= $this->grn->search_purchase_order($search,$this->session->userdata['branch_id'])    ;
+        $this->load->model('sales');
+        $data= $this->sales->search_sales_order($search,$this->session->userdata['branch_id'])    ;
         echo json_encode($data);
          
        
@@ -192,12 +192,12 @@ function delete(){
    if($this->session->userdata['goods_receiving_note_per']['delete']==1){
         if($this->input->post('guid')){
             $guid=  $this->input->post('guid');
-            $this->load->model('grn');
-            $status=$this->grn->check_approve($guid);
+            $this->load->model('sales');
+            $status=$this->sales->check_approve($guid);
            if($status!=FALSE){
-            $this->posnic->posnic_delete($guid,'grn');
+            $this->posnic->posnic_delete($guid,'sales');
             
-            $this->grn->delete_grn_items($guid);            
+            $this->sales->delete_grn_items($guid);            
                 echo 'TRUE';
             }else{
                 echo 'Approved';
@@ -211,15 +211,15 @@ function delete(){
 }
 function  get_purchase_order($guid){
     if($this->session->userdata['purchase_order_per']['edit']==1){
-    $this->load->model('grn');
-    $data=  $this->grn->get_purchase_order($guid);
+    $this->load->model('sales');
+    $data=  $this->sales->get_purchase_order($guid);
     echo json_encode($data);
     }
 }
 function  get_goods_receiving_note($guid){
     if($this->session->userdata['purchase_order_per']['edit']==1){
-    $this->load->model('grn');
-    $data=  $this->grn->get_goods_receiving_note($guid);
+    $this->load->model('sales');
+    $data=  $this->sales->get_goods_receiving_note($guid);
     echo json_encode($data);
     }
 }
@@ -227,10 +227,10 @@ function good_receiving_note_approve(){
     if($this->session->userdata['goods_receiving_note_per']['approve']==1){
         $id=  $this->input->post('guid');
         $po=  $this->input->post('po');
-        $this->load->model('grn');
-        $report=$this->grn->change_grn_status($id);
+        $this->load->model('sales');
+        $report=$this->sales->change_grn_status($id);
      
-        $this->grn->add_stock($id,$po,$this->session->userdata['branch_id']);
+        $this->sales->add_stock($id,$po,$this->session->userdata['branch_id']);
         if (!$report['error']) {
             echo 'TRUE';
         } else {
@@ -242,7 +242,7 @@ function good_receiving_note_approve(){
 }
 
 function order_number(){
-       $data[]= $this->posnic->posnic_master_max('grn')    ;
+       $data[]= $this->posnic->posnic_master_max('sales')    ;
        echo json_encode($data);
 }
 function search_items(){
