@@ -30,7 +30,7 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('purchase_order')." ".$this->lang->line('for')." ".$this->lang->line('sales_bill') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('sales_order')." ".$this->lang->line('for')." ".$this->lang->line('sales_bill') ?>');
                 }        
            function posnic_table(){
            $('#dt_table_tools').dataTable({
@@ -47,7 +47,7 @@
                                                                     if(oObj.aData[10]==1){
                                                                         return "<input type=checkbox disabled='disabled' value='"+oObj.aData[0]+"' ><input type='hidden' id='order__number_"+oObj.aData[0]+"' value='"+oObj.aData[1]+"'>";
                                                                          }else{
-                   							return "<input type=checkbox value='"+oObj.aData[0]+"' ><input type='hidden' id='order__number_"+oObj.aData[0]+"' value='"+oObj.aData[1]+"'><input type='hidden' id='purchase_order__number_"+oObj.aData[0]+"' value='"+oObj.aData[11]+"'>";
+                   							return "<input type=checkbox value='"+oObj.aData[0]+"' ><input type='hidden' id='order__number_"+oObj.aData[0]+"' value='"+oObj.aData[1]+"'><input type='hidden' id='sales_order__number_"+oObj.aData[0]+"' value='"+oObj.aData[11]+"'>";
                                                                     }
                                                                 },
 								
@@ -153,7 +153,7 @@
 ?>
                         }
         function good_receiving_note_approve(guid){
-            var po=$('#purchase_order__number_'+guid).val();
+            var po=$('#sales_order__number_'+guid).val();
             <?php if($this->session->userdata['sales_bill_per']['approve']==1){ ?>
                 $.ajax({
                 url: '<?php echo base_url() ?>index.php/sales_bill/good_receiving_note_approve',
