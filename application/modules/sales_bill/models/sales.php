@@ -67,29 +67,7 @@ class Sales extends CI_Model{
                 $query=$this->db->get();
                 return $query->result();
     }
-    function get_customers_x_items($guid){
-        $this->db->select()->from('customers_x_items')->where('guid',$guid);
-        $sql=  $this->db->get();
-        $data=array();
-        $item_id;
-        foreach ($sql->result() as $row){
-            $item_id=$row->item_id;
-            $data[]=$row;
-        }
-        $this->db->select()->from('items')->where('guid',$item_id);
-        $item=  $this->db->get();
-        foreach ($item->result() as $row){
-            $data[]=$row;
-        }
-        return $data;
-    }
-    function supplier_like($like,$bid){
-          $this->db->select('customers.* ,customers_category.guid as c_guid,customers_category.category_name')->from('customers')->where('customers.branch_id',$bid)->where('customers.active_status',1)->where('customers.active',0)->where('customers.delete_status',1);
-          $this->db->join('customers_category', 'customers_category.guid=customers.category','left');
-          $this->db->or_like($like);
-          $sql=  $this->db->get();
-          return $sql->result();
-    }
+  
     
     function serach_items($search,$bid,$guid){
          $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,customers_x_items.*')->from('customers_x_items')->where('customers_x_items.delete_status',1)->where('customers_x_items.active',0)->where('customers_x_items.active_status',1)->where('customers_x_items.active',0)->where('customers_x_items.deactive_item',0)->where('customers_x_items.item_active',0)->where('items.branch_id',$bid)->where('items.active_status',1)->where('items.delete_status',1);
@@ -107,17 +85,17 @@ class Sales extends CI_Model{
      
      }
     function get_sales_order($guid){
-        $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers_x_items.quty as item_limit,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address1 as address,sales_order.*,sales_order_items.discount_per as dis_per ,sales_order_items.discount_amount as item_dis_amt ,sales_order_items.tax as dis_amt ,sales_order_items.tax as order_tax,sales_order_items.item ,sales_order_items.quty ,sales_order_items.free,sales_order_items.guid as o_i_guid ,sales_order_items.received_quty ,sales_order_items.received_free ,sales_order_items.cost ,sales_order_items.sell ,sales_order_items.mrp,sales_order_items.guid as o_i_guid ,sales_order_items.amount ,sales_order_items.date,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_order')->where('sales_order.guid',$guid);
-        $this->db->join('sales_order_items', 'sales_order_items.order_id = sales_order.guid AND sales_order_items.delete_status=0','left');
-        $this->db->join('items', "items.guid=sales_order_items.item AND sales_order_items.order_id='".$guid."' AND sales_order_items.delete_status=0",'left');
-        $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_items.item  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_order_items.item  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_items.order_id='".$guid."'  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('customers_x_items', "customers_x_items.customer_id=sales_order.customer_id AND customers_x_items.item_id=sales_order_items.item AND sales_order_items.order_id='".$guid."'  AND sales_order_items.delete_status=0",'left');
+        $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_order.*  ,sales_order_x_items.discount as dis_per ,sales_order_x_items.item ,sales_order_x_items.quty ,sales_order_x_items.price,sales_order_x_items.guid as o_i_guid ,sales_order_x_items.guid as o_i_guid  ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_order')->where('sales_order.guid',$guid);
+        $this->db->join('sales_order_x_items', 'sales_order_x_items.quotation_id = sales_order.guid ','left');
+        $this->db->join('items', "items.guid=sales_order_x_items.item AND sales_order_x_items.quotation_id='".$guid."' ",'left');
+        $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  ",'left');
+        $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item ",'left');
+        $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_x_items.quotation_id='".$guid."' ",'left');
+       
         $sql=  $this->db->get();
         $data=array();
         foreach($sql->result_array() as $row){             
-            $row['po_date']=date('d-m-Y',$row['po_date']);       
+                 
             $row['exp_date']=date('d-m-Y',$row['exp_date']);         
             $row['date']=date('d-m-Y',$row['date']);         
             $data[]=$row;
@@ -125,15 +103,15 @@ class Sales extends CI_Model{
         return $data;
      }
     function get_goods_receiving_note($guid){
-        $this->db->select('grn.date as grn_date,grn.note as grn_note,grn.remark as grn_remark,grn.grn_no,grn_x_items.guid as grn_items_guid,grn_x_items.quty as rece_quty,grn_x_items.free as rece_free,items.tax_Inclusive ,grn.po,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers_x_items.quty as item_limit,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address1 as address,sales_order.*,sales_order_items.discount_per as dis_per ,sales_order_items.discount_amount as item_dis_amt ,sales_order_items.tax as dis_amt ,sales_order_items.tax as order_tax,sales_order_items.item ,sales_order_items.quty ,sales_order_items.free,sales_order_items.guid as o_i_guid ,sales_order_items.received_quty ,sales_order_items.received_free ,sales_order_items.cost ,sales_order_items.sell ,sales_order_items.mrp,sales_order_items.guid as o_i_guid ,sales_order_items.amount ,sales_order_items.date,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('grn')->where('grn.guid',$guid)->where('grn.delete_status',0);
+        $this->db->select('grn.date as grn_date,grn.note as grn_note,grn.remark as grn_remark,grn.grn_no,grn_x_items.guid as grn_items_guid,grn_x_items.quty as rece_quty,grn_x_items.free as rece_free,items.tax_Inclusive ,grn.po,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers_x_items.quty as item_limit,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address1 as address,sales_order.*,scount_per as dis_per ,sales_order_x_items.discount_amount as item_dis_amt ,sales_order_x_items.tax as dis_amt ,sales_order_x_items.tax as order_tax,sales_order_x_items.item ,sales_order_x_items.quty ,sales_order_x_items.free,sales_order_x_items.guid as o_i_guid ,sales_order_x_items.received_quty ,sales_order_x_items.received_free ,sales_order_x_items.cost ,sales_order_x_items.sell ,sales_order_x_items.mrp,sales_order_x_items.guid as o_i_guid ,sales_order_x_items.amount ,sales_order_x_items.date,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('grn')->where('grn.guid',$guid)->where('grn.delete_status',0);
         $this->db->join('sales_order', 'grn.po=sales_order.guid','left');
         $this->db->join('grn_x_items', 'grn_x_items.grn=grn.guid','left');
-        $this->db->join('sales_order_items', 'sales_order_items.order_id = sales_order.guid AND grn_x_items.item=sales_order_items.item AND sales_order_items.delete_status=0','left');
-        $this->db->join('items', "items.guid=sales_order_items.item AND items.guid=grn_x_items.item AND sales_order_items.order_id=sales_order.guid AND sales_order_items.delete_status=0",'left');
-        $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_items.item  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_order_items.item  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_items.order_id=sales_order.guid  AND sales_order_items.delete_status=0",'left');
-        $this->db->join('customers_x_items', "customers_x_items.customer_id=sales_order.customer_id AND customers_x_items.item_id=sales_order_items.item AND sales_order_items.order_id='".$guid."'  AND sales_order_items.delete_status=0",'left');
+        $this->db->join('sales_order_x_items', 'sales_order_x_items.quotation_id = sales_order.guid AND grn_x_items.item=sales_order_x_items.item AND sales_order_x_items.delete_status=0','left');
+        $this->db->join('items', "items.guid=sales_order_x_items.item AND items.guid=grn_x_items.item AND sales_order_x_items.quotation_id=sales_order.guid AND sales_order_x_items.delete_status=0",'left');
+        $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  AND sales_order_x_items.delete_status=0",'left');
+        $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  AND sales_order_x_items.delete_status=0",'left');
+        $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_x_items.quotation_id=sales_order.guid  AND sales_order_x_items.delete_status=0",'left');
+        $this->db->join('customers_x_items', "customers_x_items.customer_id=sales_order.customer_id AND customers_x_items.item_id=sales_order_x_items.item AND sales_order_x_items.quotation_id='".$guid."'  AND sales_order_x_items.delete_status=0",'left');
         $sql=  $this->db->get();
         $data=array();
         foreach($sql->result_array() as $row){             
@@ -147,7 +125,7 @@ class Sales extends CI_Model{
      }
      function delete_order_item($guid){      
           $this->db->where('guid',$guid);
-          $this->db->update('sales_order_items',array('delete_status'=>1));
+          $this->db->update('sales_order_x_items',array('delete_status'=>1));
      }
      function deactive_order($guid){
          $this->db->select()->from('sales_order')->where('guid',$guid)->where('order_status',0);
@@ -161,7 +139,7 @@ class Sales extends CI_Model{
          }
      }
     function update_item_receving($po_item,$quty,$free){
-        $this->db->select()->from('sales_order_items')->where('guid',$po_item);
+        $this->db->select()->from('sales_order_x_items')->where('guid',$po_item);
         $sql=  $this->db->get();
         $received_quty;
         $received_free;
@@ -183,7 +161,7 @@ class Sales extends CI_Model{
         }
         $data=array('received_quty'=>$received_quty+$quty,'received_free'=>$received_free+$free);
         $this->db->where('guid',$po_item);
-        $this->db->update('sales_order_items',$data);
+        $this->db->update('sales_order_x_items',$data);
         
          
      }
@@ -194,7 +172,7 @@ class Sales extends CI_Model{
         foreach ($grn->result() as $grn_row){
      
         
-        $this->db->select()->from('sales_order_items')->where('order_id',$po_item)->where('item',$grn_row->item);
+        $this->db->select()->from('sales_order_x_items')->where('order_id',$po_item)->where('item',$grn_row->item);
         $sql=  $this->db->get();
         $price;
         foreach ($sql->result() as $row){
@@ -242,7 +220,7 @@ class Sales extends CI_Model{
       $old_quty=$row->quty;
         }
         
-        $this->db->select()->from('sales_order_items')->where('guid',$po_item);
+        $this->db->select()->from('sales_order_x_items')->where('guid',$po_item);
         $po=  $this->db->get();
         foreach ($po->result() as $prow){
             $ofree=$prow->free;
@@ -264,7 +242,7 @@ class Sales extends CI_Model{
         $this->db->where('guid',$guid);
         $this->db->update('grn_x_items',array('quty'=>$quty,'free'=>$free));
         $this->db->where('guid',$po_item);
-        $this->db->update('sales_order_items',array('received_quty'=>$old_received_quty+$quty,'received_free'=>$free+$old_received_free));
+        $this->db->update('sales_order_x_items',array('received_quty'=>$old_received_quty+$quty,'received_free'=>$free+$old_received_free));
         
     }
     function change_grn_status($guid){
@@ -278,7 +256,7 @@ class Sales extends CI_Model{
         foreach ($grn->result() as $row){
             $order_id= $row->po;
         }
-        $this->db->select()->from('sales_order_items')->where('order_id',$order_id);
+        $this->db->select()->from('sales_order_x_items')->where('order_id',$order_id);
         $po=$this->db->get();
         foreach ($po->result() as $item){
             $quty;
@@ -295,7 +273,7 @@ class Sales extends CI_Model{
             
            
             $this->db->where('guid',$item->guid);
-            $this->db->update('sales_order_items',array('received_quty'=>$item->received_quty-$quty,'received_free'=>$item->received_free-$free));
+            $this->db->update('sales_order_x_items',array('received_quty'=>$item->received_quty-$quty,'received_free'=>$item->received_free-$free));
             $this->db->where('guid',$grn_item_guid);
             $this->db->update('grn_x_items',array('active'=>0,'active_status'=>0));
                     

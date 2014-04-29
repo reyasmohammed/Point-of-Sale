@@ -550,7 +550,7 @@
                              dataType: 'json',               
                              success: function(data)        
                              { 
-                             if(data[0]['grn_status']==0){
+                           
                                  
                                 $('#parsley_reg #sales_bill_guid').val($('#parsley_reg #demo_order_number').select2('data').id);
                                 $('#parsley_reg #demo_order_number').val($('#parsley_reg #demo_order_number').select2('data').text);
@@ -572,7 +572,7 @@
                                 $('#sales_bill_lists').removeAttr("disabled");
                                
                              
-                                $("#parsley_reg #supplier").val(data[0]['c_name']);
+                                $("#parsley_reg #first_name").val(data[0]['s_name']);
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #sales_bill_guid").val(guid);
@@ -599,47 +599,36 @@
                                 var receive=0;
                                 for(i=0;i<data.length;i++){
                                
-                                  if(data[i]['received_quty']<data[i]['quty']){
                                       receive=1;
                                     var  name=data[i]['items_name'];
                                     var  sku=data[i]['i_code'];
                                     var  quty=data[i]['quty'];
-                                    var  limit=data[i]['item_limit'];
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
-                                    var  free=data[i]['free'];
-                                    var  received_quty=data[i]['received_quty'];
-                                    var  received_free=data[i]['received_free'];
                                    
-                                    var  cost=data[i]['cost'];
-                                    var  price=data[i]['sell'];
-                                    var  mrp=data[i]['mrp'];
+                                    var  price=data[i]['price'];
                                     var  o_i_guid=data[i]['o_i_guid'];
-                                    var  date=data[i]['date'];
                                     var  items_id=data[i]['item'];
-                                    var discount;
+                                    var discount=0;
                                     if(data[i]['dis_per']!=0){
                                         var per=data[i]['dis_per'];
-                                        discount="0";
-                                    }else{
-                                        var discount=data[i]['item_dis_amt'];
-                                        var num = parseFloat(discount);
-                                        discount=num.toFixed(point);
-                                        var per="";
+                                        discount=(parseFloat(quty)*parseFloat(price))-per;
                                     }
                                     
                                    if(data[i]['tax_Inclusive']==1){
-                                      var tax=data[i]['order_tax'];
-                                      var total=+tax+ +(parseFloat(quty)*parseFloat(cost))-discount;
+                                      var tax_val=data[i]['tax_value'];
+                                      var tax=(parseFloat(quty)*parseFloat(price))-tax_val/100;
+                                      var total=+tax+ +(parseFloat(quty)*parseFloat(price))-discount;
                                       var type='Exc';
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }else{
                                       var type="Inc";
-                                      var tax=data[i]['order_tax'];
-                                      var total=(parseFloat(quty)*parseFloat(cost))-discount;
+                                      var tax_val=data[i]['tax_value'];
+                                      var tax=(parseFloat(quty)*parseFloat(price))-tax_val/100;
+                                      var total=(parseFloat(quty)*parseFloat(price))-discount;
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
@@ -647,33 +636,23 @@
                                     null,
                                     name,
                                     sku,
-                                    cost,
-                                  //  total,
-                                  
                                     quty,
-                                    received_quty,
-                                    free,
-                                    received_free,
-                                   "<input type='hidden' id='total_id_"+i+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='discount_amt_"+i+"' value='"+discount+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='cost_id_"+i+"' value='"+cost+"' ><input type='hidden' id='o_quty_id_"+i+"' value='"+parseFloat(quty-received_quty)+"' ><input type='text' id='r_quty_id_"+i+"' name='receive_quty[]' onkeyup='receive_quty_items("+i+")' onKeyPress='receive_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
-                                   "<input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' name='order_items[]' value='"+data[i]['o_i_guid']+"' ><input type='hidden' id='o_free_id_"+i+"' value='"+parseFloat(free-received_free)+"' ><input type='text' id='r_free_id_"+i+"' name='receive_free[]' onkeyup='receive_free_items("+i+")' onKeyPress='receive_free(event,"+i+","+data.length+");return numbersonly(event)' class='form-control' style='width:90px'>",
-                                 type+':'+0,
-                                  discount,
-                                  0
+                                  price,
                                  
+                                 type+':'+tax,
+                                  discount,
+                                   "<input type='hidden' id='total_id_"+i+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+discount+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='price_"+i+"' value='"+price+"' ><input type='text' id='r_quty_id_"+i+"' value='"+quty+"' name='receive_quty[]' onkeyup='receive_quty_items("+i+")' onKeyPress='receive_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
+                                 total
                                  ] );
 
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+i)
-                                }
+                                
                                 }if(receive==0){
                                   $.bootstrapGrowl('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>', { type: "success" });                         
                                   $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>');
                                   }
-                             } 
-                             else{
-                               $.bootstrapGrowl('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>', { type: "success" });                         
-                                 $('#parsley_reg #demo_order_number').select2('open');
-                             }
+                             
                              }
                            });
                     
@@ -1072,9 +1051,16 @@ function reload_update_user(){
                          
                          
          
-                  <div class="row small_inputs" >
-                    <div class="col col-lg-12">
-                      <div class="row" ><input type="hidden" value="0" id='sl_number'>
+                     </div>
+                    <div class="row small_inputs" >
+                    <div class="col col-lg-9">
+                      
+                         
+                             
+                              
+                          
+                          
+                        <div class="row" ><input type="hidden" value="0" id='sl_number'>
              
                             <div class="image_items">
                                 <div class="panel panel-default">
@@ -1085,35 +1071,18 @@ function reload_update_user(){
                                     <thead>
                                         <tr>
                                             
-                                    <th><?php echo $this->lang->line('no') ?></th>
+                                     <th><?php echo $this->lang->line('no') ?></th>
                                     <th><?php echo $this->lang->line('name') ?></th>
-                                    <th><?php echo $this->lang->line('sku') ?></th>
-                                    <th><?php echo $this->lang->line('cost') ?></th>
-                                  
-                                    
-                                    <th><?php echo $this->lang->line('ordered_quty') ?></th>
-                                    <th><?php echo $this->lang->line('received_quty') ?></th>
-                                    
-                                    <th><?php echo $this->lang->line('ordered_free') ?></th>
-                                    <th><?php echo $this->lang->line('received_free') ?></th>
-                                   
-                                    
-                                   
-                                  
-                                    <th><?php echo $this->lang->line('quantity') ?></th>
-                                    <th><?php echo $this->lang->line('free') ?></th>
-                                     <th><?php echo $this->lang->line('tax') ?></th>
-                                     <th><?php echo $this->lang->line('discount') ?></th>
-                                     <th><?php echo $this->lang->line('amount') ?></th>
-                                 
-                                 
-                                   
-                              
-                                    
-                                 
+                                        <th><?php echo $this->lang->line('sku') ?></th>
+                                    <th><?php echo $this->lang->line('quantity') ?></th>                                  
+                                    <th><?php echo $this->lang->line('price') ?></th>
+                                    <th><?php echo $this->lang->line('tax') ?></th>
+                                    <th><?php echo $this->lang->line('discount') ?></th>
+                                    <th><?php echo $this->lang->line('delivered_quty') ?></th>
+                                    <th><?php echo $this->lang->line('total') ?></th>
                                     </tr>
                                     </thead>
-                                    <tbody id="new_order_items" class="ordered_items_table" >
+                                    <tbody id="new_order_items" >
                                        
                                     </tbody >
                                 </table>
@@ -1127,7 +1096,7 @@ function reload_update_user(){
                          
                              
                                  
-                                       <div id="" class="col col-lg-6" style="padding-right: 0px;padding-left: 0px">
+                                       <div id="" class="col col-lg-12" style="padding-right: 0px;padding-left: 0px">
                                            <div class="panel panel-default">
                               <div class="panel-heading" >
                                      <h4 class="panel-title"><?php echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
@@ -1164,35 +1133,46 @@ function reload_update_user(){
                                            </div>
                                      <br>
                                         </div> 
-                                <div class="col col-sm-6" style="padding-right: 0">
-                                      <div class="row">
-                                          <div class="col col-sm-3" style="padding-top: 50px" >
-                                              <div class="form_sep " id="save_button" style="padding-left: 50px">
-                                                       <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:save_new_grn()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
-                                                  </div>
-                                              <div class="form_sep " id="update_button" style=" margin-top: 0 !important;padding-left: 50px">
-                                                       <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:update_order()" class="btn btn-default"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
-                                                  </div>
-                                               </div>
-                                          <div class="col col-sm-3" style="padding-top: 50px"  >
-                                                   <div class="form_sep " id="save_clear">
-                                                       <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_add_sales_bill()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
-                                                  </div>
-                                              <div class="form_sep " id="update_clear" style="margin-top:0 !important">
-                                                       <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_update_sales_bill()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
-                                                  </div>
-                                               </div>
-                                         
-                                               
-                                               <div class="col col-sm-6" >
+                               
+                             
+                          
+                          </div>
+                                <div id="deleted">
+                                    
+                                </div>
+                                <div id="newly_added">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div><div class="col col-sm-3" >
+                       
+                        <div class="row" style="margin-left: 5px">
                                                      <div class="panel panel-default">
                                                     <div class="panel-heading" >
                                      <h4 class="panel-title"><?php echo $this->lang->line('amount') ?></h4>                                                                               
                               </div>
+                                                         <div class="form_sep " style="padding: 0 25px">
+                                                        <label for="total_item_discount_amount" ><?php echo $this->lang->line('total_item_discount_amount') ?></label>													
+                                                                  <?php $total_item_discount_amount=array('name'=>'total_item_discount_amount',
+                                                                                    'class'=>' form-control',
+                                                                                    'id'=>'total_item_discount_amount',
+                                                                                    'disabled'=>'disabled',
+                                                                                    'value'=>set_value('total_item_discount_amount'));
+                                                                     echo form_input($total_item_discount_amount)?>
+                                                        
+                                                  </div>
+                                                         <div class="form_sep " style="padding: 0 25px">
+                                                        <label for="total_tax" ><?php echo $this->lang->line('total_tax') ?></label>													
+                                                                  <?php $total_item_discount_amount=array('name'=>'total_tax',
+                                                                                    'class'=>' form-control',
+                                                                                    'id'=>'total_tax',
+                                                                                    'disabled'=>'disabled',
+                                                                                    'value'=>set_value('total_tax'));
+                                                                     echo form_input($total_item_discount_amount)?>
+                                                        
+                                                  </div>
                                                          <div class="form_sep " style="padding: 0 25px">
                                                         <label for="total_amount" ><?php echo $this->lang->line('total_amount') ?></label>													
                                                                   <?php $total_amount=array('name'=>'demo_total_amount',
@@ -1217,21 +1197,32 @@ function reload_update_user(){
                                                   </div><br>
                                                   </div>
                                                </div>
+                        <div class="row" style="margin-left: 5px">
+                                          <div class="col col-sm-6"  >
+                                              <div class="form_sep " id="save_button" style="padding-left:0px">
+                                                       <label for="" >&nbsp;</label>	
+                                                       <a href="javascript:save_new_order()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                  </div>
+                                              <div class="form_sep " id="update_button" style=" margin-top: 0 !important;">
+                                                       <label for="" >&nbsp;</label>	
+                                                       <a href="javascript:update_order()" class="btn btn-default"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
+                                                  </div>
+                                               </div>
+                                          <div class="col col-sm-6"  >
+                                                   <div class="form_sep " id="save_clear">
+                                                       <label for="remark" >&nbsp;</label>	
+                                                        <a href="javascript:clear_add_sales_order()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                  </div>
+                                              <div class="form_sep " id="update_clear" style="margin-top:0 !important">
+                                                       <label for="remark" >&nbsp;</label>	
+                                                        <a href="javascript:clear_update_sales_order()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                  </div>
+                                               </div>
+                                         
+                                               
+                                              
                                       </div>
-                                  </div>
-                             
-                          
-                          </div>
-                                <div id="deleted">
-                                    
-                                </div>
-                                <div id="newly_added">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    
-          </div>  </div>  </div>
+                    </div>  </div>  </div>
     <?php echo form_close();?>
 </section>    
            <div id="footer_space">
