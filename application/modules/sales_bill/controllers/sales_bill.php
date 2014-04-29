@@ -209,12 +209,12 @@ function delete(){
     }
     
 }
-function  get_purchase_order($guid){
-    if($this->session->userdata['purchase_order_per']['edit']==1){
+function  get_sales_order($guid){
+  
     $this->load->model('sales');
-    $data=  $this->sales->get_purchase_order($guid);
+    $data=  $this->sales->get_sales_order($guid);
     echo json_encode($data);
-    }
+    
 }
 function  get_goods_receiving_note($guid){
     if($this->session->userdata['purchase_order_per']['edit']==1){

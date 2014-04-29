@@ -1630,7 +1630,7 @@ function new_discount_amount(){
                             </div>
                         </div>
                     
-                    </div><div class="col col-sm-3" ">
+                    </div><div class="col col-sm-3" >
                        
                         <div class="row" style="margin-left: 5px">
                                                      <div class="panel panel-default">
