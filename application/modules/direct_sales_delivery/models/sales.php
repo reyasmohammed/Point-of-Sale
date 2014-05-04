@@ -94,6 +94,21 @@ class Sales extends CI_Model{
      function approve_order($guid){
          $this->db->where('guid',$guid);
          $this->db->update('direct_sales_delivery',array('order_status'=>1));
+         $this->db->select()->from('direct_sales_delivery_x_items')->where('direct_sales_delivery_id',$guid);
+         $sql=  $this->db->get();
+         foreach ($sql->result() as $row){
+            $quty;
+            $stock_id;
+            $this->db->select('quty,id')->from('stock')->where('item',$row->item)->where('price',$row->price)->where('branch_id',$this->session->userdata['branch_id']);
+            $stock=  $this->db->get();
+            foreach ($stock->result() as $s_row){
+                $quty=$s_row->quty;
+                $stock_id=$s_row->id;
+            }
+            $this->db->where('id',$stock_id);
+            $this->db->update('stock',array('quty'=>$quty-$row->quty));
+         }
+                 
         
      }
      function  check_approve($guid){
