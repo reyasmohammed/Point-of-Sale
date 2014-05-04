@@ -206,7 +206,7 @@ function save(){
                 $quty=  $this->input->post('items_quty');
                 for($i=0;$i<count($sq);$i++){
                     $this->load->model('sales');
-                    $this->sales->update_quotation($sq[$i],$quty[$i]);
+                    $this->sales->update_sales_order($sq[$i],$quty[$i]);
                 
                         
                 }

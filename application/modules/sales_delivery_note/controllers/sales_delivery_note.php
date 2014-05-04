@@ -1,5 +1,5 @@
 <?php
-class Sales_bill extends CI_Controller{
+class Sales_delivery_note extends CI_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -8,7 +8,7 @@ class Sales_bill extends CI_Controller{
         $this->load->view('template/app/header'); 
         $this->load->view('header/header');         
         $this->load->view('template/branch',$this->posnic->branches());
-        $data['active']='goods_receiving_note';
+        $data['active']='sales_delivery_note';
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
@@ -95,15 +95,15 @@ class Sales_bill extends CI_Controller{
     }
  
 function save(){      
-     if($this->session->userdata['sales_bill_per']['add']==1){
-        $this->form_validation->set_rules('sales_bill_guid',$this->lang->line('sales_bill_guid'), 'required');
+     if($this->session->userdata['sales_delivery_note_per']['add']==1){
+        $this->form_validation->set_rules('sales_delivery_note_guid',$this->lang->line('sales_delivery_note_guid'), 'required');
         $this->form_validation->set_rules('delivery_date',$this->lang->line('delivery_date'), 'required');
         $this->form_validation->set_rules('dn_no', $this->lang->line('dn_no'), 'required'); 
         $this->form_validation->set_rules('delivered_quty[]', $this->lang->line('delivered_quty'), 'required|numeric'); 
         $this->form_validation->set_rules('items[]', $this->lang->line('items'), 'required'); 
            
             if ( $this->form_validation->run() !== false ) {    
-                $so=  $this->input->post('sales_bill_guid');
+                $so=  $this->input->post('sales_delivery_note_guid');
                 $delivery_date=strtotime($this->input->post('delivery_date'));
                 $dn_no= $this->input->post('dn_no');
                  $total_amount=strtotime($this->input->post('grand_total'));
@@ -134,15 +134,15 @@ function save(){
     }
     function update(){
             
-      if($this->session->userdata['sales_bill_per']['edit']==1){
-       $this->form_validation->set_rules('sales_bill_guid',$this->lang->line('sales_bill_guid'), 'required');
+      if($this->session->userdata['sales_delivery_note_per']['edit']==1){
+       $this->form_validation->set_rules('sales_delivery_note_guid',$this->lang->line('sales_delivery_note_guid'), 'required');
        $this->form_validation->set_rules('guid',$this->lang->line('guid'), 'required');
         $this->form_validation->set_rules('delivery_date',$this->lang->line('delivery_date'), 'required');
       //  $this->form_validation->set_rules('dn_no', $this->lang->line('dn_no'), 'required'); 
         $this->form_validation->set_rules('delivered_quty[]', $this->lang->line('delivered_quty'), 'required|numeric'); 
         $this->form_validation->set_rules('items[]', $this->lang->line('items'), 'required'); 
             if ( $this->form_validation->run() !== false ) {    
-                 $so=  $this->input->post('sales_bill_guid');
+                 $so=  $this->input->post('sales_delivery_note_guid');
                  $guid=  $this->input->post('guid');
                 $delivery_date=strtotime($this->input->post('delivery_date'));
                 $total_amount=$this->input->post('grand_total');
@@ -187,7 +187,7 @@ function search_sales_order(){
         
 }
 function delete(){
-   if($this->session->userdata['sales_bill_per']['delete']==1){
+   if($this->session->userdata['sales_delivery_note_per']['delete']==1){
         if($this->input->post('guid')){
             $guid=  $this->input->post('guid');
             $this->load->model('sales');
@@ -212,15 +212,15 @@ function  get_sales_order($guid){
     echo json_encode($data);
     
 }
-function  get_sales_bill($guid){
-    if($this->session->userdata['sales_bill_per']['edit']==1){
+function  get_sales_delivery_note($guid){
+    if($this->session->userdata['sales_delivery_note_per']['edit']==1){
     $this->load->model('sales');
-    $data=  $this->sales->get_sales_bill($guid);
+    $data=  $this->sales->get_sales_delivery_note($guid);
     echo json_encode($data);
     }
 }
 function sdn_approve(){
-    if($this->session->userdata['sales_bill_per']['approve']==1){
+    if($this->session->userdata['sales_delivery_note_per']['approve']==1){
         $id=  $this->input->post('guid');
         $so=  $this->input->post('so');
         $this->load->model('sales');

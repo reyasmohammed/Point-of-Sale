@@ -91,7 +91,7 @@
                                                                         //return '<a ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approved') ?>"><i class="icon-play"></i></span></a>&nbsp<a   ><span data-toggle="tooltip" class="label label-info hint--top hint--success" data-hint="<?php echo $this->lang->line('approved') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a  ><span data-toggle='tooltip' class='label label-danger hint--top hint--success' data-hint='<?php echo $this->lang->line('approved') ?>'><i class='icon-trash'></i></span> </a>";
                                                                        return '<a  ><span data-toggle="tooltip" class="label label-success hint--top hint--success"  ><i class="icon-play"></i></span></a>&nbsp<a  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" ><i class="icon-edit"></i></span></a>'+"&nbsp;<a><span data-toggle='tooltip' class='label label-danger hint--top hint--error' ><i class='icon-trash'></i></span> </a>"
 								}else{
-                                                                        return '<a href=javascript:good_receiving_note_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:sdn_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -152,15 +152,15 @@
    <?php }
 ?>
                         }
-        function good_receiving_note_approve(guid){
+        function sdn_approve(guid){
             var po=$('#sales_order__number_'+guid).val();
             <?php if($this->session->userdata['sales_bill_per']['approve']==1){ ?>
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/sales_bill/good_receiving_note_approve',
+                url: '<?php echo base_url() ?>index.php/sales_bill/sdn_approve',
                 type: "POST",
                 data: {
                     guid: guid,
-                    po:po
+                    so:po
                     
                 },
                   complete: function(response) {
@@ -230,13 +230,13 @@
                                 $("#parsley_reg #first_name").val(data[0]['s_name']);
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
-                                $("#parsley_reg #sales_bill_guid").val(guid);
-                                $("#parsley_reg #demo_order_number").val(data[0]['po_no']);
-                                $("#parsley_reg #order_number").val(data[0]['po_no']);
-                                $("#parsley_reg #order_date").val(data[0]['po_date']);
+                                $("#parsley_reg #guid").val(guid);
+                                $("#parsley_reg #sales_bill_guid").val(data[0]['guid']);
+                                $("#parsley_reg #order_date").val(data[0]['date']);
+                                $("#parsley_reg #edit_dn_node").val(data[0]['code']);
+                                $("#parsley_reg #demo_dn_no").val(data[0]['sales_delivery_note_no']);
+                                $("#parsley_reg #delivery_date").val(data[0]['sales_delivery_note_date']);
                                 $("#parsley_reg #expiry_date").val(data[0]['exp_date']);
-                                $("#parsley_reg #demo_grn_no").val(data[0]['grn_no']);
-                                $("#parsley_reg #grn_date").val(data[0]['grn_date']);
                                 $("#parsley_reg #note").val(data[0]['grn_note']);
                                 $("#parsley_reg #remark").val(data[0]['grn_remark']);
                               
@@ -250,105 +250,86 @@
                                 $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
-//                                $("#parsley_reg #demo_grand_total").val(data[0]['total_amt']);
-//                                $("#parsley_reg #grand_total").val(data[0]['total_amt']);
-//                                
-//                                $("#parsley_reg #demo_total_amount").val(data[0]['total_item_amt']);
-//                                $("#parsley_reg #total_amount").val(data[0]['total_item_amt']);
-//                                
-//                                  var num = parseFloat($('#demo_total_amount').val());
-//                                  $('#demo_total_amount').val(num.toFixed(point));
-//                                  
-//                                  var num = parseFloat($('#total_amount').val());
-//                                  $('#total_amount').val(num.toFixed(point));
-//                                  
-//                                  var num = parseFloat($('#grand_total').val());
-//                                  $('#grand_total').val(num.toFixed(point));
-//                                  
-//                                  var num = parseFloat($('#demo_grand_total').val());
-//                                  $('#demo_grand_total').val(num.toFixed(point));
+                         
                                   
                                 $("#parsley_reg #supplier_guid").val(data[0]['s_guid']);
                                 $("#parsley_reg #grn_guid").val(guid);
                                 var tax;
                                 var receive=0;
+                                var total_tax=0;
+                                var total_discount=0;
                                 for(i=0;i<data.length;i++){
                                
                                       receive=1;
                                     var  name=data[i]['items_name'];
-                                    var  rece_quty=data[i]['rece_quty'];
-                                    var  rece_free=data[i]['rece_free'];
                                     var  sku=data[i]['i_code'];
                                     var  quty=parseFloat(data[i]['quty']);
-                                    var  limit=data[i]['item_limit'];
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
-                                    var  free=parseFloat(data[i]['free']);
-                                    var  received_quty=data[i]['received_quty'];
-                                    var  received_free=data[i]['received_free'];
+                                    var  received_quty=data[i]['delivered_quty'];
                                    
-                                    var  cost=data[i]['cost'];
-                                    var  price=data[i]['sell'];
-                                    var  mrp=data[i]['mrp'];
+                                    var  price=data[i]['price'];
                                     var  o_i_guid=data[i]['o_i_guid'];
-                                    var  date=data[i]['date'];
                                     var  items_id=data[i]['item'];
+                                    var discount;
+                                    var per;
                                     if(data[i]['dis_per']!=0){
-                                    var discount=(parseFloat(quty)*parseFloat(cost))*(data[i]['dis_per']/100);
-                                    var per=data[i]['dis_per'];
+                                     discount=(parseFloat(quty)*parseFloat(price))*(data[i]['dis_per']/100);
+                                     per=data[i]['dis_per'];
                                      var num = parseFloat(discount);
                                       discount=num.toFixed(point);
                                     }else{
-                                    var discount=data[i]['item_dis_amt'];
-                                     var num = parseFloat(discount);
-                                      discount=num.toFixed(point);
-                                    var per="";
+                                     discount=0;
+                                    
+                                     per="";
                                   
                                     }
                                     
                                     if(data[i]['tax_Inclusive']==1){
                                         var tax=parseFloat(data[i]['tax_value']);                                    
-                                        var tax_amount=(parseFloat(rece_quty)*parseFloat(cost)*tax)/100;
+                                        var tax_amount=(parseFloat(received_quty)*parseFloat(price)*tax)/100;
                                         var type='Exc';
-                                         var total=((parseFloat(rece_quty)*parseFloat(cost)))-parseFloat(discount)+parseFloat(tax_amount);
+                                        total_tax=parseFloat(total_tax)+parseFloat(tax_amount);
+                                         var total=((parseFloat(received_quty)*parseFloat(price)))-parseFloat(discount)+parseFloat(tax_amount);
                                         var num = parseFloat(total);
                                         total=num.toFixed(point);
                                     }else{
                                         var type="Inc";
                                         var tax=parseFloat(data[i]['tax_value']);
-                                        var tax_amount=(parseFloat(rece_quty)*parseFloat(cost)*tax)/100;
-                                        var total=(parseFloat(rece_quty)*parseFloat(cost))-discount;
+                                        var tax_amount=(parseFloat(received_quty)*parseFloat(price)*tax)/100;
+                                        var total=(parseFloat(received_quty)*parseFloat(price))-discount;
                                         var num = parseFloat(total);
                                         total=num.toFixed(point);
                                   }
-                                 var grn_received_quty=parseFloat(received_quty)-parseFloat(rece_quty);
+                                  total_discount=parseFloat(total_discount)+parseFloat(discount);
+                                 var grn_received_quty=parseFloat(quty)-parseFloat(received_quty);
                              
-                                 var grn_received_free=parseFloat(received_free)-parseFloat(rece_free);
-                                    var addId = $('#selected_item_table').dataTable().fnAddData( [
+                                       var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
                                     name,
                                     sku,
-                                    cost,
                                     quty,
-                                    received_quty,
-                                    free,
-                                    received_free,
-                                    "<input type='hidden' id='total_id_"+i+"' value='"+total+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='discount_amt_"+i+"' value='"+discount+"' ><input type='hidden' id='cost_id_"+i+"' value='"+cost+"' ><input type='hidden' name='grn_items_guid[]' value='"+data[i]['grn_items_guid']+"' ><input type='hidden' id='grn_old_quantity_"+i+"' value='"+rece_quty+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='o_quty_id_"+i+"' value='"+parseFloat(quty-grn_received_quty)+"' ><input type='text' id='r_quty_id_"+i+"' name='receive_quty[]' value='"+rece_quty+"' onkeyup='receive_quty_items("+i+")' onKeyPress='receive_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
-                                    "<input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' id='grn_old_free_"+i+"' value='"+rece_free+"' ><input type='hidden' name='order_items[]' value='"+data[i]['o_i_guid']+"' ><input type='hidden' id='o_free_id_"+i+"' value='"+parseFloat(free-grn_received_free)+"' ><input type='text' id='r_free_id_"+i+"' name='receive_free[]' value='"+rece_free+"' onkeyup='receive_free_items_update("+i+")' onKeyPress='receive_free(event,"+i+","+data.length+");return numbersonly(event)' class='form-control' style='width:90px'>",
-
-                                type+':'+tax_amount,
-                                  discount,
-                                  total
+                                  price,
                                  
+                                 type+':'+tax_amount,
+                                  discount,
+                                   "<input type='hidden' id='item_total_"+i+"' value='"+total+"'><input type='hidden' id='item_quty_"+i+"' value='"+quty+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='item_price_"+i+"' value='"+price+"' ><input type='text' id='delivered_item_quty"+i+"' value='"+received_quty+"' name='delivered_quty[]' onkeyup='delivered_quty_items("+i+")' onKeyPress='delivered_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
+                                 total
                                  ] );
 
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+i)
                                 
                                 }
+                                  $('#total_item_discount_amount').val(total_discount);
+                                  $('#total_tax').val(total_tax);
                                     total_amount();
+                                     $("#parsley_reg #id_discount").val(data[0]['discount']);
+                                     $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
+                                     $("#parsley_reg #note").val(data[0]['sales_delivery_note_note']);
+                                     $("#parsley_reg #remark").val(data[0]['sales_delivery_note_remark']);
                              } 
                            });
                   
@@ -357,7 +338,7 @@
                        //$('#parsley_reg #delivery_date').focus();
                        document.getElementById('order_date').focus();
                        $('#loading').modal('hide');
-                    }, 0);
+                    }, 0); 
                          
                         <?php }else{?>
                                  $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('sales_bill');?>', { type: "error" });                       
