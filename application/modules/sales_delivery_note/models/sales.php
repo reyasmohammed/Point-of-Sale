@@ -19,7 +19,6 @@ class Sales extends CI_Model{
                     }
                 }
                 return $data; 
-        
     }
     function search_sales_order($like,$branch){
         $this->db->select('sales_order.*,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
@@ -97,33 +96,14 @@ class Sales extends CI_Model{
         }
         return $data;
      }
-     function delete_order_item($guid){      
-          $this->db->where('guid',$guid);
-          $this->db->update('sales_order_x_items',array('delete_status'=>1));
-     }
-     function deactive_order($guid){
-         $this->db->select()->from('sales_order')->where('guid',$guid)->where('order_status',0);
-         $sql=  $this->db->get();
-         if($sql->num_rows()>0){
-             $this->db->where('guid',$guid);
-             $this->db->update('sales_order',array('active'=>0));
-             echo 'TRUE';
-         }else {
-             echo "approve";
-         }
-     }
+    
+    
     function update_item_receving($items,$quty,$so){
         $where=array('sales_order_id'=>$so,'item'=>$items);
         $this->db->where($where);
         $this->db->update('sales_order_x_items',array('delivered_quty'=>$quty));
-        
-         
      }
-    # Add Stock From Purchase Receve Note
-    function add_stock($guid,$po_item,$Bid){
-     
-    }
-    
+   
     function sdn_approve($guid,$so){
         $this->db->where('guid',$guid);
         $this->db->update('sales_delivery_note',array('sales_delivery_note_status'=>1));
@@ -144,37 +124,7 @@ class Sales extends CI_Model{
             
         }
     }
-    function delete_sales_delivery_note_items($guid){
-        $this->db->select()->from('sales_delivery_note')->where('guid',$guid);
-        $sales_delivery_note=  $this->db->get();
-        $order_id;
-        foreach ($sales_delivery_note->result() as $row){
-            $order_id= $row->po;
-        }
-        $this->db->select()->from('sales_order_x_items')->where('order_id',$order_id);
-        $po=$this->db->get();
-        foreach ($po->result() as $item){
-            $quty;
-            $free;
-            $this->db->select()->from('sales_delivery_note_x_items')->where('sales_delivery_note',$guid)->where('item',$item->item) ;
-            $sales_delivery_note_item=  $this->db->get();
-            $sales_delivery_note_item_guid;
-            foreach ($sales_delivery_note_item->result() as $sales_delivery_note_row)
-            {
-                $quty=$sales_delivery_note_row->quty;   
-                $free=$sales_delivery_note_row->free; 
-                $sales_delivery_note_item_guid=$sales_delivery_note_row->guid; 
-            }
-            
-           
-            $this->db->where('guid',$item->guid);
-            $this->db->update('sales_order_x_items',array('received_quty'=>$item->received_quty-$quty,'received_free'=>$item->received_free-$free));
-            $this->db->where('guid',$sales_delivery_note_item_guid);
-            $this->db->update('sales_delivery_note_x_items',array('active'=>0,'active_status'=>0));
-                    
-        }
-        
-    }
+   
     function check_approve($guid){
             $this->db->select()->from('sales_delivery_note')->where('guid',$guid)->where('sales_delivery_note_status',1);
             $sql=  $this->db->get();
@@ -188,8 +138,6 @@ class Sales extends CI_Model{
     function update_sales_order_status($so){
         $this->db->where('guid',$so);
         $this->db->update('sales_order',array('received_status'=>1));
-                
-            
     }
     
 }
