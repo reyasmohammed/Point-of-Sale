@@ -537,6 +537,7 @@ $lang['credit_days']='Credit Days';
   $lang['damage_stock']='Damage Stock';
   $lang['po_quantity']='PO Quantity';
   $lang['po_free']='PO Free';
+  $lang['direct_sales_delivery']='Direct Delivery Note';
   $lang['cancel_quty']='Cancled Qty';
   $lang['cancel_free']='Cancled Free';
   $lang['sales_delivery_note']='Sales Delivery Note';
