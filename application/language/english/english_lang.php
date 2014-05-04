@@ -540,7 +540,7 @@ $lang['credit_days']='Credit Days';
   $lang['direct_sales_delivery']='Direct Delivery Note';
   $lang['cancel_quty']='Cancled Qty';
   $lang['cancel_free']='Cancled Free';
-  $lang['sales_delivery_note']='Sales Delivery Note';
+  $lang['sales_delivery_note']='Delivery Note';
   
   
 ?>﻿
