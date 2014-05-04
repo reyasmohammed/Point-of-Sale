@@ -4,7 +4,7 @@ class Sales extends CI_Model{
         parent::__construct();
     }
     function get($end,$start,$like,$branch){
-                $this->db->select('sales_delivery_note.total_amount,sales_delivery_note.guid as sdn_guid,sales_order.*,sales_delivery_note.delete_status as sales_delivery_note_delete_status,sales_delivery_note.sales_delivery_note_no,sales_delivery_note.active_status as sales_delivery_note_active_status,sales_delivery_note.guid as sales_delivery_note_guid,sales_delivery_note.sales_delivery_note_status as sales_delivery_note_active, sales_delivery_note.date as sales_delivery_note_date,sales_delivery_note.sales_delivery_note_no ,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
+                $this->db->select('sales_delivery_note.bill_status,sales_delivery_note.total_amount,sales_delivery_note.guid as sdn_guid,sales_order.*,sales_delivery_note.delete_status as sales_delivery_note_delete_status,sales_delivery_note.sales_delivery_note_no,sales_delivery_note.active_status as sales_delivery_note_active_status,sales_delivery_note.guid as sales_delivery_note_guid,sales_delivery_note.sales_delivery_note_status as sales_delivery_note_active, sales_delivery_note.date as sales_delivery_note_date,sales_delivery_note.sales_delivery_note_no ,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
                 $this->db->from('sales_delivery_note')->where('sales_order.branch_id',$branch)->where('sales_order.active_status',1)->where('sales_order.delete_status',0)->where('sales_delivery_note.delete_status',0);
                 $this->db->join('sales_order', 'sales_order.guid=sales_delivery_note.so AND sales_delivery_note.delete_status=0','left');
                 $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_order.guid=sales_delivery_note.so','left');
@@ -13,7 +13,7 @@ class Sales extends CI_Model{
                 $query=$this->db->get();
                 $data=array();
                 foreach ($query->result_array() as $row){
-                    if($row['sales_delivery_note_delete_status']==0){
+                    if($row['bill_status']==1){
                     $row['date']=date('d-m-Y',$row['date']);
                     $data[]=$row;
                     }
