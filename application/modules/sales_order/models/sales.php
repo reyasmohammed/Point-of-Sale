@@ -69,11 +69,11 @@ class Sales extends CI_Model{
      }
      function get_sales_order($guid){
          $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_order.*,sales_order_x_items.quty ,sales_order_x_items.stock_id ,sales_order_x_items.discount as item_discount,sales_order_x_items.price,sales_order_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_order')->where('sales_order.guid',$guid);
-         $this->db->join('sales_order_x_items', "sales_order_x_items.quotation_id = sales_order.guid  ",'left');
-         $this->db->join('items', "items.guid=sales_order_x_items.item AND sales_order_x_items.quotation_id='".$guid."' ",'left');
+         $this->db->join('sales_order_x_items', "sales_order_x_items.sales_order_id = sales_order.guid  ",'left');
+         $this->db->join('items', "items.guid=sales_order_x_items.item AND sales_order_x_items.sales_order_id='".$guid."' ",'left');
          $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  ",'left');
          $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  ",'left');
-         $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_x_items.quotation_id='".$guid."'  ",'left');
+         $this->db->join('customers', "customers.guid=sales_order.customer_id AND sales_order_x_items.sales_order_id='".$guid."'  ",'left');
          $sql=  $this->db->get();
          $data=array();
          foreach($sql->result_array() as $row){
@@ -116,11 +116,11 @@ class Sales extends CI_Model{
          {
              $price=$row->price;
          }
-         $this->db->insert('sales_order_x_items',array('stock_id'=>$stock,'guid'=>  md5($i.$guid.$item),'discount'=>$discount,'price'=>$price,'item'=>$item,'quty'=>$quty,'quotation_id'=>$guid));
+         $this->db->insert('sales_order_x_items',array('stock_id'=>$stock,'guid'=>  md5($i.$guid.$item),'discount'=>$discount,'price'=>$price,'item'=>$item,'quty'=>$quty,'sales_order_id'=>$guid));
          
                
      }
-     function update_quotation($guid,$quty){
+     function update_sales_order($guid,$quty){
          $this->db->where('guid',$guid);
          $this->db->update('sales_order_x_items',array('quty'=>$quty));
      }

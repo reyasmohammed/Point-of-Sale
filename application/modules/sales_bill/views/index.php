@@ -44,8 +44,8 @@
         height: 24px;
       line-height: 1.7;
     }
-    #dt_table_tools tr td + td + td + td + td + td + td + td + td {
-  //width: 120px !important;
+     #dt_table_tools  tr:last-child td {
+  width: 100px !important;
 }
 .editable-address {
     display: block;
@@ -81,12 +81,12 @@
         return false
           }
     }
-    function receive_quty(e,i){
+    function delivered_quty(e,i){
         var unicode=e.charCode? e.charCode : e.keyCode
             if (unicode!=13 && unicode!=9){          
             }
             else{
-                   receive_quty_items(i);
+                   delivered_quty_items(i);
                    $('#parsley_reg #r_free_id_'+i).focus();
             }
              if (unicode!=27){
@@ -98,7 +98,7 @@
                        $('#parsley_reg #grn_date').focus();
                        document.getElementById('grn_date').focus();
                    }, 0);
-                    receive_quty_items(i);
+                    delivered_quty_items(i);
             }else{
                  $('#parsley_reg #r_free_id_'+parseFloat(+i-1)).focus();
              }
@@ -132,45 +132,47 @@
             }
         }
     }
-    function receive_quty_items(i)
+    function delivered_quty_items(i)
     {
-        if(isNaN($('#cost_id_'+i).val())){
-                          $('#cost_id_'+i).val(0);   
+        if(isNaN($('#item_price_'+i).val())){
+                          $('#item_price_'+i).val(0);   
         }
-        if(isNaN($('#parsley_reg #r_quty_id_'+i).val())){
-           $('#parsley_reg #r_quty_id_'+i).val(0);
+        if(isNaN($('#parsley_reg #delivered_item_quty'+i).val())){
+           $('#parsley_reg #delivered_item_quty'+i).val(0);
         }else{
-            var good=  $('#parsley_reg #r_quty_id_'+i).val();
-            var res=  $('#parsley_reg #o_quty_id_'+i).val();
-            if(parseFloat(good)>parseFloat(res)){
-                $('#parsley_reg #r_quty_id_'+i).val(res);  
+            var delivered=  $('#parsley_reg #delivered_item_quty'+i).val();
+            var ordered=  $('#parsley_reg #item_quty_'+i).val();
+            if(parseFloat(delivered)>parseFloat(ordered)){
+                $('#parsley_reg #delivered_item_quty'+i).val(ordered);  
                 var discount;
                 if($('#discount_per_'+i).val()!=""){
-                    discount=(parseFloat($('#cost_id_'+i).val())*parseFloat($('#r_quty_id_'+i).val()))*(parseFloat($('#discount_per_'+i).val())/100)
+                    discount=(parseFloat($('#item_price_'+i).val())*parseFloat($('#delivered_item_quty'+i).val()))*(parseFloat($('#discount_per_'+i).val())/100)
                 }else{
-                    discount=$('#discount_amt_'+i).val();
+                    discount=0;
                 }
                 if(isNaN(discount)){
                     discount=0;   
                 }
-                if(isNaN($('#cost_id_'+i).val())){
-                          $('#cost_id_'+i).val(0);   
+                if(isNaN($('#item_price_'+i).val())){
+                          $('#item_price_'+i).val(0);   
                 }
                  
-                var quty=$('#r_quty_id_'+i).val();
+                var quty=$('#delivered_item_quty'+i).val();
                 if(quty==""){
                    quty=0;
                 }
-                var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty);
+                var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
+                 
                 var tax;
                 if($('#tax_inclusive_'+i).val()==1){
-                    tax=(total*parseFloat($('#tax_value_'+i).val()))/100  ;
-                    var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty)+tax;
+                    tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
+                    var total =parseFloat(total)+tax;
                 }else{
-                    tax=(total*parseFloat($('#tax_value_'+i).val()))/100 ; 
-                   
-                    var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty);
+                     tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
+                  
+                    var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
                 }
+              
                 var discount = parseFloat(discount);
                 discount=discount.toFixed(point);
                 total=total-discount;
@@ -178,45 +180,43 @@
                 total=total.toFixed(point);
                 var tax = parseFloat(tax);
                 tax=tax.toFixed(point);
-                 if(quty==0){
-                    total=0;
-                }
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(11)').html(tax);
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(12)').html(discount);
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(13)').html(total);
-                 $('#total_id_'+i).val(total);
+                 
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(tax);
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(7)').html(discount);
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(9)').html(total);
+                $('#selected_item_table #item_total_'+i).val(total);
                 
-                 total_amount();
+                total_amount();
             }else{
-                var discount;
+                 var discount;
                 if($('#discount_per_'+i).val()!=""){
-                    discount=(parseFloat($('#cost_id_'+i).val())*parseFloat($('#r_quty_id_'+i).val()))*(parseFloat($('#discount_per_'+i).val())/100)
+                    discount=(parseFloat($('#item_price_'+i).val())*parseFloat($('#delivered_item_quty'+i).val()))*(parseFloat($('#discount_per_'+i).val())/100)
                 }else{
-                    discount=$('#discount_amt_'+i).val();
+                    discount=0;
                 }
-                 if(isNaN(discount)){
+                if(isNaN(discount)){
                     discount=0;   
                 }
-                if(isNaN($('#cost_id_'+i).val())){
-                    $('#cost_id_'+i).val(0);   
+                if(isNaN($('#item_price_'+i).val())){
+                          $('#item_price_'+i).val(0);   
                 }
                  
-                var quty=$('#r_quty_id_'+i).val();
+                var quty=$('#delivered_item_quty'+i).val();
                 if(quty==""){
                    quty=0;
                 }
-                var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty);
+                var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
+                 
                 var tax;
                 if($('#tax_inclusive_'+i).val()==1){
-                    tax=(total*parseFloat($('#tax_value_'+i).val()))/100  ;
-                    var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty)+tax;
+                    tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
+                    var total =parseFloat(total)+tax;
                 }else{
-                    tax=(total*parseFloat($('#tax_value_'+i).val()))/100 ; 
-                    var total =parseFloat($('#cost_id_'+i).val())*parseFloat(quty);
-                    
+                     tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
+                  
+                    var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
                 }
-                 
-               
+              
                 var discount = parseFloat(discount);
                 discount=discount.toFixed(point);
                 total=total-discount;
@@ -224,13 +224,11 @@
                 total=total.toFixed(point);
                 var tax = parseFloat(tax);
                 tax=tax.toFixed(point);
-                if(quty==0){
-                    total=0;
-                }
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(11)').html(tax);
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(12)').html(discount);
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(13)').html(total);
-                $('#total_id_'+i).val(total);
+                 
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(tax);
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(7)').html(discount);
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(9)').html(total);
+                $('#selected_item_table #item_total_'+i).val(total);
               total_amount();
             }
             
@@ -240,7 +238,7 @@
         var length=$('#selected_item_table >tbody >tr').length
         var total=0;
         for(var i=0;i<length;i++){
-            var item_total=parseFloat($('#total_id_'+i).val());
+            var item_total=parseFloat($('#item_total_'+i).val());
             if(isNaN(item_total)){
                        item_total=0;  
              }
@@ -280,9 +278,10 @@
         $('#demo_grand_total').val(total-discount);
         var total = parseFloat($('#demo_grand_total').val());
         $('#demo_grand_total').val(total.toFixed(point));
+        $('#grand_total').val(total.toFixed(point));
         var total = parseFloat($('#demo_total_amount').val());
         $('#demo_total_amount').val(total.toFixed(point));
-        console.log(total);
+      
        
     }
     function receive_free_items_update(i)
@@ -348,7 +347,7 @@
                  receive_free_items(i);
             }
     }
-    function save_new_grn(){
+    function save_new_order(){
          <?php if($this->session->userdata['sales_bill_per']['add']==1){ ?>
                    if($('#parsley_reg').valid()){
                        var oTable = $('#selected_item_table').dataTable();
@@ -380,8 +379,8 @@
                      $('#parsley_reg #demo_order_number').select2('open');
                      $("#parsley_reg").trigger('reset');
                       $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('sales_order')." ".$this->lang->line('for')." ".$this->lang->line('sales_bill') ?>');
-                     $('#grn_no').val(grn_number);
-                     $('#demo_grn_no').val(grn_number);
+                     $('#dn_no').val(grn_number);
+                     $('#demo_dn_no').val(grn_number);
                     }
                     }else{
                    $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
@@ -429,116 +428,12 @@
     
      $(document).ready( function () {
          
-       
-          $('#parsley_reg #items').change(function() {
-              if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').id) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').id){
-                     $.bootstrapGrowl('<?php echo $this->lang->line('this item already added');?> '+$('#parsley_reg #demo_order_number').val(), { type: "warning" });  
-                       $('#parsley_reg #items').select2('open');
-              }else{
-                   var guid = $('#parsley_reg #items').select2('data').id;
-                
-                       
-                $('#parsley_reg #item_id').val(guid);
-                $('#parsley_reg #sku').val($('#parsley_reg #items').select2('data').value);
-                $('#parsley_reg #item_name').val($('#parsley_reg #items').select2('data').text);
-                $('#parsley_reg #cost').val($('#parsley_reg #items').select2('data').cost);
-                $('#parsley_reg #price').val($('#parsley_reg #items').select2('data').price);
-                $('#parsley_reg #mrp').val($('#parsley_reg #items').select2('data').mrp);
-                $('#parsley_reg #supplier_quty').val($('#parsley_reg #items').select2('data').quty);
-                $('#parsley_reg #tax_value').val($('#parsley_reg #items').select2('data').tax_value);
-                $('#parsley_reg #tax_type').val($('#parsley_reg #items').select2('data').tax_type);
-                var tax=$('#parsley_reg #items').select2('data').tax_Inclusive;
-                $('#parsley_reg #tax_Inclusive').val(tax);
-                if(tax==1){
-                    $('#tax_label').text('Tax(Exc)');
-                }else{
-                    $('#tax_label').text('Tax(Inc)');   
-                }
-                disacount_and_amount_editable();
-                  
-                    $('#i_discount').val('0');
-                    $('#i_dis_amt').val('0');
-                      free_and_discount_input();
-                   
-               net_amount();
-                $('#parsley_reg #extra_elements').click();
-                $('#parsley_reg #quantity').focus();
-                    window.setTimeout(function ()
-                    {
-                       //$('#parsley_reg #delivery_date').focus();
-                        $('#parsley_reg #quantity').focus();
-                    }, 0);
-          }
-          });
-          function format_item(sup) {
-            if (!sup.id) return sup.text;
-    return  "<p >"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:59px'></img></p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
-            }
-          $('#parsley_reg #items').select2({
-             
-              dropdownCssClass : 'item_select',
-                 formatResult: format_item,
-                formatSelection: format_item,
-                
-                escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('items') ?>",
-                ajax: {
-                     url: '<?php echo base_url() ?>index.php/sales_bill/search_items/',
-                     data: function(term, page) {
-                            return {types: ["exercise"],
-                                limit: 2,
-                                term: term,
-                               
-                            };
-                     },
-                    type:'POST',
-                    dataType: 'json',
-                    quietMillis: 100,
-                    data: function (term) {
-                        return {
-                            term: term,
-                                     suppler:$('#parsley_reg #supplier_guid').val()
-                        };
-                    },
-                    results: function (data) {
-                      var results = [];
-                      
-                      $.each(data, function(index, item){
-                        results.push({
-                          id: item.i_guid,
-                          text: item.name,
-                          value: item.code,
-                          image: item.image,
-                          brand: item.b_name,
-                          category: item.c_name,
-                          department: item.d_name,
-                          quty: item.quty,
-                          cost: item.cost,
-                          price: item.price,
-                          mrp: item.mrp,
-                          tax_type: item.tax_type_name,
-                          tax_value: item.tax_value,
-                          tax_Inclusive : item.tax_Inclusive ,
-                        });
-                      });   if($('#supplier_guid').val()==""){
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_A_Supplier');?>', { type: "warning" }); 
-     $('#parsley_reg #items').select2('close');   
-    $('#parsley_reg #demo_order_number').select2('open');
-        
-                      }
-                      return {
-                       
-                          results: results
-                      };
-                    }
-                }
-            });
          function format_sales_order(sup) {
             if (!sup.id) return sup.text;
     return  "<p >"+sup.text+"    <br>"+sup.date+" "+sup.company+"   "+sup.customer+"</p> ";
             }
         $('#parsley_reg #demo_order_number').change(function() {
-            if($('#parsley_reg #demo_order_number').select2('data').expired==0){
+            if($('#parsley_reg #demo_order_number').select2('data').received_status==0){
                refresh_items_table();
              $('#loading').modal('show');
                    var guid = $('#parsley_reg #demo_order_number').select2('data').id;
@@ -570,8 +465,6 @@
                                 $('#active').attr("disabled", "disabled");
                                 $('#deactive').attr("disabled", "disabled");
                                 $('#sales_bill_lists').removeAttr("disabled");
-                               
-                             
                                 $("#parsley_reg #first_name").val(data[0]['s_name']);
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
@@ -580,25 +473,16 @@
                                 $("#parsley_reg #order_number").val(data[0]['po_no']);
                                 $("#parsley_reg #order_date").val(data[0]['po_date']);
                                 $("#parsley_reg #expiry_date").val(data[0]['exp_date']);
-                                
                                 $("#parsley_reg #id_discount").val(data[0]['discount']);
-                              
-                                $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
-                             
-                                
-                                 
-                                  $('#demo_total_amount').val('');
-                                  $('#total_amount').val('');
-                                  $('#grand_total').val('');
-                                  $('#demo_grand_total').val('');
-                                  
                                 $("#parsley_reg #supplier_guid").val(data[0]['s_guid']);
                                 var tax;
                                 var receive=0;
+                                var total_discount=0;
+                                var total_tax=0;
+                                var total_amount=0;
                                 for(i=0;i<data.length;i++){
-                               
                                       receive=1;
                                     var  name=data[i]['items_name'];
                                     var  sku=data[i]['i_code'];
@@ -612,14 +496,19 @@
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     var discount=0;
+                                     var per=0;
                                     if(data[i]['dis_per']!=0){
-                                        var per=data[i]['dis_per'];
-                                        discount=(parseFloat(quty)*parseFloat(price))-per;
+                                         per=data[i]['dis_per'];
+                                        discount=(parseFloat(quty)*parseFloat(price))*per/100;
+                                         
                                     }
                                     
+                                     
+                                    total_discount=parseFloat(total_discount)+parseFloat(discount);
                                    if(data[i]['tax_Inclusive']==1){
                                       var tax_val=data[i]['tax_value'];
-                                      var tax=(parseFloat(quty)*parseFloat(price))-tax_val/100;
+                                      var tax=(parseFloat(quty)*parseFloat(price))*tax_val/100;
+                                      total_tax=parseFloat(total_tax)+parseFloat(tax);
                                       var total=+tax+ +(parseFloat(quty)*parseFloat(price))-discount;
                                       var type='Exc';
                                       var num = parseFloat(total);
@@ -627,11 +516,13 @@
                                   }else{
                                       var type="Inc";
                                       var tax_val=data[i]['tax_value'];
-                                      var tax=(parseFloat(quty)*parseFloat(price))-tax_val/100;
+                                      var tax=(parseFloat(quty)*parseFloat(price))*tax_val/100;
+                                  
                                       var total=(parseFloat(quty)*parseFloat(price))-discount;
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
+                                  total_amount=parseFloat(total_amount)+parseFloat(total)
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
                                     name,
@@ -641,10 +532,31 @@
                                  
                                  type+':'+tax,
                                   discount,
-                                   "<input type='hidden' id='total_id_"+i+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+discount+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='price_"+i+"' value='"+price+"' ><input type='text' id='r_quty_id_"+i+"' value='"+quty+"' name='receive_quty[]' onkeyup='receive_quty_items("+i+")' onKeyPress='receive_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
+                                   "<input type='hidden' id='item_total_"+i+"' value='"+total+"'><input type='hidden' id='item_quty_"+i+"' value='"+quty+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='item_price_"+i+"' value='"+price+"' ><input type='text' id='delivered_item_quty"+i+"' value='"+quty+"' name='delivered_quty[]' onkeyup='delivered_quty_items("+i+")' onKeyPress='delivered_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
                                  total
                                  ] );
-
+                                 if(data[0]['discount']==0){
+                                      var so_discount=0;
+                                   $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
+                                   so_discount=data[0]['discount_amt'];
+                                 }else{
+                                    var so_discount=parseFloat(total_amount)*parseFloat(data[0]['discount'])/100;
+                                    $("#parsley_reg #discount_amount").val(so_discount);
+                                    $("#parsley_reg #id_discount").val(data[0]['discount']);
+                                 }
+                                 var freight=data[0]['freight']
+                                 if(isNaN(freight) || freight==""){freight=0;}
+                                 var round_amt=data[0]['round_amt']
+                                 if(isNaN(round_amt) || round_amt==""){round_amt=0;}
+                                 
+                                 var grand=parseFloat(total_amount)-parseFloat(so_discount)+parseFloat(freight)+parseFloat(round_amt);
+                                  $('#demo_total_amount').val(total_amount);
+                                  $('#total_amount').val(total_amount);
+                                  $('#grand_total').val(grand);
+                                  $('#demo_grand_total').val(grand);
+                                  $('#grand_total').val(grand);
+                                  $('#total_item_discount_amount').val(total_discount);
+                                  $('#total_tax').val(total_tax);
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+i)
                                 
@@ -665,9 +577,9 @@
                     }else{
                      $('#parsley_reg #demo_order_number').select2('open');
                      $("#parsley_reg").trigger('reset');
-                     $.bootstrapGrowl('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('was_expired');?>', { type: "error" });                         
-                     $('#grn_no').val(grn_number);
-                     $('#demo_grn_no').val(grn_number);
+                     $.bootstrapGrowl('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('was')." ". $this->lang->line('delivered');?>', { type: "warning" });                         
+                     $('#dn_no').val(grn_number);
+                     $('#demo_dn_no').val(grn_number);
                      
                     }
           });
@@ -709,6 +621,7 @@
                           freight: item.freight,
                           round: item.round_amt,
                           expired: item.expired,
+                          received_status: item.received_status,
                         });
                       });
                       return {
@@ -747,8 +660,8 @@ refresh_items_table();
                              {    
                                  
                                 
-                                 $('#parsley_reg #demo_grn_no').val(data[0][0]['prefix']+data[0][0]['max']);
-                                 $('#parsley_reg #grn_no').val(data[0][0]['prefix']+data[0][0]['max']);
+                                 $('#parsley_reg #demo_dn_no').val(data[0][0]['prefix']+data[0][0]['max']);
+                                 $('#parsley_reg #dn_no').val(data[0][0]['prefix']+data[0][0]['max']);
                                  grn_number=data[0][0]['prefix']+data[0][0]['max'];
                              }
                              });
@@ -872,7 +785,8 @@ function reload_update_user(){
                      
         <input type="hidden" name="dummy_discount" id="dummy_discount" >
         <input type="hidden" name="dummy_discount_amount" id="dummy_discount_amount" >
-        <input type="hidden" name="grn_guid" id="grn_guid" >
+        <input type="hidden" name="sales_bill_guid" id="sales_bill_guid" >
+        <input type="hidden" name="guid" id="guid" >
                          <div class="row">
                           <div class="panel panel-default">
                               <div class="panel-heading" >
@@ -886,7 +800,7 @@ function reload_update_user(){
                                                    <div class="form_sep supplier_select_2">
                                                         <label for="demo_order_number" ><?php echo $this->lang->line('order_number') ?></label>													
                                                                   <?php $demo_order_number=array('name'=>'demo_order_number',
-                                                                                    'class'=>'required  form-control',
+                                                                                    'class'=>'  form-control',
                                                                                     'id'=>'demo_order_number',
                                                                                    
                                                                                     'value'=>set_value('demo_order_number'));
@@ -896,7 +810,7 @@ function reload_update_user(){
                                                   </div> 
                                                    <div class="form_sep porchase_order_for_grn" style="margin-top:0px">
                                                          <label for="demo_order_number" ><?php echo $this->lang->line('order_number') ?></label>	
-                                                         <input type="text" disabled="disabled" id="edit_grn_node" class='form-control'>
+                                                         <input type="text" disabled="disabled" id="edit_dn_node" class='form-control'>
                                                    </div>
                                                </div>
                                                 <div class="col col-sm-2" >
@@ -973,7 +887,7 @@ function reload_update_user(){
                                                                      <?php $discount=array('name'=>'discount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'id_discount',
-                                                                                        'maxlength'=>2,
+                                                                                        'maxlength'=>5,
                                                                                         'disabled'=>'disabled',
                                                                                         'value'=>set_value('discount'));
                                                                          echo form_input($discount)?>
@@ -1018,26 +932,26 @@ function reload_update_user(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="grn_no" ><?php echo $this->lang->line('grn_no') ?></label>													
-                                                                     <?php $round_off_amount=array('name'=>'demo_grn_no',
+                                                            <label for="dn_no" ><?php echo $this->lang->line('dn_no') ?></label>													
+                                                                     <?php $round_off_amount=array('name'=>'demo_dn_no',
                                                                                         'class'=>'  form-control',
-                                                                                        'id'=>'demo_grn_no',
+                                                                                        'id'=>'demo_dn_no',
                                                                                         'disabled'=>'disabled',
-                                                                                        'value'=>set_value('demo_grn_no'));
+                                                                                        'value'=>set_value('demo_dn_no'));
                                                                          echo form_input($round_off_amount)?>
-                                                            <input type="hidden" name="grn_no" id="grn_no">
+                                                            <input type="hidden" name="dn_no" id="dn_no">
                                                        </div>
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="grn_date" ><?php echo $this->lang->line('grn_date') ?></label>													
+                                                            <label for="delivery_date" ><?php echo $this->lang->line('delivery_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $grn_date=array('name'=>'grn_date',
+                                                                           <?php $delivery_date=array('name'=>'delivery_date',
                                                                                             'class'=>'required form-control',
-                                                                                            'id'=>'grn_date',
+                                                                                            'id'=>'delivery_date',
                                                                                             'onKeyPress'=>"new_order_date(event)", 
-                                                                                            'value'=>set_value('grn_date'));
-                                                                             echo form_input($grn_date)?>
+                                                                                            'value'=>set_value('delivery_date'));
+                                                                             echo form_input($delivery_date)?>
                                                                 <span class="input-group-addon"><i class="icon-calendar"></i></span>
                                                                 </div>
                                                        </div>
