@@ -96,32 +96,23 @@ class Sales_bill extends CI_Controller{
  
 function save(){      
      if($this->session->userdata['sales_bill_per']['add']==1){
-        $this->form_validation->set_rules('sales_bill_guid',$this->lang->line('sales_bill_guid'), 'required');
-        $this->form_validation->set_rules('delivery_date',$this->lang->line('delivery_date'), 'required');
-        $this->form_validation->set_rules('dn_no', $this->lang->line('dn_no'), 'required'); 
-        $this->form_validation->set_rules('delivered_quty[]', $this->lang->line('delivered_quty'), 'required|numeric'); 
-        $this->form_validation->set_rules('items[]', $this->lang->line('items'), 'required'); 
+        $this->form_validation->set_rules('sdn_guid',$this->lang->line('sdn_guid'), 'required');
+        $this->form_validation->set_rules('sales_order_id',$this->lang->line('sales_order_id'), 'required');
+        $this->form_validation->set_rules('bill_date',$this->lang->line('bill_date'), 'required');
+        $this->form_validation->set_rules('bill_no', $this->lang->line('bill_no'), 'required'); 
+        $this->form_validation->set_rules('customer_id', $this->lang->line('customer_id'), 'required'); 
+       
            
-            if ( $this->form_validation->run() !== false ) {    
-                $so=  $this->input->post('sales_bill_guid');
-                $delivery_date=strtotime($this->input->post('delivery_date'));
-                $dn_no= $this->input->post('dn_no');
-                 $total_amount=strtotime($this->input->post('grand_total'));
+            if ($this->form_validation->run() !== false ) {    
+                $sdn_guid=  $this->input->post('sdn_guid');
+                $sales_order_id=  $this->input->post('sales_order_id');
+                $bill_date=strtotime($this->input->post('bill_date'));
+                $bill_no= $this->input->post('bill_no');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
-                $value=array('sales_delivery_note_no'=>$dn_no,'date'=>$delivery_date,'so'=>$so,'remark'=>$remark,'note'=>$note,'total_amount'=>$total_amount);
-                $guid=   $this->posnic->posnic_add_record($value,'sales_delivery_note');
-                $this->load->model('sales');
-                $this->sales->update_sales_order_status($so);
-                $quty=  $this->input->post('delivered_quty');
-                $items=  $this->input->post('items');
-           
-                for($i=0;$i<count($items);$i++){
-                        $this->load->model('sales');
-                        $this->sales->update_item_receving($items[$i],$quty[$i],$so);
-                       
-                }
-                $this->posnic->posnic_master_increment_max('sales_delivery_note')  ;
+                $value=array('invoice'=>$bill_no,'date'=>$bill_date,'so'=>$sales_order_id,'sdn'=>$sdn_guid,'remark'=>$remark,'note'=>$note);
+                $guid=   $this->posnic->posnic_add_record($value,'sales_bill');
+                
                  echo 'TRUE';
     
                 }else{
@@ -205,10 +196,11 @@ function delete(){
     }
     
 }
-function  get_sales_order($guid){
-  
+function  get_sales_order(){
+     $guid=  $this->input->post('guid');
+    $sdn=  $this->input->post('sdn');
     $this->load->model('sales');
-    $data=  $this->sales->get_sales_order($guid);
+    $data=  $this->sales->get_sales_order($guid,$sdn);
     echo json_encode($data);
     
 }
@@ -236,7 +228,7 @@ function sdn_approve(){
 }
 
 function order_number(){
-       $data[]= $this->posnic->posnic_master_max('sales_delivery_note')    ;
+       $data[]= $this->posnic->posnic_master_max('sales_bill')    ;
        echo json_encode($data);
 }
 function search_items(){
