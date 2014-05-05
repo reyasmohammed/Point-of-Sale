@@ -22,30 +22,36 @@ class Sales extends CI_Model{
         
     }
     function search_sales_order($like,$branch){
-        $this->db->select('sales_order.*,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-        $this->db->from('sales_order')->where('sales_order.branch_id',$branch)->where('sales_order.order_status',1)->where('sales_order.active_status',1)->where('sales_order.delete_status',0);
-        $or_like=array('code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
-        $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_order.order_status=1 ','left');
+        $this->db->select('sales_order.guid as sales_order_guid,sales_order.customer_id,sales_delivery_note.*,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
+        $this->db->from('sales_delivery_note')->where('sales_order.branch_id',$branch)->where('sales_delivery_note.active_status',1)->where('sales_delivery_note.delete_status',0);
+        $or_like=array('code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like,'sales_delivery_note.sales_delivery_note_no'=>$like);
+        $this->db->join('sales_order', 'sales_order.guid=sales_delivery_note.so AND sales_delivery_note.sales_delivery_note_status=1 ','left');
+        $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_delivery_note.sales_delivery_note_status=1','left');
         $this->db->or_like($or_like); 
-        $this->db->limit($this->session->userdata['data_limit']);
+        $this->db->limit($this->session->userdata['data_limit']/2);
         $sql=$this->db->get();
         $data=array();
         foreach($sql->result_array() as $row){
-            if($row['order_status']==1){
-              $row['expired']=0;
-            if($row['exp_date'] < strtotime(date("Y/m/d"))){  
-                $row['expired']=1;
-            }
             $row['date']=date('d-m-Y',$row['date']);
-
-            $row['exp_date']=date('d-m-Y',$row['exp_date']);
-
-           
-
+            $row['sales_delivery_note']='1';
              $data[]=$row;
-            }
 
         }
+       
+//                 $this->db->select('direct_sales_delivery.*,direct_sales_delivery.code as sales_delivery_note_no,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
+//        $this->db->from('direct_sales_delivery')->where('direct_sales_delivery.branch_id',$branch)->where('direct_sales_delivery.active_status',1)->where('direct_sales_delivery.delete_status',0);
+//        $or_like=array('direct_sales_delivery.code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
+//        $this->db->join('customers', 'customers.guid=direct_sales_delivery.customer_id AND direct_sales_delivery.order_status=1','left');
+//        $this->db->or_like($or_like); 
+//        $this->db->limit($this->session->userdata['data_limit']/2);
+//        $sql=$this->db->get();
+//        foreach($sql->result_array() as $row){
+//            $row['date']=date('d-m-Y',$row['date']);
+//            $row['sales_delivery_note']='0';
+//             //$data[]=$row;
+//
+//        }
+      
          return $data;
                
         
@@ -59,8 +65,9 @@ class Sales extends CI_Model{
     }
    
    
-    function get_sales_order($guid){
-        $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_order.*  ,sales_order_x_items.discount as dis_per ,sales_order_x_items.item ,sales_order_x_items.quty ,sales_order_x_items.price,sales_order_x_items.guid as o_i_guid ,sales_order_x_items.guid as o_i_guid  ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_order')->where('sales_order.guid',$guid)->where('sales_order.order_status',1);
+    function get_sales_order($guid,$sdn){
+        $this->db->select('sales_delivery_note.date as sd_date,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_order.*  ,sales_order_x_items.discount as dis_per ,sales_order_x_items.item ,sales_order_x_items.delivered_quty as quty ,sales_order_x_items.price,sales_order_x_items.guid as o_i_guid ,sales_order_x_items.guid as o_i_guid  ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_delivery_note')->where('sales_delivery_note.guid',$sdn)->where('sales_order.guid',$guid)->where('sales_order.order_status',1);
+        $this->db->join('sales_order', 'sales_order.guid = sales_delivery_note.so ','left');
         $this->db->join('sales_order_x_items', 'sales_order_x_items.sales_order_id = sales_order.guid ','left');
         $this->db->join('items', "items.guid=sales_order_x_items.item AND sales_order_x_items.sales_order_id='".$guid."' ",'left');
         $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_order_x_items.item  ",'left');
@@ -70,9 +77,8 @@ class Sales extends CI_Model{
         $sql=  $this->db->get();
         $data=array();
         foreach($sql->result_array() as $row){             
-                 
-            $row['exp_date']=date('d-m-Y',$row['exp_date']);         
-            $row['date']=date('d-m-Y',$row['date']);         
+                         
+            $row['sd_date']=date('d-m-Y',$row['sd_date']);         
             $data[]=$row;
         }
         return $data;
