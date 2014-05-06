@@ -109,10 +109,12 @@ function save(){
                 $bill_date=strtotime($this->input->post('bill_date'));
                 $bill_no= $this->input->post('bill_no');
                 $remark=  $this->input->post('remark');
+                $customer=  $this->input->post('customer_id');
                 $note=  $this->input->post('note');
-                $value=array('invoice'=>$bill_no,'date'=>$bill_date,'so'=>$sales_order_id,'sdn'=>$sdn_guid,'remark'=>$remark,'note'=>$note);
+                $value=array('customer_id'=>$customer,'invoice'=>$bill_no,'date'=>$bill_date,'so'=>$sales_order_id,'sdn'=>$sdn_guid,'remark'=>$remark,'note'=>$note);
                 $guid=   $this->posnic->posnic_add_record($value,'sales_bill');
-                
+                $this->load->model('sales');
+                $this->sales->update_sales_delivery_note($sdn_guid);
                  echo 'TRUE';
     
                 }else{

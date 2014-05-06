@@ -23,34 +23,36 @@ class Sales extends CI_Model{
     }
     function search_sales_order($like,$branch){
         $this->db->select('sales_order.guid as sales_order_guid,sales_order.customer_id,sales_delivery_note.*,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-        $this->db->from('sales_delivery_note')->where('sales_order.branch_id',$branch)->where('sales_delivery_note.active_status',1)->where('sales_delivery_note.delete_status',0);
+        $this->db->from('sales_delivery_note')->where('sales_delivery_note.bill_status',0)->where('sales_order.branch_id',$branch)->where('sales_delivery_note.active_status',1)->where('sales_delivery_note.delete_status',0);
         $or_like=array('code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like,'sales_delivery_note.sales_delivery_note_no'=>$like);
-        $this->db->join('sales_order', 'sales_order.guid=sales_delivery_note.so AND sales_delivery_note.sales_delivery_note_status=1 ','left');
-        $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_delivery_note.sales_delivery_note_status=1','left');
+        $this->db->join('sales_order', 'sales_order.guid=sales_delivery_note.so AND sales_delivery_note.sales_delivery_note_status=1 AND sales_delivery_note.bill_status=0','left');
+        $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_delivery_note.sales_delivery_note_status=1 AND sales_delivery_note.bill_status=0','left');
         $this->db->or_like($or_like); 
         $this->db->limit($this->session->userdata['data_limit']/2);
         $sql=$this->db->get();
         $data=array();
         foreach($sql->result_array() as $row){
+            if($row['bill_status']==0){
             $row['date']=date('d-m-Y',$row['date']);
             $row['sales_delivery_note']='1';
              $data[]=$row;
+            }
 
         }
        
-//                 $this->db->select('direct_sales_delivery.*,direct_sales_delivery.code as sales_delivery_note_no,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-//        $this->db->from('direct_sales_delivery')->where('direct_sales_delivery.branch_id',$branch)->where('direct_sales_delivery.active_status',1)->where('direct_sales_delivery.delete_status',0);
-//        $or_like=array('direct_sales_delivery.code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
-//        $this->db->join('customers', 'customers.guid=direct_sales_delivery.customer_id AND direct_sales_delivery.order_status=1','left');
-//        $this->db->or_like($or_like); 
-//        $this->db->limit($this->session->userdata['data_limit']/2);
-//        $sql=$this->db->get();
-//        foreach($sql->result_array() as $row){
-//            $row['date']=date('d-m-Y',$row['date']);
-//            $row['sales_delivery_note']='0';
-//             //$data[]=$row;
-//
-//        }
+                 $this->db->select('direct_sales_delivery.*,direct_sales_delivery.code as sales_delivery_note_no,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
+        $this->db->from('direct_sales_delivery')->where('direct_sales_delivery.branch_id',$branch)->where('direct_sales_delivery.active_status',1)->where('direct_sales_delivery.delete_status',0);
+        $or_like=array('direct_sales_delivery.code'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
+        $this->db->join('customers', 'customers.guid=direct_sales_delivery.customer_id AND direct_sales_delivery.order_status=1','left');
+        $this->db->or_like($or_like); 
+        $this->db->limit($this->session->userdata['data_limit']/2);
+        $sql=$this->db->get();
+        foreach($sql->result_array() as $row){
+            $row['date']=date('d-m-Y',$row['date']);
+            $row['sales_delivery_note']='0';
+             $data[]=$row;
+
+        }
       
          return $data;
                
@@ -191,9 +193,9 @@ class Sales extends CI_Model{
             }
             
     }
-    function update_sales_order_status($so){
+    function update_sales_delivery_note($so){
         $this->db->where('guid',$so);
-        $this->db->update('sales_order',array('received_status'=>1));
+        $this->db->update('sales_delivery_note',array('bill_status'=>1));
                 
             
     }
