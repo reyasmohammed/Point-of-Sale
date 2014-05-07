@@ -8,7 +8,7 @@ $lang['item']='Item';
 $lang['delete']='Delete';
 $lang['user']='Users';
 $lang['other']='Other';
-
+$lang['customer']='Customer';
 $lang['delete_user']='Delete User';
 $lang['add_new_user']='Add New User';
 $lang['add_new_customer']='Add New Customer';
@@ -452,6 +452,7 @@ $lang['credit_days']='Credit Days';
   $lang['order_items']='Order Items';
   $lang['order_items_details']='Order Items Details';
   $lang['Please_Select_A_Supplier']='Please Select A Supplier';
+  $lang['Please_Select_A_Customer']='Please Select A Customer';
   $lang['please_select']='Please Select';
   $lang['all_require_elements']='All Require Elements';
   

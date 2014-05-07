@@ -209,10 +209,16 @@ function sales_quotation_approve(guid){
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
                            
-                                $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
+                               
+                                
+                                
+                                $('#first_name').select2('destroy');
+                                $('#first_name').prop('disabled', true);
+                                $('#first_name').val(data[0]['s_name'])
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #sales_quotation_guid").val(guid);
+                                
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_number").val(data[0]['code']);
                                 $("#parsley_reg #quotation_date").val(data[0]['date']);
@@ -225,11 +231,15 @@ function sales_quotation_approve(guid){
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
                                 $("#parsley_reg #demo_grand_total").val(data[0]['total_amt']);
+                              
                                 $("#parsley_reg #grand_total").val(data[0]['total_amt']);
                                 
                                 $("#parsley_reg #demo_total_amount").val(data[0]['total_item_amt']);
                                 $("#parsley_reg #total_amount").val(data[0]['total_item_amt']);
-                                
+                                $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                   var num = parseFloat($('#demo_total_amount').val());
                                   $('#demo_total_amount').val(num.toFixed(point));
                                   

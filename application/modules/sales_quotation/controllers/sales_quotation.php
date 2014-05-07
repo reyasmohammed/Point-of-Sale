@@ -13,9 +13,9 @@ class Sales_quotation extends CI_Controller{
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
         
-        /// echo strtotime(date("Y/m/d"));
+        
     }
-    // purchase order data table
+    // sales quotation order data table
     function data_table(){
         $aColumns = array( 'guid','code','code','c_name','s_name','date','total_items','total_amt','active_status','quotation_status' );	
 	$start = "";
@@ -97,10 +97,7 @@ class Sales_quotation extends CI_Controller{
         $this->session->userdata['supplier_guid']=$suid;
     }
     
-   
  
-    
-  
 function save(){      
      if($this->session->userdata['sales_quotation_per']['add']==1){
         $this->form_validation->set_rules('customers_guid',$this->lang->line('customers_guid'), 'required');
@@ -131,9 +128,11 @@ function save(){
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
                 $grand_total=  $this->input->post('grand_total');
+                $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
   
      
-              $value=array('customer_id'=>$customer,'exp_date'=>$expdate,'code'=>$order_number,'date'=>$quotation_date,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
+              $value=array('customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'customer_id'=>$customer,'exp_date'=>$expdate,'code'=>$order_number,'date'=>$quotation_date,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'sales_quotation');
           
                 $item=  $this->input->post('new_item_id');
@@ -195,9 +194,10 @@ function save(){
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
                 $grand_total=  $this->input->post('grand_total');
-  
+                  $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
      
-              $value=array('customer_id'=>$customer,'exp_date'=>$expdate,'date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
+              $value=array('customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'customer_id'=>$customer,'exp_date'=>$expdate,'date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
               $guid=  $this->input->post('sales_quotation_guid');
               $update_where=array('guid'=>$guid);
              $this->posnic->posnic_update_record($value,$update_where,'sales_quotation');
@@ -250,9 +250,10 @@ function save(){
  *  */       
 // functoon starts
 function search_customer(){
-    $search= $this->input->post('term');  
-    $like=array('first_name'=>$search,'email'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
-    $data= $this->posnic->posnic_select2('customers',$like)    ;
+    $search= $this->input->post('term'); 
+    $this->load->model('sales');
+    $data=$this->sales->search_customers($search);
+   
     echo json_encode($data);
 }
 // function end
