@@ -124,6 +124,22 @@ class Sales extends CI_Model{
          $this->db->where('guid',$guid);
          $this->db->update('sales_quotation_x_items',array('quty'=>$quty));
      }
+     function search_customers($search){
+          $like=array('first_name'=>$search,'email'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
+          $this->db->select('customer_category.discount,customers.*')->from('customers')->where('customers.branch_id',  $this->session->userdata('branch_id'))->where('customers.active_status',1)->where('customers.delete_status',0);
+          $this->db->join('customer_category','customer_category.guid=customers.category_id  AND customers.active_status=1 AND customers.delete_status=0','left');
+          $this->db->or_like($like);
+          $sql=  $this->db->get();
+          $data=array();
+          foreach ($sql->result() as $row){
+              if($row->active_status==1 && $row->delete_status==0){
+                  $data[]=$row;
+              }
+          }
+          return $data;
+          
+          
+     }
     
 }
 ?>

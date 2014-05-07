@@ -3,6 +3,8 @@ $lang['quotation_date']='Quotation Date';
 $lang['total_item_discount_amount']='Item Disc Amount';
 $lang['total_tax']='Total  Exclusive Tax';
 $lang['tax_type']='Tax Type';
+$lang['disc']='Disc';
+$lang['amt']='Amt';
 
 
 

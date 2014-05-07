@@ -3,7 +3,7 @@
           $(document).ready( function () {
            
                     $('#add_customer_details_form').hide();
-                    $('#edit_brand_form').hide();
+                    $('#edit_customer_form').hide();
                   $('#add_customer_form').validate();
                   
                               posnic_table();
@@ -100,7 +100,7 @@
 
                         }
     }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('brand');?>', { type: "error" });                       
+           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('customer');?>', { type: "error" });                       
    <?php }
 ?>
                         }
@@ -151,7 +151,7 @@
                              success: function(data)        
                              {    
                                  $("#user_list").hide();
-                                 $('#edit_brand_form').show('slow');
+                                 $('#edit_customer_form').show('slow');
                                  $('#delete').attr("disabled", "disabled");
                                  $('#posnic_add_customers').attr("disabled", "disabled");
                                  $('#active').attr("disabled", "disabled");
@@ -210,7 +210,7 @@
                               
                          
                         <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                       
+                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer');?>', { type: "error" });                       
                         <?php }?>
                        }
 		</script>
