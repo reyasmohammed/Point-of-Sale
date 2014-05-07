@@ -22,21 +22,10 @@ class Sales extends CI_Model{
         return $sql->num_rows();
     }
    
-//    function search_items($search,$branch){
-////          $this->db->select('items.* ,items_category.guid as c_guid,items_category.category_name as c_name,brands.guid as b_guid,brands.name as b_name,items_department.department_name as d_name')->from('items')->where('items.branch_id',$branch)->where('items.active_status',1)->where('items.delete_status',1);
-////                $this->db->join('items_category', 'items.category_id=items_category.guid','left');
-////                $this->db->join('brands', 'items.brand_id=brands.guid','left');
-////                $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
-////               // $this->db->join('supplier', 'stock.supplier=supplier.id','left');
-////                $like=array('items.name'=>$search,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search);
-////                $this->db->or_like($like);     
-////                $query=$this->db->get();
-////                return $query->result();
-//    }
-    
+
     
     function search_items($search){
-         $this->db->select('items.start_date,items.end_date,items.discount,items_setting.sales,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,stock.*')->from('stock')->where('stock.branch_id',  $this->session->userdata['branch_id'])->where('items.branch_id',$this->session->userdata['branch_id'])->where('items.active_status',1)->where('items.delete_status',1);
+         $this->db->select('items.uom,items.no_of_unit,items.start_date,items.end_date,items.discount,items_setting.sales,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,stock.*')->from('stock')->where('stock.branch_id',  $this->session->userdata['branch_id'])->where('items.branch_id',$this->session->userdata['branch_id'])->where('items.active_status',1)->where('items.delete_status',1);
          $this->db->join('items', "items.guid=stock.item ",'left');
          $this->db->join('items_category', 'items.category_id=items_category.guid','left');
          $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
