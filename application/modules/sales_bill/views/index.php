@@ -333,6 +333,134 @@
                            });
                            }else{
                            
+                          
+                   var guid = $('#parsley_reg #demo_order_number').select2('data').id;
+console.log(guid);
+               
+                            $.ajax({                                      
+                             url: "<?php echo base_url() ?>index.php/sales_bill/get_direct_delivery_note/",                      
+                             data: {
+                                guid:guid
+                             },
+                                type:'POST',
+                             dataType: 'json',               
+                             success: function(data)        
+                             { 
+                           
+                                $("#user_list").hide();
+                                $('#add_new_order').show('slow');
+                                $('#delete').attr("disabled", "disabled");
+                                $('#posnic_add_sales_bill').attr("disabled", "disabled");
+                                $('#active').attr("disabled", "disabled");
+                                $('#deactive').attr("disabled", "disabled");
+                                $('#sales_bill_lists').removeAttr("disabled");
+                                $("#parsley_reg #demo_dn_no").val( $('#parsley_reg #demo_order_number').select2('data').text);
+                                $("#parsley_reg #sdn_guid").val(guid);
+                                $("#parsley_reg #sales_order_id").val('');
+                                $("#parsley_reg #first_name").val(data[0]['s_name']);
+                                $("#parsley_reg #company").val(data[0]['c_name']);
+                                $("#parsley_reg #address").val(data[0]['address']);
+                                $("#parsley_reg #customer_id").val(data[0]['c_guid']);
+                                $("#parsley_reg #demo_order_number").val(data[0]['po_no']);
+                                $("#parsley_reg #order_number").val(data[0]['po_no']);
+                                $("#parsley_reg #order_date").val(data[0]['date']);
+                                $("#parsley_reg #id_discount").val(data[0]['discount']);
+                                $("#parsley_reg #freight").val(data[0]['freight']);
+                                $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
+                                var tax;
+                                var receive=0;
+                                var total_discount=0;
+                                var total_tax=0;
+                                var total_amount=0;
+                                for(i=0;i<data.length;i++){
+                                      receive=1;
+                                    var  name=data[i]['items_name'];
+                                    var  sku=data[i]['i_code'];
+                                    var  quty=data[i]['quty'];
+                                    var  tax_type=data[i]['tax_type_name'];
+                                    var  tax_value=data[i]['tax_value'];
+                                    var  tax_Inclusive=data[i]['tax_Inclusive'];
+                                  
+                                   
+                                    var  price=data[i]['price'];
+                                    var  o_i_guid=data[i]['o_i_guid'];
+                                    var  items_id=data[i]['item'];
+                                    var discount=0;
+                                     var per=0;
+                                    if(data[i]['item_discount']!=0){
+                                         per=data[i]['item_discount'];
+                                        discount=(parseFloat(quty)*parseFloat(price))*per/100;
+                                         
+                                    }
+                                    
+                                     
+                                    total_discount=parseFloat(total_discount)+parseFloat(discount);
+                                   if(data[i]['tax_Inclusive']==1){
+                                      var tax_val=data[i]['tax_value'];
+                                      var tax=(parseFloat(quty)*parseFloat(price))*tax_val/100;
+                                      total_tax=parseFloat(total_tax)+parseFloat(tax);
+                                      var total=+tax+ +(parseFloat(quty)*parseFloat(price))-discount;
+                                      var type='Exc';
+                                      var num = parseFloat(total);
+                                      total=num.toFixed(point);
+                                  }else{
+                                      var type="Inc";
+                                      var tax_val=data[i]['tax_value'];
+                                      var tax=(parseFloat(quty)*parseFloat(price))*tax_val/100;
+                                  
+                                      var total=(parseFloat(quty)*parseFloat(price))-discount;
+                                      var num = parseFloat(total);
+                                      total=num.toFixed(point);
+                                  }
+                                  total_amount=parseFloat(total_amount)+parseFloat(total)
+                                    var addId = $('#selected_item_table').dataTable().fnAddData( [
+                                    null,
+                                    name,
+                                    sku,
+                                    quty,
+                                  price,
+                                 
+                                 type+':'+tax,
+                                  discount,
+                                   quty,
+                                 total
+                                 ] );
+                                 if(data[0]['discount']==0){
+                                      var so_discount=0;
+                                   $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
+                                   so_discount=data[0]['discount_amt'];
+                                 }else{
+                                    var so_discount=parseFloat(total_amount)*parseFloat(data[0]['discount'])/100;
+                                    $("#parsley_reg #discount_amount").val(so_discount);
+                                    $("#parsley_reg #id_discount").val(data[0]['discount']);
+                                 }
+                                 var freight=data[0]['freight']
+                                 if(isNaN(freight) || freight==""){freight=0;}
+                                 var round_amt=data[0]['round_amt']
+                                 if(isNaN(round_amt) || round_amt==""){round_amt=0;}
+                                 
+                                 var grand=parseFloat(total_amount)-parseFloat(so_discount)+parseFloat(freight)+parseFloat(round_amt);
+                                  $('#demo_total_amount').val(total_amount);
+                                  $('#total_amount').val(total_amount);
+                                  $('#grand_total').val(grand);
+                                  $('#demo_grand_total').val(grand);
+                                  $('#grand_total').val(grand);
+                                  $('#total_item_discount_amount').val(total_discount);
+                                  $('#total_tax').val(total_tax);
+                              var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
+                              theNode.setAttribute('id','new_item_row_id_'+i)
+                                
+                                }if(receive==0){
+                                  $.bootstrapGrowl('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>', { type: "success" });                         
+                                  $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('sales_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>');
+                                  }
+                             
+                             }
+                           });
+                           
+                           
+                           
+                           
                            }
                       window.setTimeout(function ()
                     {
@@ -469,8 +597,8 @@ function reload_update_user(){
                 <div class="col col-lg-7">
                         <a href="javascript:posnic_add_new()" id="posnic_add_sales_bill" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew') ?></a>  
                       
-                        <a href="javascript:posnic_group_approve()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?php echo $this->lang->line('approve') ?></a>
-                        <a href="javascript:grn_group_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
+                        <a href="" class="btn btn-default" id="deactive"  ><i class="icon icon-print"></i> <?php echo $this->lang->line('print') ?></a>
+                       
                         <a href="javascript:posnic_sales_bill_lists()" class="btn btn-default" id="sales_bill_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('sales_bill') ?></a>
                         
                 </div>
@@ -509,9 +637,6 @@ function reload_update_user(){
                                           <th><?php echo $this->lang->line('order_date') ?></th>
                                           <th><?php echo $this->lang->line('number_of_items') ?></th>
                                           <th><?php echo $this->lang->line('total_amount') ?></th>
-                                         
-                                      
-                                          <th><?php echo $this->lang->line('status') ?></th>
                                           <th style="width: 120px"><?php echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>

@@ -17,7 +17,7 @@ class Sales_bill extends CI_Controller{
     }
     // goods Receiving Note data table
     function data_table(){
-        $aColumns = array( 'sdn_guid','code','code','sales_delivery_note_no','c_name','s_name','date','total_items','total_amount','sales_delivery_note_active','sales_delivery_note_active','guid' );	
+        $aColumns = array( 'invoice','invoice','invoice','code','c_name','s_name','date','total_items','total','invoice','invoice','guid' );	
 	$start = "";
 			$end="";
 		
@@ -97,7 +97,7 @@ class Sales_bill extends CI_Controller{
 function save(){      
      if($this->session->userdata['sales_bill_per']['add']==1){
         $this->form_validation->set_rules('sdn_guid',$this->lang->line('sdn_guid'), 'required');
-        $this->form_validation->set_rules('sales_order_id',$this->lang->line('sales_order_id'), 'required');
+      //  $this->form_validation->set_rules('sales_order_id',$this->lang->line('sales_order_id'), 'required');
         $this->form_validation->set_rules('bill_date',$this->lang->line('bill_date'), 'required');
         $this->form_validation->set_rules('bill_no', $this->lang->line('bill_no'), 'required'); 
         $this->form_validation->set_rules('customer_id', $this->lang->line('customer_id'), 'required'); 
@@ -111,10 +111,23 @@ function save(){
                 $remark=  $this->input->post('remark');
                 $customer=  $this->input->post('customer_id');
                 $note=  $this->input->post('note');
+                 if(!$this->input->post('sales_order_id')){
+                  $sales_order_id='non';
+                }
+               
                 $value=array('customer_id'=>$customer,'invoice'=>$bill_no,'date'=>$bill_date,'so'=>$sales_order_id,'sdn'=>$sdn_guid,'remark'=>$remark,'note'=>$note);
                 $guid=   $this->posnic->posnic_add_record($value,'sales_bill');
                 $this->load->model('sales');
-                $this->sales->update_sales_delivery_note($sdn_guid);
+               
+                if($this->input->post('sales_order_id')){
+                   
+                    $this->sales->update_sales_delivery_note($sdn_guid);
+                }
+                else{
+                    
+                    $this->sales->update_direct_sales_delivery_note($sdn_guid);
+                }
+                 $this->posnic->posnic_master_increment_max('sales_bill')  ;
                  echo 'TRUE';
     
                 }else{
@@ -203,6 +216,13 @@ function  get_sales_order(){
     $sdn=  $this->input->post('sdn');
     $this->load->model('sales');
     $data=  $this->sales->get_sales_order($guid,$sdn);
+    echo json_encode($data);
+    
+}
+function  get_direct_delivery_note(){
+     $guid=  $this->input->post('guid');
+    $this->load->model('sales');
+    $data=  $this->sales->get_direct_delivery_note($guid);
     echo json_encode($data);
     
 }
