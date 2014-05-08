@@ -258,6 +258,18 @@ function search_customer(){
 // function end
 
 /*
+ * get sales quotaion details for purchase order
+ *  */       
+// functoon starts
+function search_sales_quotation(){
+    $search= $this->input->post('term');  
+    $this->load->model('sales')      ;
+    $data= $this->sales->search_sales_quotation($search)    ;
+    echo json_encode($data);
+}
+// function end
+
+/*
 Delete purchase order if the user have permission  */
 // function start
 function delete(){
@@ -288,6 +300,16 @@ function  get_sales_order($guid){
     echo json_encode($data);
     }
 }
+/* get sales quotation details to sales order
+function start */
+function  get_sales_quotation($guid){
+    if($this->session->userdata['sales_order_per']['add']==1){
+    $this->load->model('sales');
+    $data=  $this->sales->get_sales_quotation($guid);
+    echo json_encode($data);
+    }
+}
+/* function end*/
 
 function sales_order_approve(){
      if($this->session->userdata['sales_order_per']['approve']==1){

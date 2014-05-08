@@ -88,6 +88,30 @@ class Sales extends CI_Model{
          }
          return $data;
      }
+     /* get sales quotation details to sale order
+    function start      */
+     function get_sales_quotation($guid){
+         $this->db->select('items.uom,items.no_of_unit,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,sales_quotation.*,sales_quotation_x_items.quty ,sales_quotation_x_items.stock_id ,sales_quotation_x_items.discount as item_discount,sales_quotation_x_items.price,sales_quotation_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_quotation')->where('sales_quotation.guid',$guid);
+         $this->db->join('sales_quotation_x_items', "sales_quotation_x_items.quotation_id = sales_quotation.guid  ",'left');
+         $this->db->join('items', "items.guid=sales_quotation_x_items.item AND sales_quotation_x_items.quotation_id='".$guid."' ",'left');
+         $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_quotation_x_items.item  ",'left');
+         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_quotation_x_items.item  ",'left');
+         $this->db->join('customers', "customers.guid=sales_quotation.customer_id AND sales_quotation_x_items.quotation_id='".$guid."'  ",'left');
+         $sql=  $this->db->get();
+         $data=array();
+         foreach($sql->result_array() as $row){
+             
+          
+       
+          $row['exp_date']=date('d-m-Y',$row['exp_date']);
+         
+          $row['date']=date('d-m-Y',$row['date']);
+         
+          $data[]=$row;
+         }
+         return $data;
+     }
+     /* function end*/
      function delete_order_item($guid){      
           $this->db->where('guid',$guid);
           $this->db->delete('sales_order_x_items');
@@ -124,6 +148,23 @@ class Sales extends CI_Model{
          $this->db->where('guid',$guid);
          $this->db->update('sales_order_x_items',array('quty'=>$quty));
      }
-    
+    /*
+     Search sales quotation 
+     * function start
+     *      */
+     function search_sales_quotation($search){
+         $this->db->select('sales_quotation.*,customers.first_name,customers.company_name,customers.address')->from('sales_quotation')->where('sales_quotation.branch_id',  $this->session->userdata('branch_id'))->where('sales_quotation.quotation_status',1);
+         $this->db->join('customers','customers.guid=sales_quotation.customer_id','left');
+         $this->db->limit($this->session->userdata('data_limit'));
+         $sql=  $this->db->get();
+         $data=array();
+         foreach ($sql->result() as $row){
+           //  $row['date']=date('d-m-Y',$row['date']);
+             $data[]=$row;
+         }
+         return $data;
+     }
+     /*
+    function end      */
 }
 ?>

@@ -212,8 +212,8 @@ function sales_quotation_approve(guid){
                                
                                 
                                 
-                                $('#first_name').select2('destroy');
-                                $('#first_name').prop('disabled', true);
+                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
+                                $('#first_name').select2('disable');
                                 $('#first_name').val(data[0]['s_name'])
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);

@@ -354,6 +354,8 @@
     
 function posnic_add_new(){
 refresh_items_table();
+
+$('#first_name').select2('enable');
 $('#update_button').hide();
 $('#save_button').show();
 $('#update_clear').hide();
