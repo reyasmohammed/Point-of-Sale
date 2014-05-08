@@ -1186,7 +1186,7 @@ var round_amt=parseFloat($("#parsley_reg #round_off_amount").val());
         if (isNaN(round_amt)|| round_amt=="") {
     round_amt=00;}
     if($('#parsley_reg #customer_discount').val()==0 || isNaN($('#parsley_reg #customer_discount').val())){
-        customer_dis=0;
+       var customer_dis=0;
     }else{
         customer_dis=parseFloat($('#parsley_reg #total_amount').val())*parseFloat($('#parsley_reg #customer_discount').val())/100;
          var customer_dis = parseFloat(customer_dis);

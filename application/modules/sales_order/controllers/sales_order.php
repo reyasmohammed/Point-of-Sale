@@ -131,9 +131,16 @@ function save(){
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
                 $grand_total=  $this->input->post('grand_total');
-  
-     
-              $value=array('customer_id'=>$customer,'exp_date'=>$expdate,'code'=>$order_number,'date'=>$order_date,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
+                $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
+                $sales_quotation_guid=  $this->input->post('sales_quotation_guid');
+                if($sales_quotation_guid==""){
+                    $sales_quotation_guid='non';
+                }else{
+                    $this->load->model('sales');
+                    $this->sales->approve_sales_quotation_to_sales_order($sales_quotation_guid) ;
+                }
+              $value=array('quotation_id'=>$sales_quotation_guid,'customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'customer_id'=>$customer,'exp_date'=>$expdate,'code'=>$order_number,'date'=>$order_date,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'sales_order');
           
                 $item=  $this->input->post('new_item_id');
@@ -250,9 +257,9 @@ function save(){
  *  */       
 // functoon starts
 function search_customer(){
-    $search= $this->input->post('term');  
-    $like=array('first_name'=>$search,'email'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
-    $data= $this->posnic->posnic_select2('customers',$like)    ;
+    $search= $this->input->post('term'); 
+    $this->load->model('sales');
+    $data=$this->sales->search_customers($search);
     echo json_encode($data);
 }
 // function end

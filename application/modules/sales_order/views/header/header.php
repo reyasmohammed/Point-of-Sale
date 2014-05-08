@@ -109,8 +109,8 @@
 			}
 
            function posnic_item_table(guid){
-           var supplier=$('#edit_brand_form #supplier_guid').val();
-           if($('#edit_brand_form #supplier_guid').val()==""){
+           var supplier=$('#edit_sales_order_form #supplier_guid').val();
+           if($('#edit_sales_order_form #supplier_guid').val()==""){
                supplier=guid;
            }
            
@@ -179,7 +179,8 @@ function sales_order_approve(guid){
 }
           
            function edit_function(guid){
-           
+            $('#sales_quotation_select').hide();
+            $('#customer_select').show();
         
                         <?php if($this->session->userdata['sales_order_per']['edit']==1){ ?>
                                 
@@ -208,8 +209,12 @@ function sales_order_approve(guid){
                                 $('#sales_order_lists').removeAttr("disabled");
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
-                           
+                                $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
+                                $("#parsley_reg #first_name").select2('disable');
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #sales_order_guid").val(guid);

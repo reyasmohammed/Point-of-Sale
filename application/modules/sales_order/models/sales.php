@@ -153,7 +153,7 @@ class Sales extends CI_Model{
      * function start
      *      */
      function search_sales_quotation($search){
-         $this->db->select('sales_quotation.*,customers.first_name,customers.company_name,customers.address')->from('sales_quotation')->where('sales_quotation.branch_id',  $this->session->userdata('branch_id'))->where('sales_quotation.quotation_status',1);
+         $this->db->select('sales_quotation.*,customers.first_name,customers.company_name,customers.address')->from('sales_quotation')->where('sales_quotation.branch_id',  $this->session->userdata('branch_id'))->where('sales_quotation.quotation_status',1)->where('sales_quotation.sales_order_status',0);
          $this->db->join('customers','customers.guid=sales_quotation.customer_id','left');
          $this->db->limit($this->session->userdata('data_limit'));
          $sql=  $this->db->get();
@@ -165,6 +165,27 @@ class Sales extends CI_Model{
          return $data;
      }
      /*
-    function end      */
+    function end    
+      *   */
+        function search_customers($search){
+          $like=array('first_name'=>$search,'email'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
+          $this->db->select('customer_category.discount,customers.*')->from('customers')->where('customers.branch_id',  $this->session->userdata('branch_id'))->where('customers.active_status',1)->where('customers.delete_status',0);
+          $this->db->join('customer_category','customer_category.guid=customers.category_id  AND customers.active_status=1 AND customers.delete_status=0','left');
+          $this->db->or_like($like);
+          $sql=  $this->db->get();
+          $data=array();
+          foreach ($sql->result() as $row){
+              if($row->active_status==1 && $row->delete_status==0){
+                  $data[]=$row;
+              }
+          }
+          return $data;
+          
+          
+     }
+     function approve_sales_quotation_to_sales_order($sales_quotation_guid) {
+         $this->db->where('guid',$sales_quotation_guid);
+         $this->db->update('sales_quotation',array('sales_order_status'=>1));
+     }
 }
 ?>
