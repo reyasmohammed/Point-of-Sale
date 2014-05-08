@@ -274,6 +274,8 @@
     return  "<p >"+sup.text+"    <br>"+sup.company+"   "+sup.address1+"</p> ";
             }
         $('#parsley_reg #first_name').change(function() {
+             $('#demo_customer_discount_amount').val(0);
+            $('#customer_discount_amount').val(0);
             refresh_items_table();
            
                    var guid = $('#parsley_reg #first_name').select2('data').id;
@@ -281,6 +283,8 @@
                  $('#parsley_reg #first_name').val($('#parsley_reg #first_name').select2('data').text);
                  $('#parsley_reg #company').val($('#parsley_reg #first_name').select2('data').company);
                  $('#parsley_reg #address').val($('#parsley_reg #first_name').select2('data').address1);
+                 $('#parsley_reg #demo_customer_discount').val($('#parsley_reg #first_name').select2('data').discount);
+                 $('#parsley_reg #customer_discount').val($('#parsley_reg #first_name').select2('data').discount);
                  $('#parsley_reg #customers_guid').val(guid);
                       window.setTimeout(function ()
                     {
@@ -320,6 +324,7 @@
                           text: item.first_name,
                           company: item.company_name,
                           address1: item.address,
+                           discount: item.discount,
                         });
                       });
                       return {
@@ -337,6 +342,7 @@
            
                    var guid = $('#parsley_reg #sales_quotation').select2('data').id;
 
+                 $('#parsley_reg #sales_quotation_guid').val($('#parsley_reg #sales_quotation').select2('data').id);
                  $('#parsley_reg #first_name').val($('#parsley_reg #sales_quotation').select2('data').text);
                  $('#parsley_reg #company').val($('#parsley_reg #sales_quotation').select2('data').company);
                  $('#parsley_reg #address').val($('#parsley_reg #sales_quotation').select2('data').address1);
@@ -569,6 +575,7 @@ function posnic_add_new(){
 refresh_items_table();
 $('#sales_quotation_select').hide();
 $('#customer_select').show();
+  $("#parsley_reg #first_name").select2('enable');
 $('#update_button').hide();
 $('#save_button').show();
 $('#update_clear').hide();
@@ -612,7 +619,7 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: '<?php echo $this->la
         $('#parsley_reg #first_name').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_order');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_add_quotation_order(){
@@ -631,7 +638,7 @@ $('#deleted').remove();
 $('#parent_items').append('<div id="deleted"></div>');
 $('#newly_added').remove();
 $('#parent_items').append('<div id="newly_added"></div>');
-$("#parsley_reg #first_name").select2('data', {id:'',text: '<?php echo $this->lang->line('search').' '.$this->lang->line('sales_quotation') ?>'});
+$("#parsley_reg #sales_quotation").select2('data', {id:'',text: '<?php echo $this->lang->line('search').' '.$this->lang->line('sales_quotation') ?>'});
     <?php if($this->session->userdata['sales_order_per']['add']==1){ ?>
              $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/sales_order/order_number/",                      
@@ -663,11 +670,11 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: '<?php echo $this->la
         $('#parsley_reg #sales_quotation').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_order');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_sales_order_lists(){
-      $('#edit_brand_form').hide('hide');
+      $('#edit_sales_order_form').hide('hide');
       $('#add_new_order').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
@@ -1448,9 +1455,16 @@ var round_amt=parseFloat($("#parsley_reg #round_off_amount").val());
         if (isNaN(round_amt)|| round_amt=="") {
     round_amt=00;}
 
-
-     $("#parsley_reg #demo_grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt);
-     $("#parsley_reg #grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt);
+    if($('#parsley_reg #customer_discount').val()==0 || isNaN($('#parsley_reg #customer_discount').val())){
+        customer_dis=0;
+    }else{
+        customer_dis=parseFloat($('#parsley_reg #total_amount').val())*parseFloat($('#parsley_reg #customer_discount').val())/100;
+         var customer_dis = parseFloat(customer_dis);
+        $('#demo_customer_discount_amount').val(customer_dis.toFixed(point));
+        $('#customer_discount_amount').val(customer_dis.toFixed(point));
+    }
+     $("#parsley_reg #demo_grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt-customer_dis);
+     $("#parsley_reg #grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt-customer_dis);
        
         var num = parseFloat($('#demo_grand_total').val());
     $('#demo_grand_total').val(num.toFixed(point));
@@ -1561,6 +1575,7 @@ function new_discount_amount(){
                                                                                     'value'=>set_value('sales_quotation'));
                                                                      echo form_input($sales_quotation)?>
                                                         <input type="hidden" id="sales_order_guid" name="sales_order_guid">
+                                                        <input type="hidden" id="sales_quotation_guid" name="sales_quotation_guid">
                                                   </div>
                                                </div>
                                                <div class="col col-sm-2" >
@@ -2093,7 +2108,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_order');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;
@@ -2191,7 +2206,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_order');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -2239,7 +2254,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_order');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;
