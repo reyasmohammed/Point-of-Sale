@@ -203,8 +203,10 @@ function save(){
                 $total_amount=  $this->input->post('total_amount');
                 $grand_total=  $this->input->post('grand_total');
   
-     
-              $value=array('customer_id'=>$customer,'exp_date'=>$expdate,'date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
+                $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
+               
+              $value=array('customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'customer_id'=>$customer,'exp_date'=>$expdate,'date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
               $guid=  $this->input->post('sales_order_guid');
               $update_where=array('guid'=>$guid);
              $this->posnic->posnic_update_record($value,$update_where,'sales_order');

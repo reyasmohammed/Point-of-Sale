@@ -181,24 +181,7 @@
         
           
         
-        function posnic_active(guid){
-                           $.ajax({
-                url: '<?php echo base_url() ?>index.php/sales_delivery_note/active',
-                type: "POST",
-                data: {
-                    guid: guid
-                    
-                },
-                success: function(response)
-                {
-                    if(response){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
-                         $("#dt_table_tools").dataTable().fnDraw();
-                    }
-                }
-            });
-        }
-          
+       
         function edit_function(guid){
                         <?php if($this->session->userdata['sales_delivery_note_per']['edit']==1){ ?>
                                 
@@ -232,14 +215,15 @@
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #guid").val(guid);
                                 $("#parsley_reg #sales_delivery_note_guid").val(data[0]['guid']);
-                                $("#parsley_reg #order_date").val(data[0]['date']);
                                 $("#parsley_reg #edit_dn_node").val(data[0]['code']);
                                 $("#parsley_reg #demo_dn_no").val(data[0]['sales_delivery_note_no']);
                                 $("#parsley_reg #delivery_date").val(data[0]['sales_delivery_note_date']);
-                                $("#parsley_reg #expiry_date").val(data[0]['exp_date']);
                                 $("#parsley_reg #note").val(data[0]['grn_note']);
                                 $("#parsley_reg #remark").val(data[0]['grn_remark']);
-                              
+                                   $("#parsley_reg #demo_customer_discount").val(data[0]['sdn_customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['sdn_customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['sdn_customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['sdn_customer_discount_amount']);
                                // $("#parsley_reg #demo_order_number").select2('data', {id:'',text: data[0]['po_no']});
                                 $(".supplier_select_2").hide();
                                 $(".porchase_order_for_grn").show();
@@ -336,7 +320,7 @@
                           window.setTimeout(function ()
                     {
                        //$('#parsley_reg #delivery_date').focus();
-                       document.getElementById('order_date').focus();
+                       document.getElementById('delivery_date').focus();
                        $('#loading').modal('hide');
                     }, 0); 
                          
