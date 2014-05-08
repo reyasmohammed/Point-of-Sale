@@ -106,10 +106,13 @@ function save(){
                 $so=  $this->input->post('sales_delivery_note_guid');
                 $delivery_date=strtotime($this->input->post('delivery_date'));
                 $dn_no= $this->input->post('dn_no');
-                 $total_amount=strtotime($this->input->post('grand_total'));
+                $total_amount=$this->input->post('grand_total');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
-                $value=array('sales_delivery_note_no'=>$dn_no,'date'=>$delivery_date,'so'=>$so,'remark'=>$remark,'note'=>$note,'total_amount'=>$total_amount);
+                 $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
+               
+              $value=array('customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'sales_delivery_note_no'=>$dn_no,'date'=>$delivery_date,'so'=>$so,'remark'=>$remark,'note'=>$note,'total_amount'=>$total_amount);
                 $guid=   $this->posnic->posnic_add_record($value,'sales_delivery_note');
                 $this->load->model('sales');
                 $this->sales->update_sales_order_status($so);
@@ -149,7 +152,10 @@ function save(){
                
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
-                $value=array('date'=>$delivery_date,'so'=>$so,'remark'=>$remark,'note'=>$note,'total_amount'=>$total_amount);
+                 $customer_discount=  $this->input->post('customer_discount');
+                $customer_discount_amount=  $this->input->post('customer_discount_amount');
+               
+                $value=array('customer_discount_amount'=>$customer_discount_amount,'customer_discount'=>$customer_discount,'date'=>$delivery_date,'so'=>$so,'remark'=>$remark,'note'=>$note,'total_amount'=>$total_amount);
                 $guid=  $this->input->post('guid');
                 $update_where=array('guid'=>$guid);
                 $this->posnic->posnic_update_record($value,$update_where,'sales_delivery_note');          

@@ -271,14 +271,25 @@
         if(isNaN(discount))
            discount=0;
         $('#demo_total_amount').val(total);
+        $('#total_amount').val(total);
        
         var total = parseFloat(total)+freight+round;
         total=total.toFixed(point);
+     if($('#parsley_reg #customer_discount').val()==0 || isNaN($('#parsley_reg #customer_discount').val())){
+        customer_dis=0;
+    }else{
+        customer_dis=parseFloat($('#parsley_reg #total_amount').val())*parseFloat($('#parsley_reg #customer_discount').val())/100;
+         var customer_dis = parseFloat(customer_dis);
+        $('#demo_customer_discount_amount').val(customer_dis.toFixed(point));
+        $('#customer_discount_amount').val(customer_dis.toFixed(point));
+    }
     
-        $('#demo_grand_total').val(total-discount);
-        var total = parseFloat($('#demo_grand_total').val());
+    
+        $('#grand_total').val(total-discount);
+        var total = parseFloat($('#grand_total').val()-parseFloat(customer_dis));
         $('#demo_grand_total').val(total.toFixed(point));
         $('#grand_total').val(total.toFixed(point));
+        
         var total = parseFloat($('#demo_total_amount').val());
         $('#demo_total_amount').val(total.toFixed(point));
       
@@ -476,7 +487,10 @@
                                 $("#parsley_reg #id_discount").val(data[0]['discount']);
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
-                                $("#parsley_reg #supplier_guid").val(data[0]['s_guid']);
+                                $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 var tax;
                                 var receive=0;
                                 var total_discount=0;
@@ -550,11 +564,19 @@
                                  if(isNaN(round_amt) || round_amt==""){round_amt=0;}
                                  
                                  var grand=parseFloat(total_amount)-parseFloat(so_discount)+parseFloat(freight)+parseFloat(round_amt);
-                                  $('#demo_total_amount').val(total_amount);
+                                  var num = parseFloat(total_amount);
+                                  total_amount=num.toFixed(point);
+
+                                $('#demo_total_amount').val(total_amount);
                                   $('#total_amount').val(total_amount);
-                                  $('#grand_total').val(grand);
-                                  $('#demo_grand_total').val(grand);
-                                  $('#grand_total').val(grand);
+                                  
+                                  
+                                  $('#grand_total').val(grand-data[0]['customer_discount_amount']);
+                                  $('#demo_grand_total').val(grand-data[0]['customer_discount_amount']);
+                                   var num = parseFloat($('#grand_total').val());
+                                  $('#grand_total').val(num.toFixed(point));
+                                  $('#demo_grand_total').val(num.toFixed(point));
+                                  
                                   $('#total_item_discount_amount').val(total_discount);
                                   $('#total_tax').val(total_tax);
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
@@ -571,7 +593,7 @@
                       window.setTimeout(function ()
                     {
                        //$('#parsley_reg #delivery_date').focus();
-                       document.getElementById('order_date').focus();
+                       document.getElementById('delivery_date').focus();
                        $('#loading').modal('hide');
                     }, 0);  
                     }else{
@@ -851,32 +873,28 @@ function reload_update_user(){
                                               
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="order_date" ><?php echo $this->lang->line('order_date') ?></label>													
-                                                                     <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $order_date=array('name'=>'order_date',
-                                                                                            'class'=>'required form-control',
-                                                                                            'id'=>'order_date',
-                                                                                            'disabled'=>'disabled',
-                                                                                            'value'=>set_value('order_date'));
-                                                                             echo form_input($order_date)?>
-                                                                <span class="input-group-addon"><i class="icon-calendar"></i></span>
-                                                                </div>
+                                                            <label for="customer_discount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('discount') ?> %</label>													
+                                                                     <?php $customer_discount=array('name'=>'customer_discount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount)?>
+                                                            <input type="hidden" name="customer_discount" id="customer_discount">
                                                        </div>
-                                                   </div>
-                                               <div class="col col-sm-2" >
-                                                     <div class="form_sep">
-                                                            <label for="expiry_date" ><?php echo $this->lang->line('expiry_date') ?></label>													
-                                                                     <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $expiry_date=array('name'=>'expiry_date',
-                                                                                            'class'=>'required form-control',
-                                                                                            'id'=>'expiry_date',
-                                                                                             'disabled'=>'disabled',
-                                                                                            'value'=>set_value('expiry_date'));
-                                                                             echo form_input($expiry_date)?>
-                                                                <span class="input-group-addon"><i class="icon-calendar"></i></span>
-                                                                </div>
+                                                    </div>
+                                                 <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="customer_discount_amount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('disc').' '.$this->lang->line('amt') ?></label>													
+                                                                     <?php $customer_discount_amount=array('name'=>'customer_discount_amount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount_amount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount_amount)?>
+                                                            <input type="hidden" name="customer_discount_amount" id="customer_discount_amount">
                                                        </div>
-                                                   </div>
+                                                    </div>
                                               
                                               
                                                </div>
@@ -965,7 +983,7 @@ function reload_update_user(){
                          
                          
          
-                     </div>
+                     
                     <div class="row small_inputs" >
                     <div class="col col-lg-9">
                       
@@ -1136,7 +1154,8 @@ function reload_update_user(){
                                                
                                               
                                       </div>
-                    </div>  </div>  </div>
+                    </div>  </div> 
+                      </div> 
     <?php echo form_close();?>
 </section>    
            <div id="footer_space">
@@ -1157,31 +1176,32 @@ function reload_update_user(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_delivery_note');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
                       for (i = 0; i < posnic.length-1; i++){
                           var guid=posnic[i].value;
+                            var po=$('#sales_order__number_'+guid).val();
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/sales_delivery_note/good_receiving_note_approve',
+                                url: '<?php echo base_url() ?>index.php/sales_delivery_note/sdn_approve',
                                 type: "POST",
                                 data: {
-                                    guid:posnic[i].value,
-                                    po:$('#sales_order__number_'+guid).val()
+                                    guid: guid,
+                                    so:po
 
                                 },
-                                 complete: function(response) {
-                                    if(response['responseText']=='TRUE'){
-                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('approved');?>', { type: "success" });
-                                       $("#dt_table_tools").dataTable().fnDraw();
-                                   }else if(response['responseText']=='approve'){
-                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
-                                   }else if(response['responseText']=='Noop'){
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_delivery_note');?>', { type: "error" });                       
-                                   }
-                               }
+                                  complete: function(response) {
+                                     if(response['responseText']=='TRUE'){
+                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('approved');?>', { type: "success" });
+                                        $("#dt_table_tools").dataTable().fnDraw();
+                                    }else if(response['responseText']=='approve'){
+                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
+                                    }else if(response['responseText']=='Noop'){
+                                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_delivery_note');?>', { type: "error" });                       
+                                    }
+                                }
                             });
 
                           }
