@@ -208,8 +208,12 @@ function direct_sales_approve(guid){
                                 $('#direct_sales_lists').removeAttr("disabled");
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
-                           
+                                $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
+                                  $("#parsley_reg #first_name").select2('disable');
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #direct_sales_guid").val(guid);
@@ -254,8 +258,14 @@ function direct_sales_approve(guid){
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
-                                  
-                                    var  price=data[i]['price'];
+                                     
+                var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  items_id=data[i]['i_guid'];
                                     var per =data[i]['item_discount'];
                                     if(per==""){
@@ -305,6 +315,8 @@ function direct_sales_approve(guid){
                                       }else{
                                           $('#parsley_reg #total_item_discount_amount').val(parseFloat($('#parsley_reg #total_item_discount_amount').val())+parseFloat(discount));
                                       }
+                                      var num = parseFloat(tax);
+                                      tax=num.toFixed(point);
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
                                     name,

@@ -21,22 +21,26 @@ class Sales extends CI_Model{
         $sql=  $this->db->get();
         return $sql->num_rows();
     }
-   
-//    function search_items($search,$branch){
-////          $this->db->select('items.* ,items_category.guid as c_guid,items_category.category_name as c_name,brands.guid as b_guid,brands.name as b_name,items_department.department_name as d_name')->from('items')->where('items.branch_id',$branch)->where('items.active_status',1)->where('items.delete_status',1);
-////                $this->db->join('items_category', 'items.category_id=items_category.guid','left');
-////                $this->db->join('brands', 'items.brand_id=brands.guid','left');
-////                $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
-////               // $this->db->join('supplier', 'stock.supplier=supplier.id','left');
-////                $like=array('items.name'=>$search,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search);
-////                $this->db->or_like($like);     
-////                $query=$this->db->get();
-////                return $query->result();
-//    }
+       function search_customers($search){
+          $like=array('first_name'=>$search,'email'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
+          $this->db->select('customer_category.discount,customers.*')->from('customers')->where('customers.branch_id',  $this->session->userdata('branch_id'))->where('customers.active_status',1)->where('customers.delete_status',0);
+          $this->db->join('customer_category','customer_category.guid=customers.category_id  AND customers.active_status=1 AND customers.delete_status=0','left');
+          $this->db->or_like($like);
+          $sql=  $this->db->get();
+          $data=array();
+          foreach ($sql->result() as $row){
+              if($row->active_status==1 && $row->delete_status==0){
+                  $data[]=$row;
+              }
+          }
+          return $data;
+          
+          
+     }
     
     
     function search_items($search){
-         $this->db->select('items.start_date,items.end_date,items.discount,items_setting.sales,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,stock.*')->from('stock')->where('stock.branch_id',  $this->session->userdata['branch_id'])->where('items.branch_id',$this->session->userdata['branch_id'])->where('items.active_status',1)->where('items.delete_status',1);
+         $this->db->select('items.uom,items.no_of_unit,items.start_date,items.end_date,items.discount,items_setting.sales,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,stock.*')->from('stock')->where('stock.branch_id',  $this->session->userdata['branch_id'])->where('items.branch_id',$this->session->userdata['branch_id'])->where('items.active_status',1)->where('items.delete_status',1);
          $this->db->join('items', "items.guid=stock.item ",'left');
          $this->db->join('items_category', 'items.category_id=items_category.guid','left');
          $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
@@ -68,7 +72,7 @@ class Sales extends CI_Model{
      
      }
      function get_direct_sales($guid){
-         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,direct_sales.*,direct_sales_x_items.quty ,direct_sales_x_items.stock_id ,direct_sales_x_items.discount as item_discount,direct_sales_x_items.price,direct_sales_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('direct_sales')->where('direct_sales.guid',$guid);
+         $this->db->select('items.uom,items.no_of_unit,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,direct_sales.*,direct_sales_x_items.quty ,direct_sales_x_items.stock_id ,direct_sales_x_items.discount as item_discount,direct_sales_x_items.price,direct_sales_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('direct_sales')->where('direct_sales.guid',$guid);
          $this->db->join('direct_sales_x_items', "direct_sales_x_items.direct_sales_id = direct_sales.guid  ",'left');
          $this->db->join('items', "items.guid=direct_sales_x_items.item AND direct_sales_x_items.direct_sales_id='".$guid."' ",'left');
          $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=direct_sales_x_items.item  ",'left');

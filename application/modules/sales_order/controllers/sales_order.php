@@ -255,7 +255,7 @@ function save(){
     }
         
 /*
- * get supplier details for purchase order
+ * get customer details for sales order
  *  */       
 // functoon starts
 function search_customer(){
