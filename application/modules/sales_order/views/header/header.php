@@ -215,6 +215,7 @@ function sales_order_approve(guid){
                                 $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
                                 $("#parsley_reg #first_name").select2('disable');
+                                $("#parsley_reg #first_name").select2('disable');
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #sales_order_guid").val(guid);
