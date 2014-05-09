@@ -9,7 +9,8 @@ $lang['tax_type']='Tax Type';
 $lang['delivered_quty']='Delivered Quty';
 $lang['delivered']='Delivered ';
 $lang['was']='Was ';
-$lang['dn_date']='D N Date'
+$lang['dn_date']='D N Date';
+$lang['delivery_note']='Delivery Note';
 
 
 

@@ -110,7 +110,7 @@
         }
         }
         }else{
-         $.bootstrapGrowl('<?php echo $this->lang->line('please_select')." ".$this->lang->line('sales_order');?>', { type: "warning" }); 
+         $.bootstrapGrowl('<?php echo $this->lang->line('please_select')." ".$this->lang->line('delivery_note');?>', { type: "warning" }); 
          $('#parsley_reg #demo_order_number').select2('open');
 
         }
@@ -241,6 +241,10 @@
                                 $("#parsley_reg #id_discount").val(data[0]['discount']);
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
+                                 $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 var tax;
                                 var receive=0;
                                 var total_discount=0;
@@ -255,8 +259,13 @@
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
-                                   
                                     var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     var discount=0;
@@ -286,6 +295,8 @@
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
+                                  var num = parseFloat(tax);
+                                      tax=num.toFixed(point);
                                   total_amount=parseFloat(total_amount)+parseFloat(total)
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
@@ -314,13 +325,21 @@
                                  if(isNaN(round_amt) || round_amt==""){round_amt=0;}
                                  
                                  var grand=parseFloat(total_amount)-parseFloat(so_discount)+parseFloat(freight)+parseFloat(round_amt);
-                                  $('#demo_total_amount').val(total_amount);
-                                  $('#total_amount').val(total_amount);
-                                  $('#grand_total').val(grand);
-                                  $('#demo_grand_total').val(grand);
-                                  $('#grand_total').val(grand);
-                                  $('#total_item_discount_amount').val(total_discount);
-                                  $('#total_tax').val(total_tax);
+                                   var num = parseFloat(total_amount);
+                                    total_amount=num.toFixed(point);
+                                    $('#demo_total_amount').val(total_amount);
+                                    $('#total_amount').val(total_amount);
+                                    var num = parseFloat(grand);
+                                    grand=num.toFixed(point);
+                                    $('#grand_total').val(grand);
+                                    $('#demo_grand_total').val(grand);
+                                    $('#grand_total').val(grand);
+                                    var num = parseFloat(total_discount);
+                                    total_discount=num.toFixed(point);
+                                    $('#total_item_discount_amount').val(total_discount);
+                                    var num = parseFloat(total_tax);
+                                    total_tax=num.toFixed(point);
+                                   $('#total_tax').val(total_tax);
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+i)
                                 
@@ -367,6 +386,10 @@ console.log(guid);
                                 $("#parsley_reg #id_discount").val(data[0]['discount']);
                                 $("#parsley_reg #freight").val(data[0]['freight']);
                                 $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
+                                 $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 var tax;
                                 var receive=0;
                                 var total_discount=0;
@@ -380,9 +403,13 @@ console.log(guid);
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
-                                  
-                                   
-                                    var  price=data[i]['price'];
+                                   var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     var discount=0;
@@ -412,6 +439,8 @@ console.log(guid);
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
+                                   var num = parseFloat(tax);
+                                      tax=num.toFixed(point);
                                   total_amount=parseFloat(total_amount)+parseFloat(total)
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
@@ -440,13 +469,21 @@ console.log(guid);
                                  if(isNaN(round_amt) || round_amt==""){round_amt=0;}
                                  
                                  var grand=parseFloat(total_amount)-parseFloat(so_discount)+parseFloat(freight)+parseFloat(round_amt);
-                                  $('#demo_total_amount').val(total_amount);
-                                  $('#total_amount').val(total_amount);
-                                  $('#grand_total').val(grand);
-                                  $('#demo_grand_total').val(grand);
-                                  $('#grand_total').val(grand);
-                                  $('#total_item_discount_amount').val(total_discount);
-                                  $('#total_tax').val(total_tax);
+                                    var num = parseFloat(total_amount);
+                                    total_amount=num.toFixed(point);
+                                    $('#demo_total_amount').val(total_amount);
+                                    $('#total_amount').val(total_amount);
+                                    var num = parseFloat(grand);
+                                    grand=num.toFixed(point);
+                                    $('#grand_total').val(grand);
+                                    $('#demo_grand_total').val(grand);
+                                    $('#grand_total').val(grand);
+                                    var num = parseFloat(total_discount);
+                                    total_discount=num.toFixed(point);
+                                    $('#total_item_discount_amount').val(total_discount);
+                                    var num = parseFloat(total_tax);
+                                    total_tax=num.toFixed(point);
+                                   $('#total_tax').val(total_tax);
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+i)
                                 
@@ -476,7 +513,7 @@ console.log(guid);
                 formatSelection: format_sales_order,
                 
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('sales_order') ?>",
+                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('delivery_note') ?>",
                 ajax: {
                      url: '<?php echo base_url() ?>index.php/sales_bill/search_sales_order',
                      data: function(term, page) {
@@ -534,7 +571,7 @@ refresh_items_table();
             $('#parent_items').append('<div id="deleted"></div>');
             $('#newly_added').remove();
             $('#parent_items').append('<div id="newly_added"></div>');
-            $("#parsley_reg #demo_order_number").select2('data', {id:'',text: 'Search PO'});
+            $("#parsley_reg #demo_order_number").select2('data', {id:'',text: '<?php  echo $this->lang->line('search').' '.$this->lang->line('delivery_note')?>'});
              $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/sales_bill/order_number/",                      
                              data: "", 
@@ -678,7 +715,7 @@ function reload_update_user(){
                                            <div class="row">
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep supplier_select_2">
-                                                        <label for="demo_order_number" ><?php echo $this->lang->line('order_number') ?></label>													
+                                                        <label for="demo_order_number" ><?php echo $this->lang->line('delivery_note') ?></label>													
                                                                   <?php $demo_order_number=array('name'=>'demo_order_number',
                                                                                     'class'=>'  form-control',
                                                                                     'id'=>'demo_order_number',
@@ -808,6 +845,30 @@ function reload_update_user(){
                                                                          echo form_input($round_off_amount)?>
                                                        </div>
                                                     </div>
+                                                <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="customer_discount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('discount') ?> %</label>													
+                                                                     <?php $customer_discount=array('name'=>'customer_discount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount)?>
+                                                            <input type="hidden" name="customer_discount" id="customer_discount">
+                                                       </div>
+                                                    </div>
+                                                 <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="customer_discount_amount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('disc').' '.$this->lang->line('amt') ?></label>													
+                                                                     <?php $customer_discount_amount=array('name'=>'customer_discount_amount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount_amount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount_amount)?>
+                                                            <input type="hidden" name="customer_discount_amount" id="customer_discount_amount">
+                                                       </div>
+                                                    </div>
                                                  <div class="col col-sm-2" >
                                                    <div class="form_sep">
                                                             <label for="dn_no" ><?php echo $this->lang->line('bill_no') ?></label>													
@@ -843,7 +904,7 @@ function reload_update_user(){
                          
                          
          
-                     </div>
+                     
                     <div class="row small_inputs" >
                     <div class="col col-lg-9">
                       
