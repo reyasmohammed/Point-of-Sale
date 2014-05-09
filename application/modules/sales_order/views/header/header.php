@@ -261,6 +261,12 @@ function sales_order_approve(guid){
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
                                     var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  items_id=data[i]['i_guid'];
                                     var per =data[i]['item_discount'];
                                     if(per==""){

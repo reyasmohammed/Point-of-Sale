@@ -164,10 +164,13 @@
                 var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
                  
                 var tax;
+                var type;
                 if($('#tax_inclusive_'+i).val()==1){
                     tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
                     var total =parseFloat(total)+tax;
+                    type='Exc';
                 }else{
+                    type='Inc';
                      tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
                   
                     var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
@@ -181,7 +184,7 @@
                 var tax = parseFloat(tax);
                 tax=tax.toFixed(point);
                  
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(tax);
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(type+'('+$('#tax_value_'+i).val()+'%): '+tax);
                 $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(7)').html(discount);
                 $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(9)').html(total);
                 $('#selected_item_table #item_total_'+i).val(total);
@@ -206,12 +209,14 @@
                    quty=0;
                 }
                 var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
-                 
+               var  type;
                 var tax;
                 if($('#tax_inclusive_'+i).val()==1){
+                    type='Exc';
                     tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
                     var total =parseFloat(total)+tax;
                 }else{
+                    type='Inc';
                      tax=total*(parseFloat($('#tax_value_'+i).val())/100)  ;
                   
                     var total =parseFloat($('#item_price_'+i).val())*parseFloat(quty);
@@ -225,7 +230,8 @@
                 var tax = parseFloat(tax);
                 tax=tax.toFixed(point);
                  
-                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(tax);
+                      
+                $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(6)').html(type+'('+$('#tax_value_'+i).val()+'%): '+tax);
                 $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(7)').html(discount);
                 $('#selected_item_table #new_item_row_id_'+i+' td:nth-child(9)').html(total);
                 $('#selected_item_table #item_total_'+i).val(total);
@@ -505,8 +511,13 @@
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
-                                   
                                     var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     var discount=0;
@@ -536,6 +547,13 @@
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
+                                    var num = parseFloat(tax);
+                                      tax=num.toFixed(point);
+                                    var num = parseFloat(discount);
+                                      discount=num.toFixed(point);
+                                    var num = parseFloat(price);
+                                      price=num.toFixed(point);
+                                      
                                   total_amount=parseFloat(total_amount)+parseFloat(total)
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
@@ -544,7 +562,7 @@
                                     quty,
                                   price,
                                  
-                                 type+':'+tax,
+                                 type+'('+tax_val+'%): '+tax,
                                   discount,
                                    "<input type='hidden' id='item_total_"+i+"' value='"+total+"'><input type='hidden' id='item_quty_"+i+"' value='"+quty+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='item_price_"+i+"' value='"+price+"' ><input type='text' id='delivered_item_quty"+i+"' value='"+quty+"' name='delivered_quty[]' onkeyup='delivered_quty_items("+i+")' onKeyPress='delivered_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
                                  total

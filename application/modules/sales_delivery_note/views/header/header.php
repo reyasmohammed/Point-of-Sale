@@ -253,8 +253,13 @@
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                   
                                     var  received_quty=data[i]['delivered_quty'];
-                                   
-                                    var  price=data[i]['price'];
+                                     var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     var discount;
@@ -287,6 +292,12 @@
                                         var num = parseFloat(total);
                                         total=num.toFixed(point);
                                   }
+                                  var num = parseFloat(tax_amount);
+                                      tax_amount=num.toFixed(point);
+                                    var num = parseFloat(discount);
+                                      discount=num.toFixed(point);
+                                    var num = parseFloat(price);
+                                      price=num.toFixed(point);
                                   total_discount=parseFloat(total_discount)+parseFloat(discount);
                                  var grn_received_quty=parseFloat(quty)-parseFloat(received_quty);
                              
@@ -297,7 +308,7 @@
                                     quty,
                                   price,
                                  
-                                 type+':'+tax_amount,
+                                 type+'('+tax+'%): '+tax_amount,
                                   discount,
                                    "<input type='hidden' id='item_total_"+i+"' value='"+total+"'><input type='hidden' id='item_quty_"+i+"' value='"+quty+"'><input type='hidden' id='tax_inclusive_"+i+"' value='"+data[i]['tax_Inclusive']+"' ><input type='hidden' id='tax_value_"+i+"' value='"+data[i]['tax_value']+"' ><input type='hidden' id='discount_per_"+i+"' value='"+per+"' ><input type='hidden' name='items[]' value='"+data[i]['item']+"' ><input type='hidden' id='item_price_"+i+"' value='"+price+"' ><input type='text' id='delivered_item_quty"+i+"' value='"+received_quty+"' name='delivered_quty[]' onkeyup='delivered_quty_items("+i+")' onKeyPress='delivered_quty(event,"+i+");return numbersonly(event)' class='form-control' style='width:100px'>",
                                  total
