@@ -168,10 +168,14 @@
                 $('#parsley_reg #sku').val($('#parsley_reg #items').select2('data').value);
                 $('#parsley_reg #stock_id').val($('#parsley_reg #items').select2('data').sid);
                 $('#parsley_reg #item_name').val($('#parsley_reg #items').select2('data').text);
-                $('#parsley_reg #price').val($('#parsley_reg #items').select2('data').price);
+                 if($('#parsley_reg #items').select2('data').uom==0){
+                    $('#parsley_reg #price').val(parseFloat($('#parsley_reg #items').select2('data').price));
+                }else{
+                    $('#parsley_reg #price').val(parseFloat($('#parsley_reg #items').select2('data').price)/parseFloat($('#parsley_reg #items').select2('data').no_of_unit));
+                }
                 $('#parsley_reg #stock_quty').val($('#parsley_reg #items').select2('data').quty);
                 $('#parsley_reg #tax_value').val($('#parsley_reg #items').select2('data').tax_value);
-                $('#parsley_reg #tax_type').val($('#parsley_reg #items').select2('data').tax_type);
+                $('#parsley_reg #tax_type').val($('#parsley_reg #items').select2('data').tax_type+'('+$('#parsley_reg #items').select2('data').tax_value+'%)');
               
                 
                 var start=$('#parsley_reg #items').select2('data').start
@@ -206,7 +210,11 @@
           });
           function format_item(sup) {
             if (!sup.id) return sup.text;
-    return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+sup.price+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
+             if(sup.uom==0){
+                return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+sup.price+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
+            }else{
+                return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+parseFloat(sup.price)/parseFloat(sup.no_of_unit)+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
+            }
             }
           $('#parsley_reg #items').select2({
              
@@ -255,6 +263,8 @@
                           start : item.start_date ,
                           end : item.end_state ,
                           discount : item.discount ,
+                          uom : item.uom ,
+                          no_of_unit : item.no_of_unit ,
                         });
                       });   if($('#customers_guid').val()==""){
                           $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_A_Supplier');?>', { type: "warning" }); 
@@ -281,6 +291,8 @@
                  $('#parsley_reg #first_name').val($('#parsley_reg #first_name').select2('data').text);
                  $('#parsley_reg #company').val($('#parsley_reg #first_name').select2('data').company);
                  $('#parsley_reg #address').val($('#parsley_reg #first_name').select2('data').address1);
+                 $('#parsley_reg #demo_customer_discount').val($('#parsley_reg #first_name').select2('data').discount);
+                 $('#parsley_reg #customer_discount').val($('#parsley_reg #first_name').select2('data').discount);
                  $('#parsley_reg #customers_guid').val(guid);
                       window.setTimeout(function ()
                     {
@@ -320,6 +332,7 @@
                           text: item.first_name,
                           company: item.company_name,
                           address1: item.address,
+                          discount: item.discount,
                         });
                       });
                       return {
@@ -1139,10 +1152,17 @@ var round_amt=parseFloat($("#parsley_reg #round_off_amount").val());
     frieight=00;}
         if (isNaN(round_amt)|| round_amt=="") {
     round_amt=00;}
+ if($('#parsley_reg #customer_discount').val()==0 || isNaN($('#parsley_reg #customer_discount').val())){
+      var  customer_dis=0;
+    }else{
+        customer_dis=parseFloat($('#parsley_reg #total_amount').val())*parseFloat($('#parsley_reg #customer_discount').val())/100;
+         var customer_dis = parseFloat(customer_dis);
+        $('#demo_customer_discount_amount').val(customer_dis.toFixed(point));
+        $('#customer_discount_amount').val(customer_dis.toFixed(point));
+    }
 
-
-     $("#parsley_reg #demo_grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt);
-     $("#parsley_reg #grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt);
+     $("#parsley_reg #demo_grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt-customer_dis);
+     $("#parsley_reg #grand_total").val(parseFloat($("#parsley_reg #total_amount").val())-discount+frieight+round_amt-customer_dis);
        
         var num = parseFloat($('#demo_grand_total').val());
     $('#demo_grand_total').val(num.toFixed(point));
@@ -1346,6 +1366,30 @@ function new_discount_amount(){
                                                                                         'onKeyPress'=>"new_round_off_amount(event);return numbersonly(event)",
                                                                                         'value'=>set_value('round_off_amount'));
                                                                          echo form_input($round_off_amount)?>
+                                                       </div>
+                                                    </div>
+                                               <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="customer_discount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('discount') ?> %</label>													
+                                                                     <?php $customer_discount=array('name'=>'customer_discount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount)?>
+                                                            <input type="hidden" name="customer_discount" id="customer_discount">
+                                                       </div>
+                                                    </div>
+                                                 <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="customer_discount_amount" ><?php echo $this->lang->line('customer').' '.$this->lang->line('disc').' '.$this->lang->line('amt') ?></label>													
+                                                                     <?php $customer_discount_amount=array('name'=>'customer_discount_amount',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_customer_discount_amount',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer_discount'));
+                                                                         echo form_input($customer_discount_amount)?>
+                                                            <input type="hidden" name="customer_discount_amount" id="customer_discount_amount">
                                                        </div>
                                                     </div>
                                            </div>
@@ -1677,94 +1721,8 @@ function new_discount_amount(){
 		</div>
 	
                 <script type="text/javascript">
-                    function direct_sales_delivery_group_approve(){
-              <?php if($this->session->userdata['direct_sales_delivery_per']['approve']==1){ ?>
-                     var flag=0;
-                     var field=document.forms.posnic;
-                      for (i = 0; i < field.length; i++){
-                          if(field[i].checked==true){
-                              flag=flag+1;
-
-                          }
-
-                      }
-                      if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_sales_delivery');?>', { type: "warning" });
-                      
-                      }else{
-                            var posnic=document.forms.posnic;
-                      for (i = 0; i < posnic.length-1; i++){
-                          if(posnic[i].checked==true){                             
-                              $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/direct_sales_delivery/direct_sales_delivery_approve',
-                                type: "POST",
-                                data: {
-                                    guid:posnic[i].value
-
-                                },
-                                complete: function(response) {
-                                    if(response['responseText']=='TRUE'){
-                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('direct_sales_delivery') ?>  <?php echo $this->lang->line('approved');?>', { type: "success" });
-                                        $("#dt_table_tools").dataTable().fnDraw();
-                                    }else if(response['responseText']=='Approved'){
-                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>   <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
-                                    }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('direct_sales_delivery');?>', { type: "error" });                              
-                                    }
-                                    }
-                            });
-
-                          }
-
-                      }
-                  
-
-                      }   
-                       <?php }else{?>
-                                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('direct_sales_delivery');?>', { type: "error" });                       
-                            <?php }
-                         ?>
-                      }
-                    function posnic_group_item_active(){
-                     var flag=0;
-                     var field=document.forms.items_form;
-                      for (i = 0; i < field.length; i++){
-                          if(field[i].checked==true){
-                              flag=flag+1;
-
-                          }
-
-                      }
-                      if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
-                      
-                      }else{
-                            var posnic=document.forms.items_form;
-                      for (i = 0; i < posnic.length-1; i++){
-                          if(posnic[i].checked==true){                             
-                              $.ajax({
-                                url: '<?php echo base_url() ?>index.php/direct_sales_delivery/item_active',
-                                type: "POST",
-                                data: {
-                                    guid:posnic[i].value
-
-                                },
-                                success: function(response)
-                                {
-                                    if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('activated');?>', { type: "success" });
-                                        $("#selected_item_table").dataTable().fnDraw();
-                                    }
-                                }
-                            });
-
-                          }
-
-                      }
-                  
-
-                      }    
-                      }
+                 
+                 
      function posnic_delete(){
             <?php if($this->session->userdata['direct_sales_delivery_per']['delete']==1){ ?>
                      var flag=0;
@@ -1778,9 +1736,9 @@ function new_discount_amount(){
                       }
                       if (flag<1) {
                         
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('paruchase_order');?>', { type: "warning" });
+                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_sales_delivery');?>', { type: "warning" });
                       }else{
-                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('Are you Sure To Delete') ?>", function(result) {
+                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('direct_sales_delivery') ?>", function(result) {
              if(result){
               
              
@@ -1798,7 +1756,7 @@ function new_discount_amount(){
                                 },
                                   complete: function(response) {
                                     if(response['responseText']=='TRUE'){
-                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('goods_receiving_note') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('direct_sales_delivery') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }else if(response['responseText']=='Approved'){
                                          $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>  <?php echo $this->lang->line('is');?> <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
@@ -1834,7 +1792,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_sales_delivery');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;

@@ -208,7 +208,10 @@ function direct_sales_delivery_approve(guid){
                                 $('#direct_sales_delivery_lists').removeAttr("disabled");
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
-                           
+                                $("#parsley_reg #demo_customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #customer_discount").val(data[0]['customer_discount']);
+                                $("#parsley_reg #demo_customer_discount_amount").val(data[0]['customer_discount_amount']);
+                                $("#parsley_reg #customer_discount_amount").val(data[0]['customer_discount_amount']);
                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
@@ -254,8 +257,13 @@ function direct_sales_delivery_approve(guid){
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
-                                  
                                     var  price=data[i]['price'];
+                                    var uom=data[i]['uom']
+                                    
+                                    if(uom==1){
+                                        var no_of_unit=data[i]['no_of_unit'];
+                                        price=price/no_of_unit;
+                                    }
                                     var  items_id=data[i]['i_guid'];
                                     var per =data[i]['item_discount'];
                                     if(per==""){
