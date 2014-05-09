@@ -542,6 +542,9 @@ $lang['credit_days']='Credit Days';
   $lang['cancel_quty']='Cancled Qty';
   $lang['cancel_free']='Cancled Free';
   $lang['sales_delivery_note']='Delivery Note';
+  // customer payment
+  $lang['customer_payment']='Customer Payment';
+  
   
   
 ?>﻿

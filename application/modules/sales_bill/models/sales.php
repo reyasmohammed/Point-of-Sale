@@ -19,7 +19,6 @@ class Sales extends CI_Model{
                 }
                 
                 $this->db->select('direct_sales_delivery.customer_id,direct_sales_delivery.total_items ,direct_sales_delivery.total_amt as total,sales_bill.branch_id,direct_sales_delivery.code,sales_bill.guid,sales_bill.date,sales_bill.invoice,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-             
                 $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so','non');
                 $this->db->join('direct_sales_delivery', 'direct_sales_delivery.guid=sales_bill.sdn','left');
                 $this->db->join('customers', 'customers.guid=direct_sales_delivery.customer_id','left');
@@ -237,6 +236,32 @@ class Sales extends CI_Model{
         $this->db->where('guid',$so);
         $this->db->update('direct_sales_delivery',array('bill_status'=>1));      
             
+    }
+    function direct_delivery_payable_amount($grn,$invoice){
+        $this->db->select('total_amt,customer_id')->from('direct_sales_delivery')->where('guid',$grn);
+        $sql=  $this->db->get();
+        $amount;
+        $customer_id;
+        foreach ($sql->result() as $row){
+            $amount=$row->total_amt;
+            $customer_id=$row->customer_id;
+        }
+        $this->db->insert('customer_payable',array('customer_id'=>$customer_id,'invoice_id'=>$invoice,'amount'=>$amount,'branch_id'=>  $this->session->userdata['branch_id']));
+        $id=  $this->db->insert_id();
+        $this->db->where('id',$id);
+        $this->db->update('customer_payable',array('guid'=>  md5($customer_id.$invoice.$id."customer_payable")));
+    }
+    function delivery_payable_amount($customer_id,$sdn_guid,$guid){
+        $this->db->select('total_amount')->from('sales_delivery_note')->where('guid',$sdn_guid);
+        $sql=  $this->db->get();
+        $amount;
+        foreach ($sql->result() as $row){
+            $amount=$row->total_amount;
+        }
+        $this->db->insert('customer_payable',array('customer_id'=>$customer_id,'invoice_id'=>$guid,'amount'=>$amount,'branch_id'=>  $this->session->userdata['branch_id']));
+        $id=  $this->db->insert_id();
+        $this->db->where('id',$id);
+        $this->db->update('customer_payable',array('guid'=>  md5($customer_id.$guid.$id."customer_payable")));
     }
     
 }
