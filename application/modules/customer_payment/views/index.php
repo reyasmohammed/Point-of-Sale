@@ -185,7 +185,7 @@
            $('#paid_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
            $('#balance_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
            
-           $('#payment').val($('#parsley_reg #payment_guid').select2('data').payment);
+           $('#payment_guid').val($('#parsley_reg #sales_bill').select2('data').payment);
             });
           $('#parsley_reg #sales_bill').select2({
               dropdownCssClass : 'supplier_select',
@@ -237,18 +237,15 @@
 function posnic_add_new(){
 $("#customer_payment_select_2").show('slow');
 $('#customer_payment_order').hide();
+$("#parsley_reg #sales_bill").select2('enable');
 $('#update_button').hide();
 $('#save_button').show();
 $('#update_clear').hide();
 $('#save_clear').show();
 $('#total_amount').val('');
 $('#items_id').val('');
-$('#supplier_guid').val('');
 $("#parsley_reg").trigger('reset');
 $('#deleted').remove();
-$('#parent_items').append('<div id="deleted"></div>');
-$('#newly_added').remove();
-$('#parent_items').append('<div id="newly_added"></div>');
 $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
     <?php if($this->session->userdata['customer_payment_per']['add']==1){ ?>
              $.ajax({                                      
@@ -270,8 +267,6 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
     $('#add_new_order').show('slow');
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_customer_payment').attr("disabled", "disabled");
-      $('#active').attr("disabled", "disabled");
-      $('#deactive').attr("disabled", "disabled");
       $('#customer_payment_lists').removeAttr("disabled");
      
          window.setTimeout(function ()
@@ -288,8 +283,6 @@ function posnic_customer_payment_lists(){
       $('#add_new_order').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
-      $('#active').removeAttr("disabled");
-      $('#deactive').removeAttr("disabled");
       $('#posnic_add_customer_payment').removeAttr("disabled");
       $('#customer_payment_lists').attr("disabled",'disabled');
 }

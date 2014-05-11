@@ -88,9 +88,9 @@ function save(){
      if($this->session->userdata['customer_payment_per']['add']==1){
         $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
         $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-        $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        $this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
-        $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+       $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        //$this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
+      $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
             if ( $this->form_validation->run() !== false ) {    
              
                 $date=strtotime($this->input->post('payment_date'));
@@ -133,7 +133,7 @@ function save(){
                     $amount=  $this->input->post('amount');
                     $balance_amount=  $this->input->post('balance_amount');
                     $memo=  $this->input->post('memo');
-                    $payment=  $this->input->post('payment');
+                     $payment=  $this->input->post('payment');
                     $this->load->model('payment');
                     $guid=  $this->input->post('payment_id');
                     if($amount>$balance_amount){

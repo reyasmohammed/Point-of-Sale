@@ -115,8 +115,7 @@
                              { 
                                 $("#user_list").hide();
                                 $('#add_new_order').show('slow');
-                                $("#customer_payment_select_2").hide();
-                                $('#customer_payment_order').show('slow');
+                               
                                 
                                 $('#delete').attr("disabled", "disabled");
                                 $('#posnic_add_customer_payment').attr("disabled", "disabled");
@@ -131,6 +130,8 @@
                                 $("#parsley_reg #company").val(data[0]['company']);
                                 $("#parsley_reg #supplier").val(data[0]['name']);
                                 $("#parsley_reg #demo_payment_code").val(data[0]['code']);
+                                $("#parsley_reg #sales_bill").select2('data', {id:'',text: data[0]['invoice']});
+                                 $("#parsley_reg #sales_bill").select2('disable');
                                 $("#parsley_reg #payment_code").val(data[0]['code']);
                                 $("#parsley_reg #payment_date").val(data[0]['payment_date']);
                                 $("#parsley_reg #amount").val(data[0]['amount']);
@@ -141,6 +142,12 @@
                                 $("#parsley_reg #balance").val(data[0]['total']-balance-data[0]['amount']);
                                 $("#parsley_reg #total").val(data[0]['total']);
                                 $("#parsley_reg #paid_amount").val(balance);
+                                var num = parseFloat( $("#parsley_reg #balance_amount").val());
+                                $("#parsley_reg #balance_amount").val(num.toFixed(point));
+                                var num = parseFloat( $("#parsley_reg #balance").val());
+                                $("#parsley_reg #balance").val(num.toFixed(point));
+                                var num = parseFloat( $("#parsley_reg #paid_amount").val());
+                                $("#parsley_reg #paid_amount").val(num.toFixed(point));
                              
                                
                              } 
