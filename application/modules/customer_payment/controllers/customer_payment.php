@@ -85,11 +85,11 @@ class Customer_payment extends CI_Controller{
     }
  
 function save(){      
-     if($this->session->userdata['supplier_payment_per']['add']==1){
+     if($this->session->userdata['customer_payment_per']['add']==1){
         $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
         $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
         $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
+        $this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
         $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
             if ( $this->form_validation->run() !== false ) {    
              
@@ -98,14 +98,14 @@ function save(){
                 $amount=  $this->input->post('amount');
                 $balance_amount=  $this->input->post('balance_amount');
                 $memo=  $this->input->post('memo');
-                $payment=  $this->input->post('payment');
+                $payment=  $this->input->post('payment_guid');
                 $this->load->model('payment');
                 if($amount>$balance_amount){
                     echo 10;
                 }else{
                     
                         if($this->payment->save_payment($payment,$amount,$date,$memo,$code)){
-                        $this->posnic->posnic_master_increment_max('supplier_payment')  ;
+                        $this->posnic->posnic_master_increment_max('customer_payment')  ;
                        echo 1;
                    }else{
                        echo 10;
@@ -119,7 +119,7 @@ function save(){
                 }
 }
     function update(){
-        If($this->session->userdata['supplier_payment_per']['add']==1){
+        If($this->session->userdata['customer_payment_per']['add']==1){
             $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
             $this->form_validation->set_rules('payment_id',$this->lang->line('payment_id'), 'required');
             $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
@@ -175,7 +175,7 @@ function save(){
     get payment code form master data
      * function start     */
     function payment_code(){
-           $data[]= $this->posnic->posnic_master_max('supplier_payment')    ;
+           $data[]= $this->posnic->posnic_master_max('customer_payment')    ;
            echo json_encode($data);
     }
     /*
@@ -183,7 +183,7 @@ function save(){
     /*
     Search purchase payable purchase invoice
      * function start     */
-    function search_purchase_invoice(){
+    function search_sales_bill(){
         $search= $this->input->post('term'); /* get key word*/
         $this->load->model('payment'); /* load payement model*/
         $data= $this->payment->serach_invoice($search);   /* get invoice list */   
@@ -194,7 +194,7 @@ function save(){
     /*
      *  get payment details for edit     
      * function start */
-    function get_supplier_payment($guid){
+    function get_customer_payment($guid){
         $this->load->model('payment');
         $data=  $this->payment->get_payment_details($guid);
         echo json_encode($data); // encode data array to json
