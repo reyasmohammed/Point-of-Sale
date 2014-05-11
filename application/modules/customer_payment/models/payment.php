@@ -35,10 +35,10 @@ class Payment extends CI_Model{
     /* get payable invoice auto suggestion
     function start      */
     function  serach_invoice($like){
-        $this->db->select('supplier_payable.guid as p_guid,supplier_payable.invoice_id,supplier_payable.amount, supplier_payable.paid_amount, purchase_invoice.*, suppliers.first_name as name,suppliers.company_name as company,suppliers.address1 as address')->from('purchase_invoice')->where('purchase_invoice.branch_id',  $this->session->userdata['branch_id']);
-        $this->db->join('suppliers', 'suppliers.guid=purchase_invoice.supplier_id ','left');  
-        $this->db->join('supplier_payable', 'suppliers.guid=purchase_invoice.supplier_id AND supplier_payable.invoice_id=purchase_invoice.guid','left');  
-        $or_like=array('purchase_invoice.invoice'=>$like,'suppliers.company_name'=>$like,'suppliers.first_name'=>$like);
+        $this->db->select('customer_payable.guid as p_guid,customer_payable.invoice_id,customer_payable.amount, customer_payable.paid_amount, sales_bill.*, customers.first_name as name,customers.company_name as company,customers.address as address')->from('sales_bill')->where('sales_bill.branch_id',  $this->session->userdata['branch_id']);
+        $this->db->join('customers', 'customers.guid=sales_bill.customer_id ','left');  
+        $this->db->join('customer_payable', 'customers.guid=sales_bill.customer_id AND customer_payable.invoice_id=sales_bill.guid','left');  
+        $or_like=array('sales_bill.invoice'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
         $this->db->or_like($or_like);     
         $this->db->limit($this->session->userdata['data_limit']);
         $sql=$this->db->get();
@@ -49,7 +49,7 @@ class Payment extends CI_Model{
      * add new supplier payment
      * function start     */
     function save_payment($payment,$amount,$date,$memo,$code){
-        $this->db->select()->from('supplier_payable')->where('guid',$payment);
+        $this->db->select()->from('customer_payable')->where('guid',$payment);
         $sql=  $this->db->get();
         $total;
         $paid;
@@ -57,7 +57,7 @@ class Payment extends CI_Model{
         foreach ($sql->result() as $row){
             $total=$row->amount; // get total amount
             $paid=$row->paid_amount; // get paid amount
-           $supplier=$row->supplier_id; // get paid amount
+           $supplier=$row->customer_id; // get paid amount
         }
         $balance=$total-$paid;
        
@@ -69,9 +69,9 @@ class Payment extends CI_Model{
             $payment_status=1;
         }
         $this->db->where('guid',$payment);
-        $this->db->update('supplier_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid)); // update paid amount to supplier payable
+        $this->db->update('customer_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid)); // update paid amount to supplier payable
         
-        $data=array('code'=>$code,'type'=>'debit','payable_id'=>$payment,'supplier_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
+        $data=array('code'=>$code,'type'=>'debit','payable_id'=>$payment,'customer_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
         $this->db->insert('payment',$data);
         $id=  $this->db->insert_id();
         $this->db->where('id',$id);
@@ -90,7 +90,7 @@ class Payment extends CI_Model{
             $old=$row->amount;
         }
       
-        $this->db->select()->from('supplier_payable')->where('guid',$payment);
+        $this->db->select()->from('customer_payable')->where('guid',$payment);
         $sql=  $this->db->get();
         $total;
         $paid;
@@ -98,7 +98,7 @@ class Payment extends CI_Model{
         foreach ($sql->result() as $row){
             $total=$row->amount; // get total amount
             $paid=$row->paid_amount; // get paid amount
-           $supplier=$row->supplier_id; // get paid amount
+           $supplier=$row->customer_id; // get paid amount
         }
         $balance=$total-$paid-$old;
        
@@ -110,7 +110,7 @@ class Payment extends CI_Model{
             $payment_status=1;
         }
         $this->db->where('guid',$payment);
-        $this->db->update('supplier_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid-$old)); // update paid amount to supplier payable
+        $this->db->update('customer_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid-$old)); // update paid amount to supplier payable
         $this->db->where('guid',$guid);
         $this->db->update('payment',array('amount'=>$amount));
         return TRUE;
@@ -120,10 +120,10 @@ class Payment extends CI_Model{
     /* function starts
      */
     function get_payment_details($guid){
-        $this->db->select('purchase_invoice.invoice,payment.*,supplier_payable.amount as total,supplier_payable.paid_amount,suppliers.first_name as name,suppliers.company_name as company,suppliers.address1 as address')->from('payment')->where('payment.guid',$guid);
-        $this->db->join('supplier_payable','supplier_payable.guid=payment.payable_id');
-        $this->db->join('purchase_invoice', 'purchase_invoice.guid=supplier_payable.invoice_id ','left'); 
-        $this->db->join('suppliers', 'suppliers.guid=payment.supplier_id ','left'); 
+        $this->db->select('sales_bill.invoice,payment.*,customer_payable.amount as total,customer_payable.paid_amount,customers.first_name as name,customers.company_name as company,customers.address as address')->from('payment')->where('payment.guid',$guid);
+        $this->db->join('customer_payable','customer_payable.guid=payment.payable_id');
+        $this->db->join('sales_bill', 'sales_bill.guid=customer_payable.invoice_id ','left'); 
+        $this->db->join('customers', 'customers.guid=payment.customer_id ','left'); 
         $sql=  $this->db->get();
         $data=array();
         foreach ($sql->result_array() as $row){
@@ -148,14 +148,14 @@ class Payment extends CI_Model{
         }
         $this->db->where('guid',$guid);
         $this->db->update('payment',array('delete_status'=>1,'deleted_by'=>  $this->session->userdata['guid']));
-        $this->db->select('paid_amount')->from('supplier_payable')->where('guid',$payable);
+        $this->db->select('paid_amount')->from('customer_payable')->where('guid',$payable);
         $paid=  $this->db->get();
         $paid_amount;
         foreach ($paid->result() as $row){
         $paid_amount=$row->paid_amount;
         }
         $this->db->where('guid',$payable);
-        $this->db->update('supplier_payable',array('paid_amount'=>$paid_amount-$amount));
+        $this->db->update('customer_payable',array('paid_amount'=>$paid_amount-$amount));
         
     }
 }

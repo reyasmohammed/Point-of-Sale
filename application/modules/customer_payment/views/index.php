@@ -180,12 +180,12 @@
             }
             $('#parsley_reg #sales_bill').change(function() {
            $('#company').val($('#parsley_reg #sales_bill').select2('data').company);
-           $('#supplier').val($('#parsley_reg #sales_bill').select2('data').name);
+           $('#customer').val($('#parsley_reg #sales_bill').select2('data').name);
            $('#total').val($('#parsley_reg #sales_bill').select2('data').amount);
            $('#paid_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
            $('#balance_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
            
-           $('#payment').val($('#parsley_reg #sales_bill').select2('data').payment);
+           $('#payment').val($('#parsley_reg #payment_guid').select2('data').payment);
             });
           $('#parsley_reg #sales_bill').select2({
               dropdownCssClass : 'supplier_select',
@@ -390,18 +390,9 @@ function clear_update_payment(){
                                                                                    
                                                                                     'value'=>set_value('sales_bill'));
                                                                      echo form_input($first_name)?>
-                                                        <input type="hidden" id="sales_bill_guid" name="sales_bill_guid">
+                                                        <input type="hidden" id="payment_guid" name="payment_guid">
                                                   </div>
-                                                   <div class="form_sep " id="customer_payment_order">
-                                                        <label for="sales_bill" ><?php echo $this->lang->line('sales_bill') ?></label>													
-                                                                  <?php $first_name=array('name'=>'invoice',
-                                                                                    'class'=>'required  form-control',
-                                                                                    'id'=>'invoice',
-                                                                                    'disabled'=>'disabled',
-                                                                                    'value'=>set_value('invoice'));
-                                                                     echo form_input($first_name)?>
-                                                        <input type="hidden" id="sales_bill_guid" name="sales_bill_guid">
-                                                  </div>
+                                                  
                                                </div>
                                                <div class="col col-sm-4" >
                                                     <div class="form_sep">
