@@ -71,7 +71,7 @@ class Payment extends CI_Model{
         $this->db->where('guid',$payment);
         $this->db->update('customer_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid)); // update paid amount to supplier payable
         
-        $data=array('code'=>$code,'type'=>'debit','payable_id'=>$payment,'customer_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
+        $data=array('code'=>$code,'type'=>'credit','payable_id'=>$payment,'customer_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
         $this->db->insert('payment',$data);
         $id=  $this->db->insert_id();
         $this->db->where('id',$id);
@@ -94,16 +94,15 @@ class Payment extends CI_Model{
         $sql=  $this->db->get();
         $total;
         $paid;
-        $supplier;
         foreach ($sql->result() as $row){
             $total=$row->amount; // get total amount
             $paid=$row->paid_amount; // get paid amount
-           $supplier=$row->customer_id; // get paid amount
         }
-        $balance=$total-$paid-$old;
+        $balance=$total+$paid-$old;
        
         if($amount > $balance){ // check wheather payment amount is valid or not, if it is invalid return false
-           return FALSE; 
+            echo 'ji';
+          return FALSE; 
         } 
         $payment_status=0;
         if($total==($amount+$paid)){
