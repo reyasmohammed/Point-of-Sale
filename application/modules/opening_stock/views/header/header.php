@@ -54,19 +54,7 @@
 								
 							},
         
-        null, null, null, {	"sName": "ID",
-                   						"bSearchable": false,
-                   						"bSortable": false,
-                                                                
-                   						"fnRender": function (oObj) {
-                   							//if(oObj.aData[8]==0)
-                                                                      return   oObj.aData[5];
-								},
-								
-								
-							}
-
-, null,  null, 
+        null, , null,  null, 
 
  							{	"sName": "ID",
                    						"bSearchable": false,
@@ -213,22 +201,16 @@ function opening_stock_approve(guid){
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #opening_stock_guid").val(guid);
-                                $("#parsley_reg #demo_order_number").val(data[0]['po_no']);
+                                $("#parsley_reg #demo_order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_number").val(data[0]['po_no']);
-                                $("#parsley_reg #order_date").val(data[0]['po_date']);
-                                $("#parsley_reg #expiry_date").val(data[0]['exp_date']);
+                                $("#parsley_reg #order_date").val(data[0]['date']);
                                 
                                 $("#parsley_reg #id_discount").val(data[0]['discount']);
                                 $("#parsley_reg #note").val(data[0]['note']);
                                 $("#parsley_reg #remark").val(data[0]['remark']);
-                                $("#parsley_reg #discount_amount").val(data[0]['discount_amt']);
-                                $("#parsley_reg #freight").val(data[0]['freight']);
-                                $("#parsley_reg #round_off_amount").val(data[0]['round_amt']);
-                                $("#parsley_reg #demo_grand_total").val(data[0]['total_amt']);
-                                $("#parsley_reg #grand_total").val(data[0]['total_amt']);
                                 
-                                $("#parsley_reg #demo_total_amount").val(data[0]['total_item_amt']);
-                                $("#parsley_reg #total_amount").val(data[0]['total_item_amt']);
+                                $("#parsley_reg #demo_total_amount").val(data[0]['total_amount']);
+                                $("#parsley_reg #total_amount").val(data[0]['total_amount']);
                                 
                                   var num = parseFloat($('#demo_total_amount').val());
                                   $('#demo_total_amount').val(num.toFixed(point));
@@ -236,11 +218,6 @@ function opening_stock_approve(guid){
                                   var num = parseFloat($('#total_amount').val());
                                   $('#total_amount').val(num.toFixed(point));
                                   
-                                  var num = parseFloat($('#grand_total').val());
-                                  $('#grand_total').val(num.toFixed(point));
-                                  
-                                  var num = parseFloat($('#demo_grand_total').val());
-                                  $('#demo_grand_total').val(num.toFixed(point));
                                   
                                 $("#parsley_reg #supplier_guid").val(data[0]['s_guid']);
                                 var tax;
@@ -254,12 +231,9 @@ function opening_stock_approve(guid){
                                     var  tax_type=data[i]['tax_type_name'];
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
-                                  
-                                    var  free=data[i]['free'];
                                    
                                     var  cost=data[i]['cost'];
                                     var  price=data[i]['sell'];
-                                    var  mrp=data[i]['mrp'];
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                     if(data[i]['dis_per']!=0){
@@ -295,31 +269,30 @@ function opening_stock_approve(guid){
                                     name,
                                     sku,
                                     quty,
-                                    free,
                                     cost,
                                     price,
-                                    parseFloat(quty)*parseFloat(cost),
                                     tax+' : '+tax_type+'('+type+')',
-                                    discount,
+                                     discount,
+                                    data[i]['s_name'],
+                                   
                                     total,
                                     '<input type="hidden" name="index" id="index"><input type="hidden" id="'+o_i_guid+'">\n\
                                 <input type="hidden" name="item_name" id="row_item_name" value="'+name+'">\n\
                                 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
                                 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
+                                <input type="hidden" name="items_supplier_id[]" value="'+data[i]['s_guid']+'" id="items_supplier_id">\n\
+                                <input type="hidden" name="items_supplier_name[]" value="'+data[i]['s_name']+'" id="items_supplier_name">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
-                                <input type="hidden" name="items_free[]" value="'+free+'" id="items_free">\n\
                                 <input type="hidden" name="items_cost[]" value="'+cost+'" id="items_cost"> \n\
                                 <input type="hidden" name="items_price[]" value="'+price+'" id="items_price">\n\
-                                <input type="hidden" name="items_mrp[]" value="'+mrp+'" id="items_mrp">\n\
                                 <input type="hidden" name="items_tax[]" value="'+tax+'" id="items_tax">\n\
                                 <input type="hidden" name="items_tax_type[]" value="'+tax_type+'" id="items_tax_type">\n\
                                 <input type="hidden" name="items_tax_value[]" value="'+tax_value+'" id="items_tax_value">\n\
                                 <input type="hidden" name="items_tax_inclusive[]" value="'+tax_Inclusive+'" id="items_tax_inclusive">\n\
                                 <input type="hidden" name="items_discount[]" value="'+discount+'" id="items_discount">\n\
                                 <input type="hidden" name="items_discount_per[]" value="'+per+'" id="items_discount_per">\n\
-                                <input type="hidden" name="items_sub_total[]"  value="'+parseFloat(quty)*parseFloat(cost)+'" id="items_sub_total">\n\
                                 <input type="hidden" name="items_total[]"  value="'+total+'" id="items_total">\n\
                                 <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
 

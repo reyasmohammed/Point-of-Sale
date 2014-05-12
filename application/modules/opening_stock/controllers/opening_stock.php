@@ -15,7 +15,7 @@ class Opening_stock extends CI_Controller{
     }
     // purchase order data table
     function data_table(){
-        $aColumns = array( 'guid','po_no','po_no','c_name','s_name','po_date','total_items','total_amt','active_status','order_status' );	
+        $aColumns = array( 'guid','code','code','date','no_items','total_amount','active_status','stock_status' );	
 	$start = "";
 			$end="";
 		
@@ -101,21 +101,16 @@ class Opening_stock extends CI_Controller{
   
 function save(){      
      if($this->session->userdata['opening_stock_per']['add']==1){
-        $this->form_validation->set_rules('supplier_guid',$this->lang->line('supplier_guid'), 'required');
-        $this->form_validation->set_rules('expiry_date',$this->lang->line('expiry_date'), 'required');
+    
         $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
         $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
-        $this->form_validation->set_rules('grand_total', $this->lang->line('grand_total'), 'numeric');                      
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
-        $this->form_validation->set_rules('round_off_amount', $this->lang->line('round_off_amount'), 'numeric');                      
-        $this->form_validation->set_rules('discount', $this->lang->line('discount'), 'numeric');                      
-        $this->form_validation->set_rules('freight', $this->lang->line('freight'), 'numeric');                      
+                       
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
         $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_free[]', $this->lang->line('new_item_free'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_mrp[]', $this->lang->line('new_item_mrp'), 'required|numeric');                      
+        $this->form_validation->set_rules('new_item_supplier[]', $this->lang->line('new_item_supplier'), 'required');                      
+        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                     
         $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'required|numeric');                      
         $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');                      
         $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'numeric');                      
@@ -123,39 +118,31 @@ function save(){
         $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|numeric');                      
            
             if ( $this->form_validation->run() !== false ) {    
-                $supplier=  $this->input->post('supplier_guid');
-                $expdate=strtotime($this->input->post('expiry_date'));
                 $pono= $this->input->post('order_number');
                 $podate= strtotime($this->input->post('order_date'));
-                $discount=  $this->input->post('discount');
-                $discount_amount=  $this->input->post('discount_amount');
-                $freight=  $this->input->post('freight');
-                $round_amt=  $this->input->post('round_off_amount');
                 $total_items=$this->input->post('index');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
-                $grand_total=  $this->input->post('grand_total');
   
      
-              $value=array('supplier_id'=>$supplier,'exp_date'=>$expdate,'po_no'=>$pono,'po_date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'order_status'=>0,'total_item_amt'=>$total_amount);
+              $value=array('code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'opening_stock');
           
                 $item=  $this->input->post('new_item_id');
                 $quty=  $this->input->post('new_item_quty');
                 $cost=  $this->input->post('new_item_cost');
-                $free=  $this->input->post('new_item_free');
+                $supplier=  $this->input->post('new_item_supplier');
                 $sell=  $this->input->post('new_item_price');
-                $mrp=  $this->input->post('new_item_mrp');
                 $net=  $this->input->post('new_item_total');
                 $per=  $this->input->post('new_item_discount_per');
                 $dis=  $this->input->post('new_item_discount');
                 $tax=  $this->input->post('new_item_tax');
            
                 for($i=0;$i<count($item);$i++){
-              
-                        $item_value=array('order_id'=>$guid,'discount_per'=>$per[$i],'discount_amount'=>$dis[$i],'tax'=>$tax[$i],'item'=>$item[$i],'quty'=>$quty[$i],'free'=>$free[$i],'cost'=>$cost[$i],'sell'=>$sell[$i],'mrp'=>$mrp[$i],'amount'=>$net[$i]);
-                        $this->posnic->posnic_add_record($item_value,'opening_stock_items');
+                        $this->load->model('stock');
+                       
+                        $this->stock->add_opening_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$per[$i],$dis[$i],$tax[$i],$net[$i],$supplier[$i]);
                 
                         
                 }
@@ -173,56 +160,45 @@ function save(){
     function update(){
             if(isset($_POST['opening_stock_guid'])){
       if($this->session->userdata['opening_stock_per']['edit']==1){
-        $this->form_validation->set_rules('supplier_guid',$this->lang->line('supplier_guid'), 'required');
-        $this->form_validation->set_rules('expiry_date',$this->lang->line('expiry_date'), 'required');
-        $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
-        $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
-        $this->form_validation->set_rules('grand_total', $this->lang->line('grand_total'), 'numeric');                      
+       
+        $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                       
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
         
         
-        $this->form_validation->set_rules('round_off_amount', $this->lang->line('round_off_amount'), 'numeric');                      
-        $this->form_validation->set_rules('discount', $this->lang->line('discount'), 'numeric');                      
-        $this->form_validation->set_rules('freight', $this->lang->line('freight'), 'numeric');    
+      
+        
+        $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'));
         
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_free[]', $this->lang->line('new_item_free'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_mrp[]', $this->lang->line('new_item_mrp'), 'numeric');                      
-      
+        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'numeric'); 
         $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');                      
+        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');   
+        $this->form_validation->set_rules('new_item_supplier[]', $this->lang->line('new_item_supplier'));  
         $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'numeric');                      
         $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'numeric');
+        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'numeric'); 
         
         
         $this->form_validation->set_rules('items_quty[]', $this->lang->line('items_quty'), 'numeric');                      
         $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
-        $this->form_validation->set_rules('items_free[]', $this->lang->line('items_free'), 'numeric');                      
-        $this->form_validation->set_rules('items_mrp[]', $this->lang->line('items_mrp'), 'numeric');                      
         $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
-        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric');                      
+        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric'); 
+        $this->form_validation->set_rules('items_supplier_id[]', $this->lang->line('items_supplier_id'));      
         $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
         $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
         $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');
+        
             if ( $this->form_validation->run() !== false ) {    
-                $supplier=  $this->input->post('supplier_guid');
-                $expdate=strtotime($this->input->post('expiry_date'));
-                $pono= $this->input->post('order_number');
+                $guid=  $this->input->post('opening_stock_guid');
                 $podate= strtotime($this->input->post('order_date'));
-                $discount=  $this->input->post('discount');
-                $discount_amount=  $this->input->post('discount_amount');
-                $freight=  $this->input->post('freight');
-                $round_amt=  $this->input->post('round_off_amount');
                 $total_items=$this->input->post('index');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
-                $grand_total=  $this->input->post('grand_total');
+                $total_amount=  $this->input->post('total_amount');
   
      
-              $value=array('supplier_id'=>$supplier,'exp_date'=>$expdate,'po_date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
+              $value=array('date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=  $this->input->post('opening_stock_guid');
               $update_where=array('guid'=>$guid);
               $this->posnic->posnic_update_record($value,$update_where,'opening_stock');
@@ -230,43 +206,40 @@ function save(){
                 $item=  $this->input->post('items_id');
                 $quty=  $this->input->post('items_quty');
                 $cost=  $this->input->post('items_cost');
-                $free=  $this->input->post('items_free');
                 $sell=  $this->input->post('items_price');
-                $mrp=  $this->input->post('items_mrp');
                 $net=  $this->input->post('items_total');
                 $per=  $this->input->post('items_discount_per');
                 $dis=  $this->input->post('items_discount');
                 $tax=  $this->input->post('items_tax');
+                $supplier=  $this->input->post('items_supplier_id');
                 for($i=0;$i<count($item);$i++){
                
-                         $where=array('order_id'=>$guid,'item'=>$item[$i]);
-                        $item_value=array('order_id'=>$guid,'discount_per'=>$per[$i],'discount_amount'=>$dis[$i],'tax'=>$tax[$i],'item'=>$item[$i],'quty'=>$quty[$i],'free'=>$free[$i],'cost'=>$cost[$i],'sell'=>$sell[$i],'mrp'=>$mrp[$i],'amount'=>$net[$i]);
-                       $this->posnic->posnic_update_record($item_value,$where,'opening_stock_items');
-                
-                        
+                        $where=array('order_id'=>$guid,'item'=>$item[$i]);
+                        $this->load->model('stock');
+                        $this->stock->update_opening_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$per[$i],$dis[$i],$tax[$i],$net[$i],$supplier[$i]);
+                  
                 }
                 $delete=  $this->input->post('r_items');
-                    for($j=0;$j<count($delete);$j++){
-                        $this->load->model('stock');
-                        
-                         $this->stock->delete_order_item($delete[$j]);
-                    }
+                for($j=0;$j<count($delete);$j++){
+                     $this->stock->delete_order_item($delete[$j]);
+                }
                     
                 $new_item=  $this->input->post('new_item_id');
                 $new_quty=  $this->input->post('new_item_quty');
                 $new_cost=  $this->input->post('new_item_cost');
-                $new_free=  $this->input->post('new_item_free');
                 $new_sell=  $this->input->post('new_item_price');
                 $new_mrp=  $this->input->post('new_item_mrp');
                 $new_net=  $this->input->post('new_item_total');
                 $new_per=  $this->input->post('new_item_discount_per');
                 $new_dis=  $this->input->post('new_item_discount');
                 $new_tax=  $this->input->post('new_item_tax');
+                $new_supplier=  $this->input->post('new_item_supplier');
                 for($i=0;$i<count($new_quty);$i++){
           if($new_quty[$i]!=""){
              
-                        $new_item_value=array('order_id'=>$guid,'discount_per'=>$new_per[$i],'discount_amount'=>$new_dis[$i],'tax'=>$new_tax[$i],'item'=>$new_item[$i],'quty'=>$new_quty[$i],'free'=>$new_free[$i],'cost'=>$new_cost[$i],'sell'=>$new_sell[$i],'mrp'=>$new_mrp[$i],'amount'=>$new_net[$i]);
-                        $this->posnic->posnic_add_record($new_item_value,'opening_stock_items');
+                       
+                        $this->stock->add_opening_stock($guid,$new_item[$i],$new_quty[$i],$new_cost[$i],$new_sell[$i],$new_per[$i],$new_dis[$i],$new_tax[$i],$new_net[$i],$new_supplier[$i]);
+                
           }
                         
                 }
