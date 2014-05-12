@@ -544,6 +544,8 @@ $lang['credit_days']='Credit Days';
   $lang['sales_delivery_note']='Delivery Note';
   // customer payment
   $lang['customer_payment']='Customer Payment';
+  $lang['opening_stock_id']='Opening Stock ID';
+  $lang['date']='Date';
   
   
   
