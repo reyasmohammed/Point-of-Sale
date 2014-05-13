@@ -263,6 +263,8 @@ function opening_stock_approve(guid){
                                       var total=(parseFloat(quty)*parseFloat(cost))-discount;
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
+                                      var num = parseFloat(discount);
+                                      discount=num.toFixed(point);
                                   }
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
