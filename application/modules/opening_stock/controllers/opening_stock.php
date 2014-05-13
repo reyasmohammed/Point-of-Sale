@@ -183,7 +183,7 @@ function save(){
         $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
         $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
         $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric'); 
-        $this->form_validation->set_rules('items_supplier_id[]', $this->lang->line('items_supplier_id'));      
+        $this->form_validation->set_rules('items_supplier[]', $this->lang->line('items_supplier'));      
         $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
         $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
         $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');
@@ -211,7 +211,7 @@ function save(){
                 $per=  $this->input->post('items_discount_per');
                 $dis=  $this->input->post('items_discount');
                 $tax=  $this->input->post('items_tax');
-                $supplier=  $this->input->post('items_supplier_id');
+                $supplier=  $this->input->post('items_supplier');
                 for($i=0;$i<count($item);$i++){
                
                         $where=array('order_id'=>$guid,'item'=>$item[$i]);

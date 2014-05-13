@@ -281,7 +281,7 @@ function opening_stock_approve(guid){
                                 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
                                 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
-                                <input type="hidden" name="items_supplier_id[]" value="'+data[i]['s_guid']+'" id="items_supplier_id">\n\
+                                <input type="hidden" name="items_supplier[]" value="'+data[i]['s_guid']+'" id="items_supplier">\n\
                                 <input type="hidden" name="items_supplier_name[]" value="'+data[i]['s_name']+'" id="items_supplier_name">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\

@@ -31,6 +31,9 @@ class Stock extends CI_Model{
     function add_opening_stock($guid,$item,$quty,$cost,$sell,$per,$dis,$tax,$net,$supplier){
          $item_value=array('opening_stock_id'=>$guid,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
          $this->db->insert('opening_stock_x_items',$item_value);
+         $os_item=  $this->db->insert_id();
+         $this->db->where('id',$os_item);
+         $this->db->update('opening_stock_x_items',array('guid'=>md5('opening_stock_x_items'.$item.$os_item)));
          
          // add stock 
            $price=$sell;
