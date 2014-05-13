@@ -179,14 +179,14 @@ function save(){
         $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'numeric'); 
         
         
-//        $this->form_validation->set_rules('items_quty[]', $this->lang->line('items_quty'), 'numeric');                      
-//        $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
-//        $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
-//        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric'); 
-//        $this->form_validation->set_rules('items_supplier[]', $this->lang->line('items_supplier'));      
-//        $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
-//        $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
-//        $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');
+        $this->form_validation->set_rules('items_quty[]', $this->lang->line('items_quty'), 'numeric');                      
+        $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
+        $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
+        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric'); 
+        $this->form_validation->set_rules('items_supplier[]', $this->lang->line('items_supplier'));      
+        $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
+        $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
+        $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');
         
             if ( $this->form_validation->run() !== false ) {    
                 $guid=  $this->input->post('opening_stock_guid');
@@ -307,7 +307,7 @@ function opening_stock_approve(){
      if($this->session->userdata['opening_stock_per']['approve']==1){
             $id=  $this->input->post('guid');
             $this->load->model('stock');
-            $this->stock->approve_order($id);
+            $this->stock->opening_stock_approve($id);
             echo 'TRUE';
      }else{
          echo 'FALSE';
