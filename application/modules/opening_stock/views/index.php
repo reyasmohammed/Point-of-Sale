@@ -198,6 +198,14 @@
                       
                         $('#parsley_reg #quantity').focus();
                     }, 0);
+                         if(isNaN($('#parsley_reg #tax_value').val())){
+                      $('#parsley_reg #tax_value').val(0);
+                      $('#parsley_reg #tax').val(0);
+                      }
+                         if(isNaN($('#parsley_reg #tax').val())){
+                      $('#parsley_reg #tax_value').val(0);
+                      $('#parsley_reg #tax').val(0);
+                }
           }
           });
           function format_item(sup) {
@@ -1303,6 +1311,7 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
     per=0;
     }
     total=total.toFixed(point);
+    
   ///$('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()).remove();
  var old_total= $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_total').val();
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(2)').html(name);
@@ -1330,7 +1339,7 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_name').val(name);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_sku').val(sku);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_quty').val(quty);
-  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_free').val(free);
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_supplier').val($('#parsley_reg #first_name').select2('data').id);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_cost').val(cost);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_price').val(price);
   
@@ -1353,14 +1362,14 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
    
         if (isNaN($("#parsley_reg #demo_total_amount").val())) 
     $("#parsley_reg #demo_total_amount").val(0)
-    
+      
 if($('#parsley_reg #total_amount').val()==0){
       $('#parsley_reg #total_amount').val(total-parseFloat(old_total));
 }else{
-    $('#parsley_reg #total_amount').val(parseFloat($('#parsley_reg #total_amount').val())+(total)-parseFloat(old_total));
+    $('#parsley_reg #total_amount').val(parseFloat($('#parsley_reg #total_amount').val())-parseFloat(old_total)+parseFloat(total));
 }
 $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
-  
+
     
     
     
@@ -1516,8 +1525,8 @@ function edit_order_item(guid){
     $('#parsley_reg #supplier_quty').val($('#selected_item_table #new_item_row_id_'+guid+' #item_limit').val());
     $('#parsley_reg #quantity').val($('#selected_item_table #new_item_row_id_'+guid+' #items_quty').val());
 
-    $("#parsley_reg #first_name").select2('data', {id:$('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_id').val(),text: $('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_name').val()});
-    $('#parsley_reg #supplier_id').val($('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_id').val());
+    $("#parsley_reg #first_name").select2('data', {id:$('#selected_item_table #new_item_row_id_'+guid+' #items_supplier').val(),text: $('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_name').val()});
+    $('#parsley_reg #supplier_id').val($('#selected_item_table #new_item_row_id_'+guid+' #items_supplier').val());
     $('#parsley_reg #cost').val($('#selected_item_table #new_item_row_id_'+guid+' #items_cost').val());
     $('#parsley_reg #price').val($('#selected_item_table #new_item_row_id_'+guid+' #items_price').val());
     $('#parsley_reg #extra_elements').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val());
