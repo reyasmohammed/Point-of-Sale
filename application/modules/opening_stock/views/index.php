@@ -1947,94 +1947,8 @@ function clear_inputs(){
 		</div>
 	
                 <script type="text/javascript">
-                    function opening_stock_group_approve(){
-              <?php if($this->session->userdata['opening_stock_per']['approve']==1){ ?>
-                     var flag=0;
-                     var field=document.forms.posnic;
-                      for (i = 0; i < field.length; i++){
-                          if(field[i].checked==true){
-                              flag=flag+1;
-
-                          }
-
-                      }
-                      if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('opening_stock');?>', { type: "warning" });
-                      
-                      }else{
-                            var posnic=document.forms.posnic;
-                      for (i = 0; i < posnic.length-1; i++){
-                          if(posnic[i].checked==true){                             
-                              $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/opening_stock/opening_stock_approve',
-                                type: "POST",
-                                data: {
-                                    guid:posnic[i].value
-
-                                },
-                                complete: function(response) {
-                                    if(response['responseText']=='TRUE'){
-                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('opening_stock') ?>  <?php echo $this->lang->line('approved');?>', { type: "success" });
-                                        $("#dt_table_tools").dataTable().fnDraw();
-                                    }else if(response['responseText']=='Approved'){
-                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>   <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
-                                    }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('opening_stock');?>', { type: "error" });                              
-                                    }
-                                    }
-                            });
-
-                          }
-
-                      }
-                  
-
-                      }   
-                       <?php }else{?>
-                                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('opening_stock');?>', { type: "error" });                       
-                            <?php }
-                         ?>
-                      }
-                    function posnic_group_item_active(){
-                     var flag=0;
-                     var field=document.forms.items_form;
-                      for (i = 0; i < field.length; i++){
-                          if(field[i].checked==true){
-                              flag=flag+1;
-
-                          }
-
-                      }
-                      if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
-                      
-                      }else{
-                            var posnic=document.forms.items_form;
-                      for (i = 0; i < posnic.length-1; i++){
-                          if(posnic[i].checked==true){                             
-                              $.ajax({
-                                url: '<?php echo base_url() ?>index.php/opening_stock/item_active',
-                                type: "POST",
-                                data: {
-                                    guid:posnic[i].value
-
-                                },
-                                success: function(response)
-                                {
-                                    if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('activated');?>', { type: "success" });
-                                        $("#selected_item_table").dataTable().fnDraw();
-                                    }
-                                }
-                            });
-
-                          }
-
-                      }
-                  
-
-                      }    
-                      }
+               
+              
      function posnic_delete(){
             <?php if($this->session->userdata['opening_stock_per']['delete']==1){ ?>
                      var flag=0;
@@ -2048,9 +1962,9 @@ function clear_inputs(){
                       }
                       if (flag<1) {
                         
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('paruchase_order');?>', { type: "warning" });
+                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('opening_stock');?>', { type: "warning" });
                       }else{
-                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('Are you Sure To Delete') ?>", function(result) {
+                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('opening_stock') ?>", function(result) {
              if(result){
               
              
@@ -2068,12 +1982,12 @@ function clear_inputs(){
                                 },
                                   complete: function(response) {
                                     if(response['responseText']=='TRUE'){
-                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('goods_receiving_note') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('opening_stock') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }else if(response['responseText']=='Approved'){
                                          $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>  <?php echo $this->lang->line('is');?> <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
                                     }else{
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+                                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('opening_stock');?>', { type: "error" });                       
                                     }
                                     }
                             });
@@ -2141,46 +2055,7 @@ function clear_inputs(){
                             <?php }
                          ?>
                       }
-                    function posnic_group_item_deactive(){
-                     var flag=0;
-                     var field=document.forms.items_form;
-                      for (i = 0; i < field.length; i++){
-                          if(field[i].checked==true){
-                              flag=flag+1;
-
-                          }
-
-                      }
-                      if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
-                      
-                      }else{
-                            var posnic=document.forms.items_form;
-                      for (i = 0; i < posnic.length-1; i++){
-                          if(posnic[i].checked==true){                             
-                                 $.ajax({
-                                    url: '<?php echo base_url() ?>index.php/opening_stock/item_deactive',
-                                    type: "POST",
-                                    data: {
-                                        guid: posnic[i].value
-
-                                    },
-                                    success: function(response)
-                                    {
-                                        if(response){
-                                             $.bootstrapGrowl('<?php echo $this->lang->line('deactivated');?>', { type: "danger" });
-                                            $("#selected_item_table").dataTable().fnDraw();
-                                        }
-                                    }
-                                });
-
-                          }
-
-                      }
-                  
-
-                      }    
-                      }
+                   
                     
                 </script>
         
