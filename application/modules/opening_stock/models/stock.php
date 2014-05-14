@@ -25,98 +25,106 @@ class Stock extends CI_Model{
 
     function update_opening_stock($guid,$item,$quty,$cost,$sell,$per,$dis,$tax,$net,$supplier){
         
-         
-         $this->db->select('quty,sell,stock_id')->from('opening_stock_x_items')->where('opening_stock_id',$guid)->where('item',$item);
-         $os=  $this->db->get();
-         foreach ($os->result() as $row){
-             $old_quty=$row->quty;
-             $old_price=$row->sell;
-             $stock_id=$row->stock_id;
-         }
-         $c_quty;
-         $c_price;
-         $this->db->select()->from('stock')->where('guid',$stock_id);
-         $is=  $this->db->get();
-         foreach ($is->result() as $row){
-             $c_price=$row->price;
-            $c_quty=$row->quty;
-         }
-       
-         if($quty==$old_quty && $old_price==$sell){
-            
-         }else{
-         if($old_price==$sell){
-             $this->db->where('guid',$stock_id);
-            
-             $this->db->update('stock',array('quty'=>$c_quty+$quty-$old_quty));
-         }else{
-              $this->db->where('guid',$stock_id);
-             $this->db->update('stock',array('quty'=>$c_quty-$old_quty));
-           
-             $price=$sell;
-            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
-            $sql_order=  $this->db->get();
-            if($sql_order->num_rows()==0){
-                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
-                $id=  $this->db->insert_id();
-                $this->db->where('id',$id);
-                $stock_id= md5('stock'.$item.$id);
-                $this->db->update('stock',array('guid'=>$stock_id));
-                
-            }else{
-                $stock_quty;
-                $stock_id;
-                foreach ($sql_order->result() as $stock){
-                    $stock_quty=  $stock->quty;
-                    $stock_id=$stock->guid;
-                }
-           
-                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
-                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
-               
-            }
-             
-         }
-         
-         }    
-         
-         
          $this->db->where(array('opening_stock_id'=>$guid,'item'=>$item));
-         $item_value=array('stock_id'=>$stock_id,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+         $item_value=array('discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
          $this->db->update('opening_stock_x_items',$item_value);
+         
+//         $this->db->select('quty,sell,stock_id')->from('opening_stock_x_items')->where('opening_stock_id',$guid)->where('item',$item);
+//         $os=  $this->db->get();
+//         foreach ($os->result() as $row){
+//             $old_quty=$row->quty;
+//             $old_price=$row->sell;
+//             $stock_id=$row->stock_id;
+//         }
+//         $c_quty;
+//         $c_price;
+//         $this->db->select()->from('stock')->where('guid',$stock_id);
+//         $is=  $this->db->get();
+//         foreach ($is->result() as $row){
+//             $c_price=$row->price;
+//            $c_quty=$row->quty;
+//         }
+//       
+//         if($quty==$old_quty && $old_price==$sell){
+//            
+//         }else{
+//         if($old_price==$sell){
+//             $this->db->where('guid',$stock_id);
+//            
+//             $this->db->update('stock',array('quty'=>$c_quty+$quty-$old_quty));
+//         }else{
+//              $this->db->where('guid',$stock_id);
+//             $this->db->update('stock',array('quty'=>$c_quty-$old_quty));
+//           
+//             $price=$sell;
+//            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
+//            $sql_order=  $this->db->get();
+//            if($sql_order->num_rows()==0){
+//                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
+//                $id=  $this->db->insert_id();
+//                $this->db->where('id',$id);
+//                $stock_id= md5('stock'.$item.$id);
+//                $this->db->update('stock',array('guid'=>$stock_id));
+//                
+//            }else{
+//                $stock_quty;
+//                $stock_id;
+//                foreach ($sql_order->result() as $stock){
+//                    $stock_quty=  $stock->quty;
+//                    $stock_id=$stock->guid;
+//                }
+//           
+//                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
+//                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
+//               
+//            }
+//             
+//         }
+//         
+//         }    
+         
+         
          
     }
     function add_opening_stock($guid,$item,$quty,$cost,$sell,$per,$dis,$tax,$net,$supplier){
-         
-         
-         // add stock 
-           $price=$sell;
-            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
-            $sql_order=  $this->db->get();
-            if($sql_order->num_rows()==0){
-                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
-                $id=  $this->db->insert_id();
-                $this->db->where('id',$id);
-                $stock_id= md5('stock'.$item.$id);
-                $this->db->update('stock',array('guid'=>$stock_id));
-                
-            }else{
-                $stock_quty;
-                $stock_id;
-                foreach ($sql_order->result() as $stock){
-                    $stock_quty=  $stock->quty;
-                    $stock_id=$stock->guid;
-                }
-           
-                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
-                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
-               
-            }
-         $item_value=array('stock_id'=>$stock_id,'opening_stock_id'=>$guid,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+         $item_value=array('opening_stock_id'=>$guid,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
          $this->db->insert('opening_stock_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
-         $this->db->update('opening_stock_x_items',array('guid'=>md5('opening_stock_x_items'.$item.$os_item)));
+         $stock_id=md5('opening_stock_x_items'.$item.$os_item);
+         $this->db->update('opening_stock_x_items',array('guid'=>$stock_id));
+         
+         // add stock 
+//           $price=$sell;
+//            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
+//            $sql_order=  $this->db->get();
+//            if($sql_order->num_rows()==0){
+//                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
+//                $id=  $this->db->insert_id();
+//                $this->db->where('id',$id);
+//                $stock_id= md5('stock'.$item.$id);
+//                $this->db->update('stock',array('guid'=>$stock_id));
+//                
+//            }else{
+//                $stock_quty;
+//                $stock_id;
+//                foreach ($sql_order->result() as $stock){
+//                    $stock_quty=  $stock->quty;
+//                    $stock_id=$stock->guid;
+//                }
+//           
+//                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
+//                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
+//               
+//            }
+//         $item_value=array('stock_id'=>$stock_id,'opening_stock_id'=>$guid,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+//         $this->db->insert('opening_stock_x_items',$item_value);
+//         $os_item=  $this->db->insert_id();
+//         $this->db->where('id',$os_item);
+//         $stock_id=md5('opening_stock_x_items'.$item.$os_item);
+//         $this->db->update('opening_stock_x_items',array('guid'=>$stock_id));
+//         
+//         $this->db->insert('stocks_history',array('guid'=>md5('stocks_history'.$item.$os_item.$stock_id),'stock_id'=>$stock_id,'branch_id'=>$this->session->userdata('branch_id'),'item_id'=>$item,'supplier_id'=>$supplier,'added_by'=>  $this->session->userdata('guid'),'quty'=>$quty,'price'=>$sell));
     }
     
     function search_items($search){
@@ -166,8 +174,53 @@ class Stock extends CI_Model{
           $this->db->delete('opening_stock_x_items');
      }
      function opening_stock_approve($guid){
-         $this->db->where('guid',$guid);
-         $this->db->update('opening_stock',array('stock_status'=>1));
+         $this->db->select()->from('opening_stock_x_items')->where('opening_stock_id',$guid);
+         $sql=  $this->db->get();
+         foreach ($sql->result() as $row){
+             $price=$row->sell;
+             $quty=$row->quty;
+             $item=$row->item;
+             $cost=$row->cost;
+             $supplier=$row->supplier_id;
+               $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$price);
+               $sql_order=  $this->db->get();
+            if($sql_order->num_rows()==0){
+                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $stock_id= md5('stock'.$item.$id);
+                $this->db->update('stock',array('guid'=>$stock_id));
+                $this->db->insert('stocks_history',array('cost'=>$cost,'stock_id'=>$stock_id,'branch_id'=>$this->session->userdata('branch_id'),'item_id'=>$item,'supplier_id'=>$supplier,'added_by'=>  $this->session->userdata('guid'),'quty'=>$quty,'price'=>$price));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $stocks_history= md5('stocks_history'.$item.$id);
+                $this->db->update('stocks_history',array('guid'=>$stocks_history));
+                
+            }else{
+                $stock_quty;
+                $stock_id;
+                foreach ($sql_order->result() as $stock){
+                    $stock_quty=  $stock->quty;
+                    $stock_id=$stock->guid;
+                }
+           
+                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
+                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
+                $this->db->insert('stocks_history',array('cost'=>$cost,'stock_id'=>$stock_id,'branch_id'=>$this->session->userdata('branch_id'),'item_id'=>$item,'supplier_id'=>$supplier,'added_by'=>  $this->session->userdata('guid'),'quty'=>$quty,'price'=>$price));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $stocks_history= md5('stocks_history'.$item.$id);
+                $this->db->update('stocks_history',array('guid'=>$stocks_history));
+               
+            }
+             
+             
+         }
+        
+         
+         
+         //$this->db->where('guid',$guid);
+         //$this->db->update('opening_stock',array('stock_status'=>1));
         
      }
      function  check_approve($guid){
