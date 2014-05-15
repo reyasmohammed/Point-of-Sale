@@ -198,14 +198,12 @@ function damage_stock_approve(guid){
                                 $("#parsley_reg").trigger('reset');
                            
                                 $("#parsley_reg #first_name").select2('data', {id:'1',text: data[0]['s_name']});
-                                $("#parsley_reg #company").val(data[0]['c_name']);
-                                $("#parsley_reg #address").val(data[0]['address']);
+                                $("#parsley_reg #supplier_id").val(data[0]['s_guid']);
                                 $("#parsley_reg #damage_stock_guid").val(guid);
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_number").val(data[0]['po_no']);
                                 $("#parsley_reg #order_date").val(data[0]['date']);
                                 
-                                $("#parsley_reg #id_discount").val(data[0]['discount']);
                                 $("#parsley_reg #note").val(data[0]['note']);
                                 $("#parsley_reg #remark").val(data[0]['remark']);
                                 
@@ -236,23 +234,11 @@ function damage_stock_approve(guid){
                                     var  price=data[i]['sell'];
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
-                                    if(data[i]['dis_per']!=0){
-                                    var discount=(parseFloat(quty)*parseFloat(cost))*(data[i]['dis_per']/100);
-                                    var per=data[i]['dis_per'];
-                                    }else{
-                                    var discount=data[i]['item_dis_amt'];
-                                     var num = parseFloat(discount);
-                                      discount=num.toFixed(point);
-                                    var per=0
-                                    if(discount==""){
-                                        discount=0;
-                                    }
                                   
-                                    }
                                    if(data[i]['tax_Inclusive']==1){
                                      var tax=data[i]['order_tax'];
                                     
-                                      var total=+tax+ +(parseFloat(quty)*parseFloat(cost))-discount;
+                                      var total=+tax+ +(parseFloat(quty)*parseFloat(cost));
                                       var type='Exc';
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
@@ -260,11 +246,9 @@ function damage_stock_approve(guid){
                                       var type="Inc";
                                   
                                       var tax=data[i]['order_tax'];
-                                      var total=(parseFloat(quty)*parseFloat(cost))-discount;
+                                      var total=(parseFloat(quty)*parseFloat(cost));
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
-                                      var num = parseFloat(discount);
-                                      discount=num.toFixed(point);
                                   }
                                     var addId = $('#selected_item_table').dataTable().fnAddData( [
                                     null,
@@ -274,7 +258,6 @@ function damage_stock_approve(guid){
                                     cost,
                                     price,
                                     tax+' : '+tax_type+'('+type+')',
-                                     discount,
                                     data[i]['s_name'],
                                    
                                     total,
@@ -284,6 +267,7 @@ function damage_stock_approve(guid){
                                 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
                                 <input type="hidden" name="items_supplier[]" value="'+data[i]['s_guid']+'" id="items_supplier">\n\
+                                <input type="hidden" name="items_stock[]" value="'+data[i]['stock_id']+'" id="items_stock">\n\
                                 <input type="hidden" name="items_supplier_name[]" value="'+data[i]['s_name']+'" id="items_supplier_name">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
@@ -293,8 +277,6 @@ function damage_stock_approve(guid){
                                 <input type="hidden" name="items_tax_type[]" value="'+tax_type+'" id="items_tax_type">\n\
                                 <input type="hidden" name="items_tax_value[]" value="'+tax_value+'" id="items_tax_value">\n\
                                 <input type="hidden" name="items_tax_inclusive[]" value="'+tax_Inclusive+'" id="items_tax_inclusive">\n\
-                                <input type="hidden" name="items_discount[]" value="'+discount+'" id="items_discount">\n\
-                                <input type="hidden" name="items_discount_per[]" value="'+per+'" id="items_discount_per">\n\
                                 <input type="hidden" name="items_total[]"  value="'+total+'" id="items_total">\n\
                                 <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
 

@@ -438,6 +438,7 @@ $lang['credit_days']='Credit Days';
   $lang['delivery_date']='Delivery Date';
   $lang['short_delivery_date']='Delry Date';
   $lang['not_able_to_order']='Not Able Pick This Much Of Order From';
+  $lang['not_able_to_damage']='Not Able Pick This Much Of Quantity In';
   $lang['for']='For';
   $lang['and']='And';
   $lang['please_enter']='Please Enter';
@@ -545,6 +546,7 @@ $lang['credit_days']='Credit Days';
   // customer payment
   $lang['customer_payment']='Customer Payment';
   $lang['opening_stock_id']='Opening Stock ID';
+  $lang['damage_stock_id']='Opening Stock ID';
   $lang['date']='Date';
   
   
