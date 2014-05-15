@@ -132,6 +132,10 @@ class Stock extends CI_Model{
              
          }
         
+         
+         
+        $this->db->where('guid',$guid);
+       $this->db->update('opening_stock',array('stock_status'=>1));
         
      }
      function  check_approve($guid){

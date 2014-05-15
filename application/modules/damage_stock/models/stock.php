@@ -94,8 +94,31 @@ class Stock extends CI_Model{
           $this->db->delete('damage_stock_x_items');
      }
      function damage_stock_approve($guid){
-         $this->db->where('guid',$guid);
-         $this->db->update('damage_stock',array('stock_status'=>1));
+         $this->db->select()->from('damage_stock_x_items')->where('damage_stock_id',$guid);
+         $sql=  $this->db->get();
+         foreach ($sql->result() as $row){
+             $price=$row->sell;
+             $quty=$row->quty;
+             $item=$row->item;
+               $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$price);
+               $sql_order=  $this->db->get();
+            
+                $stock_quty;
+                $stock_id;
+                foreach ($sql_order->result() as $stock){
+                    $stock_quty=  $stock->quty;
+                    $stock_id=$stock->guid;
+                }
+           
+                $this->db->where('guid',$stock_id);
+                $this->db->update('stock',array('quty'=>$stock_quty-$quty));
+             
+             
+         }
+         
+        $this->db->where('guid',$guid);
+      $this->db->update('damage_stock',array('stock_status'=>1));
+      
         
      }
      function  check_approve($guid){
