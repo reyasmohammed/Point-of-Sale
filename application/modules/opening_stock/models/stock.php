@@ -28,60 +28,7 @@ class Stock extends CI_Model{
          $this->db->where(array('opening_stock_id'=>$guid,'item'=>$item));
          $item_value=array('discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
          $this->db->update('opening_stock_x_items',$item_value);
-         
-//         $this->db->select('quty,sell,stock_id')->from('opening_stock_x_items')->where('opening_stock_id',$guid)->where('item',$item);
-//         $os=  $this->db->get();
-//         foreach ($os->result() as $row){
-//             $old_quty=$row->quty;
-//             $old_price=$row->sell;
-//             $stock_id=$row->stock_id;
-//         }
-//         $c_quty;
-//         $c_price;
-//         $this->db->select()->from('stock')->where('guid',$stock_id);
-//         $is=  $this->db->get();
-//         foreach ($is->result() as $row){
-//             $c_price=$row->price;
-//            $c_quty=$row->quty;
-//         }
-//       
-//         if($quty==$old_quty && $old_price==$sell){
-//            
-//         }else{
-//         if($old_price==$sell){
-//             $this->db->where('guid',$stock_id);
-//            
-//             $this->db->update('stock',array('quty'=>$c_quty+$quty-$old_quty));
-//         }else{
-//              $this->db->where('guid',$stock_id);
-//             $this->db->update('stock',array('quty'=>$c_quty-$old_quty));
-//           
-//             $price=$sell;
-//            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
-//            $sql_order=  $this->db->get();
-//            if($sql_order->num_rows()==0){
-//                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
-//                $id=  $this->db->insert_id();
-//                $this->db->where('id',$id);
-//                $stock_id= md5('stock'.$item.$id);
-//                $this->db->update('stock',array('guid'=>$stock_id));
-//                
-//            }else{
-//                $stock_quty;
-//                $stock_id;
-//                foreach ($sql_order->result() as $stock){
-//                    $stock_quty=  $stock->quty;
-//                    $stock_id=$stock->guid;
-//                }
-//           
-//                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
-//                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
-//               
-//            }
-//             
-//         }
-//         
-//         }    
+   
          
          
          
@@ -93,39 +40,7 @@ class Stock extends CI_Model{
          $this->db->where('id',$os_item);
          $stock_id=md5('opening_stock_x_items'.$item.$os_item);
          $this->db->update('opening_stock_x_items',array('guid'=>$stock_id));
-         
-         // add stock 
-//           $price=$sell;
-//            $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$sell);
-//            $sql_order=  $this->db->get();
-//            if($sql_order->num_rows()==0){
-//                 $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$this->session->userdata('branch_id')));
-//                $id=  $this->db->insert_id();
-//                $this->db->where('id',$id);
-//                $stock_id= md5('stock'.$item.$id);
-//                $this->db->update('stock',array('guid'=>$stock_id));
-//                
-//            }else{
-//                $stock_quty;
-//                $stock_id;
-//                foreach ($sql_order->result() as $stock){
-//                    $stock_quty=  $stock->quty;
-//                    $stock_id=$stock->guid;
-//                }
-//           
-//                $this->db->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item);
-//                $this->db->update('stock',array('quty'=>$quty+$stock_quty));
-//               
-//            }
-//         $item_value=array('stock_id'=>$stock_id,'opening_stock_id'=>$guid,'discount_per'=>$per,'discount_amount'=>$dis,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
-//         $this->db->insert('opening_stock_x_items',$item_value);
-//         $os_item=  $this->db->insert_id();
-//         $this->db->where('id',$os_item);
-//         $stock_id=md5('opening_stock_x_items'.$item.$os_item);
-//         $this->db->update('opening_stock_x_items',array('guid'=>$stock_id));
-//         
-//         $this->db->insert('stocks_history',array('guid'=>md5('stocks_history'.$item.$os_item.$stock_id),'stock_id'=>$stock_id,'branch_id'=>$this->session->userdata('branch_id'),'item_id'=>$item,'supplier_id'=>$supplier,'added_by'=>  $this->session->userdata('guid'),'quty'=>$quty,'price'=>$sell));
-    }
+     }
     
     function search_items($search){
         $bid=$this->session->userdata['branch_id'];
@@ -146,13 +61,13 @@ class Stock extends CI_Model{
                 $data[]=$row;
                 }
             }
-               // $this->db->like('suppliers_x_items.supplier_id',$guid); 
+             
          
          return $data;
      
      }
      function get_opening_stock($guid){
-         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,suppliers_x_items.quty as item_limit,suppliers.guid as s_guid,suppliers.first_name as s_name,suppliers.company_name as c_name,suppliers.address1 as address,opening_stock.*,opening_stock_x_items.discount_per as dis_per ,opening_stock_x_items.discount_amount as item_dis_amt ,opening_stock_x_items.tax as dis_amt ,opening_stock_x_items.tax as order_tax,opening_stock_x_items.item ,opening_stock_x_items.quty ,opening_stock_x_items.cost ,opening_stock_x_items.sell ,opening_stock_x_items.guid as o_i_guid ,opening_stock_x_items.amount ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('opening_stock')->where('opening_stock.guid',$guid);
+         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,suppliers_x_items.quty as item_limit,suppliers.guid as s_guid,suppliers.first_name as s_name,suppliers.company_name as c_name,suppliers.address1 as address,opening_stock.*,opening_stock_x_items.discount_per as dis_per ,opening_stock_x_items.discount_amount as item_dis_amt ,opening_stock_x_items.tax as tax_amt ,opening_stock_x_items.tax as order_tax,opening_stock_x_items.item ,opening_stock_x_items.quty ,opening_stock_x_items.cost ,opening_stock_x_items.sell ,opening_stock_x_items.guid as o_i_guid ,opening_stock_x_items.amount ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('opening_stock')->where('opening_stock.guid',$guid);
          $this->db->join('opening_stock_x_items', "opening_stock_x_items.opening_stock_id = opening_stock.guid ",'left');
          $this->db->join('items', "items.guid=opening_stock_x_items.item AND opening_stock_x_items.opening_stock_id='".$guid."' ",'left');
          $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=opening_stock_x_items.item  ",'left');
@@ -217,10 +132,6 @@ class Stock extends CI_Model{
              
          }
         
-         
-         
-         //$this->db->where('guid',$guid);
-         //$this->db->update('opening_stock',array('stock_status'=>1));
         
      }
      function  check_approve($guid){

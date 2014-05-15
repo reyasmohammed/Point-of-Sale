@@ -108,14 +108,14 @@ function save(){
                        
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                      
+                         
         $this->form_validation->set_rules('new_item_supplier[]', $this->lang->line('new_item_supplier'), 'required');                      
         $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                     
         $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'numeric');                      
+                         
         $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
         $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|numeric');                      
+        $this->form_validation->set_rules('new_item_stock[]', $this->lang->line('new_item_stock'), 'required');                      
            
             if ( $this->form_validation->run() !== false ) {    
                 $pono= $this->input->post('order_number');
@@ -135,14 +135,13 @@ function save(){
                 $supplier=  $this->input->post('new_item_supplier');
                 $sell=  $this->input->post('new_item_price');
                 $net=  $this->input->post('new_item_total');
-                $per=  $this->input->post('new_item_discount_per');
-                $dis=  $this->input->post('new_item_discount');
                 $tax=  $this->input->post('new_item_tax');
+                $stock=  $this->input->post('new_item_stock');
            
                 for($i=0;$i<count($item);$i++){
                         $this->load->model('stock');
                        
-                        $this->stock->add_damage_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$per[$i],$dis[$i],$tax[$i],$net[$i],$supplier[$i]);
+                        $this->stock->add_damage_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$tax[$i],$net[$i],$supplier[$i],$stock[$i]);
                 
                         
                 }
@@ -171,10 +170,9 @@ function save(){
         
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'numeric');                      
         $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'numeric'); 
-        $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');   
+        $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'numeric');             
         $this->form_validation->set_rules('new_item_supplier[]', $this->lang->line('new_item_supplier'));  
-        $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'numeric');                      
+        $this->form_validation->set_rules('new_item_stock[]', $this->lang->line('new_item_stock'));                      
         $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
         $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'numeric'); 
         
@@ -182,9 +180,8 @@ function save(){
         $this->form_validation->set_rules('items_quty[]', $this->lang->line('items_quty'), 'numeric');                      
         $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
         $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
-        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric'); 
-        $this->form_validation->set_rules('items_supplier[]', $this->lang->line('items_supplier'));      
-        $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
+        $this->form_validation->set_rules('items_stock[]', $this->lang->line('items_stock')); 
+        $this->form_validation->set_rules('items_supplier[]', $this->lang->line('items_supplier'));                           
         $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
         $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');
         
@@ -208,15 +205,14 @@ function save(){
                 $cost=  $this->input->post('items_cost');
                 $sell=  $this->input->post('items_price');
                 $net=  $this->input->post('items_total');
-                $per=  $this->input->post('items_discount_per');
-                $dis=  $this->input->post('items_discount');
+                $stock=  $this->input->post('items_stock');
                 $tax=  $this->input->post('items_tax');
                 $supplier=  $this->input->post('items_supplier');
                 for($i=0;$i<count($item);$i++){
                
                         $where=array('order_id'=>$guid,'item'=>$item[$i]);
                         $this->load->model('stock');
-                        $this->stock->update_damage_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$per[$i],$dis[$i],$tax[$i],$net[$i],$supplier[$i]);
+                        $this->stock->update_damage_stock($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$tax[$i],$net[$i],$supplier[$i],$stock[$i]);
                   
                 }
                 $delete=  $this->input->post('r_items');
@@ -230,22 +226,15 @@ function save(){
                 $new_sell=  $this->input->post('new_item_price');
                 $new_mrp=  $this->input->post('new_item_mrp');
                 $new_net=  $this->input->post('new_item_total');
-                $new_per=  $this->input->post('new_item_discount_per');
-                $new_dis=  $this->input->post('new_item_discount');
+                $new_stock=  $this->input->post('new_item_stock');
                 $new_tax=  $this->input->post('new_item_tax');
                 $new_supplier=  $this->input->post('new_item_supplier');
                 for($i=0;$i<count($new_quty);$i++){
-          if($new_quty[$i]!=""){
-             
-                       
-                        $this->stock->add_damage_stock($guid,$new_item[$i],$new_quty[$i],$new_cost[$i],$new_sell[$i],$new_per[$i],$new_dis[$i],$new_tax[$i],$new_net[$i],$new_supplier[$i]);
-                
-          }
+                    if($new_quty[$i]!=""){          
+                        $this->stock->add_damage_stock($guid,$new_item[$i],$new_quty[$i],$new_cost[$i],$new_sell[$i],$new_tax[$i],$new_net[$i],$new_supplier[$i],$new_stock[$i]);
+                    }
                         
-                }
-                    
-                    
-                    
+                }                    
                  echo 'TRUE';
     
                 }else{

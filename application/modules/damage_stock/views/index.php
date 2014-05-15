@@ -158,7 +158,7 @@
        
           $('#parsley_reg #items').change(function() {
               if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').id) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').id){
-                     $.bootstrapGrowl('<?php echo $this->lang->line('this item already added');?> '+$('#parsley_reg #first_name').val(), { type: "warning" });  
+                     $.bootstrapGrowl('<?php echo $this->lang->line('this item already added').$this->lang->line('damage_stock');?> ', { type: "warning" });  
                        $('#parsley_reg #items').select2('open');
               }else{
                    var guid = $('#parsley_reg #items').select2('data').id;
@@ -170,8 +170,11 @@
                 $('#parsley_reg #cost').val($('#parsley_reg #items').select2('data').cost);
                 $('#parsley_reg #price').val($('#parsley_reg #items').select2('data').price);
                 $('#parsley_reg #supplier_quty').val($('#parsley_reg #items').select2('data').quty);
+                $('#parsley_reg #first_name').val($('#parsley_reg #items').select2('data').supplier_name);
+                $('#parsley_reg #supplier_id').val($('#parsley_reg #items').select2('data').supplier_id);
                 $('#parsley_reg #tax_value').val($('#parsley_reg #items').select2('data').tax_value);
                 $('#parsley_reg #tax_type').val($('#parsley_reg #items').select2('data').tax_type);
+                $('#parsley_reg #stock_id').val($('#parsley_reg #items').select2('data').stock_id);
                 var tax=$('#parsley_reg #items').select2('data').tax_Inclusive;
                 $('#parsley_reg #tax_Inclusive').val(tax);
                 if(tax==1){
@@ -185,13 +188,11 @@
                 }
                
                   
-                    $('#i_discount').val('0');
-                    $('#i_dis_amt').val('0');
+               
                       
                    
                net_amount();
-                $('#parsley_reg #extra_elements').click();
-                $('#parsley_reg #extra_elements').click();
+                
                 $('#parsley_reg #quantity').focus();
                     window.setTimeout(function ()
                     {
@@ -256,6 +257,9 @@
                           tax_type: item.tax_type_name,
                           tax_value: item.tax_value,
                           tax_Inclusive : item.tax_Inclusive ,
+                          supplier_name : item.first_name ,
+                          supplier_id : item.s_guid ,
+                          stock_id : item.stock_id ,
                         });
                       });  
                       return {
@@ -310,7 +314,6 @@ $("#parsley_reg #first_name").val('');
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_damage_stock').attr("disabled", "disabled");
       $('#active').attr("disabled", "disabled");
-      $('#deactive').attr("disabled", "disabled");
       $('#damage_stock_lists').removeAttr("disabled");
      
          window.setTimeout(function ()
@@ -323,12 +326,11 @@ $("#parsley_reg #first_name").val('');
                     <?php }?>
 }
 function posnic_damage_stock_lists(){
-      $('#edit_brand_form').hide('hide');
+  
       $('#add_new_order').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
       $('#active').removeAttr("disabled");
-      $('#deactive').removeAttr("disabled");
       $('#posnic_add_damage_stock').removeAttr("disabled");
       $('#damage_stock_lists').attr("disabled",'disabled');
 }
@@ -425,7 +427,7 @@ function add_new_quty(e){
                   if (unicode!=13 && unicode!=9){
         }
        else{
-           $('#parsley_reg #cost').focus();
+           copy_items();
          
         }
          if (unicode!=27){
@@ -456,53 +458,30 @@ function add_new_quty(e){
             }
         }else{
            
-           if(isNaN($('#parsley_reg #dummy_discount_amount').val())){
-                $('#parsley_reg #dummy_discount_amount').val(0);
-            }
-            if($('#dummy_discount_amount').val()==""){
-                $('#parsley_reg #dummy_discount_amount').val(0);
-            }
+          
          
             if(parseFloat($('#parsley_reg #quantity').val())>parseFloat($('#parsley_reg #supplier_quty').val()) && $('#parsley_reg #supplier_quty').val()!=0){
               $('#parsley_reg #quantity').val($('#parsley_reg #supplier_quty').val());
            
-                  $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()-parseFloat($('#dummy_discount_amount').val()));
+                  $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val());
                $('#tax').val((parseFloat($('#parsley_reg #total').val())*parseFloat($('#tax_value').val()))/100);
-                $.bootstrapGrowl('<?php echo $this->lang->line('not_able_to_order');?> '+$('#parsley_reg #first_name').val()+' <?php echo $this->lang->line('for');?> '+$('#parsley_reg #item_name').val(), { type: "warning" }); 
+                $.bootstrapGrowl('<?php echo $this->lang->line('not_able_to_damage');?> '+' '+$('#parsley_reg #item_name').val(), { type: "warning" }); 
             }else{
-                 if($('#parsley_reg #dummy_discount').val()==""){
+                
                       
                         $('#tax').val((parseFloat($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val())*(parseFloat($('#tax_value').val()))/100));
                         var num = parseFloat($('#tax').val());
                         $('#tax').val(num.toFixed(point));
                           if($('#tax_Inclusive').val()==1){
-                        $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()-parseFloat($('#dummy_discount_amount').val())+parseFloat($('#tax').val()));
+                        $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()+parseFloat($('#tax').val()));
                         }else{
-                             $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()-parseFloat($('#dummy_discount_amount').val()));
+                             $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val());
                         }
                         var num = parseFloat($('#total').val());
                         $('#total').val(num.toFixed(point));
 
 
-                 }else{
-                     var discount_per=$('#dummy_discount').val();
-                     var discount=($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val())*(discount_per/100);
-                     
-                        $('#tax').val((parseFloat($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val())*(parseFloat($('#tax_value').val()))/100));
-                        var num = parseFloat($('#tax').val());
-                        $('#tax').val(num.toFixed(point));
-                          if($('#tax_Inclusive').val()==1){
-                        $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()-discount+parseFloat($('#tax').val()));
-                        }else{
-                             $('#parsley_reg #total').val($('#parsley_reg #cost').val()*$('#parsley_reg #quantity').val()-discount);
-                        }
-                        var num = parseFloat($('#total').val());
-                        $('#total').val(num.toFixed(point));
-
-                     
-                        $('#dummy_discount_amount').val(discount);
-                        $('#extra_elements').val(discount);
-                 }
+               
                  
                    
                 
@@ -532,8 +511,7 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
   var  cost=$('#parsley_reg #cost').val();
   var  price=$('#parsley_reg #price').val();
   var  items_id=$('#parsley_reg #item_id').val();
-  var  supplier=$('#parsley_reg #supplier_guid').val();
-  var  supplier=$('#parsley_reg #supplier_guid').val();
+  var  supplier=$('#parsley_reg #supplier_id').val();
   var  tax_value=$('#parsley_reg #tax_value').val();
 
   var  tax_type=$('#parsley_reg #tax_type').val();
@@ -559,13 +537,14 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(6)').html(price);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(7)').html(((parseFloat(quty)*parseFloat(cost))*tax_value/100) +''+' : '+tax_type+'('+type+')');
 
-  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(9)').html($('#parsley_reg #first_name').select2('data').text);
-  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(10)').html(total);
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(8)').html($('#first_name').val());
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' td:nth-child(9)').html(total);
 
   $('#newly_added #new_item_id_'+items_id).val(items_id);
   $('#newly_added #new_item_quty_'+items_id).val(quty);
-  $('#newly_added #new_item_supplier'+items_id).val($('#parsley_reg #first_name').select2('data').id);
+  $('#newly_added #new_item_supplier'+items_id).val($('#parsley_reg #supplier_id').val());
   $('#newly_added #new_item_cost_'+items_id).val(cost);
+  $('#newly_added #new_item_stock_'+items_id).val($('#stock_id').val());
   $('#newly_added #new_item_price_'+items_id).val(price);
   $('#newly_added #new_item_total_'+items_id).val(parseFloat(quty)*parseFloat(cost));
   $('#newly_added #new_item_tax_'+items_id).val(tax);
@@ -574,8 +553,10 @@ if(document.getElementById('new_item_row_id_'+$('#parsley_reg #item_id').val()))
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_id').val(items_id);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_name').val(name);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_sku').val(sku);
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_stcok').val($('#stock_id').val());
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_quty').val(quty);
-  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_supplier').val($('#parsley_reg #first_name').select2('data').id);
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_supplier').val($('#parsley_reg #supplier_id').val());
+  $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_supplier_name').val($('#first_name').val());
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_cost').val(cost);
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_price').val(price);
   
@@ -620,7 +601,7 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
   var  cost=$('#parsley_reg #cost').val();
   var  price=$('#parsley_reg #price').val();
   var  items_id=$('#parsley_reg #item_id').val();
-  var  supplier=$('#parsley_reg #supplier_guid').val();
+  var  supplier=$('#parsley_reg #supplier_id').val();
   var  limit=$('#parsley_reg #supplier_quty').val();
   var  tax_value=$('#parsley_reg #tax_value').val();
   
@@ -642,7 +623,8 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
 \n\
 <input type="hidden" name="new_item_id[]" value="'+items_id+'"  id="new_item_id_'+items_id+'">\n\
 <input type="hidden" name="new_item_quty[]" value="'+quty+'" id="new_item_quty_'+items_id+'"> \n\
-<input type="hidden" name="new_item_supplier[]" value="'+$('#parsley_reg #first_name').select2('data').id+'" id="new_item_supplier_'+items_id+'">\n\
+<input type="hidden" name="new_item_stock[]" value="'+$('#stock_id').val()+'" id="new_item_stock_'+items_id+'"> \n\
+<input type="hidden" name="new_item_supplier[]" value="'+$('#parsley_reg #supplier_id').val()+'" id="new_item_supplier_'+items_id+'">\n\
 <input type="hidden" name="new_item_cost[]" value="'+cost+'" id="new_item_cost_'+items_id+'"> \n\
 <input type="hidden" name="new_item_price[]" value="'+price+'" id="new_item_price_'+items_id+'">\n\
 <input type="hidden" name="new_item_tax[]" value="'+tax+'" id="new_item_tax_'+items_id+'">\n\
@@ -658,19 +640,18 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
       quty,
       cost,
       price,
-     
       tax+' : '+tax_type+'('+type+')',
-      $('#parsley_reg #first_name').select2('data').text,
+      $('#parsley_reg #first_name').val(),
       total,
-     
-'<input type="hidden" name="index" id="index">\n\
+'<input type="text" name="index" id="index">\n\
 <input type="hidden" name="item_name" id="row_item_name" value="'+name+'">\n\
 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty">\n\
-<input type="hidden" name="items_supplier[]" value="'+$('#parsley_reg #first_name').select2('data').id+'" id="items_supplier">\n\
-<input type="hidden" name="items_supplier_name[]" value="'+$('#parsley_reg #first_name').select2('data').text+'" id="items_supplier_name"> \n\
+<input type="hidden" name="items_stock[]" value="'+$('#stock_id').val()+'" id="items_stock">\n\
+<input type="hidden" name="items_supplier[]" value="'+$('#supplier_id').val()+'" id="items_supplier">\n\
+<input type="hidden" name="items_supplier_name[]" value="'+$('#parsley_reg #first_name').val()+'" id="items_supplier_name"> \n\
 <input type="hidden" name="items_cost[]" value="'+cost+'" id="items_cost"> \n\
 <input type="hidden" name="items_price[]" value="'+price+'" id="items_price">\n\
 <input type="hidden" name="items_order_guid[]" value="" id="items_order_guid">\n\
@@ -743,13 +724,11 @@ function edit_order_item(guid){
     $('#parsley_reg #supplier_quty').val($('#selected_item_table #new_item_row_id_'+guid+' #item_limit').val());
     $('#parsley_reg #quantity').val($('#selected_item_table #new_item_row_id_'+guid+' #items_quty').val());
 
-    $("#parsley_reg #first_name").select2('data', {id:$('#selected_item_table #new_item_row_id_'+guid+' #items_supplier').val(),text: $('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_name').val()});
+    $("#parsley_reg #first_name").val($('#selected_item_table #new_item_row_id_'+guid+' #items_supplier_name').val());
     $('#parsley_reg #supplier_id').val($('#selected_item_table #new_item_row_id_'+guid+' #items_supplier').val());
+    $('#parsley_reg #stock_id').val($('#selected_item_table #new_item_row_id_'+guid+' #items_stock').val());
     $('#parsley_reg #cost').val($('#selected_item_table #new_item_row_id_'+guid+' #items_cost').val());
     $('#parsley_reg #price').val($('#selected_item_table #new_item_row_id_'+guid+' #items_price').val());
-    $('#parsley_reg #extra_elements').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val());
-    $('#parsley_reg #hidden_dis_amt').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val());
-    $('#parsley_reg #i_dis_amt').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val());
     $('#parsley_reg #tax').val($('#selected_item_table #new_item_row_id_'+guid+' #items_tax').val());
     $('#parsley_reg #tax_type').val($('#selected_item_table #new_item_row_id_'+guid+' #items_tax_type').val());
     $('#parsley_reg #tax_value').val($('#selected_item_table #new_item_row_id_'+guid+' #items_tax_value').val());
@@ -766,14 +745,7 @@ function edit_order_item(guid){
 
          
          
-          $('#i_discount').val('0');
-          $('#i_dis_amt').val('0');
           
-         $('#dummy_discount_amount').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount').val());
-         $('#hidden_dis_amt').val( $('#dummy_discount_amount').val());
-          $('#dummy_discount').val($('#selected_item_table #new_item_row_id_'+guid+' #items_discount_per').val());
-          $('#hidden_dis').val($('#dummy_discount').val());
-          $('#extra_elements').val($('#dummy_discount_amount').val());
         
 
 }
@@ -808,23 +780,16 @@ function clear_inputs(){
   $('#parsley_reg #tax_value').val('');
   $('#parsley_reg #tax_type').val('');
   $('#parsley_reg #tax_Inclusive').val('');
-  $('#parsley_reg #extra_elements').val('');
-  $('#parsley_reg #item_id').val('')
-  $('#parsley_reg #supplier_id').val('')
-  $('#parsley_reg #dummy_discount_amount').val('')
-  $('#parsley_reg #hidden_dis_amt').val('')
-  $('#parsley_reg #hidden_dis').val('')
+  $('#parsley_reg #item_id').val('');
+  $('#parsley_reg #stock_id').val('');
   $('#parsley_reg #tax_label').text('<?php echo $this->lang->line('tax')?>');
-  $('#parsley_reg #dummy_discount').val('')
+
   $("#parsley_reg #items").select2('data', {id:'',text: '<?php echo $this->lang->line('search')." ".$this->lang->line('items') ?>'});
-  $("#parsley_reg #first_name").select2('data', {id:'',text: '<?php echo $this->lang->line('search')." ".$this->lang->line('supplier') ?>'});
+  $("#parsley_reg #first_name").val('');
+  $("#parsley_reg #supplier_id").val('');
   $('#parsley_reg #items').select2('open');
    
-         window.setTimeout(function ()
-    {
-       //$('#parsley_reg #delivery_date').focus();
-    $('#parsley_reg #extra_elements').val('');
-    }, 0);
+    
 }
 
 
@@ -840,8 +805,8 @@ function clear_inputs(){
         
     <div id="main_content" style="padding: 0 14px !important;">
                      
-        <input type="hidden" name="dummy_discount" id="dummy_discount" >
-        <input type="hidden" name="dummy_discount_amount" id="dummy_discount_amount" >
+        <input type="hidden" name="stock_id" id="stock_id" >
+   
         <input type="hidden" name="damage_stock_guid" id="damage_stock_guid" >
                         
                          
