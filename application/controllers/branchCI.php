@@ -13,19 +13,13 @@ class BranchCI extends CI_Controller{
                 $this->load->library('form_validation');
     }
     function index(){
-        if (!$_SERVER['HTTP_REFERER']){ redirect('branchCI');}  else{
-        if($this->session->userdata['Setting']['Branch']==1){
-         if(!isset($this->session->userdata['guid'])){
-                $this->load->view('template/header');
-                $this->load->view('login');
-                $this->load->view('template/footer');
-            }else{
-                $this->get_branch();
-        }
-        }else{
-            redirect('home');
-        }
-         }
+        $this->load->view('template/app/header'); 
+        $this->load->view('header/header');         
+        $this->load->view('template/branch',$this->posnic->branches());
+        $data['active']='branchCI';
+        $this->load->view('index',$data);
+        $this->load->view('template/app/navigation',$this->posnic->modules());
+        $this->load->view('template/app/footer');
     }
    
   
