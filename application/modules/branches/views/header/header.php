@@ -11,10 +11,7 @@
                                 { 
                                   return false;
                                 } 
-                                parsley_reg.onsubmit=function()
-                                { 
-                                  return false;
-                                } 
+                               
                          
                         } );
                         

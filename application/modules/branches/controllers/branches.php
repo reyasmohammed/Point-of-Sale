@@ -47,7 +47,7 @@ class Branches extends CI_Controller
 		}
             $this->load->model('customer')		   ;
             $rResult1 = $this->customer->get($end,$start,$like,$this->session->userdata['branch_id']);
-            $iFilteredTotal =$this->posnic->data_table_count('branches');
+            $iFilteredTotal =4;//$this->posnic->data_table_count('branches');
             $iTotal =$iFilteredTotal;
             $output1 = array(
                     "sEcho" => intval($_GET['sEcho']),
@@ -283,23 +283,8 @@ class Branches extends CI_Controller
                  redirect('branches');
              
     }
-    function restore_branches($guid){
-       if($this->session->userdata['Posnic_User']=='admin'){
-                 $this->posnic->posnic_restore($guid);
-        
-                 redirect('branches');
-                 
-             }else{
-                 redirect('home');
-             }
-    }
-     function get_date_in_strtotime(){
-        $dob=$this->input->post('dob');
-        $mdate=$this->input->post('mdate');
-         $data['dob']= date('j.n.Y', strtotime('+0 year, +0 days',$dob));
-         $data['mdate']= date('j.n.Y', strtotime('+0 year, +0 days',$mdate));
-         echo json_encode($data);
-    }
+   
+     
   
 }
 
