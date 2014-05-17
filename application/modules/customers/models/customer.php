@@ -20,6 +20,12 @@ class Customer extends CI_Model{
                 $this->db->join('customers_payment_type', 'customers.payment=customers_payment_type.guid','left');
                    
                 $query=$this->db->get();
+                $data=array();
+                foreach ($query->result_array() as $row){
+                    $row['bday']=date('d-m-Y',$row['bday']);
+                    $row['mday']=date('d-m-Y',$row['mday']);
+                    $data[]=$row;
+                }
                 return $query->result_array(); 
     }
 }

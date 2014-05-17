@@ -22,17 +22,7 @@ class Purchase extends CI_Model{
         return $sql->num_rows();
     }
    
-//    function search_items($search,$branch){
-////          $this->db->select('items.* ,items_category.guid as c_guid,items_category.category_name as c_name,brands.guid as b_guid,brands.name as b_name,items_department.department_name as d_name')->from('items')->where('items.branch_id',$branch)->where('items.active_status',1)->where('items.delete_status',1);
-////                $this->db->join('items_category', 'items.category_id=items_category.guid','left');
-////                $this->db->join('brands', 'items.brand_id=brands.guid','left');
-////                $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
-////               // $this->db->join('supplier', 'stock.supplier=supplier.id','left');
-////                $like=array('items.name'=>$search,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search);
-////                $this->db->or_like($like);     
-////                $query=$this->db->get();
-////                return $query->result();
-//    }
+
     
     
     function search_items($search,$bid,$guid,$limit){
