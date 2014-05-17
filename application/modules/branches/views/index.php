@@ -174,7 +174,7 @@
         
         
         
-        $('#add_new_customer').click(function() { 
+        $('#add_new_branch').click(function() { 
                 <?php if($this->session->userdata['branches_per']['add']==1){ ?>
                 var inputs = $('#add_customer_form').serialize();
                       $.ajax ({
@@ -199,9 +199,9 @@
                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer');?>', { type: "error" });                       
                     <?php }?>
         });
-         $('#update_branches').click(function() { 
+         $('#update_branch').click(function() { 
                 <?php if($this->session->userdata['branches_per']['edit']==1){ ?>
-                var inputs = $('#parsley_reg').serialize();
+                var inputs = $('#add_customer_form').serialize();
                       $.ajax ({
                             url: "<?php echo base_url('index.php/branches/update_branches')?>",
                             data: inputs,
@@ -343,7 +343,7 @@ function reload_update_user(){
                                                                                     'value'=>set_value('branch_id'));
                                                                      echo form_input($branch_id)?>
                                                   </div>
-                                                    <input  type="hidden" name="category" id='category'>
+                                                    <input  type="hidden" name="guid" id='guid'>
                                                    </div>
                                                <div class="col col-sm-4">
                                                    <div class="form_sep">
@@ -590,7 +590,8 @@ function reload_update_user(){
                          <div  class="row">
                           
                                   <div class="col col-lg-6 text-center"><br><br>
-                                      <button id="add_new_customer"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
+                                      <button id="add_new_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
+                                      <button id="update_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('update') ?></button>
                                       <a href="javascript:clear_add_users()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('clear') ?></a>
                                   </div>
                               </div>
