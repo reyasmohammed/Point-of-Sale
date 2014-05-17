@@ -379,7 +379,9 @@ function reload_update_user(){
                                                                   ); echo form_textarea($address);
                                                     ?>
                                             </div>  
+                                     
                                        </div>
+                                  
                                        <div class="col col-sm-8" style="padding-right: 25px;">
                                            <div class="row">
                                                <div class="col col-sm-6">
@@ -452,13 +454,15 @@ function reload_update_user(){
                                                </div>
                                            <div class="row">
                                                   <div class="col col-sm-6">
-                                                       <div class="form_sep">
-                                                                <label for="company" ><?php echo $this->lang->line('company') ?></label>													
-                                                                         <?php $company=array('name'=>'company',
-                                                                                            'class'=>'  form-control ',
-                                                                                            'id'=>'company',
-                                                                                            'value'=>set_value('company'));
-                                                                             echo form_input($company)?>
+                                                        <div class="form_sep">
+                                                            
+                                                                <label for="phone" ><?php echo $this->lang->line('fax') ?></label>
+
+                                                                 <?php $fax=array('name'=>'fax',
+                                                                                            'class'=>'form-control number',
+                                                                                            'id'=>'fax',
+                                                                                            'value'=>set_value('fax'));
+                                                                             echo form_input($fax)?>
                                                         </div> 
                                                    </div>
                                                    <div class="col col-sm-6">

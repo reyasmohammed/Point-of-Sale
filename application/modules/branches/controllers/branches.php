@@ -21,7 +21,7 @@ class Branches extends CI_Controller
         $this->load->view('template/app/footer');
     }
     function branches_data_table(){
-        $aColumns = array( 'guid','guid','first_name','company_name','phone','email','c_name','type','type','active_status' );	
+        $aColumns = array( 'guid','guid','store_name','store_name','phone','email','store_name','store_name','store_name','active_status' );	
 	$start = "";
         $end="";
         if ( $this->input->get_post('iDisplayLength') != '-1' )	{
@@ -45,8 +45,8 @@ class Branches extends CI_Controller
 		{
                     $like =array('name'=>  $this->input->get_post('sSearch'));
 		}
-            $this->load->model('customer')		   ;
-            $rResult1 = $this->customer->get($end,$start,$like,$this->session->userdata['branch_id']);
+            $this->load->model('branch_model')		   ;
+            $rResult1 = $this->branch_model->get($end,$start,$like,$this->session->userdata['branch_id']);
             $iFilteredTotal =4;//$this->posnic->data_table_count('branches');
             $iTotal =$iFilteredTotal;
             $output1 = array(
@@ -110,56 +110,44 @@ class Branches extends CI_Controller
     function add_branches(){
         if($this->session->userdata['branches_per']['add']=="1"){
             $this->load->library('form_validation');
-                $this->form_validation->set_rules("first_name",$this->lang->line('first_name'),"required"); 
-                $this->form_validation->set_rules("last_name",$this->lang->line('last_name'),"required"); 
-                $this->form_validation->set_rules("category",$this->lang->line('category'),"required"); 
+                $this->form_validation->set_rules("branch_id",$this->lang->line('branch_id'),"required"); 
+                $this->form_validation->set_rules("branch_name",$this->lang->line('branch_name'),"required");
                 $this->form_validation->set_rules("address",$this->lang->line('address'),"required"); 
-                $this->form_validation->set_rules("payment",$this->lang->line('payment'),"required"); 
                 $this->form_validation->set_rules("city",$this->lang->line('city'),"required"); 
                 $this->form_validation->set_rules("state",$this->lang->line('state'),"required"); 
                 $this->form_validation->set_rules("zip",$this->lang->line('zip'),"required"); 
                 $this->form_validation->set_rules("country",$this->lang->line('country'),"required"); 
                 $this->form_validation->set_rules("address",$this->lang->line('address'),"required"); 
                 $this->form_validation->set_rules('phone', $this->lang->line('phone'), 'max_length[12]|regex_match[/^[0-9]+$/]|xss_clean');
-                $this->form_validation->set_rules('credit_days', $this->lang->line('credit_days'), 'max_length[10]|regex_match[/^[0-9 .]+$/]|xss_clean');
-                $this->form_validation->set_rules('credit_limit', $this->lang->line('credit_limit'), 'max_length[10]|regex_match[/^[0-9 .]+$/]|xss_clean');
-                $this->form_validation->set_rules('balance', $this->lang->line('balance'), 'max_length[10]|regex_match[/^[0-9 .]+$/]|xss_clean');
+                $this->form_validation->set_rules('fax', $this->lang->line('fax'), 'max_length[12]|regex_match[/^[0-9]+$/]|xss_clean');
                 $this->form_validation->set_rules('email', $this->lang->line('email'), 'required|valid_email'); 
                 
                 if ( $this->form_validation->run() !== false ) {
                     $values=array(
-                        'first_name'=>$this->input->post('first_name'),
-                        'last_name'=>  $this->input->post('last_name'),
+                        'code'=>$this->input->post('branch_id'),
+                        'store_name'=>  $this->input->post('branch_name'),
                         'email'=>$this->input->post('email'),
                         'phone'=>$this->input->post('phone'),
+                        'fax'=>$this->input->post('fax'),
                         'city'=>$this->input->post('city'),
                         'state'=>$this->input->post('state'),
                         'country'=>$this->input->post('country'),
                         'zip'=>$this->input->post('zip'),
-                        'comments'=>$this->input->post('comments'),
                         'website'=>$this->input->post('website'),
                         'account_number'=>$this->input->post('account'),
                         'address'=>$this->input->post('address'),
-                        'company_name'=>$this->input->post('company'),                                    
-
-                        'payment'=>$this->input->post('payment'),
-                        'credit_limit'=>$this->input->post('credit_limit'),
-                        'cdays'=>$this->input->post('credit_days'),
-                        'month_credit_bal'=>$this->input->post('balance'),
-                        'bday'=>strtotime($this->input->post('dob')),
-                        'mday'=>strtotime($this->input->post('marragedate')),
-                        'title'=>$this->input->post('title'),
-                        'category_id'=>$this->input->post('category'),
 
                         'bank_name'=>$this->input->post('bank_name'),
                         'bank_location'=>$this->input->post('bank_location'),
                         'account_number'=>$this->input->post('account_no'),
-                        'cst'=>$this->input->post('cst'),
-                        'gst'=>$this->input->post('gst'),
-                        'tax_no'=>  $this->input->post('tax_no'));
-                         $where=array('phone'=>$this->input->post('phone'),'email'=>$this->input->post('email'));
-                    if($this->posnic->check_record_unique($where,'branches')){                   
-                            $this->posnic->posnic_add_record($values,'branches');
+                        'tax_cst'=>$this->input->post('cst'),
+                        'tax_gst'=>$this->input->post('gst'),
+                        'tax_reg'=>  $this->input->post('tax_no'));
+                     $this->load->model('branch_model');
+                         $where=array('code'=>$this->input->post('branch_id'),'phone'=>$this->input->post('phone'),'email'=>$this->input->post('email'));
+                    if($this->branch_model->check_duplicate($where)){  
+                       
+                            $this->branch_model->add_new_branch($values);
                     echo 'TRUE';
                 }else{
                     echo "ALREADY";
