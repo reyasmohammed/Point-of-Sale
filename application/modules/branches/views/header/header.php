@@ -148,56 +148,34 @@
                              success: function(data)        
                              {    
                                  $("#user_list").hide();
-                                 $('#edit_customer_form').show('slow');
+                                 $('#add_customer_details_form').show('slow');
+                                 $("#add_new_branch").hide();
+                                 $('#update_branch').show('slow');
                                  $('#delete').attr("disabled", "disabled");
                                  $('#posnic_add_branches').attr("disabled", "disabled");
                                  $('#active').attr("disabled", "disabled");
                                  $('#deactive').attr("disabled", "disabled");
                                  $('#branches_lists').removeAttr("disabled");
-                                 $('#parsley_reg #guid').val(data[0]['guid']);
-                                 $('#parsley_reg #first_name').val(data[0]['first_name']);
-                                 $('#parsley_reg #last_name').val(data[0]['last_name']);
-                                 $('#parsley_reg #title').val(data[0]['title']);
-                             //   alert(strtotime('18-12-2011'));
-                                 
-                                $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/branches/get_date_in_strtotime",                      
-                             type: "POST",
-                             data: {
-                              dob:data[0]['bday'],
-                              mdate:data[0]['mday']
-                             }, 
-                             dataType: 'json',               
-                             success: function(data)        
-                             {
-                                   $('#parsley_reg #dob').val(data['dob']); 
-                                   $('#parsley_reg #marragedate').val(data['mdate']); 
-                             }});
+                                 $('#guid').val(data[0]['guid']);
+                                 $('#branch_id').val(data[0]['code']);
+                                 $('#branch_name').val(data[0]['store_name']);
                               
-                                 $('#parsley_reg #address').val(data[0]['address']);
-                                 $('#parsley_reg #city').val(data[0]['city']);
-                                 $('#parsley_reg #state').val(data[0]['state']);
-                                 $('#parsley_reg #zip').val(data[0]['zip']);
-                                 $('#parsley_reg #country').val(data[0]['country']);
-                                 $('#parsley_reg #company').val(data[0]['company_name']);
-                                 $('#parsley_reg #website').val(data[0]['website']);
-                                 $('#parsley_reg #credit_days').val(data[0]['cdays']);
-                                 $('#parsley_reg #credit_limit').val(data[0]['credit_limit']);
-                                 $('#parsley_reg #balance').val(data[0]['month_credit_bal']);
-                                 $('#parsley_reg #bank_name').val(data[0]['bank_name']);
-                                 $('#parsley_reg #bank_location').val(data[0]['bank_location']);
-                                 $('#parsley_reg #account_no').val(data[0]['account_number']);
-                                 $('#parsley_reg #cst').val(data[0]['cst']);
-                                 $('#parsley_reg #gst').val(data[0]['gst']);
-                                 $('#parsley_reg #tax_no').val(data[0]['tax_no']);
-                                 $('#parsley_reg #email').val(data[0]['email']);
-                                 $('#parsley_reg #phone').val(data[0]['phone']);
+                                 $('#address').val(data[0]['address']);
+                                 $('#city').val(data[0]['city']);
+                                 $('#state').val(data[0]['state']);
+                                 $('#zip').val(data[0]['zip']);
+                                 $('#country').val(data[0]['country']);
+                                 $('#website').val(data[0]['website']);
+                                 $('#bank_name').val(data[0]['bank_name']);
+                                 $('#bank_location').val(data[0]['bank_location']);
+                                 $('#account_no').val(data[0]['account_number']);
+                                 $('#cst').val(data[0]['tax_cst']);
+                                 $('#gst').val(data[0]['tax_gst']);
+                                 $('#tax_no').val(data[0]['tax_reg']);
+                                 $('#email').val(data[0]['email']);
+                                 $('#phone').val(data[0]['phone']);
+                                 $('#fax').val(data[0]['fax']);
                                  
-                                 $("#parsley_reg #customer_category").select2('data', {id:data[0]['category_id'],text: data[0]['c_name']});
-                                $('#parsley_reg #category').val(data[0]['category_id']);
-                                 
-                                 $("#parsley_reg #payment_type").select2('data', {id:data[0]['payment'],text: data[0]['type']});
-                                $('#parsley_reg #payment').val(data[0]['payment']);
                                 
                                 $('#loading').modal('hide');
                              } 

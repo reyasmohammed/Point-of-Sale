@@ -5,6 +5,17 @@ class Branch_model extends CI_Model{
         parent::__construct();
     }
     function get($end,$start,$like,$branch){
+        if($this->session->userdata('user_type')==2){
+                $this->db->select('branches.*')->from('users_x_branches')->where('branches.delete_status',0);
+                $this->db->join('branches', "branches.guid=users_x_branches.branch_id ",'left');
+            
+                 $this->db->limit($end,$start); 
+                $this->db->or_like($like);    
+                $this->db->group_by('branches.guid');
+                $query=$this->db->get();
+                return $query->result_array(); 
+            
+        }else{
                 $this->db->select('branches.*')->from('users_x_branches')->where('branches.delete_status',0);
                 $this->db->join('branches', "branches.guid=users_x_branches.branch_id AND user_id='".$this->session->userdata('guid')."'",'left');
             
@@ -12,13 +23,12 @@ class Branch_model extends CI_Model{
                 $this->db->or_like($like);     
                 $query=$this->db->get();
                 return $query->result_array(); 
+        }
+    
         
     }
-    function edit_customer($guid){
-                $this->db->select('customers.* ,customer_category.guid as c_guid,customer_category.category_name as c_name,customers_payment_type.guid as p_guid,customers_payment_type.type as type')->from('customers')->where('customers.guid',$guid);
-                $this->db->join('customer_category', 'customers.category_id=customer_category.guid','left');
-                $this->db->join('customers_payment_type', 'customers.payment=customers_payment_type.guid','left');
-                   
+    function edit_branch($guid){
+                $this->db->select()->from('branches')->where('guid',$guid);
                 $query=$this->db->get();
                 return $query->result_array(); 
     }
@@ -33,7 +43,16 @@ class Branch_model extends CI_Model{
     }
     function add_new_branch($value){
         $this->db->insert('branches',$value);
+        $id=  $this->db->insert_id();
+        $this->db->where('id',$id);
+        $guid=md5('branches'.$id);
+        $this->db->update('branches',array('guid'=>$guid));
+        $this->db->insert('users_x_branches',array('user_id'=>  $this->session->userdata('guid'),'branch_id'=>$guid));
         
+    }
+    function update($value,$guid){
+        $this->db->where('guid',$guid);
+        $this->db->update('branches',$value);
     }
 }
 ?>
