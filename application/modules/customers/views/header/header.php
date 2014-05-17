@@ -161,21 +161,8 @@
                                  $('#parsley_reg #first_name').val(data[0]['first_name']);
                                  $('#parsley_reg #last_name').val(data[0]['last_name']);
                                  $('#parsley_reg #title').val(data[0]['title']);
-                             //   alert(strtotime('18-12-2011'));
-                                 
-                                $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/customers/get_date_in_strtotime",                      
-                             type: "POST",
-                             data: {
-                              dob:data[0]['bday'],
-                              mdate:data[0]['mday']
-                             }, 
-                             dataType: 'json',               
-                             success: function(data)        
-                             {
-                                   $('#parsley_reg #dob').val(data['dob']); 
-                                   $('#parsley_reg #marragedate').val(data['mdate']); 
-                             }});
+                                   $('#parsley_reg #dob').val(data['bday']); 
+                                   $('#parsley_reg #marragedate').val(data['mday']); 
                               
                                  $('#parsley_reg #address').val(data[0]['address']);
                                  $('#parsley_reg #city').val(data[0]['city']);
