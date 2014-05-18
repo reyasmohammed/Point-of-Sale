@@ -104,12 +104,14 @@ class Stock extends CI_Model{
           $this->db->delete('stock_transfer_x_items');
      }
      function stock_transfer_approve($guid){
-         $this->db->select()->from('stock_transfer_x_items')->where('stock_transfer_id',$guid);
+         $this->db->select('stock_transfer_x_items.*,stock_transfer.destination')->from('stock_transfer')->where('stock_transfer.guid',$guid);
+         $this->db->join('stock_transfer_x_items',"stock_transfer.guid=stock_transfer_x_items.stock_transfer_id",'left');
          $sql=  $this->db->get();
          foreach ($sql->result() as $row){
              $price=$row->sell;
              $quty=$row->quty;
              $item=$row->item;
+             $destination=$row->destination;
                $this->db->select('quty,guid')->from('stock')->where('branch_id',$this->session->userdata('branch_id'))->where('item',$item)->where('price',$price);
                $sql_order=  $this->db->get();
             
@@ -122,7 +124,23 @@ class Stock extends CI_Model{
            
                 $this->db->where('guid',$stock_id);
                 $this->db->update('stock',array('quty'=>$stock_quty-$quty));
-             
+                
+                $this->db->select('id')->from('stock')->where('branch_id',$destination)->where('item',$item)->where('price',$price);
+                $new_stock=  $this->db->get();
+                if($new_stock->num_rows()>0){
+                    foreach ($new_stock->result() as $stock){
+                        $stock_quty=  $stock->quty;
+                        $stock_id=$stock->guid;
+                    }
+           
+                    $this->db->where('guid',$stock_id);
+                    $this->db->update('stock',array('quty'=>$stock_quty+$quty));
+                }else{
+                    $this->db->insert('stock',array('item'=>$item,'quty'=>$quty,'price'=>$price,'branch_id'=>$destination));
+                    $id=  $this->db->insert_id();
+                    $this->db->where('id',$id);
+                    $this->db->update('stock',array('guid'=>  md5('stock'.$item.$id)));
+                }
              
          }
          
