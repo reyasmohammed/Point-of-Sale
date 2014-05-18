@@ -348,6 +348,7 @@ $('#save_button').show();
 $('#update_clear').hide();
 $('#save_clear').show();
 $('#total_amount').val('');
+$("#parsley_reg #select_branch").select2('enable');
 $('#items_id').val('');
 $('#supplier_guid').val('');
 $("#parsley_reg").trigger('reset');

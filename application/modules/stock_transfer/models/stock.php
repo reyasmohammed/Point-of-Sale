@@ -23,14 +23,14 @@ class Stock extends CI_Model{
         return $sql->num_rows();
     }
 
-    function update_damage_stock($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
-         $this->db->where(array('damage_stock_id'=>$guid,'item'=>$item));
+    function update_stock_transfer($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
+         $this->db->where(array('stock_transfer_id'=>$guid,'item'=>$item));
          $item_value=array('stocks_history_id'=>$stock,'tax'=>$tax,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
-         $this->db->update('damage_stock_x_items',$item_value);
+         $this->db->update('stock_transfer_x_items',$item_value);
          
     }
     function add_stock_transfer($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
-         $item_value=array('stocks_history_id'=>$stock,'damage_stock_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+         $item_value=array('stocks_history_id'=>$stock,'stock_transfer_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
          $this->db->insert('stock_transfer_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
@@ -78,16 +78,17 @@ class Stock extends CI_Model{
          return $data;
      
      }
-     function get_damage_stock($guid){
-         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,stock.quty as item_limit,suppliers.guid as s_guid,suppliers.first_name as s_name,suppliers.company_name as c_name,suppliers.address1 as address,damage_stock.*,damage_stock_x_items.tax as order_tax,damage_stock_x_items.item ,damage_stock_x_items.quty ,damage_stock_x_items.cost ,damage_stock_x_items.sell ,damage_stock_x_items.guid as o_i_guid ,damage_stock_x_items.amount ,damage_stock_x_items.stocks_history_id as stock_id,,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('damage_stock')->where('damage_stock.guid',$guid);
-         $this->db->join('damage_stock_x_items', "damage_stock_x_items.damage_stock_id = damage_stock.guid ",'left');
-         $this->db->join('stocks_history', 'damage_stock_x_items.stocks_history_id=stocks_history.guid','left');
+     function get_stock_transfer($guid){
+         $this->db->select('branches.store_name,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,stock.quty as item_limit,suppliers.guid as s_guid,suppliers.first_name as s_name,suppliers.company_name as c_name,suppliers.address1 as address,stock_transfer.*,stock_transfer_x_items.tax as order_tax,stock_transfer_x_items.item ,stock_transfer_x_items.quty ,stock_transfer_x_items.cost ,stock_transfer_x_items.sell ,stock_transfer_x_items.guid as o_i_guid ,stock_transfer_x_items.amount ,stock_transfer_x_items.stocks_history_id as stock_id,,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('stock_transfer')->where('stock_transfer.guid',$guid);
+         $this->db->join('branches', "branches.guid = stock_transfer.destination ",'left');
+         $this->db->join('stock_transfer_x_items', "stock_transfer_x_items.stock_transfer_id = stock_transfer.guid ",'left');
+         $this->db->join('stocks_history', 'stock_transfer_x_items.stocks_history_id=stocks_history.guid','left');
          $this->db->join('stock', 'stocks_history.stock_id=stock.guid','left');
-         $this->db->join('items', "items.guid=damage_stock_x_items.item AND damage_stock_x_items.damage_stock_id='".$guid."' ",'left');
-         $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=damage_stock_x_items.item  ",'left');
-         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=damage_stock_x_items.item  ",'left');
-         $this->db->join('suppliers', "suppliers.guid=damage_stock_x_items.supplier_id AND damage_stock_x_items.damage_stock_id='".$guid."'",'left');
-         $this->db->join('suppliers_x_items', "suppliers_x_items.supplier_id=damage_stock_x_items.supplier_id AND suppliers_x_items.item_id=damage_stock_x_items.item AND damage_stock_x_items.damage_stock_id='".$guid."'  ",'left');
+         $this->db->join('items', "items.guid=stock_transfer_x_items.item AND stock_transfer_x_items.stock_transfer_id='".$guid."' ",'left');
+         $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=stock_transfer_x_items.item  ",'left');
+         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=stock_transfer_x_items.item  ",'left');
+         $this->db->join('suppliers', "suppliers.guid=stock_transfer_x_items.supplier_id AND stock_transfer_x_items.stock_transfer_id='".$guid."'",'left');
+         $this->db->join('suppliers_x_items', "suppliers_x_items.supplier_id=stock_transfer_x_items.supplier_id AND suppliers_x_items.item_id=stock_transfer_x_items.item AND stock_transfer_x_items.stock_transfer_id='".$guid."'  ",'left');
          $sql=  $this->db->get();
          $data=array();
          foreach($sql->result_array() as $row){
@@ -100,10 +101,10 @@ class Stock extends CI_Model{
      }
      function delete_order_item($guid){      
           $this->db->where('guid',$guid);
-          $this->db->delete('damage_stock_x_items');
+          $this->db->delete('stock_transfer_x_items');
      }
-     function damage_stock_approve($guid){
-         $this->db->select()->from('damage_stock_x_items')->where('damage_stock_id',$guid);
+     function stock_transfer_approve($guid){
+         $this->db->select()->from('stock_transfer_x_items')->where('stock_transfer_id',$guid);
          $sql=  $this->db->get();
          foreach ($sql->result() as $row){
              $price=$row->sell;
@@ -126,12 +127,12 @@ class Stock extends CI_Model{
          }
          
         $this->db->where('guid',$guid);
-      $this->db->update('damage_stock',array('stock_status'=>1));
+      $this->db->update('stock_transfer',array('stock_status'=>1));
       
         
      }
      function  check_approve($guid){
-          $this->db->select()->from('damage_stock')->where('guid',$guid)->where('stock_status',1);
+          $this->db->select()->from('stock_transfer')->where('guid',$guid)->where('stock_status',1);
             $sql=  $this->db->get();
             if($sql->num_rows()>0){
                return FALSE;
