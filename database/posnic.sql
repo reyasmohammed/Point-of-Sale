@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2014 at 03:56 PM
+-- Generation Time: May 18, 2014 at 05:58 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.3.13
 
@@ -29,30 +29,38 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `branches` (
   `id` int(200) unsigned NOT NULL AUTO_INCREMENT,
   `guid` varchar(255) DEFAULT NULL,
+  `code` varchar(100) NOT NULL,
   `store_name` varchar(100) NOT NULL,
-  `store_city` varchar(50) NOT NULL,
-  `store_state` varchar(50) NOT NULL,
-  `store_zip` varchar(40) NOT NULL,
-  `store_country` varchar(50) NOT NULL,
-  `store_website` varchar(30) NOT NULL,
-  `store_phone` varchar(15) NOT NULL,
-  `store_email` varchar(100) NOT NULL,
-  `store_fax` varchar(100) NOT NULL,
-  `store_tax1` varchar(100) NOT NULL,
-  `store_tax2` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zip` varchar(40) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `website` varchar(30) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `fax` varchar(100) NOT NULL,
+  `bank_name` varchar(255) NOT NULL,
+  `bank_location` varchar(255) NOT NULL,
+  `account_number` varchar(255) NOT NULL,
+  `tax_cst` varchar(100) NOT NULL,
+  `tax_gst` varchar(100) NOT NULL,
+  `tax_reg` varchar(255) NOT NULL,
   `active_status` int(11) NOT NULL DEFAULT '1',
   `delete_status` int(11) NOT NULL DEFAULT '0',
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `branches`
 --
 
-INSERT INTO `branches` (`id`, `guid`, `store_name`, `store_city`, `store_state`, `store_zip`, `store_country`, `store_website`, `store_phone`, `store_email`, `store_fax`, `store_tax1`, `store_tax2`, `active_status`, `delete_status`, `deleted_by`) VALUES
-(1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'PIZZA HUT', '', '', '', '', '', '', '', '', '', '', 1, 0, ''),
-(2, 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'K F C', '', '', '', '', '', '', '', '', '', '', 1, 0, '');
+INSERT INTO `branches` (`id`, `guid`, `code`, `store_name`, `address`, `city`, `state`, `zip`, `country`, `website`, `phone`, `email`, `fax`, `bank_name`, `bank_location`, `account_number`, `tax_cst`, `tax_gst`, `tax_reg`, `active_status`, `delete_status`, `deleted_by`) VALUES
+(1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'BRC-102', 'PIZZA HUT', 'sgsdg', 'sdgsd', 'ssdag', 'sdag', 'sdagdsagasd', 'asdgsadgsda', '90890890', 'jibigopi007@gmail.com', '436436346', '', '', '', '', '', '', 1, 0, ''),
+(2, 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'BRC-103', 'K F C', '', '', '', '', '', '', '0980980980', '', '', '', '', '', '', '', '', 1, 0, ''),
+(3, 'BE4CB6FBBE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'BCH-109', 'Kottayam', 'fsdfsad', 'dsgds', 'gsd', 'sdg', 'sdgsd', 'fhdf4574', '66734673', 'jibi344443@yahoo.com', '467457', '', '', '', '', '', '', 1, 0, NULL),
+(4, '2307d083b4dc2d6476b05c96ef69a99b', 'BCH-109', 'Kottayam', '133, kottayam', 'kottayam', 'kerala', '6767687', 'india', '', '789798798', 'jibi344443@yahoo.com', '78798526', '', '', '', '', '', '', 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -85,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `added_by` int(100) NOT NULL,
   `deleted_by` int(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `brands`
@@ -109,7 +117,12 @@ INSERT INTO `brands` (`id`, `guid`, `name`, `branch_id`, `active_status`, `delet
 (15, '4363cdfeb27784549d2d4f5e4782177e', 'sdsgsg', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
 (16, 'd7f081c1498b201c98be6e29536b5e51', 'Samsung1', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
 (17, '9287313f27fdacb23e712e95cb16ef35', 'sdfgsd', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, 61, 61),
-(18, '82aaba1ac1310efc57ef159f97cf7d00', 'noki', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, 61, 61);
+(18, '82aaba1ac1310efc57ef159f97cf7d00', 'noki', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, 61, 61),
+(19, 'b75afe85b7eac44cbdae6094b67645aa', 'LG', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
+(20, 'a3b7bcbfe5771bf8333408e95b5f7e85', 'Brands', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
+(21, '5f88cfa9500bc70b9fd172182d528c73', 'brands 1', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
+(22, 'fb27c6720ef3b22ada9fa07edbf9bf53', 'brands 2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, 61, 0),
+(23, 'd00f4af34c53902b94fb87279f46c8e1', 'brands 3', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, 61, 0);
 
 -- --------------------------------------------------------
 
@@ -132,8 +145,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('f71679758855e4982a7dd0357d6add07', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; rv:29.0) Gecko/20100101 Firefox/29.0', 1396967265, ''),
-('34a3b74a386ed3dfa0fdf485bd51a5d1', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; rv:29.0) Gecko/20100101 Firefox/29.0', 1396972458, 'a:103:{s:9:"user_data";s:0:"";s:2:"id";s:1:"3";s:4:"guid";s:36:"61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4";s:8:"username";s:5:"admin";s:8:"password";s:32:"21232f297a57a5a743894a0e4a801fc3";s:10:"first_name";s:5:"admin";s:9:"last_name";s:5:"admin";s:7:"address";s:5:"slvpg";s:3:"sex";s:4:"Male";s:5:"blood";s:0:"";s:3:"age";s:2:"23";s:4:"city";s:9:"bangalore";s:5:"state";s:7:"karnada";s:3:"zip";s:6:"676809";s:7:"country";s:5:"india";s:5:"email";s:20:"jibi344443@yahoo.com";s:5:"phone";s:10:"7795398584";s:5:"image";s:2:"10";s:3:"dob";s:9:"654739200";s:13:"active_status";s:1:"1";s:10:"created_by";s:2:"99";s:10:"deleted_by";s:1:"0";s:13:"delete_status";s:1:"0";s:9:"user_type";s:1:"2";s:14:"default_branch";s:1:"2";s:7:"Setting";a:2:{s:6:"Branch";s:1:"1";s:6:"Depart";s:1:"0";}s:9:"branch_id";s:36:"BE4CB6FB-276C-457A-9D0F-D7948222EBB3";s:9:"users_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:5:"users";i:5;}s:5:"users";s:2:"On";s:10:"brands_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:6:"brands";i:5;}s:6:"brands";s:2:"On";s:17:"items_setting_per";a:4:{s:6:"access";i:1;s:4:"read";i:1;s:3:"set";i:1;s:13:"items_setting";i:3;}s:13:"items_setting";s:2:"On";s:13:"item_code_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:9:"item_code";i:5;}s:9:"item_code";s:2:"On";s:9:"taxes_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:5:"taxes";i:5;}s:5:"taxes";s:2:"On";s:14:"taxes_area_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:10:"taxes_area";i:5;}s:10:"taxes_area";s:2:"On";s:18:"items_category_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:14:"items_category";i:5;}s:14:"items_category";s:2:"On";s:17:"tax_commodity_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:13:"tax_commodity";i:5;}s:13:"tax_commodity";s:2:"On";s:13:"tax_types_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:9:"tax_types";i:5;}s:9:"tax_types";s:2:"On";s:9:"items_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:5:"items";i:5;}s:5:"items";s:2:"On";s:13:"suppliers_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:9:"suppliers";i:5;}s:9:"suppliers";s:2:"On";s:21:"suppliers_x_items_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:17:"suppliers_x_items";i:5;}s:17:"suppliers_x_items";s:2:"On";s:13:"customers_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:9:"customers";i:5;}s:9:"customers";s:2:"On";s:21:"customer_category_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:17:"customer_category";i:5;}s:17:"customer_category";s:2:"On";s:17:"user_groupsci_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:13:"user_groupsci";i:5;}s:13:"user_groupsci";s:2:"On";s:12:"branchCI_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:8:"branchCI";i:5;}s:8:"branchCI";s:2:"On";s:26:"customers_payment_type_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:22:"customers_payment_type";i:5;}s:22:"customers_payment_type";s:2:"On";s:18:"purchase_order_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:14:"purchase_order";i:6;}s:14:"purchase_order";s:2:"On";s:20:"items_department_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:16:"items_department";i:5;}s:16:"items_department";s:2:"On";s:22:"suppliers_category_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:18:"suppliers_category";i:5;}s:18:"suppliers_category";s:2:"On";s:15:"sales_types_per";a:6:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:6:"delete";i:1;s:11:"sales_types";i:5;}s:11:"sales_types";s:2:"On";s:24:"goods_receiving_note_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:20:"goods_receiving_note";i:6;}s:20:"goods_receiving_note";s:2:"On";s:14:"direct_grn_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:10:"direct_grn";i:6;}s:10:"direct_grn";s:2:"On";s:20:"purchase_invoice_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:16:"purchase_invoice";i:6;}s:16:"purchase_invoice";s:2:"On";s:18:"direct_invoice_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:14:"direct_invoice";i:6;}s:14:"direct_invoice";s:2:"On";s:20:"supplier_payment_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:16:"supplier_payment";i:6;}s:16:"supplier_payment";s:2:"On";s:25:"purchase_order_cancel_per";a:2:{s:3:"add";i:1;s:21:"purchase_order_cancel";i:1;}s:21:"purchase_order_cancel";s:2:"On";s:18:"stock_transfer_per";a:2:{s:3:"add";i:1;s:14:"stock_transfer";i:1;}s:14:"stock_transfer";s:2:"On";s:17:"opening_stock_per";a:2:{s:3:"add";i:1;s:13:"opening_stock";i:1;}s:13:"opening_stock";s:2:"On";s:16:"damage_stock_per";a:2:{s:3:"add";i:1;s:12:"damage_stock";i:1;}s:12:"damage_stock";s:2:"On";s:19:"sales_quotation_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:15:"sales_quotation";i:6;}s:15:"sales_quotation";s:2:"On";s:15:"sales_order_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:11:"sales_order";i:6;}s:11:"sales_order";s:2:"On";s:14:"sales_bill_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:10:"sales_bill";i:6;}s:10:"sales_bill";s:2:"On";s:16:"sales_direct_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:12:"sales_direct";i:6;}s:12:"sales_direct";s:2:"On";s:19:"direct_delivery_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:15:"direct_delivery";i:6;}s:15:"direct_delivery";s:2:"On";s:16:"sales_return_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:12:"sales_return";i:6;}s:12:"sales_return";s:2:"On";s:19:"purchase_return_per";a:7:{s:6:"access";i:1;s:4:"read";i:1;s:3:"add";i:1;s:4:"edit";i:1;s:7:"approve";i:1;s:6:"delete";i:1;s:15:"purchase_return";i:6;}s:15:"purchase_return";s:2:"On";s:11:"Posnic_User";s:5:"admin";s:10:"data_limit";i:20;}');
+('fda6697e3091030e74d986e67d5cd713', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; rv:30.0) Gecko/20100101 Firefox/30.0', 1400392615, '');
 
 -- --------------------------------------------------------
 
@@ -172,7 +184,6 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `cst` varchar(50) NOT NULL,
   `gst` varchar(50) NOT NULL,
   `tax_no` varchar(50) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) NOT NULL,
   `active_status` int(11) NOT NULL DEFAULT '1',
   `delete_status` int(11) NOT NULL DEFAULT '0',
@@ -185,16 +196,12 @@ CREATE TABLE IF NOT EXISTS `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `guid`, `branch_id`, `first_name`, `title`, `last_name`, `address`, `address2`, `bday`, `mday`, `city`, `state`, `zip`, `country`, `payment`, `credit_limit`, `cdays`, `month_credit_bal`, `category_id`, `comments`, `company_name`, `email`, `phone`, `account_number`, `bank_name`, `bank_location`, `website`, `cst`, `gst`, `tax_no`, `active`, `created_by`, `active_status`, `delete_status`, `added_by`, `deleted_by`) VALUES
-(1, 'ut7utuy', '', '', '', '', '', '', 1, 0, '', '', '', '', '', 1, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1, 0, '', ''),
-(2, 'rb6tser6nb5er6n5b5', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'jibi', 'Mr', 'gopi', '', '', 1, 0, '', '', '', '', '2', 1, 0, '0', '1', '', '', 'jibi344443@yahoo.com', '45747457', '', '', '', '', '', '', '', 1, 0, 0, 1, '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(3, '0f7c80352b128f9a45d25e42d1ebd19e', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'jibi', '1', 'gopi', 'sdsd', '', 0, 0, 'sdgsd', 'sdgsd', '44236', 'sdgsdg', '62913143b64724f3f2e19b611c0c52a1', 1, 0, '0', 'b07822de514011f2e7ffc12692033acb', '0', 'rtweytwy', 'jibi344443@yahoo.com', '457457', '', '', '', 'wtyweyy', '', '', '', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(4, '28e0bbea4b74ebc7dd397327ef8acd0c', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'jibi', 'Mr', 'gopi', '', '', 1, 0, '', '', '', '', '2', 1, 0, '0', '1', '', '', 'jibi344443@yahoo.com', '5474567', '', '', '', '', '', '', '', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(5, '315e6ee6f50a8fdfa949fdcf8918afb1', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'jibi', 'Mr', 'gopi', '', '', 1, 0, 'yuiyui', 'oiuoi', '', '', '2', 1, 0, '0', '2', '', '', 'jibi344443@yahoo.com', '547457457', '', '', '', '', '', '', '', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(6, 'compan', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'gopi', '1', 'papu', '78979', '', 1368316800, 1368403200, 'HSR Layout', '79879', '686509', 'india', 'caf6d38b8e02db86b3d41fd23a6439bb', 1200, 7987, '7987', '7879977979777987', '0', 'posnic', 'jibi@yahoo.com', '7795398584', 'ACT446546', '78979', '78979', 'www.posnic.com', '97987', '7987', '9878979', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
-(7, '63aba6eb627ce1811191c2d22399191d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Sridhar', '1', 'bala', '789789', '', 1390435200, 1390435200, '798', '798', '98798', '789', '', 89, 89, '89', '', '0', 'posnic', 'sridharkalaibala@gmail.com', '798798', '78789khkjhk', 'Fedaral', 'bangalore', 'www.posnic.com', 'Tuy66876', '687687', '687687', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(8, '5315c17449a7324783c45ae3632f7487', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Sridhar', '1', 'bala', 'bangalore', '', 508204800, 1436918400, 'BDA', 'karnataka', '87979', 'india', 'cb22f3b1c17a6b1df9d2090e945f0364', 78978, 78, '7879', 'b07822de514011f2e7ffc12692033acb', '0', 'posnic', 'sridharkalaibala@gmail.com', '789879879', 'ACT789798', 'IDBI', 'HSR Layout', 'www.posnic.com', '7987987', '789798', '797897', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
-(9, 'ee6958cdd55bbe2225e4fec2cb6cc6ce', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8908', '1', '89080', 'iuyi', '', 0, 0, 'yiuy', 'uiyi', 'yiuyi', 'uiyui', '22b29efa97369324e345614ab68b773f', 0, 0, '', '7879977979777987', '0', '9809', 'jibi344443@yahoo.com', '89080', '', '', '', '890809', '', '', '', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
+INSERT INTO `customers` (`id`, `guid`, `branch_id`, `first_name`, `title`, `last_name`, `address`, `address2`, `bday`, `mday`, `city`, `state`, `zip`, `country`, `payment`, `credit_limit`, `cdays`, `month_credit_bal`, `category_id`, `comments`, `company_name`, `email`, `phone`, `account_number`, `bank_name`, `bank_location`, `website`, `cst`, `gst`, `tax_no`, `created_by`, `active_status`, `delete_status`, `added_by`, `deleted_by`) VALUES
+(3, '0f7c80352b128f9a45d25e42d1ebd19e', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'jibi', '1', 'gopi', 'sdsd', '', 0, 0, 'sdgsd', 'sdgsd', '44236', 'sdgsdg', '62913143b64724f3f2e19b611c0c52a1', 1, 0, '0', 'b0913b800960821c61b9e7426cc3f1b8', '0', 'rtweytwy', 'jibi344443@yahoo.com', '457457', '', '', '', 'wtyweyy', '', '', '', 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(6, 'compan', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'gopi', '1', 'papu', '78979', '', 1368316800, 1368403200, 'HSR Layout', '79879', '686509', 'india', 'caf6d38b8e02db86b3d41fd23a6439bb', 1200, 7987, '7987', 'b0913b800960821c61b9e7426cc3f1b8', '0', 'posnic', 'jibi@yahoo.com', '7795398584', 'ACT446546', '78979', '78979', 'www.posnic.com', '97987', '7987', '9878979', 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(7, '63aba6eb627ce1811191c2d22399191d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Sridhar', '1', 'bala', '789789', '', 1390435200, 1390435200, '798', '798', '98798', '789', '22b29efa97369324e345614ab68b773f', 89, 89, '89', 'fe29e56d1e12ecaa33cff3242d8b8390', '0', 'posnic', 'sridharkalaibala@gmail.com', '798798', '78789khkjhk', 'Fedaral', 'bangalore', 'www.posnic.com', 'Tuy66876', '687687', '687687', 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(8, '5315c17449a7324783c45ae3632f7487', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Sridhar', '1', 'bala', 'bangalore', '', 508204800, 1436918400, 'BDA', 'karnataka', '87979', 'india', 'cb22f3b1c17a6b1df9d2090e945f0364', 78978, 78, '7879', 'b0913b800960821c61b9e7426cc3f1b8', '0', 'posnic', 'sridharkalaibala@gmail.com', '789879879', 'ACT789798', 'IDBI', 'HSR Layout', 'www.posnic.com', '7987987', '789798', '797897', 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(9, 'ee6958cdd55bbe2225e4fec2cb6cc6ce', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8908', '1', '89080', 'iuyi', '', 0, 0, 'yiuy', 'uiyi', 'yiuyi', 'uiyui', '22b29efa97369324e345614ab68b773f', 0, 0, '', 'fe29e56d1e12ecaa33cff3242d8b8390', '0', '9809', 'jibi344443@yahoo.com', '89080', '', '', '', '890809', '', '', '', 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -274,12 +281,135 @@ CREATE TABLE IF NOT EXISTS `customer_category` (
 
 INSERT INTO `customer_category` (`id`, `guid`, `branch_id`, `category_name`, `discount`, `active_status`, `delete_status`, `added_by`, `deleted_by`) VALUES
 (1, '7879977979777987', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'C-123', '0.000', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(2, 'b07822de514011f2e7ffc12692033acb', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'C-1233', '0.000', 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(3, 'b0913b800960821c61b9e7426cc3f1b8', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Web sales1', '0.000', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(2, 'b07822de514011f2e7ffc12692033acb', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'C-1233', '1.000', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(3, 'b0913b800960821c61b9e7426cc3f1b8', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'Web sales1', '2.000', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
 (4, 'bbb619417f5a8add548cdd6af3b7c71a', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'dsgsdgs', '0.000', 1, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
 (5, '50dd8794a73be791efc0f38b018a14ef', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'fgfgh', '0.000', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
 (6, 'fe29e56d1e12ecaa33cff3242d8b8390', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'retails1', '1.200', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
 (7, 'f1a986ddfd820fae3f4496b2fb06ed04', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'NRI', '1.300', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_payable`
+--
+
+CREATE TABLE IF NOT EXISTS `customer_payable` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_id` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `amount` decimal(55,3) NOT NULL,
+  `paid_amount` decimal(55,3) NOT NULL,
+  `payment_status` int(11) NOT NULL DEFAULT '0',
+  `branch_id` varchar(255) NOT NULL,
+  `guid` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
+
+--
+-- Dumping data for table `customer_payable`
+--
+
+INSERT INTO `customer_payable` (`id`, `invoice_id`, `customer_id`, `amount`, `paid_amount`, `payment_status`, `branch_id`, `guid`) VALUES
+(74, 'de3a8068fb7f8e0320b0a3e8f0689214', '63aba6eb627ce1811191c2d22399191d', '1672.696', '0.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ca7c4c7f76fab9b4b456a1d3a2a7d1b2'),
+(75, '00f230a2898e6c193b03fabfcbabd990', '63aba6eb627ce1811191c2d22399191d', '6131.212', '1001.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'a8ea84f9bcd49b7d6377abfda6b74fd2'),
+(76, '40fda2a053bc4aaaae18999220c22ea0', '63aba6eb627ce1811191c2d22399191d', '6131.212', '6000.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '3683b8421c7215cd9658c1dd47b13fe0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `damage_stock`
+--
+
+CREATE TABLE IF NOT EXISTS `damage_stock` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` int(11) NOT NULL,
+  `remark` varchar(300) NOT NULL,
+  `note` varchar(300) NOT NULL,
+  `no_items` int(11) NOT NULL,
+  `total_amount` decimal(30,3) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `stock_status` int(11) NOT NULL DEFAULT '0',
+  `branch_id` varchar(255) NOT NULL,
+  `deleted_by` varchar(255) NOT NULL,
+  `added_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+
+--
+-- Dumping data for table `damage_stock`
+--
+
+INSERT INTO `damage_stock` (`id`, `guid`, `code`, `date`, `remark`, `note`, `no_items`, `total_amount`, `active_status`, `delete_status`, `stock_status`, `branch_id`, `deleted_by`, `added_by`) VALUES
+(34, '450ee7d2ef0887e6fde9456d39742687', 'DS-122', 1400198400, 'gsdgsdg', 'xdcfsd', 1, '504.900', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(35, '65b17692b9ae489b0ec473e00714e7d6', 'DS-123', 1400198400, 'gsdg', 'sdfsd', 1, '4590.000', 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(36, '12b0ae76b49f38ab9115ca796113b5ca', 'DS-124', 1400198400, 'asfas', 'sadsa', 2, '5790.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `damage_stock_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `damage_stock_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `damage_stock_id` varchar(255) NOT NULL,
+  `stocks_history_id` varchar(255) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `quty` int(11) NOT NULL,
+  `cost` decimal(30,3) NOT NULL,
+  `sell` decimal(30,3) NOT NULL,
+  `tax` decimal(30,3) NOT NULL,
+  `amount` decimal(30,3) NOT NULL,
+  `supplier_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+
+--
+-- Dumping data for table `damage_stock_x_items`
+--
+
+INSERT INTO `damage_stock_x_items` (`id`, `guid`, `damage_stock_id`, `stocks_history_id`, `item`, `quty`, `cost`, `sell`, `tax`, `amount`, `supplier_id`) VALUES
+(42, '5dbcf39196d05414cb23aa5936447803', '450ee7d2ef0887e6fde9456d39742687', '52bb9dabaa6986843a2c91de88574923', '9d8439c7f35923f2397af1b7edadc670', 11, '45.000', '676.000', '9.900', '495.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(43, '031d4fccac6d2368adbc6c693b9669f7', '65b17692b9ae489b0ec473e00714e7d6', '9cff3c99cc56218f03b7e9a5975fa6ee', '9d8439c7f35923f2397af1b7edadc670', 100, '45.000', '676.000', '90.000', '4590.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(44, '579071c129a777c2ca2eb0624c9e8031', '12b0ae76b49f38ab9115ca796113b5ca', '0d69420b3511b6f936906639d9e6ccb1', 'ef92a1dc9701ac89a655927183a78d87', 100, '12.000', '15.000', '0.000', '1200.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(45, 'f05fab2228e99cab1752932f8f25b380', '12b0ae76b49f38ab9115ca796113b5ca', '9cff3c99cc56218f03b7e9a5975fa6ee', '9d8439c7f35923f2397af1b7edadc670', 100, '45.000', '676.000', '90.000', '4590.000', 'ceab8c7d14f12aaeec1dc19b3d81212a');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery_note_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `delivery_note_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) DEFAULT NULL,
+  `branch_id` varchar(255) NOT NULL,
+  `delivery_note` varchar(255) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `quty` decimal(55,0) NOT NULL,
+  `free` decimal(55,0) NOT NULL,
+  `active` int(255) NOT NULL,
+  `active_status` int(255) NOT NULL,
+  `delete_status` int(255) NOT NULL,
+  `added_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=85 ;
+
+--
+-- Dumping data for table `delivery_note_x_items`
+--
+
+INSERT INTO `delivery_note_x_items` (`id`, `guid`, `branch_id`, `delivery_note`, `item`, `quty`, `free`, `active`, `active_status`, `delete_status`, `added_by`) VALUES
+(80, 'd1333e1433af143c5351842158b67322', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '66077ccc98dd6f48c5c1d86cfdf2c6a0', 'c3216f7d74d4adcf50901b8559d9a3bc', '89', '89', 0, 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(81, 'd1456451ee94328a3187930e559de5fb', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '66077ccc98dd6f48c5c1d86cfdf2c6a0', 'abc049b9d095c27843b114f02ac5f640', '78', '78', 0, 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(82, 'f9b465874c6a5d256f87af155eedf3fb', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '66077ccc98dd6f48c5c1d86cfdf2c6a0', '9d8439c7f35923f2397af1b7edadc670', '90', '90', 0, 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(83, 'a9cd9d406c9bf19232de63c360ada616', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '66077ccc98dd6f48c5c1d86cfdf2c6a0', '9d8439c7f35923f2397af1b7edadc670', '90', '90', 0, 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(84, 'adae24c40b5d2d663923ea5c317cba00', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '66077ccc98dd6f48c5c1d86cfdf2c6a0', 'c709663a0324fb6175b807eb730de052', '90', '90', 0, 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
 
 -- --------------------------------------------------------
 
@@ -471,6 +601,213 @@ INSERT INTO `direct_invoice_items` (`id`, `guid`, `order_id`, `item`, `quty`, `r
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `direct_sales`
+--
+
+CREATE TABLE IF NOT EXISTS `direct_sales` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) NOT NULL,
+  `customer_id` varchar(200) NOT NULL,
+  `exp_date` int(20) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `date` int(20) NOT NULL,
+  `discount` decimal(30,3) NOT NULL,
+  `discount_amt` decimal(30,3) NOT NULL,
+  `customer_discount` decimal(30,3) NOT NULL,
+  `customer_discount_amount` decimal(30,3) NOT NULL,
+  `freight` varchar(200) NOT NULL,
+  `round_amt` varchar(200) NOT NULL,
+  `total_items` varchar(200) NOT NULL,
+  `total_amt` varchar(200) NOT NULL,
+  `total_item_amt` varchar(200) NOT NULL,
+  `remark` varchar(200) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `order_status` int(2) NOT NULL,
+  `receipt_status` int(2) NOT NULL,
+  `received_status` int(11) NOT NULL,
+  `expire_status` int(11) NOT NULL,
+  `branch_id` varchar(200) NOT NULL,
+  `added_by` varchar(200) NOT NULL,
+  `deleted_by` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+
+--
+-- Dumping data for table `direct_sales`
+--
+
+INSERT INTO `direct_sales` (`id`, `guid`, `customer_id`, `exp_date`, `code`, `date`, `discount`, `discount_amt`, `customer_discount`, `customer_discount_amount`, `freight`, `round_amt`, `total_items`, `total_amt`, `total_item_amt`, `remark`, `note`, `active_status`, `delete_status`, `order_status`, `receipt_status`, `received_status`, `expire_status`, `branch_id`, `added_by`, `deleted_by`) VALUES
+(47, '8d5b4ad0198a35411725769a0b59d46c', '0f7c80352b128f9a45d25e42d1ebd19e', 1399507200, 'SO-117', 1398902400, '0.000', '7.758', '0.000', '0.000', '10', '10', '2', '788.002', '775.760', 'fafa', 'afas', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(48, 'e2aa0234a443b1cae2c4929332494433', '0f7c80352b128f9a45d25e42d1ebd19e', 1399075200, 'SO-118', 1399075200, '0.000', '77.576', '0.000', '0.000', '10', '10', '2', '7700.024', '7757.600', 'test', 'test', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(49, 'ff78d58c0759625def196240cc673955', '0f7c80352b128f9a45d25e42d1ebd19e', 1399248000, 'SO-119', 1399248000, '0.000', '775.760', '0.000', '0.000', '10', '10', '2', '76820.240', '77576.000', 'sdgsd', 'sdfs', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(50, '248057815812d578ffd099c7661fb7db', '0f7c80352b128f9a45d25e42d1ebd19e', 0, '12', 1399334400, '1.000', '68.276', '0.000', '0.000', '', '', '1', '6759.324', '6827.600', 'sdfgsd', 'sdf', 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(51, '785ad4ebd1128dfc512570261bcbd1dc', '63aba6eb627ce1811191c2d22399191d', 0, 'DS-133', 1399680000, '0.000', '7.585', '0.000', '0.000', '', '', '1', '60.540', '68.952', 'gsgs', 'sg', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(52, '82bf49e2c51db1c9c904d0478a1e0a7d', '5315c17449a7324783c45ae3632f7487', 0, 'DS-134', 1399680000, '0.000', '6.895', '2.000', '13.790', '10', '10', '1', '688.835', '689.520', 'faf', 'ad', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(53, '6b49f603486d4e4e87417bfc6d122d24', '5315c17449a7324783c45ae3632f7487', 0, 'DS-135', 1399680000, '0.000', '758.472', '2.000', '137.904', '', '', '1', '5998.824', '6895.200', 'afsaf', 'fa', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(54, '8272ed70b3e7eeaf03f6f32ce997a142', '5315c17449a7324783c45ae3632f7487', 0, 'DS-136', 1399680000, '0.000', '16.548', '2.000', '16.548', '', '', '1', '794.328', '827.424', 'zvz', 'vz', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(55, 'd8127f0ee98b719d92dcf58aca2c3f4a', '63aba6eb627ce1811191c2d22399191d', 0, 'DS-137', 1399766400, '0.000', '1.379', '1.200', '0.827', '', '', '1', '66.746', '68.952', '', '', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(56, '8574f130f1575d33fab5f240bbbfa33e', '63aba6eb627ce1811191c2d22399191d', 0, 'DS-138', 1399680000, '2.000', '18.780', '1.200', '11.268', '', '', '2', '908.976', '939.024', 'sdfsd', 'sdfxcv', 1, 0, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `direct_sales_delivery`
+--
+
+CREATE TABLE IF NOT EXISTS `direct_sales_delivery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) NOT NULL,
+  `customer_id` varchar(200) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `date` int(20) NOT NULL,
+  `discount` decimal(30,3) NOT NULL,
+  `discount_amt` decimal(30,3) NOT NULL,
+  `customer_discount` decimal(30,3) NOT NULL,
+  `customer_discount_amount` decimal(30,3) NOT NULL,
+  `freight` varchar(200) NOT NULL,
+  `round_amt` varchar(200) NOT NULL,
+  `total_items` varchar(200) NOT NULL,
+  `total_amt` varchar(200) NOT NULL,
+  `total_item_amt` varchar(200) NOT NULL,
+  `remark` varchar(200) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `order_status` int(2) NOT NULL,
+  `bill_status` int(2) NOT NULL,
+  `branch_id` varchar(200) NOT NULL,
+  `added_by` varchar(200) NOT NULL,
+  `deleted_by` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
+
+--
+-- Dumping data for table `direct_sales_delivery`
+--
+
+INSERT INTO `direct_sales_delivery` (`id`, `guid`, `customer_id`, `code`, `date`, `discount`, `discount_amt`, `customer_discount`, `customer_discount_amount`, `freight`, `round_amt`, `total_items`, `total_amt`, `total_item_amt`, `remark`, `note`, `active_status`, `delete_status`, `order_status`, `bill_status`, `branch_id`, `added_by`, `deleted_by`) VALUES
+(51, 'f973f4b02a6ba52ff6ebbc85242baf26', '0f7c80352b128f9a45d25e42d1ebd19e', 'DDN-123', 1399248000, '1.000', '682.760', '0.000', '0.000', '10', '10', '1', '67613.240', '68276.000', 'sdggs', 'sdfg', 1, 0, 1, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(52, '0bcd63a3b1b107f08d20fc9c92b3f6cd', '0f7c80352b128f9a45d25e42d1ebd19e', 'DDN-124', 1399420800, '0.000', '6838.760', '0.000', '0.000', '10', '1', '2', '677048.240', '683876.000', 'sdf', 'sd', 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(53, '95f12b4ba62352fa8be86cd51608544e', '0f7c80352b128f9a45d25e42d1ebd19e', 'DDN-125', 1399420800, '0.000', '0.000', '0.000', '0.000', '', '', '2', '775.760', '775.760', 'sdfs', 'sdf', 1, 0, 1, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(54, '0002ecc5190e9496268a77e3190d19e8', '63aba6eb627ce1811191c2d22399191d', 'DDN-126', 1399680000, '0.000', '75.847', '1.200', '8.274', '', '', '1', '605.399', '689.520', 'gsdgs', 'sdg', 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(55, '48090dc1ed36620492650837054b13b7', '63aba6eb627ce1811191c2d22399191d', 'DDN-127', 1399680000, '0.000', '8.011', '1.200', '20.413', '', '', '3', '1672.696', '1701.120', 'dsg', 'dsfdasd', 1, 0, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `direct_sales_delivery_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `direct_sales_delivery_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) DEFAULT NULL,
+  `direct_sales_delivery_id` varchar(200) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `quty` varchar(100) NOT NULL,
+  `price` decimal(55,3) NOT NULL,
+  `discount` decimal(10,3) NOT NULL,
+  `stock_id` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=217 ;
+
+--
+-- Dumping data for table `direct_sales_delivery_x_items`
+--
+
+INSERT INTO `direct_sales_delivery_x_items` (`id`, `guid`, `direct_sales_delivery_id`, `item`, `quty`, `price`, `discount`, `stock_id`) VALUES
+(182, 'af01fac9f2cdb46ae488db156dddd683', '1ab67d2287938c48714531aad9b3dbb9', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(184, 'd2ef727839939479b4804d416eb92ce7', '1ab67d2287938c48714531aad9b3dbb9', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(185, '5ed94b6abf1eef5c5d3209ae9fc4fbdb', '5d5d99e14cda47a3e712e10b5f25940e', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(186, 'ce4c47d5119b7795ca5d59a28bf271cc', '5d5d99e14cda47a3e712e10b5f25940e', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(187, '7cddf49d7f9f69a6de34aee42d22935e', '4ce2d527cf85aa58453230e9b0a0bcbc', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(188, '10e8387eab27da7e98c256547a4fc5ef', '95ecca122700047d464befc8f01d4cd6', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(189, '9b0aec052e558e6b6f192c0bc031c1c2', '95ecca122700047d464befc8f01d4cd6', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(190, '30cd620a8d129b7c16128d5a28f72590', '45c2fdea8d1a075af9a71301f627953f', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(191, 'b69d04cfba9833412657dfd36356db1f', '45c2fdea8d1a075af9a71301f627953f', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(192, 'cb437a19bc0dabca55819c2745647dbe', '3e3ed9b31c74351bc99cc3926a198946', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(193, 'f0e07f5e2b781bb27c2509add0519ebc', '3e3ed9b31c74351bc99cc3926a198946', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(194, '0c1affbd5388ce61493d372b4904f8ad', 'dc12bb9c9dfb9f0c1693dae06f3898c4', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(195, 'bff59cba1f017caa2e44ad13f3e30d07', 'dc12bb9c9dfb9f0c1693dae06f3898c4', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(196, 'ae88468c513d4126a131a888740b8887', '08c34f5a106960808d7b242f9ff5aa76', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(197, '33af9442383c7d6c5738c00ea145f5ba', '08c34f5a106960808d7b242f9ff5aa76', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(198, '6973bf9a2a0a6b0f682b72cf38f8869b', '08c34f5a106960808d7b242f9ff5aa76', 'c709663a0324fb6175b807eb730de052', '1', '30.000', '0.000', '11c4c234a665203e54368f6db77299dc'),
+(199, '6c9e8bf198c8d02be066c0be80b4fefc', '8d5b4ad0198a35411725769a0b59d46c', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(200, 'e4522f5931efab92d3911603e57df955', '8d5b4ad0198a35411725769a0b59d46c', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(201, '22f8d51f7723b0448b30f1710679c47e', 'e2aa0234a443b1cae2c4929332494433', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(202, '7af17dd274164de6a2bda30db7a7634a', 'e2aa0234a443b1cae2c4929332494433', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(203, '4608074da107d83f367e319f7ecb376a', 'ff78d58c0759625def196240cc673955', '9d8439c7f35923f2397af1b7edadc670', '100', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(204, '6e8c5a0f001c5f9ea4d31ee3c2b7da97', 'ff78d58c0759625def196240cc673955', 'c3216f7d74d4adcf50901b8559d9a3bc', '100', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(206, '18663f92104173e7d788ad7071b247ac', '4566351566b26e13ad74d6b4a7ce495a', 'c3216f7d74d4adcf50901b8559d9a3bc', '12', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(207, 'cb399d902142eecca6fd2a47a97709fd', '4566351566b26e13ad74d6b4a7ce495a', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(208, '75514b50c2cf5249905e62621a23564c', 'f973f4b02a6ba52ff6ebbc85242baf26', '9d8439c7f35923f2397af1b7edadc670', '100', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(209, '41b649002a32af991583b509cb1412f0', '0bcd63a3b1b107f08d20fc9c92b3f6cd', '9d8439c7f35923f2397af1b7edadc670', '1000', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(210, '53e21264dd85c966b2166e32c30ebee0', '0bcd63a3b1b107f08d20fc9c92b3f6cd', 'c3216f7d74d4adcf50901b8559d9a3bc', '12', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(211, '21b583ffc1f2cc383b3b0e605eb5d0ca', '95f12b4ba62352fa8be86cd51608544e', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(212, '5a39533506d84304b56e48dd3044f7a6', '95f12b4ba62352fa8be86cd51608544e', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(213, 'a7fad3907600a9536f1b7f7a48f8a715', '0002ecc5190e9496268a77e3190d19e8', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(214, '69346faaefa9c47246be47354c4a1a0f', '48090dc1ed36620492650837054b13b7', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(215, '35353e826ee2f1f48e9ce218954a8e97', '48090dc1ed36620492650837054b13b7', 'c3216f7d74d4adcf50901b8559d9a3bc', '12', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(216, '729239d0273d589c062a2065994c00c9', '48090dc1ed36620492650837054b13b7', 'abc049b9d095c27843b114f02ac5f640', '12', '75.000', '0.000', '0e3ab27ee4da7aae96f7b0a3a7ac12f4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `direct_sales_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `direct_sales_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) DEFAULT NULL,
+  `direct_sales_id` varchar(200) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `quty` varchar(100) NOT NULL,
+  `price` decimal(55,3) NOT NULL,
+  `discount` decimal(10,3) NOT NULL,
+  `stock_id` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=213 ;
+
+--
+-- Dumping data for table `direct_sales_x_items`
+--
+
+INSERT INTO `direct_sales_x_items` (`id`, `guid`, `direct_sales_id`, `item`, `quty`, `price`, `discount`, `stock_id`) VALUES
+(182, 'af01fac9f2cdb46ae488db156dddd683', '1ab67d2287938c48714531aad9b3dbb9', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(184, 'd2ef727839939479b4804d416eb92ce7', '1ab67d2287938c48714531aad9b3dbb9', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(185, '5ed94b6abf1eef5c5d3209ae9fc4fbdb', '5d5d99e14cda47a3e712e10b5f25940e', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(186, 'ce4c47d5119b7795ca5d59a28bf271cc', '5d5d99e14cda47a3e712e10b5f25940e', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(187, '7cddf49d7f9f69a6de34aee42d22935e', '4ce2d527cf85aa58453230e9b0a0bcbc', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(188, '10e8387eab27da7e98c256547a4fc5ef', '95ecca122700047d464befc8f01d4cd6', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(189, '9b0aec052e558e6b6f192c0bc031c1c2', '95ecca122700047d464befc8f01d4cd6', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(190, '30cd620a8d129b7c16128d5a28f72590', '45c2fdea8d1a075af9a71301f627953f', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(191, 'b69d04cfba9833412657dfd36356db1f', '45c2fdea8d1a075af9a71301f627953f', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(192, 'cb437a19bc0dabca55819c2745647dbe', '3e3ed9b31c74351bc99cc3926a198946', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(193, 'f0e07f5e2b781bb27c2509add0519ebc', '3e3ed9b31c74351bc99cc3926a198946', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(194, '0c1affbd5388ce61493d372b4904f8ad', 'dc12bb9c9dfb9f0c1693dae06f3898c4', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(195, 'bff59cba1f017caa2e44ad13f3e30d07', 'dc12bb9c9dfb9f0c1693dae06f3898c4', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(196, 'ae88468c513d4126a131a888740b8887', '08c34f5a106960808d7b242f9ff5aa76', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(197, '33af9442383c7d6c5738c00ea145f5ba', '08c34f5a106960808d7b242f9ff5aa76', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(198, '6973bf9a2a0a6b0f682b72cf38f8869b', '08c34f5a106960808d7b242f9ff5aa76', 'c709663a0324fb6175b807eb730de052', '1', '30.000', '0.000', '11c4c234a665203e54368f6db77299dc'),
+(199, '6c9e8bf198c8d02be066c0be80b4fefc', '8d5b4ad0198a35411725769a0b59d46c', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(200, 'e4522f5931efab92d3911603e57df955', '8d5b4ad0198a35411725769a0b59d46c', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(201, '22f8d51f7723b0448b30f1710679c47e', 'e2aa0234a443b1cae2c4929332494433', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(202, '7af17dd274164de6a2bda30db7a7634a', 'e2aa0234a443b1cae2c4929332494433', 'c3216f7d74d4adcf50901b8559d9a3bc', '10', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(203, '4608074da107d83f367e319f7ecb376a', 'ff78d58c0759625def196240cc673955', '9d8439c7f35923f2397af1b7edadc670', '100', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(204, '6e8c5a0f001c5f9ea4d31ee3c2b7da97', 'ff78d58c0759625def196240cc673955', 'c3216f7d74d4adcf50901b8559d9a3bc', '100', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(205, '44602b2e750ad1a3384b0819081d4cc3', '248057815812d578ffd099c7661fb7db', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(206, 'ab94c40c896d4753927b24b8a5327943', '785ad4ebd1128dfc512570261bcbd1dc', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(207, 'a0cdec904040b4d4a0c846b0ea38c874', '82bf49e2c51db1c9c904d0478a1e0a7d', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(208, '550a6f6c6ba63c0a253c0112063cd803', '6b49f603486d4e4e87417bfc6d122d24', '9d8439c7f35923f2397af1b7edadc670', '100', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(209, '2148992d167bce2b16e4cebd624d7102', '8272ed70b3e7eeaf03f6f32ce997a142', '9d8439c7f35923f2397af1b7edadc670', '12', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(210, '72d808b50478a757448a4c346a0f7429', 'd8127f0ee98b719d92dcf58aca2c3f4a', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(211, '50652273c5b147a0ceca39a109b9555f', '8574f130f1575d33fab5f240bbbfa33e', '9d8439c7f35923f2397af1b7edadc670', '12', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(212, '5ef7bf3aba307476f5c5b1f41c8b8904', '8574f130f1575d33fab5f240bbbfa33e', 'c3216f7d74d4adcf50901b8559d9a3bc', '12', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `grn`
 --
 
@@ -571,7 +908,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `code_status` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `items`
@@ -587,14 +924,15 @@ INSERT INTO `items` (`id`, `guid`, `code`, `ean_upc_code`, `barcode`, `category_
 (14, 'c709663a0324fb6175b807eb730de052', 'IC-129', '', '', '0f1208f8b8d972183bb16bb0443ddb5e', '', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '2a4e7a8de41c967c9097b2e4a1a0e662', 'Item 12', '', '12', '34', 1, 'cfd8b485f99e561408192c594f8c2e92', '', '30', '0.000', 2014, 0, '2', '2d81a2d79b828aa9e3d109184961925a', 'BJRFE2322444', '', 0, '0', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, ''),
 (15, '1844a38365bda6feea716ed97859fd31', 'zfdsgsdg', '', 'sdgsdgsg', '37bc41880fa0ca0de0fa2e9f37480ba0', '37bc41880fa0ca0de0fa2e9f37480ba0', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'sdgsgsdg', '56', '32', '56', 1, 'a85e2c85b10bd213c8b876acfa8aa7a5', '', '56', '56.000', 2014, 0, '2', '2d81a2d79b828aa9e3d109184961925a', '', 'asfaf', 0, '0', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '1844a38365bda6feea716ed97859fd31.jpg'),
 (16, '73f2dab62a83cece967625cad014230d', 'zfdsgsdgertw', '', 'sdgsdgsg', '37bc41880fa0ca0de0fa2e9f37480ba0', '37bc41880fa0ca0de0fa2e9f37480ba0', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'sdgsgsdg', '56', '32', '56', 1, 'a85e2c85b10bd213c8b876acfa8aa7a5', '', '56', '56.000', 2014, 0, '2', '2d81a2d79b828aa9e3d109184961925a', '', 'asfaf', 0, '0', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, ''),
-(17, '9d8439c7f35923f2397af1b7edadc670', 'IC-12777', '', '8908098098', '44490e4607304eaaf6f9acaf170ff290', '44490e4607304eaaf6f9acaf170ff290', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '6148f274388f64b43123c3598c3fcf81', 'Apple', '877979', '45', '67', 1, 'a85e2c85b10bd213c8b876acfa8aa7a5', '', '676', '1.000', 1, 1396569600, '5dad9a40f3b35cd3b573fcd3d481ea0b', '2d81a2d79b828aa9e3d109184961925a', '', 'sdgsd', 0, '0', '', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '1ccdd561c7450ecfc3589e625d3ddc74.gif'),
+(17, '9d8439c7f35923f2397af1b7edadc670', 'IC-12777', '', '8908098098', '44490e4607304eaaf6f9acaf170ff290', '44490e4607304eaaf6f9acaf170ff290', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '6148f274388f64b43123c3598c3fcf81', 'Apple', '877979', '45', '67', 1, 'a85e2c85b10bd213c8b876acfa8aa7a5', '', '676', '0.000', 1, 1, '5dad9a40f3b35cd3b573fcd3d481ea0b', '2d81a2d79b828aa9e3d109184961925a', '', 'sdgsd', 1, '10', '', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '1ccdd561c7450ecfc3589e625d3ddc74.gif'),
 (18, '68fac0f3c2306caadf9779dd6eb0a568', 'IC-1289', '', 'test', 'f1cbc6905e17586f09094db931bcf75e', '402581a70ab59a35c0393cf2310b6f88', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'e91054c7db987e18f232ffa506f49394', 'product 1', 'test', '67', '70', 1, '11d08dc2db3920364304c6ed1192b5ba', '', '69', '0.000', 2014, 0, '5', '7973b1abfb2466b4478c9d87476951cf', '', 'test', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, ''),
 (19, 'c82ea2b2b93a10eca382fc23aa2f5d5e', 'SKU 123', '', 'Bar-1991', '7d964715c57d2df50df0a9d380c9da22', '44490e4607304eaaf6f9acaf170ff290', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'e91054c7db987e18f232ffa506f49394', 'item-123', '', '12', '16', 1, '99cb6ba01684b50fa56b573351b11b84', '', '30', '0.000', 1, 1, '0', '85127b2d6897986a9175a142f154cd1a', '', 'loatiom', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 'd8ac14f476d118369ce297b63c6305c9.jpg'),
 (20, '9c8a34bd8413ff097231dcd035284e1b', 'uiyuiyiu', '', '89789', '24f1b9183166e5a887c2f882a00dd529', '44490e4607304eaaf6f9acaf170ff290', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'e91054c7db987e18f232ffa506f49394', 'PRODUCT 12', 'daDad', '12', '15', 1, 'db336d9ef0d8a4b64a17cef1a0b91c6e', '', '14', '0.000', 2014, 0, '681401', '7973b1abfb2466b4478c9d87476951cf', '', 'sad', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '0'),
 (21, '000b7493bfbd3e7be55732d5275b43ba', 'uiyiu', '', 'yiuyi', 'f1cbc6905e17586f09094db931bcf75e', '44490e4607304eaaf6f9acaf170ff290', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c76d55c21f9d4f577b26fba515a8066f', 'yiuyi', '', '879', '787', 1, 'd7f081c1498b201c98be6e29536b5e51', '', '787', '0.000', 2014, 0, '2147483647', '7973b1abfb2466b4478c9d87476951cf', '', 'asfa', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '02d6ec3793ae9b023995b8b3c5fa7f7f.gif'),
 (22, '47e94298a89b3cf89e5e09cde7f4b1b1', 'uiyui', '', 'yuiyui', '78eef480d989be7ba6f2a1e1ac515b59', 'f1cbc6905e17586f09094db931bcf75e', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c76d55c21f9d4f577b26fba515a8066f', 'yiuyiu', '', '42', '352', 1, 'f2e56b486bcd555842563ec7b58c62c3', '', '5235', '0.000', 2014, 0, '6', '7973b1abfb2466b4478c9d87476951cf', '', '', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, '230ccc8c07788db20480c19da271f48e.gif'),
 (23, '1733d0bbbbd635f34421ddc030579885', 'sadgsd', '', 'sdgsdg', '78eef480d989be7ba6f2a1e1ac515b59', '4a70944370a2a575487e2ad0a5adae9d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'sdgsdg', 'sdgsdg', '235', '23523', 1, 'f2e56b486bcd555842563ec7b58c62c3', '', '235235', '0.000', 2014, 0, '81757', '7973b1abfb2466b4478c9d87476951cf', '', 'dsg', 0, '0', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, ''),
-(24, 'c2757704eb875d850950bd5bff8cc845', 'test', '', '798798', 'a571815faaa09a1e6d575c9a5cf92548', '981cbacdb1bd664698bf1803878909b6', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'PRODUCT 1212', 'sdfsd', '32542', '35235', 1, '6a3fba30105e2894ff21a1bef6443300', '', '235', '0.000', 2014, 0, '681401', '28aa802577d2ca603ca011f9a3147881', '', '42355', 0, '34523', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 'cb484e3e5ae282c5408e2e69f872b12b.gif');
+(24, 'c2757704eb875d850950bd5bff8cc845', 'test', '', '798798', 'a571815faaa09a1e6d575c9a5cf92548', '981cbacdb1bd664698bf1803878909b6', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'PRODUCT 1212', 'sdfsd', '32542', '35235', 1, '6a3fba30105e2894ff21a1bef6443300', '', '235', '0.000', 2014, 0, '681401', '28aa802577d2ca603ca011f9a3147881', '', '42355', 0, '34523', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 'cb484e3e5ae282c5408e2e69f872b12b.gif'),
+(25, '96d4396bdfee017b1cf08c3b54bac4a5', 'IC-123', '', 'test', '0a61072caf2d6fc1f515c26f21a71acb', 'c8f777cc66024bcfb022dad696bbff44', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'Item 1', 'dsfgsd', '13', '15', 1, 'b75afe85b7eac44cbdae6094b67645aa', '', '14', '0.000', 0, 0, '722cd6b7d27eb0ce93c8685a2c426c4d', '974cc19e629b993ced7f7267d9fbb526', '', 'oiu', 1, '2', NULL, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 'fbe37b9a098cb8835d30eeb52073bdda.jpg');
 
 -- --------------------------------------------------------
 
@@ -612,7 +950,7 @@ CREATE TABLE IF NOT EXISTS `items_category` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `items_category`
@@ -634,7 +972,10 @@ INSERT INTO `items_category` (`id`, `guid`, `category_name`, `branch_id`, `activ
 (13, '7fa9f5c245fc8ffccbeb3c0437155078', 'mobile phone', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
 (14, '78eef480d989be7ba6f2a1e1ac515b59', 'jibi gopi', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
 (15, 'b9111f1e4151d408bd01589304eaa23a', 'saaaaaaaaaaaaaaaaa', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
-(16, '22aa2ef40f166e8d1261c5bb88a4220b', 'oxford', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '7c9888196685a12a83eecf9c0d05a525', NULL);
+(16, '22aa2ef40f166e8d1261c5bb88a4220b', 'oxford', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '7c9888196685a12a83eecf9c0d05a525', NULL),
+(17, '2f559b0d9737f2e40407db3e6c998513', 'category 1', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(18, '0a61072caf2d6fc1f515c26f21a71acb', 'category 2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(19, '5ace409a4f06999ff48ba89307e82e00', 'category 3', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -652,7 +993,7 @@ CREATE TABLE IF NOT EXISTS `items_department` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `items_department`
@@ -672,7 +1013,13 @@ INSERT INTO `items_department` (`id`, `guid`, `department_name`, `branch_id`, `a
 (11, '24f1b9183166e5a887c2f882a00dd529', 'sasi12', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (12, 'a571815faaa09a1e6d575c9a5cf92548', 'sasi', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (13, '7fa9f5c245fc8ffccbeb3c0437155078', 'mobile phone', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
-(14, '75bcc4188e278a5c4f6447588c70ead6', '123', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+(14, '75bcc4188e278a5c4f6447588c70ead6', '123', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(15, '7d594b99662ecd1c1ced9db977f1f3bd', 'veg', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(16, 'c8f777cc66024bcfb022dad696bbff44', 'non veg', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(17, 'b4cad279b0cf9ba2f0a1931cacc1aa70', 'Department 1', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(18, '14fa688aeffe785a3a13dc2617b66556', 'Department 2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(19, '59f4605d16c18ba221de58b5663704e4', 'Department 3', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(20, '5ec795d44888e98fbea3c71d9b7bc47c', 'Department 4', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -700,7 +1047,7 @@ CREATE TABLE IF NOT EXISTS `items_setting` (
   `delete_status` int(11) NOT NULL DEFAULT '0',
   `active_status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `items_setting`
@@ -723,7 +1070,8 @@ INSERT INTO `items_setting` (`id`, `guid`, `item_id`, `branch_id`, `min_q`, `max
 (21, '7beae522d6dd4d5e6cebffd01e8598db', '000b7493bfbd3e7be55732d5275b43ba', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1),
 (22, '267cfb9e9337e63a8d87214413a9656c', '47e94298a89b3cf89e5e09cde7f4b1b1', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1),
 (23, '7d0e303ada389bd65ccf6c117966c3ef', '1733d0bbbbd635f34421ddc030579885', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1),
-(24, '4b1e63e719f32a90e980dca65b1eeade', 'c2757704eb875d850950bd5bff8cc845', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1);
+(24, '4b1e63e719f32a90e980dca65b1eeade', 'c2757704eb875d850950bd5bff8cc845', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1),
+(25, '66fdec0625d580aae31eb7357dc16ca8', '96d4396bdfee017b1cf08c3b54bac4a5', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', '', '', 0, 1, 1, 1, 0, 0, '', 0, NULL, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -758,7 +1106,7 @@ CREATE TABLE IF NOT EXISTS `master_data` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `master_data`
@@ -770,8 +1118,18 @@ INSERT INTO `master_data` (`id`, `guid`, `key`, `prefix`, `value2`, `max`, `bran
 (3, '276C-457A-BE4CB6FB-D7948222EBB3', 'direct_grn', 'POSNIC-D-GRN-10', '1', '32', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
 (4, '276C-457A-BE4CB6FBIJIBI-D7948222EBB3', 'purchase_invoice', 'INV-101', '1', '115', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
 (5, '276C-457A-BE4CB-BE4CB6FBIJIBI-D7948222EBB3', 'direct_invoice', 'D-INV-101', '1', '57', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
-(6, '276C-457A-B-7897987IUOI4CB6FBIJIBI-D7948222EBB3', 'supplier_payment', 'IN-1', '1', '6', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
-(7, '276C-457A-B-78D794822297987IUOI4CB6FBIJIBI-', 'sales', 'S-1', '1', '6', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3');
+(6, '276C-457A-B-7897987IUOI4CB6FBIJIBI-D7948222EBB3', 'supplier_payment', 'IN-1', '1', '7', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(7, '276C-457A-B-78D794822297987IUOI4CB6FBIJIBI-', 'sales', 'S-1', '1', '6', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(8, 'D794822297987IUOD794822297987IUOD794822297987IUO-', 'sales_quotation', 'S-1', '1', '21', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(9, '7IUOD794822297987IUOD794822297987IUOD7948222', 'sales_order', 'SO-1', '1', '37', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(10, '7IUOD79482229545tw7987IUOD7948222', 'sales_delivery_note', 'SDN-1', '1', '30', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(11, '7IUOD794822Gytyt yt57fs6auasid748222', 'direct_sales_delivery', 'DDN-1', '1', '28', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(12, '276C-457A-BE4CB6FB--457A-EBB3', 'direct_sales', 'DS-1', '1', '39', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(13, '276C-457A-BE4CB6FB--457A-EBB3-457A-', 'sales_bill', 'SB-1', '1', '54', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(14, '276C-457A-BE4CB6FB--457A-EBB3-457A-', 'customer_payment', 'CP-1', '1', '54', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(15, '276C-BE4CB6FB--457A-BE4CB6FB--457A-457A-', 'opening_stock', 'OS', '1', '21', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(16, 'BE4CB6FBBEBE4CB6FB-276C-BE4CB6FB-276C-457A-6FB-276C-457A--457A', 'damage_stock', 'DS-1', '1', '25', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3'),
+(17, 'fb95ec4fb8fa302791af95eed4982559c4fb8fa302791af95eed4982559', 'stock_transfer', 'ST-1', '1', '25', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3');
 
 -- --------------------------------------------------------
 
@@ -791,7 +1149,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `active_status` int(11) NOT NULL DEFAULT '1',
   `delete_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `modules`
@@ -813,13 +1171,12 @@ INSERT INTO `modules` (`id`, `guid`, `module_name`, `cate_id`, `added_date`, `de
 (13, '5464B2EF-92D2-4430-B366-983D7590FFC4', 'customers', '9090B0F0FD-B148-4C02-AFC7-7463Dd8989856714A', 102, 0, '0', '0', 1, 0),
 (14, '23B67A1A-0675-4DE9-98E3-7ACFA6637F25', 'customer_category', '9090B0F0FD-B148-4C02-AFC7-7463Dd8989856714A', 102, 0, '0', '0', 1, 0),
 (15, 'DA79AE6E-7D46-4BB4-AD47-CD37F5BBB615', 'user_groupsci', '80B0F0FD-B148-4C02-AFC7-7463D85671412', 102, 0, '1', '1', 1, 0),
-(16, '3AAFF903-73E6-4987-BFE1-8F24E268BDC9', 'branchCI', 'Iu878h0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(16, '3AAFF903-73E6-4987-BFE1-8F24E268BDC9', 'branches', 'Iu878h0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (17, '6D825F4C-44E0-4CF4-8FD2-A5FEA57E8FC1', 'purchase_order', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (18, 'B299A7BB-7709-4B0B-966E-023F1CA77058', 'customers_payment_type', '9090B0F0FD-B148-4C02-AFC7-7463Dd8989856714A', 102, 0, '0', '0', 1, 0),
 (19, 'B499A7BB-8709-4B0B-966E-023F1CA77058', 'purchase_order', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (21, 'CAB43E25-264TYE-47B7-84D8-1E41583CA69E', 'items_department', '80B0F0FD-B148-4C02-AF787C7-7463D856714', 102, 0, '0', '0', 1, 0),
 (22, 'D33AF9080F-570D-403D-B967-A5B658675B0645', 'suppliers_category', '80B0F0FD-B148-4C02-AFC7-7463D8567j8huy7', 102, 0, '0', '0', 1, 0),
-(23, '4C020FD-B148-4C02-AFC7-7463D856714A', 'sales_types', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (24, '7248797adf02e132ba3c51da343bbfd4', 'purchase_order_cancel', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (25, 'B499A7TWV889-7H8FSG-8709-023F-4B0B-966E-023F1CA77058-023', 'goods_receiving_note', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (26, 'B499A7BB-8709-023F-4B0B-966E-023F1CA77058-023', 'direct_grn', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
@@ -831,12 +1188,13 @@ INSERT INTO `modules` (`id`, `guid`, `module_name`, `cate_id`, `added_date`, `de
 (32, 'fe36bb26e7b7b0499d22f87ebeee343c', 'damage_stock', 'fdf7b89447e93bce736d471aefc5fff4', 102, 0, '0', '0', 1, 0),
 (33, '5ac1b200480113f66b9e38e2387b0840', 'sales_quotation', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
 (34, '5ac1fe36bb26e7b7b049387b0840', 'sales_order', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(35, '5ac1fe36bb26e7b7b5ac1fe36bb26e7b7b049387b0840', 'sales_bill', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(36, '5ac1fe4C020FD-B148-4C02-AFC7-7463D856714A7b0840', 'sales_direct', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(37, '-B148-4C02-AFC7-7463D856714A63D856714A7b0840', 'direct_delivery', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(38, '7227e29d3bb56bd72c032ca4a650f936', 'sales_return', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(39, '506e87d5b970aa58260e534531c867f2a650f936', '506e87d5b970aa58260e534531c867f2', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
-(40, 'd04f7130b0e16554b6f87751b3d7eaae', 'purchase_return', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0);
+(35, '7227e29d3bb56bd7B148-4C02-AFCB148-4C02-AFC', 'sales_delivery_note', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(36, '-B148-4C02-AFC7-7463D856714A63D856714A7b0840', 'direct_sales_delivery', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(40, '5ac1fe4C020FD-B148-4C02-AFC7-7463D856714A7b0840', 'direct_sales', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(41, 'd04f7130b0e16554b6f87751b3d7eaae', 'purchase_return', '80B900F0FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(46, '5ac1fe36bb26e7b7b5ac1fe36bb26e7b7b049387b0840', 'sales_bill', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(47, '7227e29d3bb56bd72c032ca4a650f936', 'sales_return', '4C020FD-B148-4C02-AFC7-7463D856714A', 102, 0, '0', '0', 1, 0),
+(48, 'dd9a1981f3fea7bf472c4df99a1981f3fea7bf4', 'customer_payment', 'ce373527a9a1981f3fea7bf414b6a529', 102, 0, '0', '0', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -865,7 +1223,7 @@ INSERT INTO `modules_category` (`id`, `guid`, `Category_name`, `no`) VALUES
 (8, '80B900F0FD-B148-4C02-AFC7-7463D856714A', 'purchase', 0),
 (9, '4C020FD-B148-4C02-AFC7-7463D856714A', 'sales', 0),
 (10, 'ce373527a9a1981f3fea7bf414b6a529', 'payments', 0),
-(11, 'Iu878h0FD-B148-4C02-AFC7-7463D856714A', 'branches', 1),
+(11, 'Iu878h0FD-B148-4C02-AFC7-7463D856714A', 'branches', 0),
 (12, 'fdf7b89447e93bce736d471aefc5fff4', 'stock', 0);
 
 -- --------------------------------------------------------
@@ -884,7 +1242,7 @@ CREATE TABLE IF NOT EXISTS `modules_x_branches` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `modules_x_branches`
@@ -929,7 +1287,9 @@ INSERT INTO `modules_x_branches` (`id`, `guid`, `branch_id`, `module_id`, `activ
 (36, '72487--B148-4C02-AFC7-7463D856714A63D856714A7b08406', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '-B148-4C02-AFC7-7463D856714A63D856714A7b0840', 1, 0, '0', '0'),
 (37, '7247227e29d3bb56bd72c032ca4a650f936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '7227e29d3bb56bd72c032ca4a650f936', 1, 0, '0', '0'),
 (38, '506e87d5b970aa58260e534531c867f20f936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '506e87d5b970aa58260e534531c867f2', 1, 0, '0', '0'),
-(39, 'd04f7130b0e16554b6f87751b3d7eaae936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'd04f7130b0e16554b6f87751b3d7eaae', 1, 0, '0', '0');
+(39, 'd04f7130b0e16554b6f87751b3d7eaae936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'd04f7130b0e16554b6f87751b3d7eaae', 1, 0, '0', '0'),
+(40, 'd04f7130b0e16554b6f87751b3d7eaae936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '7227e29d3bb56bd7B148-4C02-AFCB148-4C02-AFC', 1, 0, '0', '0'),
+(41, 'dd9a1981f3fea7bf472c4df99a1981f3fea7bf47eaae936', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'dd9a1981f3fea7bf472c4df99a1981f3fea7bf4', 1, 0, '0', '0');
 
 -- --------------------------------------------------------
 
@@ -945,7 +1305,7 @@ CREATE TABLE IF NOT EXISTS `modules_x_permissions` (
   `module_id` varchar(200) NOT NULL,
   `permission` int(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=142 ;
 
 --
 -- Dumping data for table `modules_x_permissions`
@@ -1090,7 +1450,77 @@ INSERT INTO `modules_x_permissions` (`id`, `guid`, `branch_id`, `user_group_id`,
 (136, '5d-B148-4C02-AFC7-7463D856714A63D856714A7b08403D856714A7b0840', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', '-B148-4C02-AFC7-7463D856714A63D856714A7b0840', 1111),
 (137, '7227e29d3bb56bd72c032ca4a', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', '7227e29d3bb56bd72c032ca4a650f936', 1111),
 (138, '72506e87d5b970aa58260e534531c867f2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', '506e87d5b970aa58260e534531c867f2', 1111),
-(139, '72d04f7130b0e16554b6f87751b3d7eaae7f2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', 'd04f7130b0e16554b6f87751b3d7eaae', 1111);
+(139, '72d04f7130b0e16554b6f87751b3d7eaae7f2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', 'd04f7130b0e16554b6f87751b3d7eaae', 1111),
+(140, '72d04f7130b0e16554b6f87751b3d7eaae7f2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', '7227e29d3bb56bd7B148-4C02-AFCB148-4C02-AFC', 1111),
+(141, '72d04f7dd9a1981f3fea7bf472c4df99a1981f3fea7bf4', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '8e296a067a37563370ded05f5a3bf3ec', 'dd9a1981f3fea7bf472c4df99a1981f3fea7bf4', 1111);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opening_stock`
+--
+
+CREATE TABLE IF NOT EXISTS `opening_stock` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` int(11) NOT NULL,
+  `remark` varchar(300) NOT NULL,
+  `note` varchar(300) NOT NULL,
+  `no_items` int(11) NOT NULL,
+  `total_amount` decimal(30,3) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `stock_status` int(11) NOT NULL DEFAULT '0',
+  `branch_id` varchar(255) NOT NULL,
+  `deleted_by` varchar(255) NOT NULL,
+  `added_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+
+--
+-- Dumping data for table `opening_stock`
+--
+
+INSERT INTO `opening_stock` (`id`, `guid`, `code`, `date`, `remark`, `note`, `no_items`, `total_amount`, `active_status`, `delete_status`, `stock_status`, `branch_id`, `deleted_by`, `added_by`) VALUES
+(25, 'f4206a8912721c53b84894ee83a02900', 'OS18', 1400112000, 'bxcbxc', 'xcvbx', 1, '45450.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(26, '063c5a4037dab38c58120c140d340eb1', 'OS19', 1400198400, 'xcvbxcbb', 'xcv', 1, '45900.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(27, '795824c2f99079b55823b8d6f388a550', 'OS20', 1400198400, 'safasf', 'asf', 4, '15642.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opening_stock_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `opening_stock_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `opening_stock_id` varchar(255) NOT NULL,
+  `stock_id` varchar(255) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `quty` int(11) NOT NULL,
+  `cost` decimal(30,3) NOT NULL,
+  `sell` decimal(30,3) NOT NULL,
+  `discount_per` decimal(30,3) NOT NULL,
+  `discount_amount` decimal(30,3) NOT NULL,
+  `tax` decimal(30,3) NOT NULL,
+  `amount` decimal(30,3) NOT NULL,
+  `supplier_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
+
+--
+-- Dumping data for table `opening_stock_x_items`
+--
+
+INSERT INTO `opening_stock_x_items` (`id`, `guid`, `opening_stock_id`, `stock_id`, `item`, `quty`, `cost`, `sell`, `discount_per`, `discount_amount`, `tax`, `amount`, `supplier_id`) VALUES
+(38, '3c2e2d7e4f8642ff6d668017e8f5a116', 'f4206a8912721c53b84894ee83a02900', '', '9d8439c7f35923f2397af1b7edadc670', 1000, '45.000', '676.000', '1.000', '450.000', '900.000', '45000.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(39, '8671719b870ef46cff4f744c4b2f4392', '063c5a4037dab38c58120c140d340eb1', '', '9d8439c7f35923f2397af1b7edadc670', 1000, '45.000', '676.000', '0.000', '0.000', '900.000', '45000.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(40, 'a9dc73b348cb6ca3d6059951497d9d0c', '795824c2f99079b55823b8d6f388a550', '', 'c3216f7d74d4adcf50901b8559d9a3bc', 100, '45.000', '60.000', '1.000', '45.000', '2520.000', '4500.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(41, '2e0ead641065c8a91a1dd8ca204d8394', '795824c2f99079b55823b8d6f388a550', '', 'abc049b9d095c27843b114f02ac5f640', 100, '56.000', '75.000', '1.000', '56.000', '0.000', '5600.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(42, '1ec2eb002fec664d670a58e991de9f6c', '795824c2f99079b55823b8d6f388a550', '', 'ef92a1dc9701ac89a655927183a78d87', 100, '12.000', '15.000', '1.000', '12.000', '0.000', '1200.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(43, 'fd1a497f416a93fa64248f5b1864f1f4', '795824c2f99079b55823b8d6f388a550', '', '23b6fb71c13f7a53235835584c0a600f', 100, '45.000', '48.000', '1.000', '45.000', '0.000', '4500.000', 'ceab8c7d14f12aaeec1dc19b3d81212a');
 
 -- --------------------------------------------------------
 
@@ -1115,7 +1545,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `delete_status` int(11) NOT NULL DEFAULT '0',
   `deleted_by` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `payment`
@@ -1127,7 +1557,13 @@ INSERT INTO `payment` (`id`, `guid`, `code`, `branch_id`, `type`, `payment_date`
 (12, 'd3106758d6d42699f7a0225beef354e5', 'IN-12', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1396310400, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '1000.000', '0', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1396310400, 0, ''),
 (13, '586a8a968936d18c0efcbd410ec642cc', 'IN-13', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1396396800, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '500.000', '0', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1396310400, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (14, '625e22be566d3f986b0421209d3f6fd0', 'IN-14', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1396396800, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '1.000', 'test', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1396310400, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(15, '2fc11ae9b9e262dff1293709a34e6c5d', 'IN-15', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1396396800, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '1.000', 'test', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1396310400, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+(15, '2fc11ae9b9e262dff1293709a34e6c5d', 'IN-15', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1396396800, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '1.000', 'test', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1396310400, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(16, '079d3ac03edd616a3ea136bb3cd9f89b', 'IN-16', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'debit', 1399766400, 'e91054c7db987e18f232ffa506f49394', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10', '', '10.000', 'zxvcz', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399680000, 0, ''),
+(17, '4019e30748b7e2e6b0d05ea71afea56c', 'CP-149', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'credit', 1368576000, '', '3683b8421c7215cd9658c1dd47b13fe0', '63aba6eb627ce1811191c2d22399191d', '1000.000', 'oioi', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399766400, 0, ''),
+(18, '80cd85c1aa99019a962dd4e2d9dbfb6d', 'CP-150', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'credit', 1399852800, '', '3683b8421c7215cd9658c1dd47b13fe0', '63aba6eb627ce1811191c2d22399191d', '1000.000', 'jibhui', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399766400, 0, ''),
+(19, 'ff3cdb9e51247dddf7a078cf3c8dd868', 'CP-151', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'credit', 1399852800, '', 'a8ea84f9bcd49b7d6377abfda6b74fd2', '63aba6eb627ce1811191c2d22399191d', '1.000', 'asf', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399766400, 0, ''),
+(20, '8ae0b68c515126ea6f09488f6b5aeb59', 'CP-152', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'credit', 1399939200, '', 'a8ea84f9bcd49b7d6377abfda6b74fd2', '63aba6eb627ce1811191c2d22399191d', '1000.000', 'afaf', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399766400, 0, ''),
+(21, '55e81590821f08d59fde12bbedd13af3', 'CP-153', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'credit', 1399852800, '', '3683b8421c7215cd9658c1dd47b13fe0', '63aba6eb627ce1811191c2d22399191d', '4000.000', 'afaf', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 1399766400, 0, '');
 
 -- --------------------------------------------------------
 
@@ -1276,6 +1712,179 @@ INSERT INTO `purchase_order_items` (`id`, `guid`, `order_id`, `branch_id`, `item
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sales_bill`
+--
+
+CREATE TABLE IF NOT EXISTS `sales_bill` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `invoice` varchar(100) NOT NULL,
+  `date` int(20) NOT NULL,
+  `so` varchar(255) NOT NULL,
+  `sdn` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `remark` varchar(500) NOT NULL,
+  `note` varchar(500) NOT NULL,
+  `branch_id` varchar(255) NOT NULL,
+  `added_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `sales_bill`
+--
+
+INSERT INTO `sales_bill` (`id`, `guid`, `invoice`, `date`, `so`, `sdn`, `customer_id`, `remark`, `note`, `branch_id`, `added_by`) VALUES
+(17, 'c1dcba4814bababded50e7582a0f41ca', 'SB-142', 1399507200, '157f6a0379a255f513d8e07f07ae2ac9', '29b131708ed704536c4bdf932ab753b7', '0f7c80352b128f9a45d25e42d1ebd19e', 'afs', 'asf', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(18, '7f9f4229d08269b40d706b8c2999eb93', 'SB-143', 1399507200, 'non', 'f973f4b02a6ba52ff6ebbc85242baf26', '0f7c80352b128f9a45d25e42d1ebd19e', 'fa', 'fa', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(19, 'f7f5e074b91d026df32d1dcaee2f5eeb', 'SB-144', 1399507200, 'non', '95f12b4ba62352fa8be86cd51608544e', '0f7c80352b128f9a45d25e42d1ebd19e', 'sd', 'sd', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(20, '2041db85b6187d7cf7659b871c773da9', 'SB-145', 1399680000, 'abd965a30fa0c90b8e9c37811c0d114d', 'fe41305f709e3d168ab53bd2ffad09fe', '63aba6eb627ce1811191c2d22399191d', 'dsg', 'sd', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(21, 'e5a1f262738bc273ffb886f3563ba64c', 'SB-146', 1399680000, 'non', '48090dc1ed36620492650837054b13b7', '63aba6eb627ce1811191c2d22399191d', 'asfas', 'asf', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(22, 'de3a8068fb7f8e0320b0a3e8f0689214', 'SB-146', 1399680000, 'non', '48090dc1ed36620492650837054b13b7', '63aba6eb627ce1811191c2d22399191d', 'asfas', 'asf', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(23, '5e2f5f6a085a04bd07c54d1ceca42f25', 'SB-147', 1399766400, '9aff11fb2081fc531636c6b3e1829cd4', 'dab06bbaee0a97d1a46781b7590ff78e', '63aba6eb627ce1811191c2d22399191d', 'fasfa', 'af', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(24, '00f230a2898e6c193b03fabfcbabd990', 'SB-147', 1399766400, '9aff11fb2081fc531636c6b3e1829cd4', 'dab06bbaee0a97d1a46781b7590ff78e', '63aba6eb627ce1811191c2d22399191d', 'fasfa', 'af', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(25, '40fda2a053bc4aaaae18999220c22ea0', 'SB-147', 1399766400, '9aff11fb2081fc531636c6b3e1829cd4', 'dab06bbaee0a97d1a46781b7590ff78e', '63aba6eb627ce1811191c2d22399191d', 'fasfa', 'af', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_delivery_note`
+--
+
+CREATE TABLE IF NOT EXISTS `sales_delivery_note` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) DEFAULT NULL,
+  `branch_id` varchar(255) NOT NULL,
+  `so` varchar(255) NOT NULL,
+  `sales_delivery_note_no` varchar(255) NOT NULL,
+  `date` int(20) NOT NULL,
+  `total_amount` decimal(20,3) NOT NULL,
+  `customer_discount` decimal(30,3) NOT NULL,
+  `customer_discount_amount` decimal(30,3) NOT NULL,
+  `note` varchar(255) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `sales_delivery_note_status` int(11) NOT NULL,
+  `bill_status` int(11) NOT NULL DEFAULT '0',
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `added_by` varchar(255) NOT NULL,
+  `deleted_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
+
+--
+-- Dumping data for table `sales_delivery_note`
+--
+
+INSERT INTO `sales_delivery_note` (`id`, `guid`, `branch_id`, `so`, `sales_delivery_note_no`, `date`, `total_amount`, `customer_discount`, `customer_discount_amount`, `note`, `remark`, `sales_delivery_note_status`, `bill_status`, `active_status`, `delete_status`, `added_by`, `deleted_by`) VALUES
+(46, '29b131708ed704536c4bdf932ab753b7', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '157f6a0379a255f513d8e07f07ae2ac9', 'SDN-122', 1399334400, '120.000', '0.000', '0.000', 'sad', 'asfas', 1, 1, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(47, 'dab06bbaee0a97d1a46781b7590ff78e', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9aff11fb2081fc531636c6b3e1829cd4', 'SDN-123', 1399593600, '6131.212', '1.200', '74.468', 'sdfadgs', 'sfasfsdgsd', 1, 1, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(48, 'fe41305f709e3d168ab53bd2ffad09fe', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'abd965a30fa0c90b8e9c37811c0d114d', 'SDN-124', 1399680000, '682.625', '1.000', '6.895', 'afgsd', 'afasf', 1, 1, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(49, '5f15a49ee129b90eb7e8c3a7f39177bc', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '01019bec72572b56a452509660bb7500', 'SDN-125', 1399766400, '688.003', '1.000', '0.827', 'asdfa', 'asfasf', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(50, 'd414bd8b0e04f4d9fe99c21f7156566d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '01019bec72572b56a452509660bb7500', 'SDN-125', 1399766400, '682.625', '1.000', '6.895', 'asdfasdgsd', 'asfasfsd', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(51, '32fa117a1295fa22d3b3ffdab4bfb00d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '527d6367ec70b6f83b39fd6ae9fb8b89', 'SDN-127', 1399593600, '688.003', '1.000', '0.827', 'sadf', 'fafa', 0, 0, 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(52, 'c1fe513e4455874209b8d5bff2939331', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'e91363b53728abf08e46bbc0fb130e27', 'SDN-128', 1399680000, '688.003', '1.000', '0.827', 'fa', '214', 0, 0, 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(53, '289cf05d95902e2abb61259717ab0dc0', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'f547403ad43ba922e37dcee3c4a3bf8b', 'SDN-129', 1399680000, '270.292', '2.000', '5.516', 'sdg', 'dsgsd', 1, 0, 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_order`
+--
+
+CREATE TABLE IF NOT EXISTS `sales_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) NOT NULL,
+  `quotation_id` varchar(255) NOT NULL,
+  `customer_id` varchar(200) NOT NULL,
+  `exp_date` int(20) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `date` int(20) NOT NULL,
+  `discount` decimal(30,3) NOT NULL,
+  `discount_amt` decimal(30,3) NOT NULL,
+  `customer_discount` decimal(30,3) NOT NULL,
+  `customer_discount_amount` decimal(30,3) NOT NULL,
+  `freight` varchar(200) NOT NULL,
+  `round_amt` varchar(200) NOT NULL,
+  `total_items` varchar(200) NOT NULL,
+  `total_amt` varchar(200) NOT NULL,
+  `total_item_amt` varchar(200) NOT NULL,
+  `remark` varchar(200) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `order_status` int(2) NOT NULL,
+  `receipt_status` int(2) NOT NULL,
+  `received_status` int(11) NOT NULL,
+  `expire_status` int(11) NOT NULL,
+  `branch_id` varchar(200) NOT NULL,
+  `added_by` varchar(200) NOT NULL,
+  `deleted_by` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
+
+--
+-- Dumping data for table `sales_order`
+--
+
+INSERT INTO `sales_order` (`id`, `guid`, `quotation_id`, `customer_id`, `exp_date`, `code`, `date`, `discount`, `discount_amt`, `customer_discount`, `customer_discount_amount`, `freight`, `round_amt`, `total_items`, `total_amt`, `total_item_amt`, `remark`, `note`, `active_status`, `delete_status`, `order_status`, `receipt_status`, `received_status`, `expire_status`, `branch_id`, `added_by`, `deleted_by`) VALUES
+(54, '5dff6bfe7cedd5059a12c094d97738cc', '', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-124', 1399593600, '0.000', '0.690', '0.000', '0.000', '0.000', '0.000', '1', '68.262', '68.952', 'dsgs', 'sdf', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(55, '8778395450b4e8a73068403561f0680e', '', 'ee6958cdd55bbe2225e4fec2cb6cc6ce', 1399593600, 'SO-125', 1399593600, '0.000', '7.825', '1.000', '0.000', '10', '10', '2', '794.695', '782.520', 'afaf', 'ad', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(56, 'abd965a30fa0c90b8e9c37811c0d114d', '', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-126', 1399593600, '0.000', '68.952', '1.000', '8.274', '', '', '1', '613.673', '689.520', 'asdas', 'sad', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(57, '8e3689d3fca009ac13c3b48e60346a44', '', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-127', 1399593600, '0.000', '69.882', '1.000', '83.858', '10', '10', '2', '6854.460', '6988.200', 'qww', 'qw', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(58, '527d6367ec70b6f83b39fd6ae9fb8b89', 'non', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-128', 1399680000, '0.000', '0.690', '1.000', '0.827', '0.000', '0.000', '1', '67.435', '68.952', 'dfasfas', 'sa', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(59, 'e91363b53728abf08e46bbc0fb130e27', 'non', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-129', 1399766400, '0.000', '0.690', '1.000', '0.827', '0.000', '0.000', '1', '67.435', '68.952', 'faf', 'af', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(60, '01019bec72572b56a452509660bb7500', '78070d5987661a744b9d1799d6ea6d1f', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-130', 1399593600, '0.000', '0.690', '1.000', '0.827', '0.000', '0.000', '1', '67.435', '68.952', 'asfasf', 'df', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(61, 'c2076bf653a5059228aa153781c118ef', 'non', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-131', 1399593600, '0.000', '68.952', '1.000', '82.742', '', '', '1', '6743.506', '6895.200', 'sdgsdg', 'sdf', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(62, '9aff11fb2081fc531636c6b3e1829cd4', 'non', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-132', 1399680000, '0.000', '0.000', '1.200', '82.742', '', '', '1', '6812.458', '6895.200', 'afaf', 'a', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(63, '328d25fc656e6e8eda43698baa61028e', 'non', '0f7c80352b128f9a45d25e42d1ebd19e', 1399593600, 'SO-133', 1399593600, '0.000', '68.952', '2.000', '137.904', '', '', '1', '6688.344', '6895.200', 'afa', 'asf', 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(64, '99566dbaca69d5e86cb6cea9aa80cf61', 'non', '63aba6eb627ce1811191c2d22399191d', 1399593600, 'SO-134', 1399680000, '0.000', '0.000', '1.200', '82.742', '', '', '1', '6812.458', '6895.200', 'gsdg', 'sdf', 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(65, '801aa7501f77dc83cc2d53b6d5241249', 'non', '5315c17449a7324783c45ae3632f7487', 1399593600, 'SO-135', 1399593600, '0.000', '68.952', '2.000', '137.904', '', '', '1', '6688.344', '6895.200', 'gsdgsd', 'sdfgsd', 1, 0, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(66, 'f547403ad43ba922e37dcee3c4a3bf8b', 'non', 'compan', 1399593600, 'SO-136', 1399593600, '0.000', '0.000', '2.000', '13.790', '', '', '1', '675.730', '689.520', 'fafa', 'asf', 1, 0, 1, 0, 1, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_order_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `sales_order_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) DEFAULT NULL,
+  `sales_order_id` varchar(200) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `quty` varchar(100) NOT NULL,
+  `delivered_quty` int(11) NOT NULL,
+  `price` decimal(55,3) NOT NULL,
+  `discount` decimal(10,3) NOT NULL,
+  `stock_id` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=225 ;
+
+--
+-- Dumping data for table `sales_order_x_items`
+--
+
+INSERT INTO `sales_order_x_items` (`id`, `guid`, `sales_order_id`, `item`, `quty`, `delivered_quty`, `price`, `discount`, `stock_id`) VALUES
+(210, 'cc31961f5f23cd467e6609ff17841339', '5dff6bfe7cedd5059a12c094d97738cc', '9d8439c7f35923f2397af1b7edadc670', '1', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(211, '69d639813586be8e48d4321d70b3d5be', '8778395450b4e8a73068403561f0680e', '9d8439c7f35923f2397af1b7edadc670', '1', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(212, '064d4ba91ad6624a8f3c52bffd47f49a', '8778395450b4e8a73068403561f0680e', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', 0, '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(213, 'd2ea081598ff43ceec2feadc39ca1eaf', 'abd965a30fa0c90b8e9c37811c0d114d', '9d8439c7f35923f2397af1b7edadc670', '1', 1, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(214, '27c1ebf77d6ee8c9afddfeb959516c9e', '8e3689d3fca009ac13c3b48e60346a44', '9d8439c7f35923f2397af1b7edadc670', '10', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(215, '3d622443721d4c10126fe0dbdb63e611', '8e3689d3fca009ac13c3b48e60346a44', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', 0, '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(216, 'cd6c6a818f6580931b8c4d5ed3e7c584', '527d6367ec70b6f83b39fd6ae9fb8b89', '9d8439c7f35923f2397af1b7edadc670', '1', 1, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(217, 'b7fc712b1f66e494ec5f4e3a2fcc02e4', 'e91363b53728abf08e46bbc0fb130e27', '9d8439c7f35923f2397af1b7edadc670', '1', 1, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(218, '818ed6c718aeeb0570d08b7b03e6368a', '01019bec72572b56a452509660bb7500', '9d8439c7f35923f2397af1b7edadc670', '1', 1, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(219, 'f545063739c0f8290d9de767cb367d80', 'c2076bf653a5059228aa153781c118ef', '9d8439c7f35923f2397af1b7edadc670', '10', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(220, '0753920cc2c9fa9b5981b45f2e299156', '9aff11fb2081fc531636c6b3e1829cd4', '9d8439c7f35923f2397af1b7edadc670', '10', 9, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(221, '98460cf7766d78ce77bc473da56cd070', '328d25fc656e6e8eda43698baa61028e', '9d8439c7f35923f2397af1b7edadc670', '10', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(222, '0675d8b1d3ca3f13ee2cd892bad5eedd', '99566dbaca69d5e86cb6cea9aa80cf61', '9d8439c7f35923f2397af1b7edadc670', '10', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(223, 'e2103dfb81a4ce0d8f3bdc3761a7784b', '801aa7501f77dc83cc2d53b6d5241249', '9d8439c7f35923f2397af1b7edadc670', '10', 0, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307'),
+(224, '3e80f81d803f53f223e6f59a084b69e9', 'f547403ad43ba922e37dcee3c4a3bf8b', '9d8439c7f35923f2397af1b7edadc670', '10', 4, '676.000', '0.000', 'de7d724347f17e5349764a49f869b307');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sales_quotation`
 --
 
@@ -1284,37 +1893,87 @@ CREATE TABLE IF NOT EXISTS `sales_quotation` (
   `guid` varchar(200) NOT NULL,
   `customer_id` varchar(200) NOT NULL,
   `exp_date` int(20) NOT NULL,
-  `po_no` varchar(200) NOT NULL,
-  `po_date` int(20) NOT NULL,
-  `discount` varchar(200) NOT NULL,
-  `discount_amt` varchar(200) NOT NULL,
-  `freight` varchar(200) NOT NULL,
-  `round_amt` varchar(200) NOT NULL,
-  `total_items` varchar(200) NOT NULL,
-  `total_amt` varchar(200) NOT NULL,
-  `total_item_amt` varchar(200) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `date` int(20) NOT NULL,
+  `discount` decimal(30,3) NOT NULL,
+  `discount_amt` decimal(30,3) NOT NULL,
+  `customer_discount` decimal(20,3) NOT NULL,
+  `customer_discount_amount` decimal(20,3) NOT NULL,
+  `freight` decimal(30,3) NOT NULL,
+  `round_amt` decimal(33,3) NOT NULL,
+  `total_items` int(11) NOT NULL,
+  `total_amt` decimal(30,3) NOT NULL,
+  `total_item_amt` decimal(30,3) NOT NULL,
   `remark` varchar(200) NOT NULL,
   `note` varchar(200) NOT NULL,
-  `order_cancel` int(11) NOT NULL,
+  `sales_order_status` int(2) NOT NULL DEFAULT '0',
+  `quotation_cancel` int(2) NOT NULL,
   `active_status` int(11) NOT NULL DEFAULT '1',
   `delete_status` int(11) NOT NULL DEFAULT '0',
-  `order_status` int(11) NOT NULL,
-  `grn_status` int(11) NOT NULL,
-  `received_status` int(11) NOT NULL,
+  `quotation_status` int(2) NOT NULL,
+  `order_status` int(2) NOT NULL,
   `expire_status` int(11) NOT NULL,
   `branch_id` varchar(200) NOT NULL,
   `added_by` varchar(200) NOT NULL,
   `deleted_by` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `sales_quotation`
 --
 
-INSERT INTO `sales_quotation` (`id`, `guid`, `customer_id`, `exp_date`, `po_no`, `po_date`, `discount`, `discount_amt`, `freight`, `round_amt`, `total_items`, `total_amt`, `total_item_amt`, `remark`, `note`, `order_cancel`, `active_status`, `delete_status`, `order_status`, `grn_status`, `received_status`, `expire_status`, `branch_id`, `added_by`, `deleted_by`) VALUES
-(28, 'be0e9618297967699deb19956c7567cc', '99ab67ac5a5630ab0aad7f95dd00d9dd', 1396396800, 'POSNIC-1059', 1396396800, '1', '203.05111', '10', '10', '4', '20122.060', '20305.111', 'asfasf', 'afa', 0, 1, 0, 1, 1, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
-(29, 'c230b3b496df0af079a8e5a1a393bb26', '99ab67ac5a5630ab0aad7f95dd00d9dd', 1396483200, 'POSNIC-1061', 1396483200, '', '', '', '', '3', '67803.362', '67803.36200000001', 'test', 'test ', 0, 1, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+INSERT INTO `sales_quotation` (`id`, `guid`, `customer_id`, `exp_date`, `code`, `date`, `discount`, `discount_amt`, `customer_discount`, `customer_discount_amount`, `freight`, `round_amt`, `total_items`, `total_amt`, `total_item_amt`, `remark`, `note`, `sales_order_status`, `quotation_cancel`, `active_status`, `delete_status`, `quotation_status`, `order_status`, `expire_status`, `branch_id`, `added_by`, `deleted_by`) VALUES
+(40, '5d5d99e14cda47a3e712e10b5f25940e', '0f7c80352b128f9a45d25e42d1ebd19e', 1397174400, 'S-16', 1397174400, '0.000', '1.000', '0.000', '0.000', '0.000', '0.000', 2, '1.000', '1.000', 'test', 'test', 0, 0, 1, 0, 1, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(41, '4ce2d527cf85aa58453230e9b0a0bcbc', '0f7c80352b128f9a45d25e42d1ebd19e', 1397174400, 'S-16', 1397174400, '1.000', '1.000', '0.000', '0.000', '0.000', '0.000', 1, '1.000', '1.000', 'te3st', 'test ', 0, 0, 0, 1, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(42, '95ecca122700047d464befc8f01d4cd6', '0f7c80352b128f9a45d25e42d1ebd19e', 1397260800, 'S-16', 1397260800, '1.000', '0.000', '0.000', '0.000', '0.000', '0.000', 2, '1.000', '1.000', 'tes', 'test ', 0, 0, 1, 0, 1, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(43, '32d45442cf2ac31ce51c86c3cc7af00b', '63aba6eb627ce1811191c2d22399191d', 1399507200, 'S-115', 1399507200, '1.000', '1.000', '1.000', '0.000', '1.000', '10.000', 1, '1.000', '1.000', 'sgdgsd', 'sdgf', 0, 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(44, '589a81efd4692c8dfde196326edff033', '5315c17449a7324783c45ae3632f7487', 1399507200, 'S-116', 1399593600, '1.000', '1.000', '2.000', '0.000', '1.000', '10.000', 1, '1.000', '1.000', 'sdfsd', 'dsf', 0, 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(45, '6d7dd27dcf73c2800971b23c16a0da96', '63aba6eb627ce1811191c2d22399191d', 1399507200, 'S-117', 1399507200, '0.000', '7.758', '1.200', '0.000', '0.000', '0.000', 2, '758.693', '775.760', 'safasf', 'sad', 0, 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(46, '92e38657a5f713ef9b185431c716fdb5', 'ee6958cdd55bbe2225e4fec2cb6cc6ce', 1399507200, 'S-118', 1399593600, '0.000', '7.758', '1.200', '0.000', '1.000', '1.000', 2, '760.693', '775.760', 'dsfsd', 'dsf', 0, 0, 1, 0, 0, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(47, 'ef233050d387b233e622840ce5dd5382', '63aba6eb627ce1811191c2d22399191d', 1399507200, 'S-119', 1399507200, '0.000', '6.828', '1.200', '8.193', '0.000', '0.000', 1, '667.739', '682.760', 'sdgsdg', 'dsfgs', 0, 0, 1, 0, 1, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(48, '78070d5987661a744b9d1799d6ea6d1f', '63aba6eb627ce1811191c2d22399191d', 1399507200, 'S-120', 1399507200, '0.000', '0.690', '1.200', '0.827', '0.000', '0.000', 1, '67.435', '68.952', 'afa', 'dfa', 1, 0, 1, 0, 1, 0, 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_quotation_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `sales_quotation_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(200) DEFAULT NULL,
+  `quotation_id` varchar(200) NOT NULL,
+  `branch_id` varchar(200) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `quty` varchar(100) NOT NULL,
+  `price` decimal(55,3) NOT NULL,
+  `discount` decimal(10,3) NOT NULL,
+  `stock_id` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=204 ;
+
+--
+-- Dumping data for table `sales_quotation_x_items`
+--
+
+INSERT INTO `sales_quotation_x_items` (`id`, `guid`, `quotation_id`, `branch_id`, `item`, `quty`, `price`, `discount`, `stock_id`) VALUES
+(182, 'af01fac9f2cdb46ae488db156dddd683', '1ab67d2287938c48714531aad9b3dbb9', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(184, 'd2ef727839939479b4804d416eb92ce7', '1ab67d2287938c48714531aad9b3dbb9', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(185, '5ed94b6abf1eef5c5d3209ae9fc4fbdb', '5d5d99e14cda47a3e712e10b5f25940e', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(186, 'ce4c47d5119b7795ca5d59a28bf271cc', '5d5d99e14cda47a3e712e10b5f25940e', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(187, '7cddf49d7f9f69a6de34aee42d22935e', '4ce2d527cf85aa58453230e9b0a0bcbc', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(188, '10e8387eab27da7e98c256547a4fc5ef', '95ecca122700047d464befc8f01d4cd6', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(189, '9b0aec052e558e6b6f192c0bc031c1c2', '95ecca122700047d464befc8f01d4cd6', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(190, '1398807c0499579fa445fe6cfd33318d', '32d45442cf2ac31ce51c86c3cc7af00b', '', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(191, '393edab934d78e9468ad8c16686816ea', '589a81efd4692c8dfde196326edff033', '', '9d8439c7f35923f2397af1b7edadc670', '10', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(192, 'd9c9d830c0c16b3bd20813b5147b10b8', '6d7dd27dcf73c2800971b23c16a0da96', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(195, '021c00e9100678a61684a3a69518dd8f', '6d7dd27dcf73c2800971b23c16a0da96', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(197, '69c58ede5474e68a1932b76f2265e00c', '92e38657a5f713ef9b185431c716fdb5', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(198, '9c4d4d1853c7601e090bd9fc0d188803', '92e38657a5f713ef9b185431c716fdb5', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(199, '69c58ede5474e68a1932b76f2265e00c', '92e38657a5f713ef9b185431c716fdb5', '', 'c3216f7d74d4adcf50901b8559d9a3bc', '1', '93.000', '0.000', '92452936fa7217cd784feba1a6ad2d10'),
+(202, '1fbc9cf6c36bc5ecd9728f9891466a14', 'ef233050d387b233e622840ce5dd5382', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '1.000', 'de7d724347f17e5349764a49f869b307'),
+(203, '9e2a18b7a0ad64247c4c898aa0d31fa0', '78070d5987661a744b9d1799d6ea6d1f', '', '9d8439c7f35923f2397af1b7edadc670', '1', '676.000', '0.000', 'de7d724347f17e5349764a49f869b307');
 
 -- --------------------------------------------------------
 
@@ -1384,25 +2043,25 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `branch_id` varchar(255) NOT NULL,
   `item` varchar(255) NOT NULL,
   `quty` decimal(55,0) NOT NULL,
-  `price` decimal(55,0) NOT NULL,
+  `price` decimal(30,3) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   `active_status` int(11) NOT NULL DEFAULT '1',
   `delete_status` int(11) NOT NULL DEFAULT '0',
   `added_by` varchar(255) NOT NULL,
   `deleted_by` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `stock`
 --
 
 INSERT INTO `stock` (`id`, `guid`, `branch_id`, `item`, `quty`, `price`, `active`, `active_status`, `delete_status`, `added_by`, `deleted_by`) VALUES
-(4, 'de7d724347f17e5349764a49f869b307', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9d8439c7f35923f2397af1b7edadc670', '84799', '676', 1, 0, 0, '', ''),
-(5, '92452936fa7217cd784feba1a6ad2d10', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c3216f7d74d4adcf50901b8559d9a3bc', '18948', '93', 1, 0, 0, '', ''),
-(6, '0e3ab27ee4da7aae96f7b0a3a7ac12f4', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'abc049b9d095c27843b114f02ac5f640', '797', '75', 1, 0, 0, '', ''),
-(7, '6f6b3e4615ba931433a1dc4b530a430e', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '68fac0f3c2306caadf9779dd6eb0a568', '90', '69', 1, 1, 0, '', ''),
-(8, '11c4c234a665203e54368f6db77299dc', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c709663a0324fb6175b807eb730de052', '90', '30', 1, 1, 0, '', '');
+(15, '52bb9dabaa6986843a2c91de88574923', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9d8439c7f35923f2397af1b7edadc670', '789', '676.000', 1, 1, 0, '', ''),
+(16, '2e5cb8b338adf9228e5cb8fd2782cd5b', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c3216f7d74d4adcf50901b8559d9a3bc', '200', '60.000', 1, 1, 0, '', ''),
+(17, '0ba4c1649d19b6eab3cf0cff29bbce21', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'abc049b9d095c27843b114f02ac5f640', '200', '75.000', 1, 1, 0, '', ''),
+(18, '629cabe550d1eb20e11b44880f0bba70', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ef92a1dc9701ac89a655927183a78d87', '0', '15.000', 1, 1, 0, '', ''),
+(19, '7209f39fea8b0d34a5a6b4012b91a263', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '23b6fb71c13f7a53235835584c0a600f', '200', '48.000', 1, 1, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -1447,32 +2106,97 @@ INSERT INTO `stocks` (`id`, `guid`, `branch_id`, `branch_name`, `item_id`, `pric
 CREATE TABLE IF NOT EXISTS `stocks_history` (
   `id` int(200) unsigned NOT NULL AUTO_INCREMENT,
   `guid` varchar(255) DEFAULT NULL,
+  `stock_id` varchar(255) NOT NULL,
   `branch_id` varchar(255) DEFAULT NULL,
-  `branch_name` varchar(100) NOT NULL,
   `item_id` varchar(100) NOT NULL,
-  `category_id` varchar(100) NOT NULL,
   `supplier_id` varchar(100) NOT NULL,
   `added_by` varchar(255) DEFAULT NULL,
-  `cost` varchar(100) NOT NULL,
-  `stock` varchar(100) NOT NULL,
-  `price` varchar(50) NOT NULL,
-  `Quantity` varchar(100) NOT NULL,
-  `date` varchar(200) NOT NULL,
+  `cost` decimal(30,3) NOT NULL,
+  `quty` int(100) NOT NULL,
+  `price` decimal(30,3) NOT NULL,
+  `date` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `stocks_history`
 --
 
-INSERT INTO `stocks_history` (`id`, `guid`, `branch_id`, `branch_name`, `item_id`, `category_id`, `supplier_id`, `added_by`, `cost`, `stock`, `price`, `Quantity`, `date`) VALUES
-(5, '', '3', 'Mcdonalds', '21', '3', '8', '102', '10', '1000', '12', '12', '1369612800'),
-(6, '', '3', 'Mcdonalds', '22', '3', '8', '102', '15', '2000', '20', '1', '1369612800'),
-(7, '', '3', 'Mcdonalds', '23', '3', '8', '102', '11', '20', '14', '1', '1369612800'),
-(8, '', '3', 'Mcdonalds', '24', '3', '8', '102', '21', '30', '25', '1', '1369612800'),
-(9, '', '3', 'Mcdonalds', '25', '3', '8', '102', '18', '100', '20', '1', '1369612800'),
-(10, '', '3', 'Mcdonalds', '26', '3', '8', '102', '26', '1000', '28', '2', '1369612800'),
-(11, '', '3', 'Mcdonalds', '27', '3', '8', '102', '6', '2', '10', '1', '1369612800');
+INSERT INTO `stocks_history` (`id`, `guid`, `stock_id`, `branch_id`, `item_id`, `supplier_id`, `added_by`, `cost`, `quty`, `price`, `date`) VALUES
+(17, '9cff3c99cc56218f03b7e9a5975fa6ee', '52bb9dabaa6986843a2c91de88574923', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9d8439c7f35923f2397af1b7edadc670', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 1000, '676.000', 0),
+(18, '199ef781d6a06d93753889414fa075f4', '52bb9dabaa6986843a2c91de88574923', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9d8439c7f35923f2397af1b7edadc670', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 1000, '676.000', 0),
+(19, '5b13072750bf2f4c8cf7a47b37d6e9b4', '2e5cb8b338adf9228e5cb8fd2782cd5b', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c3216f7d74d4adcf50901b8559d9a3bc', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 100, '60.000', 0),
+(20, '2dada10b8b26dc0d68bc8b84a5f8c84a', '0ba4c1649d19b6eab3cf0cff29bbce21', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'abc049b9d095c27843b114f02ac5f640', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '56.000', 100, '75.000', 0),
+(21, '0d69420b3511b6f936906639d9e6ccb1', '629cabe550d1eb20e11b44880f0bba70', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ef92a1dc9701ac89a655927183a78d87', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '12.000', 100, '15.000', 0),
+(22, '7b85ff3be9bd9273f02fe2dee5fa437e', '7209f39fea8b0d34a5a6b4012b91a263', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '23b6fb71c13f7a53235835584c0a600f', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 100, '48.000', 0),
+(23, '2ebcfac7b9ae6cad5c3e5babf6949a9e', '2e5cb8b338adf9228e5cb8fd2782cd5b', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c3216f7d74d4adcf50901b8559d9a3bc', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 100, '60.000', 0),
+(24, 'b6c25505e0a80b03968f695fdfa429e1', '0ba4c1649d19b6eab3cf0cff29bbce21', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'abc049b9d095c27843b114f02ac5f640', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '56.000', 100, '75.000', 0),
+(25, '45b284f1b04f3fff8c0a7c3cde5d488a', '629cabe550d1eb20e11b44880f0bba70', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ef92a1dc9701ac89a655927183a78d87', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '12.000', 100, '15.000', 0),
+(26, 'e33e7c7434ea1b38d13e6d9aeb01afce', '7209f39fea8b0d34a5a6b4012b91a263', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '23b6fb71c13f7a53235835584c0a600f', 'ceab8c7d14f12aaeec1dc19b3d81212a', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '45.000', 100, '48.000', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_transfer`
+--
+
+CREATE TABLE IF NOT EXISTS `stock_transfer` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` int(11) NOT NULL,
+  `remark` varchar(300) NOT NULL,
+  `note` varchar(300) NOT NULL,
+  `no_items` int(11) NOT NULL,
+  `total_amount` decimal(30,3) NOT NULL,
+  `active_status` int(11) NOT NULL DEFAULT '1',
+  `delete_status` int(11) NOT NULL DEFAULT '0',
+  `stock_status` int(11) NOT NULL DEFAULT '0',
+  `branch_id` varchar(255) NOT NULL,
+  `deleted_by` varchar(255) NOT NULL,
+  `added_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+
+--
+-- Dumping data for table `stock_transfer`
+--
+
+INSERT INTO `stock_transfer` (`id`, `guid`, `destination`, `code`, `date`, `remark`, `note`, `no_items`, `total_amount`, `active_status`, `delete_status`, `stock_status`, `branch_id`, `deleted_by`, `added_by`) VALUES
+(25, 'f4206a8912721c53b84894ee83a02900', '', 'OS18', 1400112000, 'bxcbxc', 'xcvbx', 1, '45450.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(26, '063c5a4037dab38c58120c140d340eb1', '', 'OS19', 1400198400, 'xcvbxcbb', 'xcv', 1, '45900.000', 1, 0, 1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_transfer_x_items`
+--
+
+CREATE TABLE IF NOT EXISTS `stock_transfer_x_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) NOT NULL,
+  `damage_stock_id` varchar(255) NOT NULL,
+  `stock_id` varchar(255) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `quty` int(11) NOT NULL,
+  `cost` decimal(30,3) NOT NULL,
+  `sell` decimal(30,3) NOT NULL,
+  `discount_per` decimal(30,3) NOT NULL,
+  `discount_amount` decimal(30,3) NOT NULL,
+  `tax` decimal(30,3) NOT NULL,
+  `amount` decimal(30,3) NOT NULL,
+  `supplier_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+
+--
+-- Dumping data for table `stock_transfer_x_items`
+--
+
+INSERT INTO `stock_transfer_x_items` (`id`, `guid`, `damage_stock_id`, `stock_id`, `item`, `quty`, `cost`, `sell`, `discount_per`, `discount_amount`, `tax`, `amount`, `supplier_id`) VALUES
+(38, '3c2e2d7e4f8642ff6d668017e8f5a116', 'f4206a8912721c53b84894ee83a02900', '', '9d8439c7f35923f2397af1b7edadc670', 1000, '45.000', '676.000', '1.000', '450.000', '900.000', '45000.000', 'ceab8c7d14f12aaeec1dc19b3d81212a'),
+(39, '8671719b870ef46cff4f744c4b2f4392', '063c5a4037dab38c58120c140d340eb1', '', '9d8439c7f35923f2397af1b7edadc670', 1000, '45.000', '676.000', '0.000', '0.000', '900.000', '45000.000', 'ceab8c7d14f12aaeec1dc19b3d81212a');
 
 -- --------------------------------------------------------
 
@@ -1611,7 +2335,7 @@ CREATE TABLE IF NOT EXISTS `suppliers_x_items` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=127 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=128 ;
 
 --
 -- Dumping data for table `suppliers_x_items`
@@ -1647,7 +2371,8 @@ INSERT INTO `suppliers_x_items` (`id`, `guid`, `branch_id`, `supplier_id`, `item
 (123, '892f9f39498d7239b742ce72c8e48c6d', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c76d55c21f9d4f577b26fba515a8066f', '000b7493bfbd3e7be55732d5275b43ba', '879', '', '787', '787', '', 1, 0, 0, 1, 0, 0, NULL, NULL),
 (124, 'b5b5313cb724c9cf11e3f40e05a2ff60', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'c76d55c21f9d4f577b26fba515a8066f', '47e94298a89b3cf89e5e09cde7f4b1b1', '42', '', '5235', '352', '', 1, 0, 0, 1, 0, 0, NULL, NULL),
 (125, '7a2a814a17743d64d3e4fdccccc9f30c', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', '1733d0bbbbd635f34421ddc030579885', '235', '', '235235', '23523', '', 1, 0, 0, 1, 0, 0, NULL, NULL),
-(126, 'f642108093fc97c60e18a1739344e5b2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'c2757704eb875d850950bd5bff8cc845', '32542', '', '235', '35235', '', 1, 0, 0, 1, 0, 0, NULL, NULL);
+(126, 'f642108093fc97c60e18a1739344e5b2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', 'c2757704eb875d850950bd5bff8cc845', '32542', '', '235', '35235', '', 1, 0, 0, 1, 0, 0, NULL, NULL),
+(127, '41fdd9225b1d00800e3c1cc8fdaad552', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'ceab8c7d14f12aaeec1dc19b3d81212a', '96d4396bdfee017b1cf08c3b54bac4a5', '13', '', '14', '15', '', 1, 0, 0, 1, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1716,7 +2441,7 @@ INSERT INTO `supplier_payable` (`id`, `invoice_id`, `supplier_id`, `amount`, `pa
 (70, '1fe8e17b45d319d29b51a550fdcc5189', 'e91054c7db987e18f232ffa506f49394', '12869.815', '0.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '31703fb1f5e686252aac3fa238943d10'),
 (71, 'ae6e03d1a3eb5a4a9e9ec6a7876ca486', 'e91054c7db987e18f232ffa506f49394', '26377.078', '0.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '31703fb1f5e686252aac3fa238943d10e686252aac3fa238943d10'),
 (72, '6884ef831670ce6763513cb06a9cb7ec', 'e91054c7db987e18f232ffa506f49394', '8898.102', '97879.122', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '31703fb1f5e6862531703fb1f5e686252aac3fa238943d10'),
-(73, '7426a6fc2562fef9f209621700390c23', 'e91054c7db987e18f232ffa506f49394', '10000.000', '2000.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10');
+(73, '7426a6fc2562fef9f209621700390c23', 'e91054c7db987e18f232ffa506f49394', '10000.000', '2010.000', 0, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '31703fb131703fb1f5e686252aac3fa238943d10a238943d10');
 
 -- --------------------------------------------------------
 
@@ -1735,7 +2460,7 @@ CREATE TABLE IF NOT EXISTS `taxes` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `taxes`
@@ -1752,7 +2477,9 @@ INSERT INTO `taxes` (`id`, `guid`, `value`, `branch_id`, `type`, `active_status`
 (8, '5dad9a40f3b35cd3b573fcd3d481ea0b', '2', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9583a13924a8e28cc35fec0650a891af', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
 (9, '4eeb244d4c7f6eb3e725c99f970aef8d', '5', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9583a13924a8e28cc35fec0650a891af', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
 (10, 'd8bb722ea46cec6fcc9f88a213401f87', 'safas', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9583a13924a8e28cc35fec0650a891af', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
-(11, '94f8ababe49f9a0f6270f2ddb96e6291', '67', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9583a13924a8e28cc35fec0650a891af', 1, 0, '7c9888196685a12a83eecf9c0d05a525', NULL);
+(11, '94f8ababe49f9a0f6270f2ddb96e6291', '67', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '9583a13924a8e28cc35fec0650a891af', 1, 0, '7c9888196685a12a83eecf9c0d05a525', NULL),
+(12, '722cd6b7d27eb0ce93c8685a2c426c4d', '5', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 'ff9fc7bb46cf6d765d3f647c9acf3d9c', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(13, '3bd8ee71ad402856e20a0ad069e3d32d', '2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', '01fc209013ae06f62b4af21088294b45', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -1770,7 +2497,7 @@ CREATE TABLE IF NOT EXISTS `taxes_area` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `taxes_area`
@@ -1787,7 +2514,9 @@ INSERT INTO `taxes_area` (`id`, `guid`, `name`, `branch_id`, `active_status`, `d
 (9, '810cae8bb4bfd17574f57308d3bf0062', 'Colombo', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (10, '85127b2d6897986a9175a142f154cd1a', 'kerala121', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (11, '7973b1abfb2466b4478c9d87476951cf', 'kerala121t', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
-(12, '28aa802577d2ca603ca011f9a3147881', 'sdafsd dsgfds', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4');
+(12, '28aa802577d2ca603ca011f9a3147881', 'sdafsd dsgfds', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
+(13, '974cc19e629b993ced7f7267d9fbb526', 'Area 1', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(14, '35df27055dd4a46148b656ee0a048b86', 'Area 2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -1839,7 +2568,7 @@ CREATE TABLE IF NOT EXISTS `tax_types` (
   `added_by` varchar(255) DEFAULT NULL,
   `deleted_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `tax_types`
@@ -1853,7 +2582,9 @@ INSERT INTO `tax_types` (`id`, `guid`, `type`, `branch_id`, `active_status`, `de
 (5, 'ed1318118fb9ca6592cb0117d1d5a529', 'asfas', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4'),
 (6, '4f9a30691955022263017ccddcae1f9d', 'Vat', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
 (7, '3acdb4df97f5635b08d72b343a438c80', 'Sales Tax', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 0, 1, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
-(8, 'd2567c03492d4abc80011e6829067a16', 'Income Tax', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', '');
+(8, 'd2567c03492d4abc80011e6829067a16', 'Income Tax', 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', ''),
+(9, 'ff9fc7bb46cf6d765d3f647c9acf3d9c', 'Vat ', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL),
+(10, '01fc209013ae06f62b4af21088294b45', 'Vat 2', 'BE4CB6FB-9D0F-457A-9D0F-D7948222EBB3', 1, 0, '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', NULL);
 
 -- --------------------------------------------------------
 
@@ -1913,7 +2644,7 @@ CREATE TABLE IF NOT EXISTS `users_x_branches` (
   `deleted_by` varchar(255) DEFAULT NULL,
   `admin` int(101) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `users_x_branches`
@@ -1922,7 +2653,8 @@ CREATE TABLE IF NOT EXISTS `users_x_branches` (
 INSERT INTO `users_x_branches` (`id`, `branch_id`, `user_id`, `user_delete`, `user_active`, `deleted_by`, `admin`) VALUES
 (1, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 1, '0', 101),
 (51, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', 'a2da554fc03881e96b50685f3d60de70', 0, 0, NULL, 1),
-(52, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '7c9888196685a12a83eecf9c0d05a525', 0, 1, NULL, 1);
+(52, 'BE4CB6FB-276C-457A-9D0F-D7948222EBB3', '7c9888196685a12a83eecf9c0d05a525', 0, 1, NULL, 1),
+(53, '2307d083b4dc2d6476b05c96ef69a99b', '61F8FC7E-CB3F-4CC5-9EF2-4ED38DC992B4', 0, 1, NULL, 1);
 
 -- --------------------------------------------------------
 
