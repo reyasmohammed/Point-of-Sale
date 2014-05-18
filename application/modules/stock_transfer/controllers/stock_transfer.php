@@ -105,7 +105,7 @@ function save(){
         $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
         $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
-        $this->form_validation->set_rules('branch', $this->lang->line('branch'), 'numeric'); 
+        $this->form_validation->set_rules('branch', $this->lang->line('branch')); 
                        
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
@@ -324,8 +324,9 @@ function order_number(){
 
 function search_items(){
     $search= $this->input->post('term');
+    $destination= $this->input->post('destination');
     $this->load->model('stock');
-    $data= $this->stock->search_items($search);      
+    $data= $this->stock->search_items($search,$destination);      
     echo json_encode($data);
        
         

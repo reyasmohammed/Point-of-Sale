@@ -5,7 +5,7 @@ class Stock extends CI_Model{
         parent::__construct();
     }
     function get($end,$start,$like,$branch){
-                $this->db->select()->from('damage_stock')->where('branch_id',$branch)->where('delete_status',0);
+                $this->db->select()->from('stock_transfer')->where('branch_id',$branch)->where('delete_status',0);
                 $this->db->limit($end,$start); 
                 $this->db->or_like($like);     
                 $query=$this->db->get();
@@ -18,7 +18,7 @@ class Stock extends CI_Model{
     }
    
     function count($branch){
-        $this->db->select()->from('damage_stock')->where('branch_id',$branch)->where('delete_status',0);
+        $this->db->select()->from('stock_transfer')->where('branch_id',$branch)->where('delete_status',0);
         $sql=  $this->db->get();
         return $sql->num_rows();
     }
@@ -29,17 +29,15 @@ class Stock extends CI_Model{
          $this->db->update('damage_stock_x_items',$item_value);
          
     }
-    function add_damage_stock($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
-         
-         
+    function add_stock_transfer($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
          $item_value=array('stocks_history_id'=>$stock,'damage_stock_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
-         $this->db->insert('damage_stock_x_items',$item_value);
+         $this->db->insert('stock_transfer_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
-         $this->db->update('damage_stock_x_items',array('guid'=>md5('damage_stock_x_items'.$item.$os_item)));
+         $this->db->update('stock_transfer_x_items',array('guid'=>md5('stock_transfer_x_items'.$item.$os_item)));
     }
     
-    function search_items($search){
+    function search_items($search,$destination){
         $bid=$this->session->userdata['branch_id'];
        
         $this->db->select('stocks_history.guid as stock_id,suppliers.first_name,suppliers.guid as s_guid,items_setting.purchase,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,stocks_history.price as price,stocks_history.cost as cost,stock.quty as quty')->from('stock')->where('stock.branch_id',$bid)->where('stock.quty >',0);
@@ -59,10 +57,21 @@ class Stock extends CI_Model{
             $this->db->group_by('stocks_history.cost');
             $sql=$this->db->get();
             $data=array();
+           // echo $destination;
+            $this->db->select()->from('items')->where('branch_id',$destination);
+            $dest=  $this->db->get();
+            $item=$dest->result_array();
+            
             foreach ($sql->result() as $row){
                 if($row->quty >0){
+                    for($i=0;$i<count($item);$i++){
+                   if($item[$i]['code']==$row->code){
                 $data[]=$row;
+                    }
+                    }
                 }
+             //   echo $item[0]['code'];
+             //  echo  $row->code;
             }
                // $this->db->like('suppliers_x_items.supplier_id',$guid); 
          
@@ -133,11 +142,17 @@ class Stock extends CI_Model{
      }
       function search_branch($search){
           $like=array('store_name'=>$search,'code'=>$search,'phone'=>$search,'email'=>$search,'city'=>$search,'state'=>$search,'country'=>$search,'website'=>$search);       
-          $this->db->select()->from('branches')->where('active_status',1)->where('delete_status',0);
+          $this->db->select()->from('branches')->where('guid <>',$this->session->userdata('branch_id'))->where('active_status',1)->where('delete_status',0);
           $this->db->or_like($like);
           $this->db->limit($this->session->userdata('data_limit'));
           $sql=  $this->db->get();
-          return $sql->result();
+          $data=array();
+          foreach($sql->result() as $row){
+              if($row->guid!=$this->session->userdata('branch_id')){
+                  $data[]=$row;
+              }
+          }
+          return $data;
      }
     
 }

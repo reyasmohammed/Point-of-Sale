@@ -69,6 +69,12 @@
     font-size: 11px;
     padding: 0 1px !important;
 }
+  #selected_item_table  tr td:nth-child(7)  {
+  width: 100px !important;
+}
+  #selected_item_table  tr td:nth-child(8)  {
+  width: 150px !important;
+}
 </style>	
 <script type="text/javascript">
     function numbersonly(e){
@@ -161,7 +167,7 @@
                    var guid = $('#parsley_reg #select_branch').select2('data').id;
 
                  $('#parsley_reg #branch_name').val($('#parsley_reg #select_branch').select2('data').name);
-                 $('#parsley_reg #branch').val(guid);
+                 $('#parsley_reg #destination_branch').val(guid);
                       window.setTimeout(function ()
                     {
                       
@@ -292,6 +298,7 @@
                     data: function (term) {
                         return {
                             term: term,
+                            destination:$('#destination_branch').val()
                                    
                         };
                     },
@@ -842,7 +849,7 @@ function clear_inputs(){
 
   $("#parsley_reg #items").select2('data', {id:'',text: '<?php echo $this->lang->line('search')." ".$this->lang->line('items') ?>'});
   $("#parsley_reg #first_name").val('');
-  $("#parsley_reg #branch").val('');
+ 
   $('#parsley_reg #items').select2('open');
     
         window.setTimeout(function ()
@@ -852,7 +859,7 @@ function clear_inputs(){
     
 }
 function new_order_date(e){
-    if($('#parsley_reg #branch').val()!=""){
+    if($('#parsley_reg #destination_branch').val()!=""){
 
      var unicode=e.charCode? e.charCode : e.keyCode
    if($('#parsley_reg #order_date').value!=""){
@@ -913,7 +920,7 @@ function new_order_date(e){
                                                                                        
                                                                                         'value'=>set_value('branch'));
                                                                          echo form_input($branch)?>
-                                                            <input type="hidden" name="branch" id="branch">
+                                                            <input type="hidden" name="branch" id="destination_branch">
                                                        </div>
                                                </div>
                                                <div class="col col-sm-2" >
