@@ -550,6 +550,7 @@ $lang['credit_days']='Credit Days';
   $lang['damage_stock_id']='Opening Stock ID';
   $lang['date']='Date';
   $lang['receiving_stock']='Receiving Stock';
+  $lang['access']='Access';
   
   
   

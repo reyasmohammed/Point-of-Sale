@@ -12,10 +12,14 @@ class Groups extends CI_Model{
         
         $data=array();
         $i=0;
-        foreach ($sql->result() as $row){
-            $this->config->load("$row->module_name/posnic");
+        foreach ($sql->result_array() as $row){
+            $this->config->load($row['module_name']."/posnic");
             $acl_list =  $this->config->item('M_ACL');
-            if($row->guid!=NULL){
+            if($row['guid']!=NULL){
+                $row['module_name']= $this->lang->line($row['module_name']);
+                for($j=0;$j<count($acl_list);$j++){
+                    $acl_list[$j]=$this->lang->line($acl_list[$j]);
+                }
             $data[$i][0]=$row;
             $data[$i][1]=$acl_list;
             $i++;
