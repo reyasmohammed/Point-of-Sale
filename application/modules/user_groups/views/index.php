@@ -83,6 +83,7 @@ function posnic_add_new(){
       $('#active').attr("disabled", "disabled");
       $('#deactive').attr("disabled", "disabled");
       $('#user_groups_lists').removeAttr("disabled");
+     
         $.ajax({                                      
                              url: "<?php echo base_url('index.php/user_groups/get_permissions_list') ?>",                      
                              data: "", 
@@ -98,14 +99,14 @@ function posnic_add_new(){
               $('#permissions').append('<div class="row" id="'+module_row+'" />');
             }
             
-             $('#'+module_row).append('<div class="col col-lg-2" id="mod_col_'+data[i][0]['guid']+'">\n\
-                        <div class="row text-center">\n\
+             $('#'+module_row).append('<div class="col col-lg-2" id="mod_col_'+data[i][0]['guid']+'" >\n\
+                        <div class="row text-center" style="border-bottom:solid 3px #48AC2E;margin:10px -3px">\n\
                             <lablel  >'+data[i][0]['module_name']+'</lablel>\n\
                         </div> </div>');
             for(var j=0;j<data[i][1].length;j++){
                           $('#'+module_row+' #mod_col_'+data[i][0]['guid']).append('<div class="row">\n\
                             <div class="col col-lg-6">\n\
-                                <lablel>"'+data[i][1][j]+'"</lablel>\n\
+                                <lablel>'+data[i][1][j]+'</lablel>\n\
                             </div>\n\
                             <div class="col col-lg-6">\n\
                                <input type="checkbox" checked id="permission_'+j+data[i][0]['guid']+'"> \n\
