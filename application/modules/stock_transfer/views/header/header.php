@@ -1,8 +1,8 @@
 
 <script type="text/javascript" charset="utf-8">
-    var point=3;
+    var point=3; 
           $(document).ready( function () {
-              
+              //$(document).fullScreen(true);
         	 refresh_items_table();
                  $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('stock_transfer') ?>');
                      $('#add_new_order').hide();
