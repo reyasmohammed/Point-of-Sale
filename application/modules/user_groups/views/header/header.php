@@ -133,8 +133,11 @@
             });
             }
            function edit_function(guid){
+            $('#loading').modal('show');
                        $("#add_user_groups").trigger('reset');
                        $('#permissions').remove();
+                       $('#new_buttons').hide();
+                       $('#update_buttons').show();
       $('#parent_permission').append('<div id="permissions"/>');
                         <?php if($this->session->userdata['user_groups_per']['edit']==1){ ?>
                             $.ajax({                                      
@@ -204,7 +207,7 @@
                              }
                                 
                                 
-                                
+                                $('#loading').modal('hide');
                              } 
                            });
                          
