@@ -79,29 +79,99 @@ class User_groups extends CI_Controller
     }
    
    
-    function update_customer_category(){
-        if($this->session->userdata['customer_category_per']['edit']==1){
-           if($this->input->post('customer_category')){
-                $this->form_validation->set_rules('customer_category',$this->lang->line('customer_category'),'required'); 
+    function add_user_groups(){
+        if($this->session->userdata['user_groups_per']['add']==1){
+                $this->form_validation->set_rules('user_groups',$this->lang->line('user_groups'),'required'); 
+                $this->form_validation->set_rules('module_name',$this->lang->line('module_name'),'required'); 
+                $this->form_validation->set_rules('module_id',$this->lang->line('module_id'),'required'); 
                 if ( $this->form_validation->run() !== false ) {  
-                      $id=  $this->input->post('guid');
-                      $name=$this->input->post('customer_category');                
-                      $discount=$this->input->post('discount');                
-                      $where=array('guid !='=>$id,'group_name'=>$name);
-                if($this->posnic->check_record_unique($where,'customer_category')){
-                    $value=array('group_name'=>$name,'discount'=>$discount);
-                    $update_where=array('guid'=>$id);
-                    $this->posnic->posnic_update_record($value,$update_where,'customer_category');
-                    echo 'TRUE';
+                     
+                      $name=$this->input->post('user_groups');                
+                      $where=array('group_name'=>$name);
+                if($this->posnic->check_record_unique($where,'user_groups')){
+                    $value=array('group_name'=>$name);
+                 
+                 $guid= $this->posnic->posnic_add_record($value,'user_groups');
+                   
+                   $data=$this->input->post('module_name');
+                   $module=$this->input->post('module_id');
+                   for($i=0;$i<  count($module);$i++){
+                       $this->config->load($data[$i]."/posnic");
+                        $acl_list =  $this->config->item('M_ACL');
+                        $per="";
+                     for($j=0;$j<count($acl_list);$j++){
+                         
+                         if(!$this->input->post($data[$i]."_".$acl_list[$j])){
+                         
+                             $per='0'.$per;
+                         }else{
+                               $per='1'.$per;
+                         }
+                     }
+                     $this->load->model('groups');
+                     $this->groups->add_module_permission($guid,$per,$module[$i]);
+                   
+                   }
+                   
+                   
+                   
+                    echo 'TRUEsgs';
                 }else{
                         echo "ALREADY";
                 }
                 }else{
                     echo "FALSE";
                 }
+              	             
+       }else{
+           echo "NOOP";
+       }
+    }
+    function update_user_groups(){
+        if($this->session->userdata['user_groups_per']['edit']==1){
+                $this->form_validation->set_rules('user_groups',$this->lang->line('user_groups'),'required'); 
+                $this->form_validation->set_rules('guid',$this->lang->line('guid'),'required'); 
+                $this->form_validation->set_rules('module_name',$this->lang->line('module_name'),'required'); 
+                $this->form_validation->set_rules('module_id',$this->lang->line('module_id'),'required'); 
+                if ( $this->form_validation->run() !== false ) {  
+                     $guid=$this->input->post('guid');   
+                      $name=$this->input->post('user_groups');                
+                      $where=array('guid !='=>$guid,'group_name'=>$name);
+                if($this->posnic->check_record_unique($where,'user_groups')){
+                    $value=array('group_name'=>$name);
+                 $update=array('guid'=>$guid);
+                  $this->posnic->posnic_update_record($value,$update,'user_groups');
+                   
+                   $data=$this->input->post('module_name');
+                   $module=$this->input->post('module_id');
+                   for($i=0;$i<  count($module);$i++){
+                       $this->config->load($data[$i]."/posnic");
+                        $acl_list =  $this->config->item('M_ACL');
+                        $per="";
+                     for($j=0;$j<count($acl_list);$j++){
+                         
+                         if(!$this->input->post($data[$i]."_".$acl_list[$j])){
+                         
+                             $per='0'.$per;
+                         }else{
+                               $per='1'.$per;
+                         }
+                     }
+                     $this->load->model('groups');
+                     $this->groups->update_module_permission($guid,$per,$module[$i]);
+                   
+                   }
+                   
+                   
+                   
+                    echo 'TRUEsgs';
+                }else{
+                        echo "ALREADY";
+                }
                 }else{
                     echo "FALSE";
-                }	             
+                }
+              	             
        }else{
            echo "NOOP";
        }
@@ -109,7 +179,7 @@ class User_groups extends CI_Controller
 
     function active(){
         $id=  $this->input->post('guid');
-        $report= $this->posnic->posnic_module_active($id,'customer_category'); 
+        $report= $this->posnic->posnic_module_active($id,'user_groups'); 
         if (!$report['error']) {
             echo 'TRUE';
         } else {
@@ -118,16 +188,17 @@ class User_groups extends CI_Controller
     }
     function deactive(){
         $id=  $this->input->post('guid');
-        $report= $this->posnic->posnic_module_deactive($id,'customer_category'); 
+        $report= $this->posnic->posnic_module_deactive($id,'user_groups'); 
         if (!$report['error']) {
             echo 'TRUE';
         } else {
             echo 'FALSE';
         }
     }
-    function edit_customer_category($guid){
-        if($this->session->userdata['customer_category_per']['edit']==1){
-            $data=  $this->posnic->get_module_details_for_update($guid,'customer_category');
+    function edit_user_groups($guid){
+        if($this->session->userdata['user_groups_per']['edit']==1){
+            $this->load->model('groups');
+            $data=  $this->groups->get_user_groups($guid);
             echo json_encode($data);
         }else{
             echo 'FALSE';
@@ -136,10 +207,10 @@ class User_groups extends CI_Controller
             
     
     function delete(){
-        if($this->session->userdata['customer_category_per']['delete']==1){
+        if($this->session->userdata['user_groups_per']['delete']==1){
             if($this->input->post('guid')){
                 $guid=  $this->input->post('guid');
-                $this->posnic->posnic_delete($guid,'customer_category');
+                $this->posnic->posnic_delete($guid,'user_groups');
                 echo 'TRUE';
             }
         }else{

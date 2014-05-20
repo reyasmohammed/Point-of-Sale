@@ -49,7 +49,7 @@
         });
          $('#update_user_groups').click(function() { 
                 <?php if($this->session->userdata['user_groups_per']['edit']==1){ ?>
-                var inputs = $('#parsley_reg').serialize();
+                var inputs = $('#add_user_groups').serialize();
                       $.ajax ({
                             url: "<?php echo base_url('index.php/user_groups/update_user_groups')?>",
                             data: inputs,
@@ -83,6 +83,8 @@ function posnic_add_new(){
       $('#active').attr("disabled", "disabled");
       $('#deactive').attr("disabled", "disabled");
       $('#user_groups_lists').removeAttr("disabled");
+      $('#permissions').remove();
+      $('#parent_permission').append('<div id="permissions"/>');
      
         $.ajax({                                      
                              url: "<?php echo base_url('index.php/user_groups/get_permissions_list') ?>",                      
@@ -102,14 +104,14 @@ function posnic_add_new(){
              $('#'+module_row).append('<div class="col col-lg-2" id="mod_col_'+data[i][0]['guid']+'" >\n\
                         <div class="row text-center" style="border-bottom:solid 3px #48AC2E;margin:10px -3px">\n\
                             <lablel  >'+data[i][0]['module_name']+'</lablel>\n\
-                        </div> </div>');
+                        </div><input type="hidden" name="module_name[]" value="'+data[i][2]+'"><input type="hidden" name="module_id[]" value="'+data[i][0]['guid']+'"></div>');
             for(var j=0;j<data[i][1].length;j++){
                           $('#'+module_row+' #mod_col_'+data[i][0]['guid']).append('<div class="row">\n\
                             <div class="col col-lg-6">\n\
                                 <lablel>'+data[i][1][j]+'</lablel>\n\
                             </div>\n\
                             <div class="col col-lg-6">\n\
-                               <input type="checkbox" checked id="permission_'+j+data[i][0]['guid']+'"> \n\
+                               <input type="checkbox" name="'+data[i][2]+'_'+data[i][3][j]+'" checked id="permission_'+j+data[i][0]['guid']+'"> \n\
                             </div>\n\
                         </div>');
             
@@ -131,7 +133,7 @@ function posnic_add_new(){
                     <?php }?>
 }
 function posnic_user_groups_lists(){
-      $('#edit_user_groups_form').hide('hide');
+  
       $('#add_user_groups_form').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
@@ -221,7 +223,8 @@ function reload_update_user(){
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'user_groups',
                                                                                     'value'=>set_value('user_groups'));
-                                                           echo form_input($user_groups)?> 
+                                                           echo form_input($user_groups)?>
+                                                         <input type="hidden" name="guid" id="guid">
                                                     </div>
                                                    </div>
                                                <div class="col col-lg-1"></div>
@@ -232,77 +235,20 @@ function reload_update_user(){
                           </div>
                      </div>
                 </div>
+                <div  id="parent_permission">
                 <div  id="permissions">
                     
                 </div>
+                </div>
                
-                    <div class="row">
+                    <div class="row" id="new_buttons">
                                 <div class="col-lg-4"></div>
                                   <div class="col col-lg-4 text-center"><br><br>
                                       <button id="add_new_user_groups"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
                                       <a href="javascript:clear_add_user_groups()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('clear') ?></a>
                                   </div>
                               </div>
-                </div>
-          </div>
-    <?php echo form_close();?>
-</section>    
- 
-   
-<section id="edit_user_groups_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
-                          'runat'=>'server',
-                          'class'=>'form-horizontal');
-       echo form_open_multipart('user_groups/upadate_pos_user_groups_details/',$form);?>
-        <div id="main_content_outer" class="clearfix">
-           <div id="main_content">
-                <div class="row">
-                     <div class="col-lg-4"></div>
-                     <div class="col-lg-4">
-                          <div class="panel panel-default">
-                               <div class="panel-heading">
-                                    <h4 class="panel-title"><?php echo $this->lang->line('user_groups') ?></h4>  
-                                     <input type="hidden" name="guid" id="guid" >
-                               </div>
-                              <br>
-                              <div class="row">
-                                       <div class="col col-lg-12" >
-                                           <div class="row">
-                                               <div class="col col-lg-1"></div>
-                                               <div class="col col-lg-10">
-                                                    <div class="form_sep">
-                                                         <label for="user_groups" class="req"><?php echo $this->lang->line('user_groups') ?></label>                                                                                                       
-                                                           <?php $user_groups=array('name'=>'user_groups',
-                                                                                    'class'=>'required form-control',
-                                                                                    'id'=>'user_groups',
-                                                                                    'value'=>set_value('user_groups'));
-                                                           echo form_input($user_groups)?> 
-                                                    </div>
-                                                   </div>
-                                               <div class="col col-lg-1"></div>
-                                               </div>
-                                        </div> 
-                                  <div class="col col-lg-12" >
-                                           <div class="row">
-                                               <div class="col col-lg-1"></div>
-                                               <div class="col col-lg-10">
-                                                    <div class="form_sep">
-                                                         <label for="discount" ><?php echo $this->lang->line('discount') ?>%</label>                                                                                                       
-                                                           <?php $discount=array('name'=>'discount',
-                                                                                    'class'=>'form-control',
-                                                                                    'id'=>'discount',
-                                                                                    'value'=>set_value('discount'));
-                                                           echo form_input($discount)?> 
-                                                    </div>
-                                                   </div>
-                                               <div class="col col-lg-1"></div>
-                                               </div>
-                                        </div>
-                              </div><br><br>
-                          </div>
-                     </div>
-                </div>
-                   <div class="row">
+                <div class="row" id="update_buttons">
                         <div class="col-lg-4"></div>
                       <div class="col col-lg-4 text-center"><br><br>
                           <button id="update_user_groups"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('update') ?></button>
@@ -313,6 +259,9 @@ function reload_update_user(){
           </div>
     <?php echo form_close();?>
 </section>    
+ 
+   
+  
            <div id="footer_space">
               
            </div>
