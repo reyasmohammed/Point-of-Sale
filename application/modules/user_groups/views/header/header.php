@@ -3,16 +3,12 @@
           $(document).ready( function () {
            
                     $('#add_user_groups_form').hide();
-                    $('#edit_user_groups_form').hide();
                               posnic_table();
                                 add_user_groups.onsubmit=function()
                                 { 
                                   return false;
                                 } 
-                                parsley_reg.onsubmit=function()
-                                { 
-                                  return false;
-                                } 
+                                
                          
                         } );
                         
@@ -137,7 +133,9 @@
             });
             }
            function edit_function(guid){
-                       $("#parsley_reg").trigger('reset');
+                       $("#add_user_groups").trigger('reset');
+                       $('#permissions').remove();
+      $('#parent_permission').append('<div id="permissions"/>');
                         <?php if($this->session->userdata['user_groups_per']['edit']==1){ ?>
                             $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/user_groups/edit_user_groups/"+guid,                      
@@ -146,16 +144,67 @@
                              success: function(data)        
                              {    
                                  $("#user_list").hide();
-                                 $('#edit_user_groups_form').show('slow');
+                                 $('#add_user_groups_form').show('slow');
                                  $('#delete').attr("disabled", "disabled");
                                  $('#posnic_add_user_groups').attr("disabled", "disabled");
                                  $('#active').attr("disabled", "disabled");
                                  $('#deactive').attr("disabled", "disabled");
                                  $('#user_groups_lists').removeAttr("disabled");
-                                 $('#parsley_reg #guid').val(data[0]['guid']);
-                                 $('#parsley_reg #user_groups').val(data[0]['group_name']);
-                                 $('#parsley_reg #discount').val(data[0]['discount']);
+                                 $('#add_user_groups #guid').val(guid);
+                                 $('#add_user_groups #user_groups').val(data[0][0]['group_name']);
+                              
+                                 for(var i=0;i<data.length;i++){
+                                   var module_row;
+            
+            if(i%6==0){
+                module_row='mod_row_'+data[i][0]['guid'];
+              $('#permissions').append('<div class="row" id="'+module_row+'" />');
+            }
+            
+             $('#'+module_row).append('<div class="col col-lg-2" id="mod_col_'+data[i][0]['guid']+'" >\n\
+                        <div class="row text-center" style="border-bottom:solid 3px #48AC2E;margin:10px -3px">\n\
+                            <lablel  >'+data[i][0]['module_name']+'</lablel>\n\
+                        </div><input type="hidden" name="module_name[]" value="'+data[i][2]+'"><input type="hidden" name="module_id[]" value="'+data[i][0]['guid']+'"></div>');
+            for(var j=0;j<data[i][1].length;j++){
+                
+                  if(data[i][4][data[i][3][j]]==1){
+                          $('#'+module_row+' #mod_col_'+data[i][0]['guid']).append('<div class="row">\n\
+                            <div class="col col-lg-6">\n\
+                                <lablel>'+data[i][1][j]+'</lablel>\n\
+                            </div>\n\
+                            <div class="col col-lg-6">\n\
+                               <input type="checkbox" name="'+data[i][2]+'_'+data[i][3][j]+'" checked id="permission_'+j+data[i][0]['guid']+'"> \n\
+                            </div>\n\
+                        </div>');
+            
+            
+               // $('#permissions').append('<div class="col col-lg-4"><div  class="make-switch switch-mini " data-on-label='<i class="icon icon-ok"></i>' data-off-label='<i class="success icon icon-off"></i>'><input type="checkbox" checked></div></div>')
+                         //    $('#permissions').append('<div class="col col-lg-4"><input type="checkbox" checked id="create-switch"></div>')
+                            $('#permission_'+j+data[i][0]['guid']).wrap('<div class="make-switch  switch-mini" data-on-label="'+"<i class='icon icon-ok'></i>"+'" data-off-label="'+"<i class='icon icon-off'></i>"+'" />').parent().bootstrapSwitch(); 
+                          
                                
+                            }else{
+                                  $('#'+module_row+' #mod_col_'+data[i][0]['guid']).append('<div class="row">\n\
+                            <div class="col col-lg-6">\n\
+                                <lablel>'+data[i][1][j]+'</lablel>\n\
+                            </div>\n\
+                            <div class="col col-lg-6">\n\
+                               <input type="checkbox" name="'+data[i][2]+'_'+data[i][3][j]+'"  id="permission_'+j+data[i][0]['guid']+'"> \n\
+                            </div>\n\
+                        </div>');
+            
+            
+               // $('#permissions').append('<div class="col col-lg-4"><div  class="make-switch switch-mini " data-on-label='<i class="icon icon-ok"></i>' data-off-label='<i class="success icon icon-off"></i>'><input type="checkbox" checked></div></div>')
+                         //    $('#permissions').append('<div class="col col-lg-4"><input type="checkbox" checked id="create-switch"></div>')
+                            $('#permission_'+j+data[i][0]['guid']).wrap('<div class="make-switch  switch-mini" data-on-label="'+"<i class='icon icon-ok'></i>"+'" data-off-label="'+"<i class='icon icon-off'></i>"+'" />').parent().bootstrapSwitch(); 
+                          
+                            }
+                            
+                             } 
+                             }
+                                
+                                
+                                
                              } 
                            });
                          
