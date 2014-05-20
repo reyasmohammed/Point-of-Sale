@@ -115,7 +115,7 @@ class User_groups extends CI_Controller
                    
                    
                    
-                    echo 'TRUEsgs';
+                    echo 'TRUE';
                 }else{
                         echo "ALREADY";
                 }
@@ -164,7 +164,7 @@ class User_groups extends CI_Controller
                    
                    
                    
-                    echo 'TRUEsgs';
+                    echo 'TRUE';
                 }else{
                         echo "ALREADY";
                 }
