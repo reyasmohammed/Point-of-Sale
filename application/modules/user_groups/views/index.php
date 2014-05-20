@@ -23,6 +23,7 @@
 <script type="text/javascript">
      $(document).ready( function () {
          $('#add_new_user_groups').click(function() { 
+             $('#loading').modal('show');
                 <?php if($this->session->userdata['user_groups_per']['add']==1){ ?>
                 var inputs = $('#add_user_groups').serialize();
                       $.ajax ({
@@ -42,12 +43,14 @@
                                     }else{
                                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('user_groups');?>', { type: "error" });                           
                                     }
+                                    $('#loading').modal('hide');
                        }
                 });<?php }else{ ?>
                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('user_groups');?>', { type: "error" });                       
                     <?php }?>
         });
          $('#update_user_groups').click(function() { 
+             $('#loading').modal('show');
                 <?php if($this->session->userdata['user_groups_per']['edit']==1){ ?>
                 var inputs = $('#add_user_groups').serialize();
                       $.ajax ({
@@ -67,6 +70,7 @@
                                     }else{
                                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('user_groups');?>', { type: "error" });                           
                                     }
+                                    $('#loading').modal('hide');
                        }
                  });
                  <?php }else{ ?>
@@ -77,6 +81,7 @@
 function posnic_add_new(){
     <?php if($this->session->userdata['user_groups_per']['add']==1){ ?>
       $("#user_list").hide();
+      $('#loading').modal('show');
       $('#add_user_groups_form').show('slow');
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_user_groups').attr("disabled", "disabled");
@@ -84,6 +89,8 @@ function posnic_add_new(){
       $('#deactive').attr("disabled", "disabled");
       $('#user_groups_lists').removeAttr("disabled");
       $('#permissions').remove();
+      $('#new_buttons').show();
+      $('#update_buttons').hide();
       $('#parent_permission').append('<div id="permissions"/>');
      
         $.ajax({                                      
@@ -111,16 +118,16 @@ function posnic_add_new(){
                                 <lablel>'+data[i][1][j]+'</lablel>\n\
                             </div>\n\
                             <div class="col col-lg-6">\n\
-                               <input type="checkbox" name="'+data[i][2]+'_'+data[i][3][j]+'" checked id="permission_'+j+data[i][0]['guid']+'"> \n\
+                               <input type="checkbox" name="'+data[i][2]+'_'+data[i][3][j]+'"  id="permission_'+j+data[i][0]['guid']+'"> \n\
                             </div>\n\
                         </div>');
             
             
-               // $('#permissions').append('<div class="col col-lg-4"><div  class="make-switch switch-mini " data-on-label='<i class="icon icon-ok"></i>' data-off-label='<i class="success icon icon-off"></i>'><input type="checkbox" checked></div></div>')
-                         //    $('#permissions').append('<div class="col col-lg-4"><input type="checkbox" checked id="create-switch"></div>')
+             
                             $('#permission_'+j+data[i][0]['guid']).wrap('<div class="make-switch  switch-mini" data-on-label="'+"<i class='icon icon-ok'></i>"+'" data-off-label="'+"<i class='icon icon-off'></i>"+'" />').parent().bootstrapSwitch(); 
                              } 
                              }
+                             $('#loading').modal('hide');
                              }
                            });
       
@@ -164,7 +171,13 @@ function reload_update_user(){
     </div>
 </nav>
 <nav id="mobile_navigation"></nav>
-              
+  <div class="modal fade" id="loading">
+    <div class="modal-dialog" style="width: 146px;margin-top: 20%">
+                
+        <img src="<?php echo base_url('loader.gif') ?>" style="margin: auto">
+                    
+        </div>
+</div>            
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
