@@ -273,26 +273,7 @@ class Customers extends CI_Controller
     }
     
     
-    function deactive_customers($guid){
-                 $this->posnic->posnic_deactive($guid);
-                 redirect('customers');
-             
-    }
-    function active_customers($guid){
-                 $this->posnic->posnic_active($guid);
-                 redirect('customers');
-             
-    }
-    function restore_customers($guid){
-       if($this->session->userdata['Posnic_User']=='admin'){
-                 $this->posnic->posnic_restore($guid);
-        
-                 redirect('customers');
-                 
-             }else{
-                 redirect('home');
-             }
-    }
+    
      function get_date_in_strtotime(){
         $dob=$this->input->post('dob');
         $mdate=$this->input->post('mdate');

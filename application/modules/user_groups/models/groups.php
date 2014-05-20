@@ -33,9 +33,7 @@ class Groups extends CI_Model{
    }
    function add_module_permission($guid,$per,$module){
        $this->db->insert('modules_x_permissions',array('permission'=>$per,'branch_id'=>$this->session->userdata('branch_id'),'module_id'=>$module,'user_group_id'=>$guid));
-       $id=  $this->db->insert_id();
-       $this->db->where('id',$id);
-       $this->db->update('modules_x_permissions',array('guid'=>md5('modules_x_permissions'.$id)));
+     
    }
    function update_module_permission($guid,$per,$module){
        $this->db->select('id')->from('modules_x_permissions')->where('user_group_id',$guid)->where('branch_id',$this->session->userdata('branch_id'))->where('module_id',$module);
@@ -45,9 +43,7 @@ class Groups extends CI_Model{
             $this->db->update('modules_x_permissions',array('permission'=>$per));
        }else{
             $this->db->insert('modules_x_permissions',array('permission'=>$per,'branch_id'=>$this->session->userdata('branch_id'),'module_id'=>$module,'user_group_id'=>$guid));
-            $id=  $this->db->insert_id();
-            $this->db->where('id',$id);
-            $this->db->update('modules_x_permissions',array('guid'=>md5('modules_x_permissions'.$id)));
+            
        }
    }
    function get_user_groups($guid){
