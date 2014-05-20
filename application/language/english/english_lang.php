@@ -551,6 +551,13 @@ $lang['credit_days']='Credit Days';
   $lang['date']='Date';
   $lang['receiving_stock']='Receiving Stock';
   $lang['access']='Access';
+  // modules
+  $lang['module_category']='Module Category';
+  $lang['module']='Module';
+  $lang['module_category_name']='Module Category Name';
+  $lang['icon_class']='Icon Class';
+  $lang['order']='Order Number';
+  $lang['should_not_repeat_order_number']='Should Not Repeat Order Number';
   
   
   
