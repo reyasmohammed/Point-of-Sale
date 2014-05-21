@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Customers extends CI_Controller
+class Customers extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -281,7 +281,10 @@ class Customers extends CI_Controller
          $data['mdate']= date('j.n.Y', strtotime('+0 year, +0 days',$mdate));
          echo json_encode($data);
     }
-  
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
 }
 
 ?>

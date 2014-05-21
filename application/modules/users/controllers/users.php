@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends CI_Controller{
+class Users extends MX_Controller{
     
    var $user_image = '';
     function __construct() {
@@ -403,6 +403,10 @@ class Users extends CI_Controller{
         $guid=  $this->input->post('branch_id');
         $data=  $this->pos_users_model->get_user_grous($guid);
         echo json_encode($data);
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
 
 

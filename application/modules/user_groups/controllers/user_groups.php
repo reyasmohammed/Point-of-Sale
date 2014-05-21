@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_groups extends CI_Controller
+class User_groups extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -223,7 +223,10 @@ class User_groups extends CI_Controller
         $data=$this->groups->get_modules();
         echo json_encode($data);
     }
-    
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
    
 }
 ?>

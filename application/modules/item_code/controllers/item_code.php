@@ -1,5 +1,5 @@
 <?php
-class Item_code extends CI_Controller{
+class Item_code extends MX_Controller{
     function __construct() {
     parent::__construct();
                $this->load->library('posnic');  
@@ -113,7 +113,10 @@ class Item_code extends CI_Controller{
             echo json_encode($data);
         
     }
-            
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }        
     
 }
 ?>

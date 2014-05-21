@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Tax_commodity extends CI_Controller
+class Tax_commodity extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -176,6 +176,10 @@ class Tax_commodity extends CI_Controller
               } else {
                 echo 'FALSE';
               }
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
 }
 ?>

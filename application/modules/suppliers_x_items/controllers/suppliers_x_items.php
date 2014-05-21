@@ -1,5 +1,5 @@
 <?php
-class Suppliers_x_items extends CI_Controller{
+class Suppliers_x_items extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -287,6 +287,10 @@ class Suppliers_x_items extends CI_Controller{
         $data= $this->supplier->supplier_like($like,$this->session->userdata['branch_id']);      
         echo json_encode($data);
         
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
     
 }

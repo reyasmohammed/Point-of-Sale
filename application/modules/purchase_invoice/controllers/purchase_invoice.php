@@ -1,5 +1,5 @@
 <?php
-class Purchase_invoice extends CI_Controller{
+class Purchase_invoice extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -175,7 +175,10 @@ function save(){
             }
 
     }
-
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
     // get grn data
    
     }

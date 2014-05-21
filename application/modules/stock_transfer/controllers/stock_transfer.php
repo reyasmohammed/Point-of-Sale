@@ -1,5 +1,5 @@
 <?php
-class Stock_transfer extends CI_Controller{
+class Stock_transfer extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -331,5 +331,9 @@ function search_items(){
        
         
 }
+function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
 }
 ?>

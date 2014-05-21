@@ -1,5 +1,5 @@
 <?php 
-class Customers_payment_type extends CI_Controller{
+class Customers_payment_type extends MX_Controller{
         function __construct() {
                 parent::__construct();
                $this->load->library('posnic_module'); 

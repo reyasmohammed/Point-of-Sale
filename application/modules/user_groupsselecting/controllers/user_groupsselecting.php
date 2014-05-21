@@ -1,5 +1,5 @@
 <?php
-class User_groupsselecting extends CI_Controller{
+class User_groupsselecting extends MX_Controller{
     function __construct() {
         parent::__construct();
          $this->load->helper('form');

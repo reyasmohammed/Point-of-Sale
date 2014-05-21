@@ -121,7 +121,7 @@ function posnic_assign(){
                              {    
                                  
                              
-                                   var len=data.length-1;
+                                   var len=data.length-2;
                     for(var i=0;i<data[len].length;i++){
                                    var module_row;
             
@@ -134,7 +134,7 @@ function posnic_assign(){
                         <div class="row text-center" style="border-bottom:solid 3px #48AC2E;margin:10px -3px">\n\
                             <lablel  >'+data[len][i]['Category_name']+'</lablel>\n\
                         </div><input type="hidden" name="category_name[]" value="'+data[len][i]['Category_name']+'"><input type="hidden" name="category_id[]" value="'+data[len][i]['guid']+'"></div>');
-            for(var j=0;j<data.length-1;j++){
+            for(var j=0;j<data.length-2;j++){
                 if(data[j]['cate_id']==data[len][i]['guid']){
                     if(data[j]['core']==1){
                          $('#'+module_row+' #mod_col_'+data[len][i]['guid']).append('<div class="row" style="margin:5px">\n\

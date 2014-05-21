@@ -1,5 +1,5 @@
 <?php
-class Receiving_stock extends CI_Controller{
+class Receiving_stock extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -108,6 +108,10 @@ function  get_stock_transfer($guid){
     echo json_encode($data);
     }
 }
+function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
 
 
 

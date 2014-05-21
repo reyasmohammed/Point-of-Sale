@@ -1,5 +1,5 @@
 <?php
-class Purchase_order extends CI_Controller{
+class Purchase_order extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -356,6 +356,10 @@ function search_items(){
     echo json_encode($data);
        
         
-}
+}   
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
 }
 ?>

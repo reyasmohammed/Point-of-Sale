@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Branches extends CI_Controller
+class Branches extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -241,7 +241,10 @@ class Branches extends CI_Controller
                  redirect('branches');
              
     }
-   
+   function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
      
   
 }

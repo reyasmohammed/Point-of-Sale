@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
-class Items_setting extends CI_Controller{
+class Items_setting extends MX_Controller{
     function __construct() {
                 parent::__construct();
                $this->load->library('posnic');   
@@ -119,6 +119,10 @@ class Items_setting extends CI_Controller{
             echo 'Noop';
         }   
         
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
     
     
