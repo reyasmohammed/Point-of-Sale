@@ -2,8 +2,8 @@
 <script type="text/javascript" charset="utf-8">
           $(document).ready( function () {
            
-                    $('#add_module_category_form').hide();
-                    $('#edit_module_category_form').hide();
+                    $('#add_language_form').hide();
+                    $('#edit_language_form').hide();
                               posnic_table();
                                
                                 parsley_reg.onsubmit=function()
@@ -17,7 +17,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/module_category/module_category_data_table",
+                                      "sAjaxSource": "<?php echo base_url() ?>index.php/language/language_data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -73,12 +73,12 @@
                                    
 			}
     function user_function(guid){
-    var module_category=$('#name_'+guid).val();
-    <?php if($this->session->userdata['module_category_per']['delete']==1){ ?>
-             bootbox.confirm("Are you Sure To Delete This module_category ("+module_category+")", function(result) {
+    var language=$('#name_'+guid).val();
+    <?php if($this->session->userdata['language_per']['delete']==1){ ?>
+             bootbox.confirm("Are you Sure To Delete This language ("+language+")", function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/module_category/delete',
+                url: '<?php echo base_url() ?>/index.php/language/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -87,7 +87,7 @@
                 success: function(response)
                 {
                     if(response){
-                          $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('deleted');?>', { type: "danger" });
+                          $.bootstrapGrowl('<?php echo $this->lang->line('language') ?> '+language+' <?php echo $this->lang->line('deleted');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }}
             });
@@ -95,14 +95,14 @@
 
                         }
     }); <?php }else{?>
-             $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('module_category');?>', { type: "error" });         
+             $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('language');?>', { type: "error" });         
    <?php }
 ?>
                         }
             function posnic_deactive(guid){
-                var module_category=$('#name_'+guid).val();
+                var language=$('#name_'+guid).val();
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/module_category/deactive',
+                url: '<?php echo base_url() ?>index.php/language/deactive',
                 type: "POST",
                 data: {
                     guid: guid
@@ -111,16 +111,16 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('isdeactivated');?>', { type: "danger" });
+                         $.bootstrapGrowl('<?php echo $this->lang->line('language') ?> '+language+' <?php echo $this->lang->line('isdeactivated');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
             });
             }
             function posnic_active(guid){
-            var module_category=$('#name_'+guid).val();
+            var language=$('#name_'+guid).val();
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/module_category/active',
+                url: '<?php echo base_url() ?>index.php/language/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -130,7 +130,7 @@
                 {
                     if(response){
                          
-                          $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                          $.bootstrapGrowl('<?php echo $this->lang->line('language') ?> '+language+' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -140,22 +140,22 @@
                        $("#parsley_reg").trigger('reset');
                        $("#update_button").show();
                        $("#add_button").hide();
-                        <?php if($this->session->userdata['module_category_per']['edit']==1){ ?>
+                        <?php if($this->session->userdata['language_per']['edit']==1){ ?>
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/module_category/edit_module_category/"+guid,                      
+                             url: "<?php echo base_url() ?>index.php/language/edit_language/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
                              {    
                                  $("#user_list").hide();
-                                 $('#add_module_category_form').show('slow');
+                                 $('#add_language_form').show('slow');
                                  $('#delete').attr("disabled", "disabled");
-                                 $('#posnic_add_module_category').attr("disabled", "disabled");
+                                 $('#posnic_add_language').attr("disabled", "disabled");
                                  $('#active').attr("disabled", "disabled");
                                  $('#deactive').attr("disabled", "disabled");
-                                 $('#module_category_lists').removeAttr("disabled");
+                                 $('#language_lists').removeAttr("disabled");
                                  $('#parsley_reg #guid').val(data[0]['guid']);
-                                 $('#parsley_reg #module_category_name').val(data[0]['Category_name']);
+                                 $('#parsley_reg #language_name').val(data[0]['Category_name']);
                                  $('#parsley_reg #icon_class').val(data[0]['icon_class']);
                                  $('#parsley_reg #order').val(data[0]['order']);
                                
