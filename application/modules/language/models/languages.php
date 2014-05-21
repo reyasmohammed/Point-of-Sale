@@ -1,11 +1,11 @@
 <?php
-class Module extends CI_Model{
+class Languages extends CI_Model{
     function __construct() {
         parent::__construct();
     }
     function get($end,$start,$like){
                 $this->db->select();
-                $this->db->from('modules_category')->where('delete_status',0);
+                $this->db->from('language')->where('delete_status',0);
                 $this->db->limit($end,$start); 
                 $this->db->or_like($like);     
                 $query=$this->db->get();
