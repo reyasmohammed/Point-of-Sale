@@ -558,6 +558,7 @@ $lang['credit_days']='Credit Days';
   $lang['icon_class']='Icon Class';
   $lang['order']='Order Number';
   $lang['should_not_repeat_order_number']='Should Not Repeat Order Number';
+  $lang['language']='Language'
   
   
   

@@ -7,8 +7,8 @@ class Brands extends MX_Controller
           $this->load->library('posnic');              
     }
     function index(){
-       $this->get_brands(); 
-   // print_r(Modules::load('users/edit_users','a2da554fc03881e96b50685f3d60de70'));
+      $this->get_brands(); 
+  //print_r(Modules::load('users/edit_users','7c9888196685a12a83eecf9c0d05a525'));
     }
      function get_brands(){
         $this->load->view('template/app/header'); 
@@ -178,6 +178,10 @@ class Brands extends MX_Controller
                echo "NOOP";
            }
          
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
    
    

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Customer_category extends CI_Controller
+class Customer_category extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -172,6 +172,10 @@ class Customer_category extends CI_Controller
            echo "NOOP";
        }
          
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
     
    

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Items_category extends CI_Controller
+class Items_category extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -246,6 +246,10 @@ class Items_category extends CI_Controller
                 $this->get_customers_payment_type();
             } 
         
+    }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
     }
    
 }

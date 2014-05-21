@@ -1,5 +1,5 @@
 <?php
-class Purchase_main extends CI_Controller{
+class Purchase_main extends MX_Controller{
     function __construct() {
         parent::__construct();
        $this->load->helper('form');

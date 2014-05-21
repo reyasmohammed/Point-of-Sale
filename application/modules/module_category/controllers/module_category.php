@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Module_category extends CI_Controller
+class Module_category extends MX_Controller
 {
     function __construct() {
         parent::__construct();
@@ -161,7 +161,10 @@ class Module_category extends CI_Controller
            }
          
     }
-   
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
    
 }
 ?>

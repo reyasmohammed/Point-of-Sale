@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
-class Items extends CI_Controller{
+class Items extends MX_Controller{
       var $user_image = '';
     function __construct() {
                 parent::__construct();
@@ -418,6 +418,10 @@ class Items extends CI_Controller{
             return true; 
     }
  }
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
     
 }
 ?>

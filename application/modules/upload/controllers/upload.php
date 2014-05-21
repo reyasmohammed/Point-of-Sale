@@ -1,4 +1,4 @@
- <?php class Upload extends CI_Controller
+ <?php class Upload extends MX_Controller
  
   {
  

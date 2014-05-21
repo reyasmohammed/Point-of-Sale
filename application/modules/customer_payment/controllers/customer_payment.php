@@ -1,5 +1,5 @@
 <?php
-class Customer_payment extends CI_Controller{
+class Customer_payment extends MX_Controller{
    function __construct() {
                 parent::__construct();
                 $this->load->library('posnic');               
@@ -200,6 +200,9 @@ function save(){
         echo json_encode($data); // encode data array to json
     }
     /* function end*/
-    
+    function language($lang){
+       $lang= $this->lang->load($lang);
+       return $lang;
+    }
     }
 ?>
