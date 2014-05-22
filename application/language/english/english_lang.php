@@ -627,4 +627,6 @@ $lang['credit_days']='Credit Days';
     $lang['memo']='Memo';
     $lang['invalid_payment_entry']='Invalid Payment Entry';
     $lang['paid_amount']='Paid Amount';
+    $lang['english']='English';
+    $lang['malayalam']='Malayalam';
 ?>﻿

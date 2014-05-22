@@ -138,6 +138,8 @@
                        $("#parsley_reg").trigger('reset');
                        $("#update_button").show();
                        $("#add_button").hide();
+                       $('#language_inputs').remove();
+                       $('#parent_div').append('<div id="language_inputs"/>');
                         <?php if($this->session->userdata['language_per']['edit']==1){ ?>
                             $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/language/edit_language/"+guid,                      
@@ -145,6 +147,7 @@
                              dataType: 'json',               
                              success: function(data)        
                              {    
+                                 console.log(data);
                                  $("#user_list").hide();
                                  $('#add_language_form').show('slow');
                                  $('#delete').attr("disabled", "disabled");
@@ -152,11 +155,17 @@
                                  $('#active').attr("disabled", "disabled");
                                  $('#deactive').attr("disabled", "disabled");
                                  $('#language_lists').removeAttr("disabled");
-                                 $('#parsley_reg #guid').val(data[0]['guid']);
-                                 $('#parsley_reg #language_name').val(data[0]['Category_name']);
-                                 $('#parsley_reg #icon_class').val(data[0]['icon_class']);
-                                 $('#parsley_reg #order').val(data[0]['order']);
-                               
+                                  var row='lang_row_0';
+                                 for(var i=0;i<data.length;i++){
+                                    
+                                     if(i%3==0){
+                                           $('#language_inputs').append('<div id="lang_row_'+i+'"/>');
+                                           row='lang_row_'+i;
+                                     }
+                                      $('#language_inputs #'+row).append('<div class="col col-lg-2"><input type="text"></input></div>');
+                                 }
+                                 
+                              
                              } 
                            });
                          
