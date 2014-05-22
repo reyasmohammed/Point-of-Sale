@@ -190,46 +190,16 @@ function reload_update_user(){
                                                </div>
                                         </div>                              
                               </div>
-                               <div class="row">
-                                       <div class="col col-lg-12" >
-                                           <div class="row">
-                                               <div class="col col-lg-1"></div>
-                                               <div class="col col-lg-10">
-                                                    <div class="form_sep">
-                                                         <label for="language_name" ><?php echo $this->lang->line('icon_class') ?></label>                                                                                                       
-                                                           <?php $icon_class=array('name'=>'icon_class',
-                                                                                    'class'=>'required form-control',
-                                                                                    'id'=>'icon_class',
-                                                                                    'value'=>set_value('icon_class'));
-                                                           echo form_input($icon_class)?> 
-                                                    </div>
-                                                   </div>
-                                               <div class="col col-lg-1"></div>
-                                               </div>
-                                        </div>                              
-                              </div>
-                               <div class="row">
-                                       <div class="col col-lg-12" >
-                                           <div class="row">
-                                               <div class="col col-lg-1"></div>
-                                               <div class="col col-lg-10">
-                                                    <div class="form_sep">
-                                                         <label for="order" ><?php echo $this->lang->line('order') ?></label>                                                                                                       
-                                                           <?php $order=array('name'=>'order',
-                                                                                    'class'=>'required form-control number',
-                                                                                    'id'=>'order',
-                                                                                    'value'=>set_value('language_name'));
-                                                           echo form_input($order)?> 
-                                                    </div>
-                                                   </div>
-                                               <div class="col col-lg-1"></div>
-                                               </div>
-                                        </div>                              
-                              </div>
+                             
+                              
                               <br><br>
                           </div>
                      </div>
                 </div>
+               <div id="parent_div">
+                  
+                   
+               </div>
                     <div class="row" id="add_button">
                                 <div class="col-lg-4"></div>
                                   <div class="col col-lg-4 text-center"><br><br>
