@@ -12,13 +12,15 @@ class Language extends MX_Controller
      
     function index(){
         $this->get_langauge(); 
+       redirect('edit_language/get/english');
+       
     }
      function get_langauge(){
         $this->load->view('template/app/header'); 
-        $this->load->view('header/header');         
+        $this->load->view('language/header/header');         
         $this->load->view('template/branch',$this->posnic->branches());
         $data['active']='language';
-        $this->load->view('index',$data);
+        $this->load->view('language/index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
     }
@@ -79,6 +81,27 @@ class Language extends MX_Controller
 		}
         
         echo json_encode($output1);
+    }
+    function edit_language($id){
+       $this->load->model('languages');
+      //  $lang=  $this->languages->edit_language($id);
+      $mode= $this->languages->get_modules();
+        $data=array();
+        
+        for($i=0;$i<count($mode);$i++){
+          
+            if($mode[$i]['module_name']!="" ){
+           $second_array=array( Modules::run('brands/brands/language','english'));
+           //  $data = array_merge((array)$data, (array)$second_array);
+             print_r($second_array);
+             echo $mode[$i]['module_name']."?/////////////////?";
+            }
+            break;
+        }
+        $result = array_unique($data);
+     //  echo json_encode($result);
+                
+                
     }
    
 }

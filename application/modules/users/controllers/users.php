@@ -15,7 +15,8 @@ class Users extends MX_Controller{
         $this->poslanguage->set_language();
     }
     function index(){
-        $this->get_pos_users_details();
+      //  $this->get_pos_users_details();
+      $this->language('english');
     } 
     function photo_upload($name){
 		$config['upload_path'] = './uploads/';
@@ -407,7 +408,7 @@ class Users extends MX_Controller{
     function language($lang){
        $lang= $this->lang->load($lang);
        return $lang;
-    }
+       }
 
 
 }

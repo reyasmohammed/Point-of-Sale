@@ -35,10 +35,13 @@ class Languages extends CI_Model{
         $this->db->where('id',$id);
         $this->db->update('modules_category',array('guid'=>  md5(($id*$id).'modules_category'.$id)));
     }
-    function get_module_category($guid){
-        $this->db->select()->from('modules_category')->where('guid',$guid);
+    function edit_language($guid){
+        $this->db->select()->from('language')->where('id',$guid);
         $sql=  $this->db->get();
-        return $sql->result();
+        $sql->result();
+        foreach ($sql->result() as $row){
+            return $row->language_name;
+        }
     }
     function update($value,$id){
         $this->db->where('guid',$id);
@@ -47,6 +50,13 @@ class Languages extends CI_Model{
     function delete($guid){
         $this->db->where(array('guid'=>$guid,'core !='=>1));
         $this->db->update('modules_category',array('delete_status'=>1));
+    }
+    function get_modules(){
+        $this->db->select('modules.module_name');
+        $this->db->from('modules_x_branches')->where('modules_x_branches.delete_status',0);
+        $this->db->join('modules','modules.guid=modules_x_branches.module_id','left');
+        $sql=  $this->db->get();
+        return $sql->result_array();
     }
   
 }
