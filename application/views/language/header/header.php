@@ -147,7 +147,7 @@
                              dataType: 'json',               
                              success: function(data)        
                              {    
-                                 console.log(data);
+                                
                                  $("#user_list").hide();
                                  $('#add_language_form').show('slow');
                                  $('#delete').attr("disabled", "disabled");
@@ -156,16 +156,18 @@
                                  $('#deactive').attr("disabled", "disabled");
                                  $('#language_lists').removeAttr("disabled");
                                   var row='lang_row_0';
-                                 for(var i=0;i<data.length;i++){
-                                    
+                                 for(var i=0;i<data[0].length;i++){
+                                  //console.log(data[i]['user_name'])
                                      if(i%3==0){
                                            $('#language_inputs').append('<div id="lang_row_'+i+'"/>');
                                            row='lang_row_'+i;
+                                          
                                      }
-                                      $('#language_inputs #'+row).append('<div class="col col-lg-2"><input type="text"></input></div>');
+                                   $('#language_inputs #'+row).append('<div class="col col-lg-6">'+data[0][i]+'</div><div class="col col-lg-6"><input type="hidden" value="'+data[2][i]+'" name="key_val[]"/><input type="text" name="lang_val[]" class="form-control required" value="'+data[1][i]+'"></div>');
                                  }
                                  
-                              
+                              $('#language_name').val(data[3]);
+                              $('#language').val(data[3]);
                              } 
                            });
                          

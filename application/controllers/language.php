@@ -86,15 +86,59 @@ class Language extends MX_Controller
         $this->load->model('languages');
         $lang=  $this->languages->edit_language($id);
         //$data=$this->lang->load('malayalam');
+        $this->config->set_item('language','english');
+         $english=$this->lang->load('english');
          
+       $this->config->set_item('language',$lang); 
+          $data= $this->lang->load($lang);
          
-          $this->config->set_item('language',$lang); 
-         $data= $this->lang->load($lang);
-        
-     
-     echo json_encode($data);
+        $val=array();
+        $key_val=array();
+        $eng=array();
+         foreach ($data as $key => $value){
+             $key_val[]=$key;
+             $val[]=$value;
+           
+         }
+         foreach ($english as $key => $value){
+             $eng[]=  $value;
+           
+         }
+         
+     $lag=array();
+     $lag[0]=$eng;
+     $lag[2]=$key_val;
+     $lag[1]=$val;
+     $lag[3]=$lang;
+     echo json_encode($lag);
+    
                 
-                
+    }
+    function update_language(){
+        $this->form_validation->set_rules("key_val",$this->lang->line('key_val'),'required'); 
+      // $this->form_validation->set_rules("langauge",$this->lang->line('langauge'),'required'); 
+        $this->form_validation->set_rules("lang_val",$this->lang->line('lang_val'),'required'); 
+        if ( $this->form_validation->run() !== false ) { 
+            $lang=  $this->input->post('language');
+            $this->load->helper('file');
+            $key=$this->input->post('key_val');
+            $lang_val=$this->input->post('lang_val');
+             $data = '';
+            for($i=0;$i<count($lang_val);$i++){
+                 $data =$data.'$lang["'.$key[$i].'"]="'.$lang_val[$i].'"'."\n";
+            }
+                  
+
+         ///   if ( ! write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
+                    if ( ! write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
+            {
+                 echo 'TRUE';
+            }
+            else
+            {
+                 echo 'FALSE';
+            } 
+        }
     }
    
 }

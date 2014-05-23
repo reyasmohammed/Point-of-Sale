@@ -181,9 +181,10 @@ function reload_update_user(){
                                                            <?php $language_name=array('name'=>'language_name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'language_name',
+                                                               'disabled'=>'disabled',
                                                                                     'value'=>set_value('language_name'));
                                                            echo form_input($language_name)?> 
-                                                         <input type="hidden" name="guid" id="guid">
+                                                         <input type="hidden" name="language" id="language">
                                                     </div>
                                                    </div>
                                                <div class="col col-lg-1"></div>

@@ -629,4 +629,5 @@ $lang['credit_days']='Credit Days';
     $lang['paid_amount']='Paid Amount';
     $lang['english']='English';
     $lang['malayalam']='Malayalam';
+    $lang['language_name']='Language Name';
 ?>﻿
