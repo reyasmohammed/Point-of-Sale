@@ -9,7 +9,7 @@ class Poslanguage{
         $CI->load->library('session');
           if(isset($this->session->userdata['lang'])){                
              
-        $lang= $this->session->userdata['lang'];
+        $lang= $this->session->userdata('lang');
         $CI->config->set_item('language',$lang); 
         $CI->lang->load($lang);
              }
