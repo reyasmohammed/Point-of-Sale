@@ -11,8 +11,17 @@ class Language extends MX_Controller
 //        print_r($data);
      
     function index(){
-        $this->get_langauge(); 
-   
+    //    $this->config->set_item('language','malayalam');
+    //     $english=$this->lang->load('malayalam');
+    $this->get_langauge(); 
+    
+          $this->load->helper('file');
+//   if(read_file('application/language/english/english_lang.php','r+')){
+//      $string=read_file('application/language/english/english_lang.php','r+');
+//      print_r($string);
+//      
+//   }
+     
        
     }
      function get_langauge(){
@@ -109,7 +118,7 @@ class Language extends MX_Controller
      $lag[0]=$eng;
      $lag[2]=$key_val;
      $lag[1]=$val;
-     $lag[3]=$lang;
+    // $lag[3]=$lang;
      echo json_encode($lag);
     
                 
