@@ -11,16 +11,7 @@ class Language extends MX_Controller
 //        print_r($data);
      
     function index(){
-    //    $this->config->set_item('language','malayalam');
-    //     $english=$this->lang->load('malayalam');
-    $this->get_langauge(); 
-    
-          $this->load->helper('file');
-//   if(read_file('application/language/english/english_lang.php','r+')){
-//      $string=read_file('application/language/english/english_lang.php','r+');
-//      print_r($string);
-//      
-//   }
+        $this->get_langauge(); 
      
        
     }
@@ -93,14 +84,13 @@ class Language extends MX_Controller
     }
     function edit_language($id){
         $this->load->model('languages');
-        $lang=  $this->languages->edit_language($id);
+        $lang1=  $this->languages->edit_language($id);
         //$data=$this->lang->load('malayalam');
         $this->config->set_item('language','english');
          $english=$this->lang->load('english');
-         
-       $this->config->set_item('language',$lang); 
-          $data= $this->lang->load($lang);
-         
+       include 'application/language/'.$lang1.'/'.$lang1.'_lang.php';
+             
+    $data=$lang;
         $val=array();
         $key_val=array();
         $eng=array();
@@ -118,7 +108,28 @@ class Language extends MX_Controller
      $lag[0]=$eng;
      $lag[2]=$key_val;
      $lag[1]=$val;
-    // $lag[3]=$lang;
+     $lag[3]=$lang1;
+     echo json_encode($lag);
+    
+                
+    }
+    function add_language(){
+       
+       include 'application/language/english/english_lang.php';
+           $data=$lang;  
+        
+        $val=array();
+        $key_val=array();
+         foreach ($data as $key => $value){
+             $key_val[]=$key;
+             $val[]=$value;
+           
+         }
+        
+         
+     $lag=array();
+     $lag[0]=$key_val;
+     $lag[1]=$val;
      echo json_encode($lag);
     
                 
@@ -128,25 +139,65 @@ class Language extends MX_Controller
       // $this->form_validation->set_rules("langauge",$this->lang->line('langauge'),'required'); 
         $this->form_validation->set_rules("lang_val",$this->lang->line('lang_val'),'required'); 
         if ( $this->form_validation->run() !== false ) { 
-            $lang=  $this->input->post('language');
+             $lang=  $this->input->post('language');
             $this->load->helper('file');
             $key=$this->input->post('key_val');
             $lang_val=$this->input->post('lang_val');
-             $data = '';
+             $data = "<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');\n";
             for($i=0;$i<count($lang_val);$i++){
-                 $data =$data.'$lang["'.$key[$i].'"]="'.$lang_val[$i].'"'."\n";
+                 $data =$data.'$lang["'.$key[$i].'"]="'.$lang_val[$i].'";'."\n";
             }
                   
 
          ///   if ( ! write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
-                    if ( ! write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
+                    if (!write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
             {
-                 echo 'TRUE';
+                 echo 'FALSE';
             }
             else
             {
-                 echo 'FALSE';
+                 echo 'TRUE';
             } 
+        }
+    }
+    function save_new_language(){
+        $this->form_validation->set_rules("key_val",$this->lang->line('key_val'),'required'); 
+       $this->form_validation->set_rules("language_name",$this->lang->line('language_name'),'required'); 
+        $this->form_validation->set_rules("lang_val",$this->lang->line('lang_val'),'required'); 
+        if ( $this->form_validation->run() !== false ) { 
+             $lang=  $this->input->post('language_name');
+            $this->load->helper('file');
+            $key=$this->input->post('key_val');
+            $lang_val=$this->input->post('lang_val');
+             $data = "<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');\n";
+            for($i=0;$i<count($lang_val);$i++){
+                 $data =$data.'$lang["'.$key[$i].'"]="'.$lang_val[$i].'";'."\n";
+            }
+                     $this->load->library('upload'); 
+        echo    mkdir('./uploads/'.'jibibi');
+         ///   if ( ! write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
+                 //   if (!write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data))
+//            {
+//                 echo 'FALSE';
+//            }
+//            else
+//            {
+//                 echo 'TRUE';
+//            } 
+        
+        $date = date('Y-m-d H:i:s');
+
+    $config['upload_path'] = './uploads/'.$date;
+    $config['allowed_types'] = 'jpg|jpeg|gif|png';
+    $config['max_size'] = '100';
+    $config['max_width']  = '1024';
+    $config['max_height']  = '768';
+
+
+    if (!is_dir('uploads/'.$date)) {
+    mkdir('./uploads/' . $date, 0777, TRUE);
+echo 'ji';
+    }
         }
     }
    

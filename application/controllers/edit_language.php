@@ -6,7 +6,10 @@ class Edit_language extends MX_Controller
         parent::__construct();
                   
     }
-   
+    function index(){
+          $this->config->set_item('language','malayalam');
+        $english=$this->lang->load('malayalam');
+    }
 //        $data= Modules::run('brands/brands/language','english');
 //        print_r($data);
      

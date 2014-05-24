@@ -27,7 +27,7 @@
                 var inputs = $('#add_language').serialize();
                 if($('#parsley_reg').valid()){
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/language/add_language')?>",
+                            url: "<?php echo base_url('index.php/language/save_new_language')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
@@ -65,10 +65,9 @@
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_language_lists();
-                                    }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#language_name').val()+' <?php echo $this->lang->line('language').' '.$this->lang->line('is_already_added')." ".$this->lang->line('should_not_repeat_order_number');?>', { type: "warning" });                           
+                                    
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('please_enter_non_repeated_correct_order');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?php echo $this->lang->line('please_enter_all_key_words');?>', { type: "warning" });                           
                                     }else{
                                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('language');?>', { type: "error" });                           
                                     }
@@ -88,8 +87,40 @@ function posnic_add_new(){
       $('#add_language_form').show('slow');
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_language').attr("disabled", "disabled");
-  
+     $('#language_inputs').remove();
+                       $('#parent_div').append('<div id="language_inputs"/>');
       $('#language_lists').removeAttr("disabled");
+       $.ajax({                                      
+                             url: "<?php echo base_url() ?>index.php/language/add_language/",                      
+                             data: "", 
+                             dataType: 'json',               
+                             success: function(data)        
+                             {    
+                                
+                                 $("#user_list").hide();
+                                 $('#add_language_form').show('slow');
+                                 $('#delete').attr("disabled", "disabled");
+                                 $('#posnic_add_language').attr("disabled", "disabled");
+                                 $('#active').attr("disabled", "disabled");
+                                 $('#deactive').attr("disabled", "disabled");
+                                 $('#language_lists').removeAttr("disabled");
+                                 $('#language_name').removeAttr("disabled");
+                                  var row='lang_row_0';
+                                  
+                                 for(var i=0;i<data[0].length;i++){
+                                console.log(data[0][i])
+                                     if(i%3==0){
+                                           $('#language_inputs').append('<div id="lang_row_'+i+'"/>');
+                                           row='lang_row_'+i;
+                                          
+                                     }
+                                   $('#language_inputs #'+row).append('<div class="col col-lg-6">'+data[1][i]+'</div><div class="col col-lg-6"><input type="hidden" value="'+data[0][i]+'" name="key_val[]"/><input type="text" id="'+i+data[0][i]+'" name="lang_val[]" class="form-control required" ></div>');
+                                 }
+                                 
+                             
+                             } 
+                           });
+      
       <?php }else{ ?>
                  $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('language');?>', { type: "error" });         
                     <?php }?>

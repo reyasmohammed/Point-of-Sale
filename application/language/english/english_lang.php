@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$lang['user_name']='USER ID';;
+$lang['user_name']='USER ID';
 $lang['password']='PASSWORD';
 $lang['login']='LOGIN';
 $lang['logout']='LOGOUT';
@@ -630,4 +630,5 @@ $lang['credit_days']='Credit Days';
     $lang['english']='English';
     $lang['malayalam']='Malayalam';
     $lang['language_name']='Language Name';
-?>﻿
+    $lang['please_enter_all_key_words']='Please Enter All Keywords';
+?>
