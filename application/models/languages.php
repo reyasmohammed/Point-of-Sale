@@ -16,7 +16,7 @@ class Languages extends CI_Model{
     }
    
     function count(){
-        $this->db->select()->from('modules_category')->where('delete_status',0);
+        $this->db->select()->from('language')->where('delete_status',0);
         $sql=  $this->db->get();
         return $sql->num_rows();
     }

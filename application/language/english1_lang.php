@@ -1,5 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$lang["user_name"]="ഉദ്യോഗസ്ഥന്‍ ശകലം";
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');$lang["user_name"]="ഉദ്യോഗസ്ഥന്‍ ശകലം";
 $lang["password"]="രഹസ്യസൂചകപദം ";
 $lang["login"]="ലോഗിണ്‍ ";
 $lang["logout"]="ലോഗൌട്ട് ";
@@ -429,4 +428,4 @@ $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
-$lang["undefined"]="Lnaguage name";
+$lang["undefined"]="undefined";
