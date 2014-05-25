@@ -118,15 +118,19 @@
      });
 function posnic_add_new(){
     <?php if($this->session->userdata['language_per']['add']==1){ ?>
-      $("#user_list").hide();
-      $("#update_button").hide();
-      $("#add_button").show();
-      $('#add_language_form').show('slow');
-      $('#delete').attr("disabled", "disabled");
-      $('#posnic_add_language').attr("disabled", "disabled");
-     $('#language_inputs').remove();
-                       $('#parent_div').append('<div id="language_inputs"/>');
-      $('#language_lists').removeAttr("disabled");
+       $("#user_list").hide();
+       $("#update_button").hide();
+       $("#add_button").show();
+       $('#add_language_form').show('slow');
+       $('#delete').attr("disabled", "disabled");
+       $('#posnic_add_language').attr("disabled", "disabled");
+       $('#language_inputs').remove();
+       $('#parent_div').append('<div id="language_inputs"/>');
+       $('#language_lists').removeAttr("disabled");
+       $('#language_name').removeAttr("disabled");
+       $('#english_name').removeAttr("disabled");
+      
+                               
        $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/language/add_language/",                      
                              data: "", 
@@ -231,8 +235,8 @@ function reload_update_user(){
         <div id="main_content_outer" class="clearfix">
            <div id="main_content">
                  <div class="row">
-                     <div class="col-lg-4"></div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-2"></div>
+                     <div class="col-lg-8">
                           <div class="panel panel-default">
                                <div class="panel-heading">
                                      <h4 class="panel-title"><?php echo $this->lang->line('language') ?></h4>  
@@ -243,13 +247,24 @@ function reload_update_user(){
                                        <div class="col col-lg-12" >
                                            <div class="row">
                                                <div class="col col-lg-1"></div>
-                                               <div class="col col-lg-10">
+                                               <div class="col col-lg-5">
                                                     <div class="form_sep">
-                                                         <label for="language_name" class="req"><?php echo $this->lang->line('language_name') ?></label>                                                                                                       
+                                                         <label for="english_name" class="req">Language Name In English</label>                                                                                                       
+                                                           <?php $english_name=array('name'=>'english_name',
+                                                                                    'class'=>'required form-control',
+                                                                                    'id'=>'english_name',
+                                                             
+                                                                                    'value'=>set_value('english_name'));
+                                                           echo form_input($english_name)?> 
+                                                    </div>
+                                                   </div>
+                                               <div class="col col-lg-5">
+                                                    <div class="form_sep">
+                                                         <label for="language_name" class="req"><?php echo $this->lang->line('language_name') ?> </label>                                                                                                       
                                                            <?php $language_name=array('name'=>'language_name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'language_name',
-                                                               'disabled'=>'disabled',
+                                                              
                                                                                     'value'=>set_value('language_name'));
                                                            echo form_input($language_name)?> 
                                                          <input type="hidden" name="language" id="language">
@@ -264,7 +279,7 @@ function reload_update_user(){
                               <br><br>
                           </div>
                      </div>
-                </div>
+                </div> <br><br>
                <div id="parent_div">
                   
                    

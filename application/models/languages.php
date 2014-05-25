@@ -29,17 +29,15 @@ class Languages extends CI_Model{
             return TRUE;
         }
     }
-    function add_new($value){
-        $this->db->insert('language',array('language_name'=>$value));
+    function add_new($value,$eng){
+        $this->db->insert('language',array('language_name'=>$value,'in_english'=>$eng));
        
     }
     function edit_language($guid){
         $this->db->select()->from('language')->where('id',$guid);
         $sql=  $this->db->get();
-        $sql->result();
-        foreach ($sql->result() as $row){
-            return $row->language_name;
-        }
+        return $sql->result_array();
+        
     }
     function update($value,$id){
         $this->db->where('guid',$id);

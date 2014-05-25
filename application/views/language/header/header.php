@@ -154,6 +154,8 @@
                                  $('#posnic_add_language').attr("disabled", "disabled");
                                  $('#active').attr("disabled", "disabled");
                                  $('#deactive').attr("disabled", "disabled");
+                                 $('#language_name').attr("disabled", "disabled");
+                                 $('#english_name').attr("disabled", "disabled");
                                  $('#language_lists').removeAttr("disabled");
                                   var row='lang_row_0';
                                  for(var i=0;i<data[0].length;i++){
@@ -166,8 +168,9 @@
                                    $('#language_inputs #'+row).append('<div class="col col-lg-6">'+data[0][i]+'</div><div class="col col-lg-6"><input type="hidden" value="'+data[2][i]+'" name="key_val[]"/><input type="text" name="lang_val[]" class="form-control required" value="'+data[1][i]+'"></div>');
                                  }
                                  
-                              $('#language_name').val(data[3]);
-                              $('#language').val(data[3]);
+                              $('#language_name').val(data[3][0]['language_name']);
+                              $('#language').val(data[3][0]['language_name']);
+                              $('#english_name').val(data[3][0]['in_english']);
                              } 
                            });
                          
