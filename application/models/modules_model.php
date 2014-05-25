@@ -54,5 +54,10 @@ class Modules_model extends CI_Model{
         }
         return $data;
     }
+    function get_lang(){
+         $this->db->select()->from('language')->where('delete_status',0);
+        $sql=  $this->db->get();
+        return $sql->result();
+    }
 }
 ?>

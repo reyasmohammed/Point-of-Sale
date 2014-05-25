@@ -23,9 +23,33 @@ class Userlogin extends CI_Controller
             $this->load->view('login');
             $this->load->view('template/login/footer');
         }else{
-            $this->load->view('template/header');
-            $this->load->view('home');
-            $this->load->view('template/footer');
+   $this->load->model('setting');
+        $this->load->model('branch');        
+        $data['branch_settings']=$this->setting->get_branch_setting();
+        if($this->session->userdata['user_type']==2){
+            $this->session->set_userdata('Posnic_User','admin');
+			//$this->session->userdata['Posnic_User']='admin';
+            $data['row']=  $this->branch->get_branch();
+        
+        }else{
+			//$this->session->userdata['Posnic_User']='user';
+			$this->session->set_userdata('Posnic_User','admin');
+			$data['row']=$this->branch->get_active_user_branches($this->session->userdata['guid']);
+        }
+        $this->load->model('modules_model')  ;
+        $data['lang']=  $this->modules_model->get_lang();
+        $this->load->view('template/app/header');
+        $this->load->view('template/branch',$data);
+        
+        $modules['active']="home";
+        
+        $modules['cate']= $this->modules_model->get_module_category();      
+        $modules['row']=  $this->modules_model->get_modules($this->session->userdata['branch_id']);
+        $this->load->view('home');  
+        $this->load->view('template/app/navigation',$modules);
+        $this->load->view('template/app/footer');   
+        
+       
         }     
         } 
 	function employee()

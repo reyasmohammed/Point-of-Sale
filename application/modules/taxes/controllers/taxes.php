@@ -15,7 +15,7 @@ class Taxes extends MX_Controller
         $this->load->view('template/app/header'); 
         $this->load->view('header/header');         
         $this->load->view('template/branch',$this->posnic->branches());
-        $data['active']='brands';
+        $data['active']='taxes';
         $where="'active',0";
         $data['type']=  $this->posnic->posnic_all_module_data('tax_types');
         $this->load->view('index',$data);

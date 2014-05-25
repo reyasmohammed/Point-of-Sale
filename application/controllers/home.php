@@ -32,13 +32,13 @@ class Home extends CI_Controller
 			$this->session->set_userdata('Posnic_User','admin');
 			$data['row']=$this->branch->get_active_user_branches($this->session->userdata['guid']);
         }
-       
-        $this->load->view('template/app/header');
-        if($this->session->userdata['Setting']['Branch']==1){
-        	$this->load->view('template/branch',$data);
-          }
-        $modules['active']="home";
         $this->load->model('modules_model')  ;
+        $data['lang']=  $this->modules_model->get_lang();
+        $this->load->view('template/app/header');
+        $this->load->view('template/branch',$data);
+         
+        $modules['active']="home";
+        
         $modules['cate']= $this->modules_model->get_module_category();      
         $modules['row']=  $this->modules_model->get_modules($this->session->userdata['branch_id']);
         $this->load->view('home');  
