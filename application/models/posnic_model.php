@@ -350,6 +350,12 @@ class posnic_model extends CI_model{
         $this->db->where('guid',$guid);
         $this->db->update('master_data',array('max'=>$max+1));
     }
+    function get_lang()
+    {
+        $this->db->select()->from('language')->where('delete_status',0);
+        $sql=  $this->db->get();
+        return $sql->result();
+    }
     
 }
 ?>
