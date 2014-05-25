@@ -86,7 +86,7 @@ if($this->session->userdata['user_type']==2){
                                                 <select class="form-control" name="select_lang" id="select_lang">
                                                     <?php foreach ($lang as $lrow){ 
     
-    ?><option onclick="change_language()" value="<?php echo $lrow->language_name ?>"  ><?php echo $lrow->language_name ?></option>
+                                                        ?><option onclick="change_language()" value="<?php echo $lrow->in_english ?>" <?php if($this->session->userdata('lang')==$lrow->in_english) { ?> selected="selected" <?php } ?> ><?php echo $lrow->language_name ?></option>
     
    <?php } ?>
                                                     

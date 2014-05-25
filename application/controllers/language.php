@@ -77,7 +77,12 @@ class Language extends MX_Controller
     }
     function edit_language($id){
         $this->load->model('languages');
-        $lang1=  $this->languages->edit_language($id);
+        $lang_details =array();
+        $lang_details=  $this->languages->edit_language($id);
+
+        foreach ($lang_details as $lang_d){
+             $lang1=$lang_d['in_english'];
+        }
         //$data=$this->lang->load('malayalam');
         $this->config->set_item('language','english');
          $english=$this->lang->load('english');
@@ -101,7 +106,7 @@ class Language extends MX_Controller
      $lag[0]=$eng;
      $lag[2]=$key_val;
      $lag[1]=$val;
-     $lag[3]=$lang1;
+     $lag[3]=$lang_details;
      echo json_encode($lag);
     
                 
@@ -156,9 +161,11 @@ class Language extends MX_Controller
     function add_pos_language_details(){
         $this->form_validation->set_rules("key_val[]",$this->lang->line('key_val'),'required'); 
        $this->form_validation->set_rules("language_name",$this->lang->line('language_name'),'required'); 
+       $this->form_validation->set_rules("english_name",$this->lang->line('english_name'),'required'); 
        // $this->form_validation->set_rules("lang_val[]",$this->lang->line('lang_val'),'required'); 
         if ( $this->form_validation->run() !== false ) { 
              $lang=  $this->input->post('language_name');
+             $in_english=  $this->input->post('english_name');
             $this->load->helper('file');
             $key=$this->input->post('key_val');
             $lang_val=$this->input->post('lang_val');
@@ -170,13 +177,13 @@ class Language extends MX_Controller
                  $data =$data.'$lang["'.$key[$i].'"]="'.$lang_val[$i].'";'."\n";
             }
        
-        if(!is_dir('./application/language/'.$lang))
+        if(!is_dir('./application/language/'.$in_english))
             {
-                 mkdir('./application/language/' . $lang, 0777, TRUE);
-                 write_file('application/language/'.$lang.'/'.$lang.'_lang.php', $data);
+                 mkdir('./application/language/' . $in_english, 0777, TRUE);
+                 write_file('application/language/'.$in_english.'/'.$in_english.'_lang.php', $data);
                  echo 'true';
                  $this->load->model('languages');
-                 $this->languages->add_new($lang);
+                 $this->languages->add_new($lang,$in_english);
                          
             }else{
                 echo 'already';
