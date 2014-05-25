@@ -5,18 +5,9 @@ class Language extends MX_Controller
     function __construct() {
         parent::__construct();
           $this->load->library('posnic');              
-    }
-   
-//        $data= Modules::run('brands/brands/language','english');
-//        print_r($data);
-     
+    }  
     function index(){
-  $this->get_langauge(); 
-        
- //mkdir('./application/language/' . 'jibi1123', 0777, TRUE);
-
-   
-
+        $this->get_langauge(); 
 
        
     }
