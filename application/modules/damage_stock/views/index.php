@@ -322,7 +322,7 @@ $("#parsley_reg #first_name").val('');
         $('#parsley_reg #items').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('damage_stock');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_damage_stock_lists(){
@@ -1192,7 +1192,7 @@ function clear_inputs(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('damage_stock');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;

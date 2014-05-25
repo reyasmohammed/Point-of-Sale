@@ -601,7 +601,7 @@ refresh_items_table();
                        $('#parsley_reg #demo_order_number').select2('open');
                     }, 1000);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_quotation');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_sales_bill_lists(){
@@ -1096,7 +1096,7 @@ function reload_update_user(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_quotation');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;

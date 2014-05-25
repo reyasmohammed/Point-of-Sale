@@ -16,7 +16,20 @@ class Users extends MX_Controller{
     }
     function index(){
      $this->get_pos_users_details();
-    
+//        echo '<pre>';
+//    $data=$this->posnic->modules();
+//    $data['row'];
+//    print_r($data['row']);
+//    exit;
+//    foreach ($data['cate'] as $cat){
+//        foreach ($data['row'] as $mode){
+//            if($mode->cate_id==$cat->guid){
+//                echo '<pre>';
+//                echo $mode->module_name;
+//            }
+//        }
+//        exit();
+//    }
       
      // print_r($this->lang->load('english'));
     } 

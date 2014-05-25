@@ -147,7 +147,8 @@ class Branches extends MX_Controller
                          $where=array('code'=>$this->input->post('branch_id'),'phone'=>$this->input->post('phone'),'email'=>$this->input->post('email'));
                     if($this->branch_model->check_duplicate($where)){  
                        
-                            $this->branch_model->add_new_branch($values);
+                           $guid= $this->branch_model->add_new_branch($values);
+                            $this->branch_model->add_module($guid);
                     echo 'TRUE';
                 }else{
                     echo "ALREADY";

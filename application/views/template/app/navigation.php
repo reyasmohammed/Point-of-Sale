@@ -10,7 +10,17 @@
                                     <li <?php if($active==='home'){ ?> class="link_active" <?php }?> ><a href="<?php echo base_url()?>index.php/home/"><span class="icon-dashboard"></span>Dashboard</a></li>
                                              <?php  
                                       if($row>0){
-                                      foreach ($cate as $m_cate){ ?>
+                                          
+                                      foreach ($cate as $m_cate){ 
+                                          $cat_val=0;
+                                          foreach ($row as $mode){
+                                                   if($m_cate->guid==$mode->cate_id){ 
+                                                       if($this->session->userdata[$mode->module_name.'_per']['access']==1){
+                                                           $cat_val=$cat_val+1;
+                                                       }
+                                                   }
+                                          }?>
+<?php if($cat_val>0){ ?>
                                     <li >
 						
 						<?php if($m_cate->no!=1) {?>
@@ -18,13 +28,15 @@
                                                 <ul>
                                                 <?php                                          
                                                    foreach ($row as $mode){
-                                                   if($m_cate->guid==$mode->cate_id){?>
+                                                   if($m_cate->guid==$mode->cate_id){
+                                                   
+                                                       ?>
 							<li <?php if($active===$mode->module_name){ ?> class="link_active" <?php }?> ><a href="<?php echo base_url()?><?php echo $mode->module_name?>"><?php echo $this->lang->line($mode->module_name) ?></a></li>							
-                                                        <?php } } ?>
+                                                   <?php } } ?>
 						</ul>
                                                 <?php }?>
 					</li>
-                                        <?php } }?>
+                                      <?php } } }?>
 								
 				</ul>
 			</div>

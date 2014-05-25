@@ -373,7 +373,7 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
         $('#parsley_reg #first_name').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('direct_invoice');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_direct_invoice_lists(){
@@ -2279,7 +2279,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_invoice');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;
@@ -2377,7 +2377,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_invoice');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -2425,7 +2425,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('direct_invoice');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;

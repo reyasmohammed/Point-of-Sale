@@ -386,7 +386,7 @@ $("#parsley_reg #first_name").val('');
         $('#parsley_reg #select_branch').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('stock_transfer');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_stock_transfer_lists(){
@@ -1324,7 +1324,7 @@ function new_order_date(e){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('stock_transfer');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
