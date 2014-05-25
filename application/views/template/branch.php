@@ -18,13 +18,34 @@
        
         xmlhttp.open("GET","<?php echo base_url() ?>index.php/posmain/change_user_branch/"+posnic,false);
         xmlhttp.send();
-        alert('Branch Is Changed')
+          $.bootstrapGrowl('<?php echo $this->lang->line('branch') ?> '+' <?php echo $this->lang->line('changed');?>', { type: "success" });
          setTimeout("location.reload(true);");
 
         $.get('branch.php', function(ret){
             $('body').php(ret);
         });
-        document.getElementById("branch").value=jibi;
+     //   document.getElementById("branch").value=jibi;
+        
+        }
+        function change_language(){
+           var lang=$('#select_lang').val();
+        
+                     $.ajax({
+                url: '<?php echo base_url() ?>index.php/posmain/change_lang',
+                type: "POST",
+                data: {
+                    lang: lang
+                    
+                },
+                success: function(response)
+                {
+                    if(response){
+                         
+                          $.bootstrapGrowl('<?php echo $this->lang->line('language') ?> <?php echo $this->lang->line('changed');?>', { type: "success" });
+                         setTimeout("location.reload(true);");
+                    }
+                }
+            });
         }
 </script>
 </head>
@@ -33,11 +54,14 @@
 			<header id="top_header">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-6 col-sm-2">
-		
-						</div>
-                                            <div class="col-sm-push-4 col-sm-3 text-right hidden-xs" style="margin-top:5px ">
-												            <?php 
+                                            <div class="col col-lg-3">
+                                                <form class="main_search">
+								<input type="text" id="search_query" name="search_query" class="typeahead form-control">
+								<button type="submit" class="btn btn-primary btn-xs"><i class="icon-search icon-white"></i></button>
+							</form> 
+                                            </div>
+                                            <div class="col col-lg-3" style="margin-top: 5px">
+                                                												            <?php 
 echo form_open('home/change_branch') ; ?>
                                                     <select id="branch" class="select form-control">
 <?php
@@ -57,9 +81,21 @@ if($this->session->userdata['user_type']==2){
     <?php echo form_close(); 
 }
    ?>
-						</div>
-						<div class="col-xs-6 col-sm-push-4 col-sm-3">
-							<div class="pull-right dropdown">
+                                            </div>
+                                            <div class="col col-lg-3" style="margin-top: 5px">
+                                                <select class="form-control" name="select_lang" id="select_lang">
+                                                    <?php foreach ($lang as $lrow){ 
+    
+    ?><option onclick="change_language()" value="<?php echo $lrow->language_name ?>"  ><?php echo $lrow->language_name ?></option>
+    
+   <?php } ?>
+                                                    
+                                                    
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="col col-lg-3">
+                                                <div class="pull-right dropdown">
 								<a href="#" class="user_info dropdown-toggle" title="Jonathan Hay" data-toggle="dropdown">
 									<img src="img/user_avatar.png" alt="">
 									<span class="caret"></span>
@@ -69,13 +105,11 @@ if($this->session->userdata['user_type']==2){
                                                                         <li><a href="<?php echo base_url() ?>index.php/home/logout">Log Out</a></li>
 								</ul>
 							</div>
-						</div>
-						<div class="col-xs-12 col-sm-pull-6 col-sm-4">
-							<form class="main_search">
-								<input type="text" id="search_query" name="search_query" class="typeahead form-control">
-								<button type="submit" class="btn btn-primary btn-xs"><i class="icon-search icon-white"></i></button>
-							</form> 
-						</div>
+                                            </div>
+                                            
+						
+                                          
+					
 					</div>
 				</div>
 			</header>

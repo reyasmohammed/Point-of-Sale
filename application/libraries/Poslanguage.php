@@ -7,11 +7,12 @@ class Poslanguage{
     function set_language(){
         $CI=  get_instance();
         $CI->load->library('session');
-          if(isset($this->session->userdata['lang'])){                
+          if($CI->session->userdata('lang')){                
              
-        $lang= $this->session->userdata('lang');
+        $lang= $CI->session->userdata('lang');
         $CI->config->set_item('language',$lang); 
         $CI->lang->load($lang);
+        
              }
         else{
        $CI->config->set_item('language','english'); 

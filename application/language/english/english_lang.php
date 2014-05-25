@@ -630,5 +630,6 @@ $lang['credit_days']='Credit Days';
     $lang['english']='English';
     $lang['malayalam']='Malayalam';
     $lang['language_name']='Language Name';
+    $lang['changed']='Changed';
     $lang['please_enter_all_key_words']='Please Enter All Keywords';
 ?>

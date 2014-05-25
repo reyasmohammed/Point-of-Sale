@@ -370,6 +370,7 @@ class Posnic{
         
         $data['row']=$CI->branch->get_active_user_branches($this->CI->session->userdata['guid']);
         }
+        $data['lang']=$CI->posnic_model->get_lang();
         return $data;
     }
     function modules(){

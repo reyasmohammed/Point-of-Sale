@@ -92,6 +92,15 @@ class Posmain extends CI_Controller{
         $date=$this->input->post('date');
          echo date('n/j/Y', strtotime('+0 year, +0 days',$date));
     }
+    function change_lang(){
+         $lang=  $this->input->post('lang');
+         $this->session->set_userdata(array('lang'=>$lang));
+         $this->config->set_item('language',$lang); 
+         $this->lang->load($lang);
+         echo 'true';
+    }
+    
+            
     
 }
 ?>
