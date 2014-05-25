@@ -33,20 +33,7 @@
         
         null, 
 
- 							{	"sName": "ID",
-                   						"bSearchable": false,
-                   						"bSortable": false,
-                                                                
-                   						"fnRender": function (oObj) {
-                   							if(oObj.aData[5]==1){
-                                                                            return 'Core';
-                                                                        }else{
-                                                                            return 'No Core';
-                                                                        }
-								},
-								
-								
-							},
+ 							
  							{	"sName": "ID1",
                    						"bSearchable": false,
                    						"bSortable": false,
@@ -169,7 +156,7 @@
                                  }
                                  
                               $('#language_name').val(data[3][0]['language_name']);
-                              $('#language').val(data[3][0]['language_name']);
+                              $('#language').val(data[3][0]['in_english']);
                               $('#english_name').val(data[3][0]['in_english']);
                              } 
                            });
