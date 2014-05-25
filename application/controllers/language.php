@@ -114,8 +114,7 @@ class Language extends MX_Controller
     function add_language(){
        
        include 'application/language/english/english_lang.php';
-           $data=$lang;  
-        
+           $data=array_unique($lang); 
         $val=array();
         $key_val=array();
          foreach ($data as $key => $value){

@@ -214,7 +214,6 @@ function reload_update_user(){
                                           <th ><?php echo $this->lang->line('select') ?></th>
                                           <th ><?php echo $this->lang->line('language') ?></th>
                                           
-                                          <th><?php echo $this->lang->line('status') ?></th>
                                           <th><?php echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
