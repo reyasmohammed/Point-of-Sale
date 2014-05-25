@@ -157,11 +157,11 @@
          
        
           $('#parsley_reg #items').change(function() {
-              if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').id) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').id){
+              if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').item) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').item){
                      $.bootstrapGrowl('<?php echo $this->lang->line('this item already added');?> '+$('#parsley_reg #first_name').val(), { type: "warning" });  
                        $('#parsley_reg #items').select2('open');
               }else{
-                   var guid = $('#parsley_reg #items').select2('data').id;
+                   var guid = $('#parsley_reg #items').select2('data').item;
                 
                        
                 $('#parsley_reg #item_id').val(guid);
@@ -249,7 +249,8 @@
                       
                       $.each(data, function(index, item){
                         results.push({
-                          id: item.i_guid,
+                          id: item.i_guid+item.price,
+                          item: item.i_guid,
                           sid: item.guid,
                           text: item.name,
                           value: item.code,
