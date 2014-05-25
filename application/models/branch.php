@@ -5,7 +5,7 @@ class Branch extends CI_Model{
         parent::__construct();
     }
     function get_branch(){
-            $this->db->select()->from('branches')->where('delete_status',0);
+            $this->db->select()->from('branches')->where('delete_status',0)->where('active_status',1);
             $sql=  $this->db->get();
             return $sql->result();  
             

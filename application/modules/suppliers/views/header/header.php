@@ -91,7 +91,7 @@
                 success: function(response)
                 {
                     if(response){
-                           $.bootstrapGrowl($('#supplier_name_'+guid).val()+ ' <?php echo $this->lang->line('brand') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl($('#supplier_name_'+guid).val()+ ' <?php echo $this->lang->line('supplier') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }}
             });
@@ -99,7 +99,7 @@
 
                         }
     }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('brand');?>', { type: "error" });                       
+           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('supplier');?>', { type: "error" });                       
    <?php }
 ?>
                         }
@@ -206,7 +206,7 @@
                               
                          
                         <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                       
+                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('supplier');?>', { type: "error" });                       
                         <?php }?>
                        }
 		</script>

@@ -399,11 +399,11 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: '<?php echo $this->la
         $('#parsley_reg #first_name').select2('open');
     }, 500);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_quotation');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_sales_quotation_lists(){
-      $('#edit_brand_form').hide('hide');
+      $('#edit_sales_quotation_form').hide('hide');
       $('#add_new_order').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
@@ -1826,7 +1826,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_quotation');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;
@@ -1924,7 +1924,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_quotation');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -1972,7 +1972,7 @@ function new_discount_amount(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('sales_quotation');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;

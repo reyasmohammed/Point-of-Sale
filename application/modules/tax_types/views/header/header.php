@@ -161,7 +161,7 @@
                               
                          
                         <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                       
+                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('tax_types');?>', { type: "error" });                       
                         <?php }?>
                        }
 		</script>

@@ -48,11 +48,24 @@ class Branch_model extends CI_Model{
         $guid=md5('branches'.$id);
         $this->db->update('branches',array('guid'=>$guid));
         $this->db->insert('users_x_branches',array('user_id'=>  $this->session->userdata('guid'),'branch_id'=>$guid));
+        return $guid;
         
     }
     function update($value,$guid){
         $this->db->where('guid',$guid);
         $this->db->update('branches',$value);
+    }
+    function add_module($guid){
+        $this->db->select('guid')->from('modules');
+        $sql=  $this->db->get();
+        foreach ($sql->result() as $row){
+            $this->db->insert('modules_x_branches',array('branch_id'=>$guid,'module_id'=>$row->guid));
+            $id=  $this->db->insert_id();
+            $this->db->where('id',$id);
+            $this->db->update('modules_x_branches',array('guid'=>  md5($id.$guid.$row->guid)));
+            
+        }
+        
     }
 }
 ?>

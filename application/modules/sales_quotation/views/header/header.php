@@ -109,8 +109,8 @@
 			}
 
            function posnic_item_table(guid){
-           var supplier=$('#edit_brand_form #supplier_guid').val();
-           if($('#edit_brand_form #supplier_guid').val()==""){
+           var supplier=$('#edit_sales_quotation_form #supplier_guid').val();
+           if($('#edit_sales_quotation_form #supplier_guid').val()==""){
                supplier=guid;
            }
            

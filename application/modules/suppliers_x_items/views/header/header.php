@@ -160,7 +160,7 @@
 
                         }
     }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('brand');?>', { type: "error" });                       
+           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('suppliers_x_items');?>', { type: "error" });                       
    <?php }
 ?>
                         }

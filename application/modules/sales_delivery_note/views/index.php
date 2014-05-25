@@ -721,7 +721,7 @@ refresh_items_table();
                        $('#parsley_reg #demo_order_number').select2('open');
                     }, 1000);
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_delivery_note');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_sales_delivery_note_lists(){

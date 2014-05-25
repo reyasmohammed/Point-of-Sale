@@ -180,7 +180,7 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
       $('#deactive').attr("disabled", "disabled");
       $('#suppliers_lists').removeAttr("disabled");
       <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('brand');?>', { type: "error" });                         
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('suppliers_x_items');?>', { type: "error" });                         
                     <?php }?>
 }
 function posnic_suppliers_lists(){
@@ -412,7 +412,7 @@ if(document.getElementById('item_id_'+$('#parsley_reg #item_id').val())){
                                     }else  if(response['responseText']=='FALSE'){
                                            $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('suppliers_x_items');?>', { type: "error" });                           
                                     }
                        }
                  });
@@ -457,7 +457,7 @@ if(document.getElementById('item_id_'+$('#parsley_reg #item_id').val())){
                                     }else  if(response['responseText']=='FALSE'){
                                            $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('suppliers_x_items');?>', { type: "error" });                           
                                     }
                        }
                  });
@@ -765,7 +765,7 @@ function clear_inputs(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('suppliers_x_items');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -805,7 +805,7 @@ function clear_inputs(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('suppliers_x_items');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;
@@ -892,7 +892,7 @@ function clear_inputs(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('suppliers_x_items');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -932,7 +932,7 @@ function clear_inputs(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('brand');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('suppliers_x_items');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.items_form;

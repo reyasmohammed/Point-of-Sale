@@ -97,7 +97,7 @@
 
                         }
     }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('brand');?>', { type: "error" });                       
+           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('taxes_area');?>', { type: "error" });                       
    <?php }
 ?>
                         }
@@ -161,7 +161,7 @@
                               
                          
                         <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('brand');?>', { type: "error" });                       
+                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('taxes_area');?>', { type: "error" });                       
                         <?php }?>
                        }
 		</script>

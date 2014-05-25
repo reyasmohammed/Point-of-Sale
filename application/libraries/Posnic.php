@@ -378,9 +378,15 @@ class Posnic{
         $CI->load->model('modules_model')  ;
         
         $data['cate']= $CI->modules_model->get_module_category();      
-        $data['row']=  $CI->modules_model->get_modules($this->CI->session->userdata['branch_id']);
-       
-        return $data;
+        $mode=  $CI->modules_model->get_modules($this->CI->session->userdata['branch_id']);
+        $module=array();
+        foreach ($mode as $row){
+           if($this->CI->session->userdata[$row->module_name."_per"]['access']==1){
+               $module[]=$row;
+           }
+        }
+        $data['row']=$module;
+       return $data;
     }
     function posnic_all_module_data($table){
          $CI=  get_instance();
