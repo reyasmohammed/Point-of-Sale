@@ -29,11 +29,9 @@ class Languages extends CI_Model{
             return TRUE;
         }
     }
-    function add($value){
-        $this->db->insert('modules_category',$value);
-        $id=  $this->db->insert_id();
-        $this->db->where('id',$id);
-        $this->db->update('modules_category',array('guid'=>  md5(($id*$id).'modules_category'.$id)));
+    function add_new($value){
+        $this->db->insert('language',array('language_name'=>$value));
+       
     }
     function edit_language($guid){
         $this->db->select()->from('language')->where('id',$guid);
@@ -48,16 +46,10 @@ class Languages extends CI_Model{
         $this->db->update('modules_category',$value);
     }
     function delete($guid){
-        $this->db->where(array('guid'=>$guid,'core !='=>1));
-        $this->db->update('modules_category',array('delete_status'=>1));
+        $this->db->where('id',$guid);
+        $this->db->update('language',array('delete_status'=>1));
     }
-    function get_modules(){
-        $this->db->select('modules.module_name');
-        $this->db->from('modules_x_branches')->where('modules_x_branches.delete_status',0);
-        $this->db->join('modules','modules.guid=modules_x_branches.module_id','left');
-        $sql=  $this->db->get();
-        return $sql->result_array();
-    }
+   
   
 }
 ?>

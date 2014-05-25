@@ -79,8 +79,8 @@
                 url: '<?php echo base_url() ?>/index.php/language/delete',
                 type: "POST",
                 data: {
-                    guid: guid
-                    
+                    guid: guid,
+                    name:$('#name_'+guid).val()
                 },
                 success: function(response)
                 {
@@ -180,6 +180,6 @@
                        }
 		</script>
                 <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
-
+                <script type="text/javascript" src="<?php echo base_url('template/form_post/jquery.form.js') ?>"></script>
 
   

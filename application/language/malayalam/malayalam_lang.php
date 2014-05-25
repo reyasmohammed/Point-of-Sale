@@ -429,4 +429,5 @@ $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
 $lang["undefined"]="undefined";
-$lang["undefined"]="Lnaguage name";
+$lang["undefined"]="undefined";
+$lang["undefined"]="undefined";

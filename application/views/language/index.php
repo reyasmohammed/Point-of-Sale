@@ -22,34 +22,71 @@
 </style>	
 <script type="text/javascript">
      $(document).ready( function () {
+     
+    
+         
+         
+         
+         
          $('#add_new_language').click(function() { 
-                <?php if($this->session->userdata['language_per']['add']==1){ ?>
-                var inputs = $('#add_language').serialize();
-                if($('#parsley_reg').valid()){
-                      $.ajax ({
-                            url: "<?php echo base_url('index.php/language/save_new_language')?>",
-                            data: inputs,
-                            type:'POST',
-                            complete: function(response) {
-                                if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('language').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
-                                       $("#dt_table_tools").dataTable().fnDraw();
-                                       $("#add_language").trigger('reset');
-                                       posnic_language_lists();
-                                    }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#language_name').val()+' <?php echo $this->lang->line('language').' '.$this->lang->line('is_already_added')." ".$this->lang->line('should_not_repeat_order_number');?>', { type: "warning" });                           
-                                    }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
-                                    }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('language');?>', { type: "error" });                           
-                                    }
-                       }
-                       
-                });
-                }
-                    <?php }else{ ?>
-                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('language');?>', { type: "error" });         
-                    <?php }?>
+               parsley_reg.onsubmit=function()
+                                { 
+                                  return true;
+                                }
+               var options = { 
+                beforeSend: function() 
+                {
+                    $("#progress").show();
+                    //clear everything
+                    $("#bar").width('0%');
+                    $("#message").html("");
+                            $("#percent").html("0%");
+                },
+                uploadProgress: function(event, position, total, percentComplete) 
+                {
+                    $("#bar").width(percentComplete+'%');
+                    $("#percent").html(percentComplete+'%');
+
+
+                },
+                success: function() 
+                {
+                    $("#bar").width('100%');
+                    $("#percent").html('100%');
+                },
+                    complete: function(response) { 
+                              if(response['responseText']=='true'){
+                                                 $.bootstrapGrowl('<?php echo $this->lang->line('language').' '.$this->lang->line('added');?>', { type: "success" });                                                                                    
+                                                   $("#dt_table_tools").dataTable().fnDraw();
+                                                   $("#parsley_reg").trigger('reset');
+                                                   posnic_language_lists();
+                              }else  if(response['responseText']=='already'){
+                                                       $.bootstrapGrowl($('#language_name').val()+' <?php echo $this->lang->line('language').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                              }else  if(response['responseText']=='false'){
+                                                       $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                              }else{
+                                                      $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('language');?>', { type: "error" });                           
+                              }
+
+
+                    },
+                    error: function()
+                    {
+                            $("#message").html("<font color='red'> ERROR: Problem in adding user. Please try again</font>");
+
+                    }
+
+            }; 
+
+                    <?php if($this->session->userdata['language_per']['add']==1){ ?>
+                      if($('#parsley_reg').valid()){
+                        $("#parsley_reg").ajaxForm(options);
+                      }else{
+                        $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields')." ".$this->lang->line('users');?>', { type: "error" });         
+                      }         
+                   <?php }else{ ?>
+                              bootbox.alert("<?php echo $this->lang->line('You Have NO Permission To Add Record')?>");  
+                   <?php }?>
         });
          $('#update_language').click(function() { 
                 <?php if($this->session->userdata['language_per']['edit']==1){ ?>
@@ -108,7 +145,7 @@ function posnic_add_new(){
                                   var row='lang_row_0';
                                   
                                  for(var i=0;i<data[0].length;i++){
-                                console.log(data[0][i])
+                               
                                      if(i%3==0){
                                            $('#language_inputs').append('<div id="lang_row_'+i+'"/>');
                                            row='lang_row_'+i;
@@ -242,7 +279,7 @@ function reload_update_user(){
                 <div class="row" id="update_button">
                         <div class="col-lg-4"></div>
                       <div class="col col-lg-4 text-center"><br><br>
-                          <button id="update_language"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('update') ?></button>
+                          <button id="update_language"  type="button" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('update') ?></button>
                           <a href="javascript:reload_update_user()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('reload') ?></a>
                       </div>
                   </div>
