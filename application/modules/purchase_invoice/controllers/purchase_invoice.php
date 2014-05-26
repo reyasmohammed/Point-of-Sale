@@ -97,27 +97,30 @@ function save(){
                 $supplier_id= $this->input->post('supplier_id');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
-                $po= $this->input->post('purchase_order');
+                 $po= $this->input->post('purchase_order');
                 $this->load->model('invoice');
                  if($po=="" Or $po==NULL) {
-                   $po="non";
+                    $po="non";
                  }
                  $where=array('invoice'=>$invoice_no);
                 if($this->invoice->check_duplicate($where)){
                 $value=array('supplier_id'=>$supplier_id,'invoice'=>$invoice_no,'po'=>$po,'grn'=>$grn,'date'=>$date,'remark'=>$remark,'note'=>$note);
-               $guid= $this->posnic->posnic_add_record($value,'purchase_invoice');
-                   if($po=="" Or $po==NULL) {
-                   $po="non";
+              $guid= $this->posnic->posnic_add_record($value,'purchase_invoice');
+                   if($po=='non') {
+                    $po="non";
                   
                     $this->invoice->direct_grn_invoice_status($grn);
                     $this->invoice->direct_grn_payable_amount($grn,$guid);
                 }else{
+                    
                     $this->invoice->grn_invoice_status($grn);
                     $this->invoice->grn_payable_amount($grn,$guid,$po);
                 }
                 $this->posnic->posnic_master_increment_max('purchase_invoice')  ;
            
-                 //echo 'TRUE';
+                echo 'TRUE';
+                }else{
+                    echo 'ALREADY';
                 }
                 }else{
                    echo 'FALSE';
