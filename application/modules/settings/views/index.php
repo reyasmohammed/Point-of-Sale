@@ -23,22 +23,24 @@
 <script type="text/javascript">
      $(document).ready( function () {
          $('#add_new_setting').click(function() { 
-              
-                var inputs = $('#add_setting').serialize();
+              if($('#parsley_reg').valid()){
+                var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
                             url: "<?php echo base_url('index.php/settings/save_settings')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
-                                if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('setting').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
-                                   
-                                       posnic_settings_lists();
-                                    }else  (response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
-                                    }
+                                 if(response['responseText']=='TRUE'){
+                                       $.bootstrapGrowl('<?php echo $this->lang->line('settings').' '.$this->lang->line('saved');?>', { type: "success" });          
+                                 }else {
+                                      $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                            
+                                 }
+                                 
                        }
                 });
+                }else{
+                $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                }
         });
        
      });
@@ -50,7 +52,7 @@
 <nav id="mobile_navigation"></nav>
      
 <section id="add_setting_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'add_setting',
+     <?php   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('settings/add_pos_settings_details/',$form);?>

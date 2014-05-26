@@ -93,7 +93,7 @@ class Settings extends MX_Controller
                 if ( $this->form_validation->run() !== false ) { 
                     $data=array(
                       'purchase_order'=>$this->input->post('purchase_order'),
-                      'purchase_order'=>$this->input->post('grn'),
+                      'grn'=>$this->input->post('grn'),
                       'direct_grn'=>$this->input->post('direct_grn'),
                       'purchase_invoice'=>$this->input->post('purchase_invoice'),
                       'direct_invoice'=>$this->input->post('direct_invoice'),
@@ -111,14 +111,16 @@ class Settings extends MX_Controller
                       'opening_stock'=>$this->input->post('opening_stock'),
                       'damage_stock'=>$this->input->post('damage_stock'), 
                       'stock_transfer'=>$this->input->post('stock_transfer'));
-                      $where=array('name'=>$name);
+                    
                       $this->load->model('branch_settings');
-                if($this->branch_settings->check_duplicate($where)){
+                if($this->branch_settings->check_duplicate()){
                    
                     $this->branch_settings->save($data);
                     echo 'TRUE';
                 }else{
-                        echo "ALREADY";
+                   
+                    $this->branch_settings->update($data);
+                     echo 'TRUE';
                 }
                 }else{
                     echo "FALSE";
