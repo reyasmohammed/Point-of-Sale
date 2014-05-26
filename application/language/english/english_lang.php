@@ -632,4 +632,7 @@ $lang['credit_days']='Credit Days';
     $lang['language_name']='Language Name';
     $lang['changed']='Changed';
     $lang['please_enter_all_key_words']='Please Enter All Keywords';
+    $lang['profile']='Profile';
+    $lang['settings']='Settings';
+    $lang['grn']='Good Receiving Note';
 ?>
