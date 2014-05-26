@@ -225,34 +225,50 @@ class Grn extends CI_Model{
      }
     # Add Stock From Purchase Receve Note
     function add_stock($guid,$po_item,$Bid){
-        $this->db->select()->from('grn_x_items')->where('grn',$guid);
+        $this->db->select('grn_x_items.*,grn.po')->from('grn')->where('grn.guid',$guid);
+        $this->db->join('grn_x_items', 'grn_x_items.grn=grn.guid','left');
         $grn=$this->db->get();
         foreach ($grn->result() as $grn_row){
      
         
-        $this->db->select()->from('purchase_order_items')->where('order_id',$po_item)->where('item',$grn_row->item);
+        $this->db->select('purchase_order_items.*,purchase_order.supplier_id')->from('purchase_order')->where('purchase_order.guid',$grn_row->po);
+        $this->db->join('purchase_order_items','purchase_order_items.order_id=purchase_order.guid','left');
         $sql=  $this->db->get();
         $price;
+        $supplier;
         foreach ($sql->result() as $row){
            $price=$row->sell;
+           $cost=$row->cost;
+           $supplier=$row->supplier_id;
         }
         $this->db->select()->from('stock')->where('branch_id',$Bid)->where('item',$grn_row->item);
         $sql_order=  $this->db->get();
         if($sql_order->num_rows()>0){
             $stock_quty;
+            $stock_guid;
             foreach ($sql_order->result() as $stock){
                 $stock_quty=  $stock->quty;
                 $selling=$stock->price;
+                $stock_guid=$stock->guid;
             }
             if($selling==$price){
             $this->db->where('branch_id',$Bid)->where('item',$grn_row->item);
             $this->db->update('stock',array('quty'=>$grn_row->quty+$stock_quty,'price'=>$price));
+            $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
+            
             }else{
              $this->db->insert('stock',array('item'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'branch_id'=>$Bid));
             $id=  $this->db->insert_id();
             $this->db->where('id',$id);
              
             $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
             }
         }else{
             $this->db->insert('stock',array('item'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'branch_id'=>$Bid));
@@ -260,6 +276,12 @@ class Grn extends CI_Model{
             $this->db->where('id',$id);
              
             $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
+            
+            
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
         }
         }
     }

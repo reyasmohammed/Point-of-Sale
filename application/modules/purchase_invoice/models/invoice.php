@@ -58,7 +58,7 @@ class Invoice extends CI_Model{
         
         // get data from grn
         
-        $this->db->select('grn.guid,grn.grn_no,grn.date as grn_date ,grn.po,purchase_order.supplier_id,suppliers.guid as s_guid');
+        $this->db->select('grn.invoice_status,grn.guid,grn.grn_no,grn.date as grn_date ,grn.po,purchase_order.supplier_id,suppliers.guid as s_guid');
         $this->db->from('grn')->where('grn.branch_id',$branch)->where('grn.grn_status',1)->where('grn.invoice_status',0)->where('grn.delete_status',0);
         $or_like=array('grn_no'=>$like,'suppliers.company_name'=>$like,'suppliers.first_name'=>$like);
         $this->db->join('purchase_order', 'purchase_order.guid=grn.po AND grn.invoice_status=0 ','left');
@@ -167,11 +167,11 @@ class Invoice extends CI_Model{
         
         
         $sql=  $this->db->get();
-        $freight;
-        $round_amt;
-        $discount;
-        $discount_amt;
-        $round_amt;
+        $freight=0;
+        $round_amt=0;
+        $discount=0;
+        $discount_amt=0;
+        $round_amt=0;
         $supplier;
         $amount=0;
         foreach ($sql->result() as $row){

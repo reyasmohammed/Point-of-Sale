@@ -637,5 +637,6 @@ $lang['credit_days']='Credit Days';
     $lang['grn']='Good Receiving Note';
     $lang['saved']='Saved';
     // purchase  return
-    $lang['purchase_return_id']='Purchase Return ID'
+    $lang['purchase_return_id']='Purchase Return ID';
+    $lang['is_already_invoice']='Is Already Invoice';
 ?>

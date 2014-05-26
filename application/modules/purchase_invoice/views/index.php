@@ -224,7 +224,7 @@
                                        posnic_purchase_invoice_lists();
                                        refresh_items_table();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('supplier').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('purchase').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
                                            $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
@@ -298,6 +298,7 @@
         $('#parsley_reg #demo_order_number').change(function() {
             var guid = $('#parsley_reg #demo_order_number').select2('data').id;
                 $('#purchase_invoice_guid').val(guid);
+                if($('#parsley_reg #demo_order_number').select2('data').invoice_status==0){
                 if($('#parsley_reg #demo_order_number').select2('data').po){
                       $('#purchase_order').val($('#parsley_reg #demo_order_number').select2('data').po);
                       $('#goods_receiving_note_guid').val(guid);
@@ -521,7 +522,7 @@
                              } 
                            });
            }
-               refresh_items_table();
+             refresh_items_table();
              $('#loading').modal('show');
                  
                     
@@ -530,7 +531,11 @@
                        //$('#parsley_reg #delivery_date').focus();
                        document.getElementById('order_date').focus();
                        $('#loading').modal('hide');
-                    }, 0);  
+                    }, 0); 
+}else{
+ $.bootstrapGrowl($('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('grn').' '.$this->lang->line('is_already_invoice');?>', { type: "warning" });                           
+           }
+              
                     
           });
           $('#parsley_reg #demo_order_number').select2({
@@ -562,6 +567,7 @@
                         results.push({
                           id: item.guid,
                           text: item.grn_no,
+                          invoice_status: item.invoice_status,
                           
                           po:item.po
                         });
