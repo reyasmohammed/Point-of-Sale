@@ -101,8 +101,9 @@ if($this->session->userdata['user_type']==2){
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a href="user_profile.html">Profile</a></li>									
-                                                                        <li><a href="<?php echo base_url() ?>index.php/home/logout">Log Out</a></li>
+									<li><a href="user_profile"><?php echo $this->lang->line('profile') ?></a></li>									
+									<li><a href="settings"><?php echo $this->lang->line('settings') ?></a></li>									
+                                                                        <li><a href="<?php echo base_url() ?>index.php/home/logout"><?php echo $this->lang->line('logout') ?></a></li>
 								</ul>
 							</div>
                                             </div>
