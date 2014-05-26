@@ -635,4 +635,5 @@ $lang['credit_days']='Credit Days';
     $lang['profile']='Profile';
     $lang['settings']='Settings';
     $lang['grn']='Good Receiving Note';
+    $lang['saved']='Saved';
 ?>

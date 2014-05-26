@@ -1,6 +1,10 @@
 
 <script type="text/javascript" charset="utf-8">
           $(document).ready( function () {
+               parsley_reg.onsubmit=function()
+                                { 
+                                  return false;
+                                } 
              window.setTimeout(function ()
                     {
                       
