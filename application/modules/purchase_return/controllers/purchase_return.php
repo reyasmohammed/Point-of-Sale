@@ -105,7 +105,7 @@ function save(){
         $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
         $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
-        $this->form_validation->set_rules('branch', $this->lang->line('branch')); 
+
                        
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
@@ -127,7 +127,7 @@ function save(){
                 $total_amount=  $this->input->post('total_amount');
   
      
-              $value=array('destination'=>$this->input->post('branch'),'code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
+              $value=array('code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'purchase_return');
           
                 $item=  $this->input->post('new_item_id');
@@ -196,7 +196,7 @@ function save(){
                 $total_amount=  $this->input->post('total_amount');
   
      
-              $value=array('destination'=>$this->input->post('branch'),'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
+              $value=array('date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=  $this->input->post('purchase_return_guid');
               $update_where=array('guid'=>$guid);
               $this->posnic->posnic_update_record($value,$update_where,'purchase_return');

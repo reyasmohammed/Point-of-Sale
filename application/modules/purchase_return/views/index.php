@@ -163,6 +163,7 @@
          
        
           $('#parsley_reg #items').change(function() {
+              if($('#parsley_reg #items').select2('data').purchase_return==1){
               if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').item) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').item){
                      $.bootstrapGrowl('<?php echo $this->lang->line('this item already added').$this->lang->line('purchase_return');?> ', { type: "warning" });  
                        $('#parsley_reg #items').select2('open');
@@ -214,16 +215,16 @@
                       $('#parsley_reg #tax').val(0);
                 }
           }
+          }else{
+                $.bootstrapGrowl("<?php echo $this->lang->line('this_item_cant_purchase_return');?>", { type: "warning" });  
+          }
           });
           function format_item(sup) {
             if (!sup.id) return sup.text;
   
   
-            if(sup.uom==0){
                 return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+sup.price+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
-            }else{
-                return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+parseFloat(sup.price)/parseFloat(sup.no_of_unit)+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
-            }
+            
             }
           $('#parsley_reg #items').select2({
              
@@ -272,11 +273,11 @@
                           tax_type: item.tax_type_name,
                           tax_value: item.tax_value,
                           tax_Inclusive : item.tax_Inclusive ,
-                          start : item.start_date ,
-                          end : item.end_state ,
+                          supplier_name : item.first_name ,
+                          supplier_id : item.s_guid ,
+                          stock_id : item.stock_id ,
                           discount : item.discount ,
-                          uom : item.uom ,
-                          no_of_unit : item.no_of_unit ,
+                          purchase_return : item.purchase_return ,
                         });
                       });  
                       return {
