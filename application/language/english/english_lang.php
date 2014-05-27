@@ -639,4 +639,5 @@ $lang['credit_days']='Credit Days';
     // purchase  return
     $lang['purchase_return_id']='Purchase Return ID';
     $lang['is_already_invoice']='Is Already Invoice';
+    $lang['this_item_cant_purchase_return']="This Item Can't Purchase Return";
 ?>
