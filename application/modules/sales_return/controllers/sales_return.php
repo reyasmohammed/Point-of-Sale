@@ -264,10 +264,10 @@ function search_supplier(){
  * get branch details forstock transfer 
  *  */       
 // functoon starts
-function search_branch(){
+function search_sales_bill(){
     $search= $this->input->post('term');  
     $this->load->model('stock');
-    $data= $this->stock->search_branch($search)    ;
+    $data= $this->stock->search_sales_bill($search)    ;
     echo json_encode($data);
 }
 // function end

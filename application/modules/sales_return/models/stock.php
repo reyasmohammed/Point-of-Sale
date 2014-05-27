@@ -133,17 +133,18 @@ class Stock extends CI_Model{
             }
             
      }
-      function search_branch($search){
-          $like=array('store_name'=>$search,'code'=>$search,'phone'=>$search,'email'=>$search,'city'=>$search,'state'=>$search,'country'=>$search,'website'=>$search);       
-          $this->db->select()->from('branches')->where('guid <>',$this->session->userdata('branch_id'))->where('active_status',1)->where('delete_status',0);
+      function search_sales_bill($search){
+          
+          $this->db->select('sales_bill.*')->from('sales_bill');
+          $this->db->join('customers', 'customers.guid=sales_bill.customer_id','left');
+          $like=array('invoice'=>$search,'code'=>$search,'phone'=>$search,'email'=>$search,'city'=>$search,'state'=>$search,'country'=>$search,'website'=>$search);       
           $this->db->or_like($like);
           $this->db->limit($this->session->userdata('data_limit'));
           $sql=  $this->db->get();
           $data=array();
           foreach($sql->result() as $row){
-              if($row->guid!=$this->session->userdata('branch_id')){
+            
                   $data[]=$row;
-              }
           }
           return $data;
      }

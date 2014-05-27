@@ -161,14 +161,69 @@
     
      $(document).ready( function () {
          
-       
+       $('#parsley_reg #sales_bill').change(function() {
+            refresh_items_table();
+           
+                   var guid = $('#parsley_reg #sales_bill').select2('data').id;
+
+                 $('#parsley_reg #branch_name').val($('#parsley_reg #sales_bill').select2('data').name);
+                 $('#parsley_reg #sales_bill_id').val(guid);
+                      window.setTimeout(function ()
+                    {
+                      
+                       document.getElementById('order_date').focus();
+                    }, 0);  
+             
+          });
+           function format_branch(sup) {
+            if (!sup.id) return sup.text;
+    return  "<p >"+sup.text+"    <br>"+sup.name+"   "+sup.phone+"</p> ";
+            }
+          $('#parsley_reg #sales_bill').select2({
+              dropdownCssClass : 'customers_select',
+                 formatResult: format_branch,
+                formatSelection: format_branch,
+                escapeMarkup: function(m) { return m; },
+                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('branch') ?>",
+                ajax: {
+                     url: '<?php echo base_url() ?>index.php/sales_return/search_sales_bill',
+                     data: function(term, page) {
+                            return {types: ["exercise"],
+                                limit: -1,
+                                term: term
+                            };
+                     },
+                    type:'POST',
+                    dataType: 'json',
+                    quietMillis: 100,
+                    data: function (term) {
+                        return {
+                            term: term
+                        };
+                    },
+                    results: function (data) {
+                      var results = [];
+                      $.each(data, function(index, item){
+                        results.push({
+                          id: item.guid,
+                          text: item.code,
+                          name: item.store_name,
+                          phone: item.phone,
+                         
+                        });
+                      });
+                      return {
+                          results: results
+                      };
+                    }
+                }
+            });
           $('#parsley_reg #items').change(function() {
-              if($('#parsley_reg #items').select2('data').sales_return==1){
-              if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').item) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').item){
+              if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').id) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').id){
                      $.bootstrapGrowl('<?php echo $this->lang->line('this item already added').$this->lang->line('sales_return');?> ', { type: "warning" });  
                        $('#parsley_reg #items').select2('open');
               }else{
-                   var guid = $('#parsley_reg #items').select2('data').item;
+                   var guid = $('#parsley_reg #items').select2('data').id;
                 
                        
                 $('#parsley_reg #item_id').val(guid);
@@ -215,16 +270,10 @@
                       $('#parsley_reg #tax').val(0);
                 }
           }
-          }else{
-                $.bootstrapGrowl("<?php echo $this->lang->line('this_item_cant_sales_return');?>", { type: "warning" });  
-          }
           });
           function format_item(sup) {
             if (!sup.id) return sup.text;
-  
-  
-                return  "<p style='font-size:13px;'>"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:78px'></img></p><p style='font-size:14px;margin-top: -27px;'>"+"<?php echo ' <br>'.$this->lang->line('price') ?> : "+sup.price+" <?php echo ' '.$this->lang->line('stock') ?> : "+sup.quty+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
-            
+    return  "<p >"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:59px'></img></p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
             }
           $('#parsley_reg #items').select2({
              
@@ -249,7 +298,7 @@
                     data: function (term) {
                         return {
                             term: term,
-                           
+                            destination:$('#sales_bill_id').val()
                                    
                         };
                     },
@@ -258,9 +307,7 @@
                       
                       $.each(data, function(index, item){
                         results.push({
-                        id: item.i_guid+item.price,
-                          item: item.i_guid,
-                          sid: item.guid,
+                          id: item.i_guid,
                           text: item.name,
                           value: item.code,
                           image: item.image,
@@ -268,16 +315,14 @@
                           category: item.c_name,
                           department: item.d_name,
                           quty: item.quty,
-                          price: item.price,
                           cost: item.cost,
+                          price: item.price,
                           tax_type: item.tax_type_name,
                           tax_value: item.tax_value,
                           tax_Inclusive : item.tax_Inclusive ,
                           supplier_name : item.first_name ,
                           supplier_id : item.s_guid ,
                           stock_id : item.stock_id ,
-                          discount : item.discount ,
-                          sales_return : item.sales_return ,
                         });
                       });  
                       return {
@@ -303,7 +348,7 @@ $('#save_button').show();
 $('#update_clear').hide();
 $('#save_clear').show();
 $('#total_amount').val('');
-$("#parsley_reg #select_branch").select2('enable');
+$("#parsley_reg #sales_bill").select2('enable');
 $('#items_id').val('');
 $('#supplier_guid').val('');
 $("#parsley_reg").trigger('reset');
@@ -338,7 +383,7 @@ $("#parsley_reg #first_name").val('');
          window.setTimeout(function ()
     {
        
-        $('#parsley_reg #select_branch').select2('open');
+        $('#parsley_reg #sales_bill').select2('open');
     }, 500);
       <?php }else{ ?>
                     $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_return');?>', { type: "error" });                         
@@ -815,7 +860,7 @@ function clear_inputs(){
     
 }
 function new_order_date(e){
-
+    if($('#parsley_reg #sales_bill_id').val()!=""){
 
      var unicode=e.charCode? e.charCode : e.keyCode
    if($('#parsley_reg #order_date').value!=""){
@@ -830,10 +875,14 @@ function new_order_date(e){
         }
        else{
         
-           $('#parsley_reg #select_branch').select2('open');
+           $('#parsley_reg #sales_bill').select2('open');
         }
         }
-        
+        }else{
+ $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select');?>', { type: "warning" }); 
+         $('#parsley_reg #sales_bill').select2('open');
+
+        }
 
     }
 
@@ -863,7 +912,40 @@ function new_order_date(e){
                                  
                                        <div id="" class="col col-sm-12" style="padding-right: 25px;padding-left: 25px">
                                            <div class="row">
-                                               
+                                               <div class="col col-sm-2" >
+                                                   <div class="form_sep" >
+                                                            <label for="sales_bill" ><?php echo $this->lang->line('sales_bill') ?></label>													
+                                                                     <?php $sales_bill=array('name'=>'sales_bill',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'sales_bill',
+                                                                                       
+                                                                                        'value'=>set_value('sales_bill'));
+                                                                         echo form_input($sales_bill)?>
+                                                            <input type="hidden" name="sales_bill_id" id="sales_bill_id">
+                                                       </div>
+                                               </div>
+                                               <div class="col col-sm-2" >
+                                                   <div class="form_sep" >
+                                                            <label for="customer" ><?php echo $this->lang->line('customer') ?></label>													
+                                                                     <?php $customer=array('name'=>'customer',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'customer',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer'));
+                                                                         echo form_input($customer)?>
+                                                       </div>
+                                               </div>
+                                               <div class="col col-sm-2" >
+                                                   <div class="form_sep" >
+                                                            <label for="sales_date" ><?php echo $this->lang->line('sales')." ".$this->lang->line('date') ?></label>													
+                                                                     <?php $sales_date=array('name'=>'sales_date',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'sales_date',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('sales_date'));
+                                                                         echo form_input($sales_date)?>
+                                                       </div>
+                                               </div>
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep" >
                                                             <label for="order_number" ><?php echo $this->lang->line('sales_return_id') ?></label>													

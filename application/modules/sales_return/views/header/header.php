@@ -197,10 +197,10 @@ function sales_return_approve(guid){
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
                            
-                                $("#parsley_reg #select_branch").select2('data', {id:data[0]['destination'],text: data[0]['store_name']});
-                                $("#parsley_reg #destination_branch").val(data[0]['destination']);
+                                $("#parsley_reg #sales_bill").select2('data', {id:data[0]['destination'],text: data[0]['store_name']});
+                                $("#parsley_reg #sales_bill_id").val(data[0]['destination']);
                                 $("#parsley_reg #branch_name").val(data[0]['store_name']);
-                                $("#parsley_reg #select_branch").select2('disable');
+                                $("#parsley_reg #sales_bill").select2('disable');
                                 $("#parsley_reg #sales_return_guid").val(guid);
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_number").val(data[0]['po_no']);
