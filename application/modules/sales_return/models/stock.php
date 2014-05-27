@@ -29,8 +29,8 @@ class Stock extends CI_Model{
          $this->db->update('sales_return_x_items',$item_value);
          
     }
-    function add_sales_return($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
-         $item_value=array('stocks_history_id'=>$stock,'sales_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+    function add_sales_return($guid,$item,$quty,$sell,$tax,$net){
+         $item_value=array('sales_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'sell'=>$sell,'amount'=>$net);
          $this->db->insert('sales_return_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
@@ -40,10 +40,10 @@ class Stock extends CI_Model{
     function search_items($search,$bill){
         $bid=$this->session->userdata['branch_id'];
        
-        $this->db->select('items.uom,items.no_of_unit,suppliers.first_name,suppliers.guid as s_guid,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,')->from('sales_bill')->where('sales_bill.guid',$bill);
+        $this->db->select('sales_order_x_items.delivered_quty as quty,sales_order_x_items.price,items.uom,items.no_of_unit,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,')->from('sales_bill')->where('sales_bill.guid',$bill);
         //$this->db->distinct('stocks_history.cost');
-        $this->db->join('delivery_note_x_items', 'delivery_note_x_items.delivery_note=sales_bill.sdn','left');
-        $this->db->join('items', 'items.guid=delivery_note_x_items.item','left');
+        $this->db->join('sales_order_x_items', 'sales_order_x_items.sales_order_id=sales_bill.so','left');
+        $this->db->join('items', 'items.guid=sales_order_x_items.item','left');
         $this->db->join('items_category', 'items.category_id=items_category.guid','left');
         $this->db->join('brands', 'items.brand_id=brands.guid','left');
         $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
@@ -53,13 +53,12 @@ class Stock extends CI_Model{
         $like=array('items.guid'=>1,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search,'items.name'=>$search);
             $this->db->limit($this->session->userdata['data_limit']);
             $this->db->or_like($like);   
-            $this->db->group_by('stocks_history.cost');
+           // $this->db->group_by('stocks_history.cost');
             $sql=$this->db->get();
             $data=array();
             foreach ($sql->result() as $row){
-                if($row->quty >0){
+             
                 $data[]=$row;
-                }
             }
          
          return $data;
