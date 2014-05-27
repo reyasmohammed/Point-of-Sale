@@ -166,7 +166,8 @@
            
                    var guid = $('#parsley_reg #sales_bill').select2('data').id;
 
-                 $('#parsley_reg #branch_name').val($('#parsley_reg #sales_bill').select2('data').name);
+                 $('#parsley_reg #customer').val($('#parsley_reg #sales_bill').select2('data').name);
+                 $('#parsley_reg #sales_date').val($('#parsley_reg #sales_bill').select2('data').date);
                  $('#parsley_reg #sales_bill_id').val(guid);
                       window.setTimeout(function ()
                     {
@@ -177,7 +178,7 @@
           });
            function format_branch(sup) {
             if (!sup.id) return sup.text;
-    return  "<p >"+sup.text+"    <br>"+sup.name+"   "+sup.phone+"</p> ";
+    return  "<p >"+sup.text+"    <br>"+sup.name+"   "+sup.company+"</p> ";
             }
           $('#parsley_reg #sales_bill').select2({
               dropdownCssClass : 'customers_select',
@@ -206,9 +207,10 @@
                       $.each(data, function(index, item){
                         results.push({
                           id: item.guid,
-                          text: item.code,
-                          name: item.store_name,
-                          phone: item.phone,
+                          text: item.invoice,
+                          name: item.first_name,
+                          company: item.company_name,
+                          date: item.date,
                          
                         });
                       });
@@ -298,7 +300,7 @@
                     data: function (term) {
                         return {
                             term: term,
-                            destination:$('#sales_bill_id').val()
+                            bill:$('#parsley_reg #sales_bill_id').val();
                                    
                         };
                     },

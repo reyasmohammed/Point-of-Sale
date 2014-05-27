@@ -324,9 +324,9 @@ function order_number(){
 
 function search_items(){
     $search= $this->input->post('term');
-  
+   $bill=  $this->input->post('bill');
     $this->load->model('stock');
-    $data= $this->stock->search_items($search);      
+    $data= $this->stock->search_items($search,$bill);      
     echo json_encode($data);
        
         
