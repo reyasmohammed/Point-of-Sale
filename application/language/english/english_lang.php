@@ -641,4 +641,7 @@ $lang['credit_days']='Credit Days';
     $lang['is_already_invoice']='Is Already Invoice';
     $lang['this_item_cant_purchase_return']="This Item Can't Purchase Return";
     $lang['sales_return_id']='Sales Return ID';
+    $lang['direct_sales_number']='D S Number';
+    $lang['sales_bill_number']='S B Number';
+    $lang['sales_bill_date']='Sales Bill Date';
 ?>

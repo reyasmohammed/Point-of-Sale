@@ -152,6 +152,43 @@
                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customers');?>', { type: "error" });                       
                     <?php }?>
     }
+    function save_sales_bill(){
+         <?php if($this->session->userdata['direct_sales_per']['edit']==1){ ?>
+                   if($('#parsley_reg').valid()){
+                       var oTable = $('#selected_item_table').dataTable();
+                       if(oTable.fnGetData().length>0){
+                var inputs = $('#parsley_reg').serialize();
+                      $.ajax ({
+                            url: "<?php echo base_url('index.php/direct_sales/save_sales_bill')?>",
+                            data: inputs,
+                            type:'POST',
+                            complete: function(response) {
+                                if(response['responseText']=='TRUE'){
+                                      $.bootstrapGrowl('<?php echo $this->lang->line('save_sales_bill').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
+                                       $("#dt_table_tools").dataTable().fnDraw();
+                                       $("#parsley_reg").trigger('reset');
+                                       posnic_direct_sales_lists();
+                                       refresh_items_table();
+                                    }else  if(response['responseText']=='ALREADY'){
+                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('customers').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                    }else  if(response['responseText']=='FALSE'){
+                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                    }else{
+                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('direct_sales');?>', { type: "error" });                           
+                                    }
+                       }
+                });
+                    }else{
+                  
+                   $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+                     $('#parsley_reg #items').select2('open');
+                    }
+                    }else{
+                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?php }else{ ?>
+                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customers');?>', { type: "error" });                       
+                    <?php }?>
+    }
     
      $(document).ready( function () {
          
@@ -532,6 +569,36 @@ function new_order_date(e){
                window.setTimeout(function ()
     {
         $('#parsley_reg #id_discount').focus();
+    }, 10);
+            
+        }
+         if (unicode!=27){
+        }
+       else{
+        
+           $('#parsley_reg #first_name').select2('open');
+        }
+        }
+        }else{
+ $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_A_Customer');?>', { type: "warning" }); 
+         $('#parsley_reg #first_name').select2('open');
+
+        }
+
+    }
+function new_sales_bill_date(e){
+    if($('#parsley_reg #customers_guid').val()!=""){
+
+     var unicode=e.charCode? e.charCode : e.keyCode
+   if($('#parsley_reg #sales_bill_date').value!=""){
+        
+                  if (unicode!=13 && unicode!=9){
+        }
+       else{
+         
+               window.setTimeout(function ()
+    {
+        $('#parsley_reg #note').focus();
     }, 10);
             
         }
@@ -1278,7 +1345,7 @@ function new_discount_amount(){
                                                     </div><input type="hidden" value="" name='customers_guid' id='customers_guid'>
                                                </div>
                                               
-                                               <div class="col col-sm-2" >
+                                               <div class="col col-sm-2" id="address_div">
                                                     <div class="form_sep">
                                                             <label for="address" ><?php echo $this->lang->line('address') ?></label>													
                                                                      <?php $address=array('name'=>'address',
@@ -1291,7 +1358,7 @@ function new_discount_amount(){
                                                </div>
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="order_number" ><?php echo $this->lang->line('order_number') ?></label>													
+                                                            <label for="order_number" ><?php echo $this->lang->line('direct_sales_number') ?></label>													
                                                                      <?php $order_number=array('name'=>'demo_order_number',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'demo_order_number',
@@ -1301,6 +1368,7 @@ function new_discount_amount(){
                                                             <input type="hidden" name="order_number" id="order_number">
                                                        </div>
                                                     </div>
+                                              
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
                                                             <label for="order_date" ><?php echo $this->lang->line('sales_date') ?></label>													
@@ -1315,6 +1383,18 @@ function new_discount_amount(){
                                                                 </div>
                                                        </div>
                                                    </div>
+                                                <div class="col col-sm-2" id="sales_bill_number_div">
+                                                   <div class="form_sep">
+                                                            <label for="sales_bill_number" ><?php echo $this->lang->line('sales_bill_number') ?></label>													
+                                                                     <?php $order_number=array('name'=>'demo_sales_bill_number',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_sales_bill_number',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('sales_bill_number'));
+                                                                         echo form_input($order_number)?>
+                                                            <input type="hidden" name="sales_bill_number" id="sales_bill_number">
+                                                       </div>
+                                                    </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
                                                             <label for="discount" ><?php echo $this->lang->line('discount') ?>%</label>													
@@ -1395,6 +1475,20 @@ function new_discount_amount(){
                                                             <input type="hidden" name="customer_discount_amount" id="customer_discount_amount">
                                                        </div>
                                                     </div>
+                                               <div class="col col-sm-2" >
+                                                   <div class="form_sep">
+                                                            <label for="sales_bill_date" ><?php echo $this->lang->line('sales_bill_date') ?></label>													
+                                                                     <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
+                                                                           <?php $sales_bill_date=array('name'=>'sales_bill_date',
+                                                                                            'class'=>'required form-control',
+                                                                                            'id'=>'sales_bill_date',
+                                                                                          'onKeyPress'=>"new_sales_bill_date(event)", 
+                                                                                            'value'=>set_value('order_date'));
+                                                                             echo form_input($sales_bill_date)?>
+                                                                <span class="input-group-addon"><i class="icon-calendar"></i></span>
+                                                                </div>
+                                                       </div>
+                                                   </div>
                                            </div>
                                      <br>
                                         </div>                              
@@ -1404,7 +1498,7 @@ function new_discount_amount(){
                          
                          
          
-                    <div class="row small_inputs" >
+                    <div class="row small_inputs" id="sales_items_list">
                         <div class="col col-lg-12">
                             <div class="row" style="padding-top: 1px;">
                                  
@@ -1690,7 +1784,7 @@ function new_discount_amount(){
                                                   </div><br>
                                                   </div>
                                                </div>
-                        <div class="row" style="margin-left: 5px">
+                        <div class="row" style="margin-left: 5px" id="sales_buttons">
                                           <div class="col col-sm-6"  >
                                               <div class="form_sep " id="save_button" style="padding-left:0px">
                                                        <label for="" >&nbsp;</label>	
@@ -1715,6 +1809,22 @@ function new_discount_amount(){
                                                
                                               
                                       </div>
+                         <div class="row" style="margin-left: 5px" id="sales_bill_buttons">
+                                          <div class="col col-sm-6"  >
+                                              <div class="form_sep " id="save_button" style="padding-left:0px">
+                                                       <label for="" >&nbsp;</label>	
+                                                       <a href="javascript:save_sales_bill()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                  </div>
+                                             
+                                               </div>
+                              <div class="col col-sm-6"  >
+                                                   <div class="form_sep " id="save_clear">
+                                                       <label for="remark" >&nbsp;</label>	
+                                                        <a href="javascript:clear_update_direct_sales()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                  </div>
+                                               </div>
+                         </div>
+                        
                     </div>  </div>  </div>
     <?php echo form_close();?>
 </section>    
