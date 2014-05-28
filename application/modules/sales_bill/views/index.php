@@ -666,7 +666,7 @@ function reload_update_user(){
                                         <tr>
                                          <th>Id</th>
                                           <th ><?php echo $this->lang->line('select') ?></th>
-                                          <th ><?php echo $this->lang->line('sales_order') ?></th>
+                                          <th ><?php echo $this->lang->line('invoice') ?></th>
                                            <th style="width: 170px !important"><?php echo $this->lang->line('grn_number') ?></th>
                                           
                                           <th><?php echo $this->lang->line('company') ?></th>

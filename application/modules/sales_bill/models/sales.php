@@ -5,7 +5,7 @@ class Sales extends CI_Model{
     }
     function get($end,$start,$like,$branch){
                 $this->db->select('sales_delivery_note.so ,sales_order.total_items,sales_delivery_note.total_amount as total,sales_bill.branch_id,sales_delivery_note.sales_delivery_note_no as code,sales_bill.guid,sales_bill.date,sales_bill.invoice,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-                $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so <>','non');
+                $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so <>','non')->where('sales_bill.direct_sales_id','non');
                 $this->db->join('sales_delivery_note','sales_delivery_note.guid=sales_bill.sdn','left');
                 $this->db->join('sales_order', 'sales_order.guid=sales_delivery_note.so AND sales_delivery_note.delete_status=0','left');
                 $this->db->join('customers', 'customers.guid=sales_order.customer_id AND sales_order.guid=sales_delivery_note.so','left');
@@ -17,11 +17,22 @@ class Sales extends CI_Model{
                     $row['date']=date('d-m-Y',$row['date']);
                     $data[]=$row;
                 }
-                
+//                
                 $this->db->select('direct_sales_delivery.customer_id,direct_sales_delivery.total_items ,direct_sales_delivery.total_amt as total,sales_bill.branch_id,direct_sales_delivery.code,sales_bill.guid,sales_bill.date,sales_bill.invoice,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
-                $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so','non');
+                $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so','non')->where('sales_bill.direct_sales_id','non');
                 $this->db->join('direct_sales_delivery', 'direct_sales_delivery.guid=sales_bill.sdn','left');
                 $this->db->join('customers', 'customers.guid=direct_sales_delivery.customer_id','left');
+                $this->db->limit($end,$start); 
+                $this->db->or_like($like);     
+                $query=$this->db->get();
+                foreach ($query->result_array() as $row){
+                    $row['date']=date('d-m-Y',$row['date']);
+                    $data[]=$row;
+                }
+                $this->db->select('direct_sales.customer_id,direct_sales.total_items ,direct_sales.total_amt as total,sales_bill.branch_id,direct_sales.code,sales_bill.guid,sales_bill.date,sales_bill.invoice,customers.guid as s_guid,customers.first_name as s_name,customers.company_name as c_name');
+                $this->db->from('sales_bill')->where('sales_bill.branch_id',$branch)->where('sales_bill.so','non')->where('sales_bill.sdn','non');
+                $this->db->join('direct_sales', 'direct_sales.guid=sales_bill.direct_sales_id','left');
+                $this->db->join('customers', 'customers.guid=direct_sales.customer_id','left');
                 $this->db->limit($end,$start); 
                 $this->db->or_like($like);     
                 $query=$this->db->get();
