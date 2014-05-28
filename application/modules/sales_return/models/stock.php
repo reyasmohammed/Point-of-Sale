@@ -38,10 +38,9 @@ class Stock extends CI_Model{
     }
     
     function search_items($search,$bill){
-        $bid=$this->session->userdata['branch_id'];
+         $data=array();
        
         $this->db->select('sales_order_x_items.delivered_quty as quty,sales_order_x_items.price,items.uom,items.no_of_unit,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,')->from('sales_bill')->where('sales_bill.guid',$bill);
-        //$this->db->distinct('stocks_history.cost');
         $this->db->join('sales_order_x_items', 'sales_order_x_items.sales_order_id=sales_bill.so','left');
         $this->db->join('items', 'items.guid=sales_order_x_items.item','left');
         $this->db->join('items_category', 'items.category_id=items_category.guid','left');
@@ -55,11 +54,14 @@ class Stock extends CI_Model{
             $this->db->or_like($like);   
            // $this->db->group_by('stocks_history.cost');
             $sql=$this->db->get();
-            $data=array();
+           
             foreach ($sql->result() as $row){
              
                 $data[]=$row;
             }
+            
+            
+            
          
          return $data;
      
