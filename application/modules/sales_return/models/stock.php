@@ -91,12 +91,11 @@ class Stock extends CI_Model{
          $this->db->select()->from('sales_return_x_items')->where('sales_return_id',$guid);
          $sql=  $this->db->get();
          foreach ($sql->result() as $row){
-             $price=$row->cost;
+             $price=$row->sell;
              $quty=$row->quty;
              $item=$row->item;
-             $stock_history=$row->stocks_history_id;
-               $this->db->select('stock.quty,stock.guid')->from('stocks_history')->where('stocks_history.guid',$stock_history);
-               $this->db->join('stock','stock.guid=stocks_history.stock_id','left');
+               $this->db->select('stock.quty,stock.guid')->from('stock')->where('item',$item)->where('price',$price);
+              
                $sql_order=  $this->db->get();
             
                 $stock_quty;
