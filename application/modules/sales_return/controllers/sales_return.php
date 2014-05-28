@@ -103,6 +103,7 @@ function save(){
      if($this->session->userdata['sales_return_per']['add']==1){
     
         $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
+        $this->form_validation->set_rules('sales_bill_id', $this->lang->line('sales_bill_id'), 'required');
         $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
 
@@ -116,6 +117,7 @@ function save(){
            
             if ( $this->form_validation->run() !== false ) {    
                 $pono= $this->input->post('order_number');
+                $bill= $this->input->post('sales_bill_id');
                 $podate= strtotime($this->input->post('order_date'));
                 $total_items=$this->input->post('index');
                 $remark=  $this->input->post('remark');
@@ -123,7 +125,7 @@ function save(){
                 $total_amount=  $this->input->post('total_amount');
   
      
-              $value=array('code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
+              $value=array('sales_bill_id'=>  $this->input->post('sales_bill_id'),'code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'sales_return');
           
                 $item=  $this->input->post('new_item_id');
@@ -186,7 +188,6 @@ function save(){
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
-                $total_amount=  $this->input->post('total_amount');
   
      
               $value=array('date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
@@ -196,17 +197,14 @@ function save(){
           
                 $item=  $this->input->post('items_id');
                 $quty=  $this->input->post('items_quty');
-                $cost=  $this->input->post('items_cost');
                 $sell=  $this->input->post('items_price');
                 $net=  $this->input->post('items_total');
-                $stock=  $this->input->post('items_stock');
                 $tax=  $this->input->post('items_tax');
-                $supplier=  $this->input->post('items_supplier');
                 for($i=0;$i<count($item);$i++){
                
                         $where=array('order_id'=>$guid,'item'=>$item[$i]);
                         $this->load->model('stock');
-                        $this->stock->update_sales_return($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$tax[$i],$net[$i],$supplier[$i],$stock[$i]);
+                        $this->stock->update_sales_return($guid,$item[$i],$quty[$i],$sell[$i],$tax[$i],$net[$i]);
                   
                 }
                 $delete=  $this->input->post('r_items');

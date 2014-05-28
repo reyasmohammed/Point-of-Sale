@@ -23,9 +23,9 @@ class Stock extends CI_Model{
         return $sql->num_rows();
     }
 
-    function update_sales_return($guid,$item,$quty,$cost,$sell,$tax,$net,$supplier,$stock){
+    function update_sales_return($guid,$item,$quty,$sell,$tax,$net){
          $this->db->where(array('sales_return_id'=>$guid,'item'=>$item));
-         $item_value=array('stocks_history_id'=>$stock,'tax'=>$tax,'quty'=>$quty,'supplier_id'=>$supplier,'cost'=>$cost,'sell'=>$sell,'amount'=>$net);
+         $item_value=array('tax'=>$tax,'quty'=>$quty,'sell'=>$sell,'amount'=>$net);
          $this->db->update('sales_return_x_items',$item_value);
          
     }
@@ -65,21 +65,19 @@ class Stock extends CI_Model{
      
      }
      function get_sales_return($guid){
-         $this->db->select('items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,stock.quty as item_limit,suppliers.guid as s_guid,suppliers.first_name as s_name,suppliers.company_name as c_name,suppliers.address1 as address,sales_return.*,sales_return_x_items.tax as order_tax,sales_return_x_items.item ,sales_return_x_items.quty ,sales_return_x_items.cost ,sales_return_x_items.sell ,sales_return_x_items.guid as o_i_guid ,sales_return_x_items.amount ,sales_return_x_items.stocks_history_id as stock_id,,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_return')->where('sales_return.guid',$guid);
-    
+         $this->db->select('sales_bill.invoice ,customers.first_name,sales_bill.date as sales_date,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,sales_return_x_items.quty as item_limit,sales_return.*,sales_return_x_items.tax as order_tax,sales_return_x_items.item ,sales_return_x_items.quty ,sales_return_x_items.sell ,sales_return_x_items.guid as o_i_guid ,sales_return_x_items.amount ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('sales_return')->where('sales_return.guid',$guid);
+         $this->db->join('sales_bill','sales_bill.guid=sales_return.sales_bill_id','left');
+         $this->db->join('customers','customers.guid=sales_bill.customer_id','left');
          $this->db->join('sales_return_x_items', "sales_return_x_items.sales_return_id = sales_return.guid ",'left');
-         $this->db->join('stocks_history', 'sales_return_x_items.stocks_history_id=stocks_history.guid','left');
-         $this->db->join('stock', 'stocks_history.stock_id=stock.guid','left');
          $this->db->join('items', "items.guid=sales_return_x_items.item AND sales_return_x_items.sales_return_id='".$guid."' ",'left');
          $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=sales_return_x_items.item  ",'left');
          $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=sales_return_x_items.item  ",'left');
-         $this->db->join('suppliers', "suppliers.guid=sales_return_x_items.supplier_id AND sales_return_x_items.sales_return_id='".$guid."'",'left');
-         $this->db->join('suppliers_x_items', "suppliers_x_items.supplier_id=sales_return_x_items.supplier_id AND suppliers_x_items.item_id=sales_return_x_items.item AND sales_return_x_items.sales_return_id='".$guid."'  ",'left');
-         $sql=  $this->db->get();
+          $sql=  $this->db->get();
          $data=array();
          foreach($sql->result_array() as $row){
 
           $row['date']=date('d-m-Y',$row['date']);
+          $row['sales_date']=date('d-m-Y',$row['sales_date']);
 
           $data[]=$row;
          }

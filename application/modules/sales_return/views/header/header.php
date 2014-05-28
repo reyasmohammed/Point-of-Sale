@@ -197,14 +197,15 @@ function sales_return_approve(guid){
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
                            
-                                $("#parsley_reg #sales_bill").select2('data', {id:data[0]['destination'],text: data[0]['store_name']});
-                                $("#parsley_reg #sales_bill_id").val(data[0]['destination']);
-                                $("#parsley_reg #branch_name").val(data[0]['store_name']);
+                                $("#parsley_reg #sales_bill").select2('data', {id:data[0]['invoice'],text: data[0]['invoice']});
+                                $("#parsley_reg #sales_bill_id").val(data[0]['sales_bill_id']);
+                                $("#parsley_reg #customer").val(data[0]['first_name']);
                                 $("#parsley_reg #sales_bill").select2('disable');
                                 $("#parsley_reg #sales_return_guid").val(guid);
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);
-                                $("#parsley_reg #order_number").val(data[0]['po_no']);
+                                $("#parsley_reg #order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_date").val(data[0]['date']);
+                                $("#parsley_reg #sales_date").val(data[0]['sales_date']);
                                 
                                 $("#parsley_reg #note").val(data[0]['note']);
                                 $("#parsley_reg #remark").val(data[0]['remark']);
@@ -234,6 +235,9 @@ function sales_return_approve(guid){
                                    
                                
                                     var  price=data[i]['sell'];
+                                    
+                                    
+                                    
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                   
@@ -258,9 +262,7 @@ function sales_return_approve(guid){
                                     sku,
                                     quty,
                                     price,
-                                    price,
                                     tax+' : '+tax_type+'('+type+')',
-                                    data[i]['s_name'],
                                    
                                     total,
                                     '<input type="hidden" name="index" id="index"><input type="hidden" id="'+o_i_guid+'">\n\
@@ -268,9 +270,6 @@ function sales_return_approve(guid){
                                 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
                                 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
-                                <input type="hidden" name="items_supplier[]" value="'+data[i]['s_guid']+'" id="items_supplier">\n\
-                                <input type="hidden" name="items_stock[]" value="'+data[i]['stock_id']+'" id="items_stock">\n\
-                                <input type="hidden" name="items_supplier_name[]" value="'+data[i]['s_name']+'" id="items_supplier_name">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
                                 <input type="hidden" name="items_price[]" value="'+price+'" id="items_price">\n\
