@@ -91,6 +91,33 @@ class Sales extends CI_Model{
          }
          return $data;
      }
+     function get_direct_sales_for_bill($guid){
+         $this->db->select('items.uom,items.no_of_unit,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,customers.guid as c_guid,customers.first_name as s_name,customers.company_name as c_name,customers.address as address,direct_sales.*,direct_sales_x_items.quty ,direct_sales_x_items.stock_id ,direct_sales_x_items.discount as item_discount,direct_sales_x_items.price,direct_sales_x_items.guid as o_i_guid ,items.guid as i_guid,items.name as items_name,items.code as i_code')->from('direct_sales')->where('direct_sales.guid',$guid);
+         $this->db->join('direct_sales_x_items', "direct_sales_x_items.direct_sales_id = direct_sales.guid  ",'left');
+         $this->db->join('items', "items.guid=direct_sales_x_items.item AND direct_sales_x_items.direct_sales_id='".$guid."' ",'left');
+         $this->db->join('taxes', "items.tax_id=taxes.guid AND items.guid=direct_sales_x_items.item  ",'left');
+         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid AND items.guid=direct_sales_x_items.item  ",'left');
+         $this->db->join('customers', "customers.guid=direct_sales.customer_id AND direct_sales_x_items.direct_sales_id='".$guid."'  ",'left');
+         $sql=  $this->db->get();
+         $data=array();
+         foreach($sql->result_array() as $row){
+             
+          
+       
+         
+          $row['date']=date('d-m-Y',$row['date']);
+         
+          $data[]=$row;
+         }
+         $this->db->select()->from('master_data')->where('key','sales_bill')->where('branch_id',  $this->session->userdata('branch_id'));
+         $mas=  $this->db->get();
+         foreach ($mas->result() as $row){
+             $prefix=$row->prefix;
+             $max=$row->max;
+         }
+         $data[]=$prefix.$max;
+         return $data;
+     }
      function delete_order_item($guid){      
           $this->db->where('guid',$guid);
           $this->db->delete('direct_sales_x_items');
@@ -125,6 +152,10 @@ class Sales extends CI_Model{
             }
             
      }
+     function bill_status($guid){
+         $this->db->where('guid',$guid);
+         $this->db->update('direct_sales',array('receipt_status'=>1));
+     }
      function add_direct_sales($guid,$item,$quty,$stock,$discount,$i){
          
          $this->db->select()->from('stock')->where('guid',$stock);
@@ -142,6 +173,18 @@ class Sales extends CI_Model{
          $this->db->where('guid',$guid);
          $this->db->update('direct_sales_x_items',array('quty'=>$quty));
      }
+      function payable_amount($customer_id,$sdn_guid,$guid){
+        $this->db->select('total_amt')->from('direct_sales')->where('guid',$sdn_guid);
+        $sql=  $this->db->get();
+        $amount;
+        foreach ($sql->result() as $row){
+            $amount=$row->total_amt;
+        }
+        $this->db->insert('customer_payable',array('customer_id'=>$customer_id,'invoice_id'=>$guid,'amount'=>$amount,'branch_id'=>  $this->session->userdata['branch_id']));
+        $id=  $this->db->insert_id();
+        $this->db->where('id',$id);
+        $this->db->update('customer_payable',array('guid'=>  md5($customer_id.$guid.$id."customer_payable")));
+    }
     
 }
 ?>

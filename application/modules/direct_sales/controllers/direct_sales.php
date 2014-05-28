@@ -17,7 +17,7 @@ class Direct_sales extends MX_Controller{
     }
     // purchase order data table
     function data_table(){
-        $aColumns = array( 'guid','code','code','c_name','s_name','date','total_items','total_amt','active_status','order_status' );	
+        $aColumns = array( 'guid','code','code','c_name','s_name','date','total_items','total_amt','active_status','order_status','receipt_status' );	
 	$start = "";
 			$end="";
 		
@@ -247,6 +247,43 @@ function save(){
         
         
     }
+    function save_sales_bill(){
+            if(isset($_POST['direct_sales_guid'])){
+      if($this->session->userdata['direct_sales_per']['edit']==1){
+        $this->form_validation->set_rules('customers_guid',$this->lang->line('customers_guid'), 'required');
+        $this->form_validation->set_rules('sales_bill_date', $this->lang->line('order_date'), 'required'); 
+        $this->form_validation->set_rules('direct_sales_guid', $this->lang->line('direct_sales_guid'), 'required'); 
+        $this->form_validation->set_rules('sales_bill_number', $this->lang->line('sales_bill_number'), 'required'); 
+        
+        
+            if ( $this->form_validation->run() !== false ) {    
+                $customer=  $this->input->post('customers_guid');
+                $direct_sales_guid=  $this->input->post('direct_sales_guid');
+             
+                $date= strtotime($this->input->post('sales_bill_date'));
+                $bill_no= strtotime($this->input->post('sales_bill_number'));
+                $remark=  $this->input->post('remark');
+                $note=  $this->input->post('note');
+               
+                $value=array('customer_id'=>$customer,'invoice'=>$bill_no,'date'=>$date,'direct_sales_id'=>$direct_sales_guid,'remark'=>$remark,'note'=>$note);
+               $invoice= $this->posnic->posnic_add_record($value,'sales_bill');
+                $this->load->model('sales');
+                $this->sales->bill_status($direct_sales_guid);
+            
+                 $this->posnic->posnic_master_increment_max('sales_bill')  ;
+                 $this->sales->payable_amount($customer,$direct_sales_guid,$invoice)   ;
+                 echo 'TRUE';
+    
+                }else{
+                   echo 'FALSE';
+                }
+        }else{
+                   echo 'Noop';
+                }
+        }
+        
+        
+    }
         
 /*
  * get customer details for direct sales
@@ -291,6 +328,13 @@ function  get_direct_sales($guid){
     echo json_encode($data);
     }
 }
+function  get_direct_sales_for_bill($guid){
+    if($this->session->userdata['direct_sales_per']['edit']==1){
+    $this->load->model('sales');
+    $data=  $this->sales->get_direct_sales_for_bill($guid);
+    echo json_encode($data);
+    }
+}
 
 function direct_sales_approve(){
      if($this->session->userdata['direct_sales_per']['approve']==1){
@@ -309,7 +353,10 @@ function order_number(){
 /*
  * search items to purchase order with or like 
  *  */
-
+function sales_bill_number(){
+       $data[]= $this->posnic->posnic_master_max('sales_bill')    ;
+       echo json_encode($data);
+}
 function search_items(){
     $search= $this->input->post('term');
     $guid= $this->input->post('suppler');
