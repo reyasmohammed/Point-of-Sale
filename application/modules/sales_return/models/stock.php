@@ -40,29 +40,60 @@ class Stock extends CI_Model{
     function search_items($search,$bill){
          $data=array();
        
-        $this->db->select('sales_order_x_items.delivered_quty as quty,sales_order_x_items.price,items.uom,items.no_of_unit,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,')->from('sales_bill')->where('sales_bill.guid',$bill);
+//        $this->db->select('sales_order_x_items.delivered_quty as quty,sales_order_x_items.price,items.uom,items.no_of_unit,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id,')->from('sales_bill')->where('sales_bill.guid',$bill);
+//        $this->db->join('sales_order_x_items', 'sales_order_x_items.sales_order_id=sales_bill.so AND sales_bill.direct_sales_id="non"','right');
+//        $this->db->join('direct_sales_x_items', 'direct_sales_x_items.direct_sales_id=sales_bill.direct_sales_id AND sales_bill.so="non" AND sales_bill.sdn="non"','right');
+//        $this->db->join('items', 'items.guid=sales_order_x_items.item OR items.guid=direct_sales_x_items.item','left');
+//        $this->db->join('items_category', 'items.category_id=items_category.guid','left');
+//        $this->db->join('brands', 'items.brand_id=brands.guid','left');
+//        $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
+//        $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
+//        $this->db->join('taxes', "items.tax_id=taxes.guid  ",'left');
+//        $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid ",'left');
+//        $like=array('items.guid'=>1,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search,'items.name'=>$search);
+//            $this->db->limit($this->session->userdata['data_limit']);
+//            $this->db->or_like($like);   
+           //$this->db->group_by('items.code');
+         
+         
+        $this->db->select('sales_bill.invoice,direct_sales_x_items.price as ds_price,direct_sales_x_items.quty as ds_quty,sales_order_x_items.price as so_price,sales_order_x_items.quty as so_quty,direct_sales_delivery_x_items.price as dsd_price,direct_sales_delivery_x_items.quty as dsd_quty,direct_sales_x_items.item as ds_item,sales_order_x_items.item as so_item,items.code,items.uom,items.no_of_unit,items_setting.sales_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id')->from('sales_bill')->where('sales_bill.guid',$bill)->where('sales_bill.branch_id',  $this->session->userdata('branch_id'));
+        $this->db->join('direct_sales_x_items', 'direct_sales_x_items.direct_sales_id=sales_bill.direct_sales_id','left');
+        $this->db->join('direct_sales_delivery_x_items', 'direct_sales_delivery_x_items.direct_sales_delivery_id=sales_bill.sdn AND sales_bill.so="non" AND sales_bill.direct_sales_id="non" ','left');
         $this->db->join('sales_order_x_items', 'sales_order_x_items.sales_order_id=sales_bill.so','left');
-        $this->db->join('items', 'items.guid=sales_order_x_items.item','left');
+        $this->db->join('items', 'items.guid=sales_order_x_items.item OR items.guid=direct_sales_x_items.item OR items.guid=direct_sales_delivery_x_items.item','left');
         $this->db->join('items_category', 'items.category_id=items_category.guid','left');
         $this->db->join('brands', 'items.brand_id=brands.guid','left');
         $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
         $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
         $this->db->join('taxes', "items.tax_id=taxes.guid  ",'left');
         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid ",'left');
-        $like=array('items.guid'=>1,'items.code'=>$search,'items.barcode'=>$search,'items_category.category_name'=>$search,'brands.name'=>$search,'items_department.department_name'=>$search,'items.name'=>$search);
-            $this->db->limit($this->session->userdata['data_limit']);
-            $this->db->or_like($like);   
-           // $this->db->group_by('stocks_history.cost');
-            $sql=$this->db->get();
+           $sql=$this->db->get();
            
-            foreach ($sql->result() as $row){
-             
+            foreach ($sql->result_array() as $row){
+        if($row['ds_price']!=""){
+            $row['price']=$row['ds_price'];
+        }
+        if($row['ds_quty']!=""){
+            $row['quty']=$row['ds_quty'];
+        }
+        if($row['so_price']!=""){
+            $row['price']=$row['so_price'];
+        }
+        if($row['so_quty']!=""){
+            $row['quty']=$row['so_quty'];
+        }
+        if($row['dsd_price']!=""){
+            $row['price']=$row['dsd_price'];
+        }
+        if($row['dsd_quty']!=""){
+            $row['quty']=$row['dsd_quty'];
+        }
                 $data[]=$row;
+             
             }
             
             
             
-         
          return $data;
      
      }
