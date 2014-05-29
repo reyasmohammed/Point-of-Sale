@@ -219,6 +219,39 @@
                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
                     <?php }?>
     }
+    function update_sales_return(){
+         <?php if($this->session->userdata['customer_payment_per']['edit']==1){ ?>
+                   if($('#parsley_ext').valid()){
+                       var oTable = $('#selected_item_table').dataTable();
+                    
+                var inputs = $('#parsley_ext').serialize();
+                      $.ajax ({
+                            url: "<?php echo base_url('index.php/customer_payment/update_sales_return')?>",
+                            data: inputs,
+                            type:'POST',
+                            complete: function(response) {
+                                  if(response['responseText']==1){
+                                      $.bootstrapGrowl('<?php echo $this->lang->line('customer_payment').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                       $("#dt_table_tools").dataTable().fnDraw();
+                                       $("#parsley_ext").trigger('reset');
+                                       posnic_customer_payment_lists();
+                                       
+                                    }else  if(response['responseText']==10){
+                                           $.bootstrapGrowl(' <?php echo $this->lang->line('invalid_payment_entry'); ?>', { type: "error" });                           
+                                    }else  if(response['responseText']==0){
+                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                    }else{
+                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer_payment');?>', { type: "error" });                           
+                                    }
+                       }
+                });
+                   
+                    }else{
+                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?php }else{ ?>
+                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
+                    <?php }?>
+    }
     
      $(document).ready( function () {
           function format_invoice(sup) {
@@ -282,7 +315,7 @@
             // sales return
           function format_return(sup) {
             if (!sup.id) return sup.text;
-    return  "<p >"+sup.text+"    <br>"+sup.name+" "+sup.company+"</p> ";
+    return  "<p >"+sup.text+"    <br>"+sup.invoice+" "+sup.name+" "+sup.company+"</p> ";
             }
             $('#parsley_ext #sales_return').change(function() {
            $('#parsley_ext #company').val($('#parsley_ext #sales_return').select2('data').company);
@@ -293,6 +326,7 @@
            
            $('#parsley_ext #sales_return_guid').val($('#parsley_ext #sales_return').select2('data').id);
            $('#parsley_ext #invoice_id').val($('#parsley_ext #sales_return').select2('data').invoice_id);
+           $('#parsley_ext #sales_bill').val($('#parsley_ext #sales_return').select2('data').invoice);
            $('#parsley_ext #customer_id').val($('#parsley_ext #sales_return').select2('data').customer);
             });
           $('#parsley_ext #sales_return').select2({
@@ -394,7 +428,7 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
 function posnic_add_debit(){
 $("#customer_payment_select_2").show('slow');
 $('#customer_payment_order').hide();
-$("#parsley_reg #sales_return").select2('enable');
+$("#parsley_ext #sales_return").select2('enable');
 $('#parsley_ext #update_button').hide();
 $('#parsley_ext #save_button').show();
 $('#parsley_ext #update_clear').hide();
@@ -426,7 +460,7 @@ $("#parsley_ext #first_name").select2('data', {id:'',text: 'Search Supplier'});
      
       $('#delete').attr("disabled", "disabled");
       $('#posnic_customer_debit_payment').attr("disabled", "disabled");
-      $('#posnic_add_customer_payment').removeattr("disabled");
+      $('#posnic_add_customer_payment').removeAttr("disabled");
       $('#customer_payment_lists').removeAttr("disabled");
      
          window.setTimeout(function ()
@@ -748,14 +782,14 @@ function clear_update_payment(){
                                                </div>
                                                <div class="col col-sm-4" >
                                                     <div class="form_sep">
-                                                            <label for="company" ><?php echo $this->lang->line('company') ?></label>													
-                                                                     <?php $last_name=array('name'=>'last_name',
+                                                            <label for="sales_bill" ><?php echo $this->lang->line('sales_bill') ?></label>													
+                                                                     <?php $sales_bill=array('name'=>'sales_bill',
                                                                                         'class'=>'required  form-control',
-                                                                                        'id'=>'company',
+                                                                                        'id'=>'sales_bill',
                                                                                         'disabled'=>'disabled',
-                                                                                        'value'=>set_value('company'));
-                                                                         echo form_input($last_name)?>
-                                                    </div><input type="hidden" value="" name='supplier_guid' id='supplier_guid'>
+                                                                                        'value'=>set_value('sales_bill'));
+                                                                         echo form_input($sales_bill)?>
+                                                    </div>
                                                </div>
                                               
                                                <div class="col col-sm-4" >
@@ -879,7 +913,7 @@ function clear_update_payment(){
                                                   </div>
                                               <div class="form_sep " id="update_button" >
                                                        <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:update_order()" class="btn btn-default" style="margin-top:-12px"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
+                                                       <a href="javascript:update_sales_return()" class="btn btn-default" style="margin-top:-12px"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
                                                   </div>
                                                </div>
                                           <div class="col col-sm-6"  >

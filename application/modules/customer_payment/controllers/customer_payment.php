@@ -191,6 +191,44 @@ function save_sales_return_payment(){
         }
           
    }
+    function update_sales_return(){
+        If($this->session->userdata['customer_payment_per']['add']==1){
+            $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
+            $this->form_validation->set_rules('payment_id',$this->lang->line('payment_id'), 'required');
+            $this->form_validation->set_rules('sales_return_guid',$this->lang->line('sales_return_guid'), 'required');
+            $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
+            $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        //    $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
+            $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+                if ( $this->form_validation->run() !== false ) {    
+
+                    $date=strtotime($this->input->post('payment_date'));
+                    $code= $this->input->post('payment_code');
+                    $amount=  $this->input->post('amount');
+                    $balance_amount=  $this->input->post('balance_amount');
+                    $memo=  $this->input->post('memo');
+                   
+                    $return_id=  $this->input->post('sales_return_guid');
+                    $this->load->model('payment');
+                    $guid=  $this->input->post('payment_id');
+                    if($amount>$balance_amount){
+                        echo 10;
+                    }else{
+                            if($this->payment->update_debit_payment($guid,$amount,$date,$memo,$code,$return_id)){
+                        
+                       echo 1;
+                    }else{
+                        echo 10;
+                    }
+                }
+            }else{
+                 echo 0;
+            }
+        }else{
+            echo 'Noop';
+        }
+          
+   }
     function delete(){
        if($this->session->userdata['goods_receiving_note_per']['delete']==1){
             if($this->input->post('guid')){
@@ -245,6 +283,17 @@ function save_sales_return_payment(){
         $data=  $this->payment->get_payment_details($guid);
         echo json_encode($data); // encode data array to json
     }
+    /* function end*/
+    /*
+    get customer debit payment     
+        function start     */
+    function get_customer_debit_payment($guid){
+        $this->load->model('payment');
+        $data=  $this->payment->get_customer_debit_payment($guid);
+        echo json_encode($data); // encode data array to json
+    }
+    
+    
     /* function end*/
     function language($lang){
        $lang= $this->lang->load($lang);
