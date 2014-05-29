@@ -121,25 +121,19 @@ class Payment extends CI_Model{
     /* update payment
      * function start */
     function update_payment($guid,$payment,$amount,$date,$memo,$code){
-        $this->db->select()->from('payment')->where('guid',$guid);
+        $this->db->select('customer_payable.amount as cp_amount,customer_payable.paid_amount,payment.amount')->from('payment')->where('payment.guid',$guid);
+        $this->db->join('customer_payable','customer_payable.guid=payment.payable_id','left');
         $pay=  $this->db->get();
         $old;
         foreach ($pay->result() as $row){
             $old=$row->amount;
-        }
-      
-        $this->db->select()->from('customer_payable')->where('guid',$payment);
-        $sql=  $this->db->get();
-        $total;
-        $paid;
-        foreach ($sql->result() as $row){
-            $total=$row->amount; // get total amount
+            $total=$row->cp_amount; // get total amount
             $paid=$row->paid_amount; // get paid amount
         }
         $balance=$total+$paid-$old;
        
         if($amount > $balance){ // check wheather payment amount is valid or not, if it is invalid return false
-            echo 'ji';
+         
           return FALSE; 
         } 
         $payment_status=0;
@@ -149,7 +143,30 @@ class Payment extends CI_Model{
         $this->db->where('guid',$payment);
         $this->db->update('customer_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid-$old)); // update paid amount to supplier payable
         $this->db->where('guid',$guid);
-        $this->db->update('payment',array('amount'=>$amount));
+        $this->db->update('payment',array('memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,));
+        return TRUE;
+    }
+    function update_debit_payment($guid,$amount,$date,$memo,$code,$return_id){
+        $this->db->select('sales_return.total_amount,sales_return.paid_amount,payment.amount')->from('payment')->where('payment.guid',$guid);
+        $this->db->join('sales_return','sales_return.guid=payment.return_id','left');
+        $pay=  $this->db->get();
+        $old;
+        foreach ($pay->result() as $row){
+            $old=$row->amount;
+            $total=$row->total_amount; // get total amount
+            $paid=$row->paid_amount; // get paid amount
+        }
+       
+       
+       
+        $payment_status=0;
+        if($total==($amount+$paid)){
+            $payment_status=1;
+        }
+        $this->db->where('guid',$return_id);
+        $this->db->update('sales_return',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid-$old)); // update paid amount to supplier payable
+        $this->db->where('guid',$guid);
+        $this->db->update('payment',array('memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,));
         return TRUE;
     }
     /* function end*/
@@ -161,6 +178,24 @@ class Payment extends CI_Model{
         $this->db->join('customer_payable','customer_payable.guid=payment.payable_id');
         $this->db->join('sales_bill', 'sales_bill.guid=customer_payable.invoice_id ','left'); 
         $this->db->join('customers', 'customers.guid=payment.customer_id ','left'); 
+        $sql=  $this->db->get();
+        $data=array();
+        foreach ($sql->result_array() as $row){
+            $row['payment_date']=date('d-m-Y',$row['payment_date']); // converet date  form strtotime formt  to date
+            $data[]=$row; 
+        }
+        return $data;
+    }
+    /*
+     *  fucntion end */ 
+    /* function starts
+     */
+    function get_customer_debit_payment($guid){
+        $this->db->select('sales_return.code as sales_return_code,sales_bill.invoice,sales_return.paid_amount,sales_return.total_amount as total,payment.*,customers.first_name as name,customers.company_name as company,customers.address as address')->from('payment')->where('payment.guid',$guid);
+     
+        $this->db->join('sales_return', 'sales_return.guid=payment.return_id ','left'); 
+        $this->db->join('sales_bill', 'sales_bill.guid=sales_return.sales_bill_id ','left'); 
+        $this->db->join('customers', 'customers.guid=sales_bill.customer_id ','left'); 
         $sql=  $this->db->get();
         $data=array();
         foreach ($sql->result_array() as $row){
