@@ -17,7 +17,7 @@ class Customer_payment extends MX_Controller{
     }
     // goods Receiving Note data table
     function data_table(){
-        $aColumns = array( 'guid','code','code','p_invoice','first_name','company_name','payment_date','amount','guid' );	
+        $aColumns = array( 'guid','code','code','p_invoice','first_name','company_name','payment_date','amount','guid','return_id' );	
 	$start = "";
 	$end="";
         if ( $this->input->get_post('iDisplayLength') != '-1' )	{
@@ -89,6 +89,7 @@ function save(){
         $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
         $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
        $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+       $this->form_validation->set_rules('invoice_id', $this->lang->line('invoice_id'), 'required');
         //$this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
       $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
             if ( $this->form_validation->run() !== false ) {    
@@ -99,12 +100,13 @@ function save(){
                 $balance_amount=  $this->input->post('balance_amount');
                 $memo=  $this->input->post('memo');
                 $payment=  $this->input->post('payment_guid');
+                $invoice_id=  $this->input->post('invoice_id');
                 $this->load->model('payment');
                 if($amount>$balance_amount){
                     echo 10;
                 }else{
                     
-                        if($this->payment->save_payment($payment,$amount,$date,$memo,$code)){
+                        if($this->payment->save_payment($payment,$amount,$date,$memo,$code,$invoice_id)){
                         $this->posnic->posnic_master_increment_max('customer_payment')  ;
                        echo 1;
                    }else{
@@ -139,8 +141,7 @@ function save_sales_return_payment(){
                 if($amount > $balance_amount){
                   echo 10;
                 }else{
-                
-                        if($this->payment->sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id)){
+                   if($this->payment->sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id)){
                         $this->posnic->posnic_master_increment_max('customer_payment')  ;
                        echo 1;
                    }else{

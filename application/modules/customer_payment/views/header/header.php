@@ -32,7 +32,21 @@
 								
 							},
         
-        null, null, null,  null,  null,  null,  
+        null, null, null,  null,  null,  null,  {	"sName": "ID",
+                   						"bSearchable": false,
+                   						"bSortable": false,
+                                                                
+                   						"fnRender": function (oObj) {
+                   							//if(oObj.aData[8]==0)
+                                                                      if(oObj.aData[9]!=""){
+                                                                          return "<?php echo $this->lang->line('debit') ?>";
+                                                                      }else{
+                                                                          return "<?php echo $this->lang->line('credit') ?>";
+                                                                      }
+								},
+								
+								
+							},
 
  						{	"sName": "ID1",
                    						"bSearchable": false,
@@ -124,6 +138,7 @@
                                 
                                 $('#delete').attr("disabled", "disabled");
                                 $('#posnic_add_customer_payment').attr("disabled", "disabled");
+                                $('#posnic_customer_debit_payment').attr("disabled", "disabled");
                                 $('#active').attr("disabled", "disabled");
                                 $('#deactive').attr("disabled", "disabled");
                                 $('#customer_payment_lists').removeAttr("disabled");
