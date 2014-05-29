@@ -105,13 +105,18 @@ class Stock extends CI_Model{
           $this->db->delete('sales_return_x_items');
      }
      function sales_return_approve($guid){
-         $this->db->select()->from('sales_return_x_items')->where('sales_return_id',$guid);
+         $this->db->select('items.no_of_unit,sales_return_x_items.*')->from('sales_return_x_items')->where('sales_return_x_items.sales_return_id',$guid);
+         $this->db->join('items','items.guid=sales_return_x_items.item','left');
          $sql=  $this->db->get();
          foreach ($sql->result() as $row){
              $price=$row->sell;
              $quty=$row->quty;
              $item=$row->item;
-               $this->db->select('stock.quty,stock.guid')->from('stock')->where('item',$item)->where('price',$price);
+             $no_of_unit=$row->no_of_unit;
+             if($no_of_unit==0){
+                 $no_of_unit=1;
+             }
+               $this->db->select('stock.quty,stock.guid')->from('stock')->where('item',$item)->where('price',$price*$no_of_unit);
               
                $sql_order=  $this->db->get();
             
