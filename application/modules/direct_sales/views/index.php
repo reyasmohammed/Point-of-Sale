@@ -390,6 +390,18 @@
     
 function posnic_add_new(){
 refresh_items_table();
+  $('#sales_items_list').show();
+        $('#sales_buttons').show();
+        $('#address_div').show();
+        $('#sales_bill_buttons').hide();
+        $('#sales_bill_number_div').hide();
+        $('#round_off_amount').removeAttr("disabled");
+        $('#order_date').removeAttr("disabled");
+        $('#id_discount').removeAttr("disabled");
+        $('#freight').removeAttr("disabled");
+        $('#discount_amount').removeAttr("disabled");
+
+
 $('#update_button').hide();
 $('#save_button').show();
 $('#update_clear').hide();

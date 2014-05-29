@@ -184,7 +184,16 @@ function direct_sales_approve(guid){
 }
           
            function edit_function(guid){
-           
+                 $('#sales_items_list').show();
+                 $('#sales_buttons').show();
+                 $('#address_div').show();
+                 $('#sales_bill_buttons').hide();
+                 $('#sales_bill_number_div').hide();
+                 $('#round_off_amount').removeAttr("disabled");
+                 $('#order_date').removeAttr("disabled");
+                 $('#id_discount').removeAttr("disabled");
+                 $('#freight').removeAttr("disabled");
+                 $('#discount_amount').removeAttr("disabled");
         
                         <?php if($this->session->userdata['direct_sales_per']['edit']==1){ ?>
                                 
