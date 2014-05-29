@@ -118,6 +118,42 @@ function save(){
                    echo 'Noop';
                 }
 }
+function save_sales_return_payment(){      
+     if($this->session->userdata['customer_payment_per']['add']==1){
+        $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
+        $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
+       $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        //$this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
+      $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+            if ( $this->form_validation->run() !== false ) {    
+             
+                $date=strtotime($this->input->post('payment_date'));
+                $code= $this->input->post('payment_code');
+                $amount=  $this->input->post('amount');
+                $balance_amount=  $this->input->post('balance_amount');
+                $memo=  $this->input->post('memo');
+                $customer=  $this->input->post('customer_id');
+                 $return_id=  $this->input->post('sales_return_guid');
+                $invoice_id=  $this->input->post('invoice_id');
+                $this->load->model('payment');
+                if($amount > $balance_amount){
+                  echo 10;
+                }else{
+                
+                        if($this->payment->sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id)){
+                        $this->posnic->posnic_master_increment_max('customer_payment')  ;
+                       echo 1;
+                   }else{
+                       echo 10;
+                   }
+                }
+             }else{
+                  echo 0;
+             }
+    }else{
+                   echo 'Noop';
+                }
+}
     function update(){
         If($this->session->userdata['customer_payment_per']['add']==1){
             $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');

@@ -6,8 +6,8 @@ class Payment extends CI_Model{
     function get($end,$start,$like,$branch){
                 $this->db->select('sales_bill.invoice as p_invoice,payment.*,customers.first_name ,customers.company_name ');
                 $this->db->from('payment')->where('payment.branch_id',$branch)->where('payment.type','credit')->where('payment.delete_status',0);
-                $this->db->join('customer_payable', 'customer_payable.guid=payment.payable_id ','left');  
-                $this->db->join('sales_bill', 'sales_bill.guid=customer_payable.invoice_id','left');
+           
+                $this->db->join('sales_bill', 'sales_bill.guid=payment.invoice_id','left');
                 $this->db->join('customers', 'customers.guid=payment.customer_id','left');
                 $this->db->limit($end,$start); 
                 $this->db->or_like($like);     
@@ -49,7 +49,7 @@ class Payment extends CI_Model{
     /* get purchase return auto suggestion
     function start      */
     function  search_sales_return($like){
-        $this->db->select('sales_bill.invoice,customer_payable.guid as p_guid,customer_payable.invoice_id,customer_payable.amount, customer_payable.paid_amount, sales_return.*, customers.first_name as name,customers.company_name as company,customers.address as address')->from('sales_return')->where('sales_return.branch_id',  $this->session->userdata['branch_id']);
+        $this->db->select('customer_payable.invoice_id,sales_bill.invoice, sales_return.*, customers.guid as customer_id,customers.first_name as name,customers.company_name as company,customers.address as address')->from('sales_return')->where('sales_return.branch_id',  $this->session->userdata['branch_id']);
         $this->db->join('sales_bill', 'sales_bill.guid=sales_return.sales_bill_id ','left');  
         $this->db->join('customers', 'customers.guid=sales_bill.customer_id ','left');  
         $this->db->join('customer_payable', 'customers.guid=sales_bill.customer_id AND customer_payable.invoice_id=sales_bill.guid','left');  
@@ -92,6 +92,29 @@ class Payment extends CI_Model{
         $this->db->where('id',$id);
         $this->db->update('payment',array('guid'=>md5($id.$supplier.$payment)));
          return TRUE; 
+    }
+    /* function end*/
+    /*
+    save sales rerturn payment    
+     * function start */
+    function sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id){
+        $this->db->select()->from('sales_return')->where('guid',$return_id);
+        $sql=  $this->db->get();
+        $paid_amount=0;
+        foreach ($sql->result() as $row){
+            $paid_amount=  $row->paid_amount;
+            
+        }
+        $this->db->where('guid',$return_id);
+        $this->db->update('sales_return',array('paid_amount'=>$amount+$paid_amount));
+        
+        
+        $data=array('invoice_id'=>$invoice_id,'return_id'=>$return_id,'code'=>$code,'type'=>'credit','customer_id'=>$customer,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
+        $this->db->insert('payment',$data);
+         $id=  $this->db->insert_id();
+        $this->db->where('id',$id);
+        $this->db->update('payment',array('guid'=>md5($id.$customer.$invoice_id)));
+          return TRUE; 
     }
     /*
      *  fucntion end */ 
