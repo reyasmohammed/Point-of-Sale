@@ -647,4 +647,7 @@ $lang['credit_days']='Credit Days';
     $lang['sales_bill_number']='S B Number';
     $lang['sales_bill_date']='Sales Bill Date';
     $lang['avilable_stock_is']='Avilable Stock Is';
+    $lang['type']='Type';
+    $lang['debit']='Debit';
+    $lang['credit']='Credit';
 ?>

@@ -226,13 +226,14 @@
     return  "<p >"+sup.text+"    <br>"+sup.name+" "+sup.company+"</p> ";
             }
             $('#parsley_reg #sales_bill').change(function() {
-           $('#company').val($('#parsley_reg #sales_bill').select2('data').company);
-           $('#customer').val($('#parsley_reg #sales_bill').select2('data').name);
-           $('#total').val($('#parsley_reg #sales_bill').select2('data').amount);
-           $('#paid_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
-           $('#balance_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
+           $('#parsley_reg #company').val($('#parsley_reg #sales_bill').select2('data').company);
+           $('#parsley_reg #customer').val($('#parsley_reg #sales_bill').select2('data').name);
+           $('#parsley_reg #total').val($('#parsley_reg #sales_bill').select2('data').amount);
+           $('#parsley_reg #paid_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
+           $('#parsley_reg #balance_amount').val(parseFloat($('#parsley_reg #sales_bill').select2('data').amount-$('#parsley_reg #sales_bill').select2('data').paid_amount));
            
-           $('#payment_guid').val($('#parsley_reg #sales_bill').select2('data').payment);
+           $('#parsley_reg #invoice_id').val($('#parsley_reg #sales_bill').select2('data').id);
+           $('#parsley_reg #payment_guid').val($('#parsley_reg #sales_bill').select2('data').payment);
             });
           $('#parsley_reg #sales_bill').select2({
               dropdownCssClass : 'supplier_select',
@@ -372,9 +373,13 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
             
             
       $("#user_list").hide();
-    $('#credit_payment').show('slow');
+      $("#debit_payament").hide();
+      $('#credit_payment').show('slow');
+    
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_customer_payment').attr("disabled", "disabled");
+     
+      $('#posnic_customer_debit_payment').removeAttr("disabled");
       $('#customer_payment_lists').removeAttr("disabled");
      
          window.setTimeout(function ()
@@ -416,9 +421,12 @@ $("#parsley_ext #first_name").select2('data', {id:'',text: 'Search Supplier'});
             
             
       $("#user_list").hide();
-    $('#debit_payament').show('slow');
+      $('#credit_payment').hide();
+      $('#debit_payament').show('slow');
+     
       $('#delete').attr("disabled", "disabled");
-      $('#posnic_add_customer_payment').attr("disabled", "disabled");
+      $('#posnic_customer_debit_payment').attr("disabled", "disabled");
+      $('#posnic_add_customer_payment').removeattr("disabled");
       $('#customer_payment_lists').removeAttr("disabled");
      
          window.setTimeout(function ()
@@ -436,6 +444,7 @@ function posnic_customer_payment_lists(){
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
       $('#posnic_add_customer_payment').removeAttr("disabled");
+      $('#posnic_customer_debit_payment').removeAttr("disabled");
       $('#customer_payment_lists').attr("disabled",'disabled');
 }
 function clear_add_payment(){
@@ -454,7 +463,7 @@ function clear_update_payment(){
             <div class="row">
                 <div class="col col-lg-7">
                         <a href="javascript:posnic_add_new()" id="posnic_add_customer_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('credit_payment') ?></a>  
-                        <a href="javascript:posnic_add_debit()" id="posnic_add_customer_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('debit_payment') ?></a>  
+                        <a href="javascript:posnic_add_debit()" id="posnic_customer_debit_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('debit_payment') ?></a>  
                         <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
                         <a href="javascript:posnic_customer_payment_lists()" class="btn btn-default" id="customer_payment_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('customer_payment') ?></a>
                         
@@ -487,6 +496,7 @@ function clear_update_payment(){
                                              <th><?php echo $this->lang->line('company') ?></th>
                                           <th><?php echo $this->lang->line('order_date') ?></th>
                                           <th><?php echo $this->lang->line('total_amount') ?></th>
+                                          <th><?php echo $this->lang->line('type') ?></th>
                                           <th style="width: 120px"><?php echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
@@ -535,6 +545,7 @@ function clear_update_payment(){
                                                                                     'value'=>set_value('sales_bill'));
                                                                      echo form_input($first_name)?>
                                                         <input type="hidden" id="payment_guid" name="payment_guid">
+                                                        <input type="hidden" id="invoice_id" name="invoice_id">
                                                   </div>
                                                   
                                                </div>

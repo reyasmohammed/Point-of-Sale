@@ -63,7 +63,7 @@ class Payment extends CI_Model{
     /*
      * add new supplier payment
      * function start     */
-    function save_payment($payment,$amount,$date,$memo,$code){
+    function save_payment($payment,$amount,$date,$memo,$code,$invoice_id){
         $this->db->select()->from('customer_payable')->where('guid',$payment);
         $sql=  $this->db->get();
         $total;
@@ -86,7 +86,7 @@ class Payment extends CI_Model{
         $this->db->where('guid',$payment);
         $this->db->update('customer_payable',array('payment_status'=>$payment_status,'paid_amount'=>$amount+$paid)); // update paid amount to supplier payable
         
-        $data=array('code'=>$code,'type'=>'credit','payable_id'=>$payment,'customer_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
+        $data=array('invoice_id'=>$invoice_id,'code'=>$code,'type'=>'credit','payable_id'=>$payment,'customer_id'=>$supplier,'memo'=>$memo,'amount'=>$amount,'payment_date'=>$date,'added_date'=>strtotime(date("Y/m/d")),'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
         $this->db->insert('payment',$data);
         $id=  $this->db->insert_id();
         $this->db->where('id',$id);
