@@ -488,7 +488,12 @@ function clear_add_payment(){
 function clear_update_payment(){
       $("#parsley_reg").trigger('reset');
       
-      edit_function($('#payment_id').val());
+      edit_function($('#parsley_reg #payment_id').val());
+}
+function clear_debit_payment(){
+    var payment=$('#parsley_ext #payment_id').val();
+    $("#parsley_ext").trigger('reset');
+    edit_debit_function(payment);
 }
 
 </script>
@@ -923,7 +928,7 @@ function clear_update_payment(){
                                                   </div>
                                               <div class="form_sep " id="update_clear" style="margin-top:0 !important">
                                                        <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_update_payment()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                        <a href="javascript:clear_debit_payment()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
                                                   </div>
                                                </div>
                                                </div>
