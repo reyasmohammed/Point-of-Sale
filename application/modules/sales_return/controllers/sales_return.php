@@ -12,6 +12,10 @@ class Sales_return extends MX_Controller{
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
+//        $this->load->model('stock');
+//        $this->stock->search_items('','62245c40fad9bd6a1acead37243d0b02');
+//         $this->stock->search_items('','667a901118c7eba0cb686b6dbbca1b48');
+//         $this->stock->search_items('','fc157016310c6314cc8b3b69c34d730e');
     }
     // purchase order data table
     function data_table(){
