@@ -79,8 +79,8 @@
           }
     }
     function invoice_payment(){
-        var balance=parseFloat($('#balance_amount').val());
-        var amount=parseFloat($('#amount').val());
+        var balance=parseFloat($('#parsley_reg #balance_amount').val());
+        var amount=parseFloat($('#parsley_reg #amount').val());
           if(isNaN(balance)){
               balance=0;
           }
@@ -88,9 +88,23 @@
               amount=0;
           }
           if(amount > balance){
-              $('#amount').val(balance);
+              $('#parsley_reg #amount').val(balance);
           }
-          $('#balance').val(balance-$('#amount').val());
+          $('#parsley_reg #balance').val(balance-$('#parsley_reg #amount').val());
+    }
+    function sales_return_payment(){
+        var balance=parseFloat($('#parsley_ext #balance_amount').val());
+        var amount=parseFloat($('#parsley_ext #amount').val());
+          if(isNaN(balance)){
+              balance=0;
+          }
+          if(isNaN(amount)){
+              amount=0;
+          }
+          if(amount > balance){
+              $('#parsley_ext #amount').val(balance);
+          }
+          $('#parsley_ext #balance').val(balance-$('#parsley_ext #amount').val());
     }
     function change_focus(e){
          var unicode=e.charCode? e.charCode : e.keyCode
@@ -114,6 +128,39 @@
                 var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
                             url: "<?php echo base_url('index.php/customer_payment/save')?>",
+                            data: inputs,
+                            type:'POST',
+                            complete: function(response) {
+                                if(response['responseText']==1){
+                                      $.bootstrapGrowl('<?php echo $this->lang->line('customer_payment').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                       $("#dt_table_tools").dataTable().fnDraw();
+                                       $("#parsley_reg").trigger('reset');
+                                       posnic_customer_payment_lists();
+                                       
+                                    }else  if(response['responseText']==10){
+                                           $.bootstrapGrowl(' <?php echo $this->lang->line('invalid_payment_entry'); ?>', { type: "error" });                           
+                                    }else  if(response['responseText']==0){
+                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                    }else{
+                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer_payment');?>', { type: "error" });                           
+                                    }
+                       }
+                });
+                    
+                    }else{
+                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?php }else{ ?>
+                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
+                    <?php }?>
+    }
+    function save_sales_return(){
+         <?php if($this->session->userdata['customer_payment_per']['add']==1){ ?>
+                   if($('#parsley_ext').valid()){
+                       var oTable = $('#selected_item_table').dataTable();
+                     
+                var inputs = $('#parsley_ext').serialize();
+                      $.ajax ({
+                            url: "<?php echo base_url('index.php/customer_payment/save_sales_return_payment')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
@@ -237,13 +284,15 @@
     return  "<p >"+sup.text+"    <br>"+sup.name+" "+sup.company+"</p> ";
             }
             $('#parsley_ext #sales_return').change(function() {
-           $('#company').val($('#parsley_ext #sales_return').select2('data').company);
-           $('#customer').val($('#parsley_ext #sales_return').select2('data').name);
-           $('#total').val($('#parsley_ext #sales_return').select2('data').amount);
-           $('#paid_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
-           $('#balance_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
+           $('#parsley_ext #company').val($('#parsley_ext #sales_return').select2('data').company);
+           $('#parsley_ext #customer').val($('#parsley_ext #sales_return').select2('data').name);
+           $('#parsley_ext #total').val($('#parsley_ext #sales_return').select2('data').amount);
+           $('#parsley_ext #paid_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
+           $('#parsley_ext #balance_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
            
-           $('#payment_guid').val($('#parsley_ext #sales_return').select2('data').payment);
+           $('#parsley_ext #sales_return_guid').val($('#parsley_ext #sales_return').select2('data').id);
+           $('#parsley_ext #invoice_id').val($('#parsley_ext #sales_return').select2('data').invoice_id);
+           $('#parsley_ext #customer_id').val($('#parsley_ext #sales_return').select2('data').customer);
             });
           $('#parsley_ext #sales_return').select2({
               dropdownCssClass : 'supplier_select',
@@ -272,14 +321,15 @@
                       $.each(data, function(index, item){
                         results.push({
                           id: item.guid,
-                          text: item.invoice,
-                          supplier: item.supplier_id,
+                          text: item.code,
+                          customer: item.customer_id,
                           company: item.company,
                           name: item.name,
                           address: item.address,
-                          amount: item.amount,
+                          amount: item.total_amount,
                           paid_amount: item.paid_amount,
-                          payment: item.p_guid,
+                          invoice:item.invoice,
+                          invoice_id:item.invoice_id,
                         
                         });
                       });
@@ -680,6 +730,8 @@ function clear_update_payment(){
                                                                                     'value'=>set_value('sales_return'));
                                                                      echo form_input($sales_return)?>
                                                         <input type="hidden" id="sales_return_guid" name="sales_return_guid">
+                                                        <input type="hidden" id="invoice_id" name="invoice_id">
+                                                        <input type="hidden" id="customer_id" name="customer_id">
                                                   </div>
                                                   
                                                </div>
@@ -775,7 +827,7 @@ function clear_update_payment(){
                                                                      <?php $amount=array('name'=>'amount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'amount',
-                                                                                       'onkeyup'=>"invoice_payment()",
+                                                                                       'onkeyup'=>"sales_return_payment()",
                                                                                        'onKeyPress'=>"change_focus(event);return numbersonly(event)", 
                                                                                         'value'=>set_value('amount'));
                                                                          echo form_input($amount)?>
@@ -812,7 +864,7 @@ function clear_update_payment(){
                                                        
                                               <div class="form_sep " id="save_button" >
                                                        <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:save_new_payment()" class="btn btn-default  pull-right"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                       <a href="javascript:save_sales_return()" class="btn btn-default  pull-right"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
                                                   </div>
                                               <div class="form_sep " id="update_button" >
                                                        <label for="" >&nbsp;</label>	
