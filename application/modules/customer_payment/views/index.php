@@ -231,6 +231,64 @@
                     }
                 }
             });
+            // sales return
+          function format_return(sup) {
+            if (!sup.id) return sup.text;
+    return  "<p >"+sup.text+"    <br>"+sup.name+" "+sup.company+"</p> ";
+            }
+            $('#parsley_ext #sales_return').change(function() {
+           $('#company').val($('#parsley_ext #sales_return').select2('data').company);
+           $('#customer').val($('#parsley_ext #sales_return').select2('data').name);
+           $('#total').val($('#parsley_ext #sales_return').select2('data').amount);
+           $('#paid_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
+           $('#balance_amount').val(parseFloat($('#parsley_ext #sales_return').select2('data').amount-$('#parsley_ext #sales_return').select2('data').paid_amount));
+           
+           $('#payment_guid').val($('#parsley_ext #sales_return').select2('data').payment);
+            });
+          $('#parsley_ext #sales_return').select2({
+              dropdownCssClass : 'supplier_select',
+                formatResult: format_return,
+                formatSelection: format_return,
+                escapeMarkup: function(m) { return m; },
+                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('purchase_order') ?>",
+                ajax: {
+                     url: '<?php echo base_url() ?>index.php/customer_payment/search_sales_return',
+                     data: function(term, page) {
+                            return {types: ["exercise"],
+                                limit: -1,
+                                term: term
+                            };
+                     },
+                    type:'POST',
+                    dataType: 'json',
+                    quietMillis: 100,
+                    data: function (term) {
+                        return {
+                            term: term
+                        };
+                    },
+                    results: function (data) {
+                      var results = [];
+                      $.each(data, function(index, item){
+                        results.push({
+                          id: item.guid,
+                          text: item.invoice,
+                          supplier: item.supplier_id,
+                          company: item.company,
+                          name: item.name,
+                          address: item.address,
+                          amount: item.amount,
+                          paid_amount: item.paid_amount,
+                          payment: item.p_guid,
+                        
+                        });
+                      });
+                      return {
+                          results: results
+                      };
+                    }
+                }
+            });
         
      });
     
@@ -264,7 +322,7 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
             
             
       $("#user_list").hide();
-    $('#add_new_order').show('slow');
+    $('#credit_payment').show('slow');
       $('#delete').attr("disabled", "disabled");
       $('#posnic_add_customer_payment').attr("disabled", "disabled");
       $('#customer_payment_lists').removeAttr("disabled");
@@ -278,9 +336,53 @@ $("#parsley_reg #first_name").select2('data', {id:'',text: 'Search Supplier'});
                     $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('payment');?>', { type: "error" });                         
                     <?php }?>
 }
+function posnic_add_debit(){
+$("#customer_payment_select_2").show('slow');
+$('#customer_payment_order').hide();
+$("#parsley_reg #sales_return").select2('enable');
+$('#parsley_ext #update_button').hide();
+$('#parsley_ext #save_button').show();
+$('#parsley_ext #update_clear').hide();
+$('#parsley_ext #save_clear').show();
+$('#parsley_ext #total_amount').val('');
+$('#parsley_ext #items_id').val('');
+$("#parsley_ext").trigger('reset');
+$('#parsley_ext #deleted').remove();
+$("#parsley_ext #first_name").select2('data', {id:'',text: 'Search Supplier'});
+    <?php if($this->session->userdata['customer_payment_per']['add']==1){ ?>
+             $.ajax({                                      
+                             url: "<?php echo base_url() ?>index.php/customer_payment/payment_code/",                      
+                             data: "", 
+                             dataType: 'json',               
+                             success: function(data)        
+                             {    
+                                 
+                                
+                                 $('#parsley_ext #payment_code').val(data[0][0]['prefix']+data[0][0]['max']);
+                                 $('#parsley_ext #demo_payment_code').val(data[0][0]['prefix']+data[0][0]['max']);
+                             }
+                             });
+            
+            
+            
+      $("#user_list").hide();
+    $('#debit_payament').show('slow');
+      $('#delete').attr("disabled", "disabled");
+      $('#posnic_add_customer_payment').attr("disabled", "disabled");
+      $('#customer_payment_lists').removeAttr("disabled");
+     
+         window.setTimeout(function ()
+    {
+       
+        $('#parsley_ext #sales_return').select2('open');
+    }, 500);
+      <?php }else{ ?>
+                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('payment');?>', { type: "error" });                         
+                    <?php }?>
+}
 function posnic_customer_payment_lists(){
-      $('#edit_brand_form').hide('hide');
-      $('#add_new_order').hide('hide');      
+      $('#debit_payament').hide('hide');
+      $('#credit_payment').hide('hide');      
       $("#user_list").show('slow');
       $('#delete').removeAttr("disabled");
       $('#posnic_add_customer_payment').removeAttr("disabled");
@@ -301,7 +403,8 @@ function clear_update_payment(){
     <div class="container">
             <div class="row">
                 <div class="col col-lg-7">
-                        <a href="javascript:posnic_add_new()" id="posnic_add_customer_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew') ?></a>  
+                        <a href="javascript:posnic_add_new()" id="posnic_add_customer_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('credit_payment') ?></a>  
+                        <a href="javascript:posnic_add_debit()" id="posnic_add_customer_payment" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('debit_payment') ?></a>  
                         <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
                         <a href="javascript:posnic_customer_payment_lists()" class="btn btn-default" id="customer_payment_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('customer_payment') ?></a>
                         
@@ -353,7 +456,7 @@ function clear_update_payment(){
 
 
   
-<section id="add_new_order" class="container clearfix main_section">
+<section id="credit_payment" class="container clearfix main_section">
      <?php   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'name'=>'items_form',
@@ -361,9 +464,7 @@ function clear_update_payment(){
        echo form_open_multipart('customer_payment/upadate_pos_customer_payment_details/',$form);?>
         
     <div id="main_content" style="padding: 0 14px !important;">
-                     
-        <input type="hidden" name="dummy_discount" id="dummy_discount" >
-        <input type="hidden" name="dummy_discount_amount" id="dummy_discount_amount" >
+                
         <div class="col col-sm-2"></div>
                          <div class="row col col-sm-8">
                           <div class="panel panel-default">
@@ -384,6 +485,201 @@ function clear_update_payment(){
                                                                                     'value'=>set_value('sales_bill'));
                                                                      echo form_input($first_name)?>
                                                         <input type="hidden" id="payment_guid" name="payment_guid">
+                                                  </div>
+                                                  
+                                               </div>
+                                               <div class="col col-sm-4" >
+                                                    <div class="form_sep">
+                                                            <label for="company" ><?php echo $this->lang->line('company') ?></label>													
+                                                                     <?php $last_name=array('name'=>'last_name',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'company',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('company'));
+                                                                         echo form_input($last_name)?>
+                                                    </div><input type="hidden" value="" name='supplier_guid' id='supplier_guid'>
+                                               </div>
+                                              
+                                               <div class="col col-sm-4" >
+                                                    <div class="form_sep">
+                                                            <label for="customer" ><?php echo $this->lang->line('customer') ?></label>													
+                                                                     <?php $customer=array('name'=>'customer',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'customer',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('customer'));
+                                                                         echo form_input($customer)?>
+                                                       </div>
+                                               </div>
+                                                
+                                               
+                                               
+                                             
+                                              
+                                              
+                                               </div>
+                                           <div class="row">
+                                               <div class="col col-sm-4" >
+                                                   <div class="form_sep">
+                                                            <label for="payment_code" ><?php echo $this->lang->line('payment_code') ?></label>													
+                                                                     <?php $payment_code=array('name'=>'demo_payment_code',
+                                                                                        'class'=>'required  form-control',
+                                                                                        'id'=>'demo_payment_code',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('payment_code'));
+                                                                         echo form_input($payment_code)?>
+                                                            <input type="hidden" name="payment_code" id="payment_code">
+                                                       </div>
+                                                    </div>
+                                               <div class="col col-sm-4" >
+                                                   <div class="form_sep">
+                                                            <label for="total" ><?php echo $this->lang->line('total')." ".$this->lang->line('payment') ?></label>													
+                                                                     <?php $total=array('name'=>'total',
+                                                                                        'class'=>'  form-control',
+                                                                                        'id'=>'total',
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('total'));
+                                                                         echo form_input($total)?>
+                                                       </div>
+                                                    </div>
+                                               <div class="col col-sm-4" >
+                                                   <div class="form_sep">
+                                                            <label for="paid_amount" ><?php echo $this->lang->line('paid_amount') ?></label>													
+                                                                     <?php $paid_amount=array('name'=>'paid_amount',
+                                                                                        'class'=>'  form-control',
+                                                                                        'id'=>'paid_amount',                                                                                    
+                                                                                        'disabled'=>'disabled',
+                                                                                        'value'=>set_value('paid_amount'));
+                                                                         echo form_input($paid_amount)?>
+                                                       </div>
+                                                    </div>
+                                               
+                                            
+                                               
+                                                
+                                           </div>
+                                           <div class="row">
+                                               <div class="col col-sm-4" >
+                                                     <div class="form_sep">
+                                                            <label for="payment_date" ><?php echo $this->lang->line('payment_date') ?></label>													
+                                                                     <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
+                                                                           <?php $payment_date=array('name'=>'payment_date',
+                                                                                            'class'=>'required form-control',
+                                                                                            'id'=>'payment_date',
+                                                                                         //   'onKeyPress'=>"new_payment_date(event)", 
+                                                                                            'value'=>set_value('payment_date'));
+                                                                             echo form_input($payment_date)?>
+                                                                <span class="input-group-addon"><i class="icon-calendar"></i></span>
+                                                                </div>
+                                                       </div>
+                                                   </div>
+                                                
+                                                <div class="col col-sm-4" >
+                                                   <div class="form_sep">
+                                                            <label for="amount" ><?php echo $this->lang->line('amount') ?></label>													
+                                                                     <?php $amount=array('name'=>'amount',
+                                                                                        'class'=>'  form-control',
+                                                                                        'id'=>'amount',
+                                                                                       'onkeyup'=>"invoice_payment()",
+                                                                                       'onKeyPress'=>"change_focus(event);return numbersonly(event)", 
+                                                                                        'value'=>set_value('amount'));
+                                                                         echo form_input($amount)?>
+                                                       </div>
+                                                    </div>
+                                                <div class="col col-sm-4" >
+                                                   <div class="form_sep">
+                                                            <label for="balance" ><?php echo $this->lang->line('balance') ?></label>													
+                                                                     <?php $balance=array('name'=>'balance',
+                                                                                        'class'=>'  form-control',
+                                                                                        'id'=>'balance',
+                                                                                        'value'=>set_value('amount'));
+                                                                         echo form_input($balance)?>
+                                                       </div>
+                                                    </div>
+                                               
+                                           </div>
+                                           <div class="row">
+                                               <div class="col col-lg-8">
+                                                    <div class="form_sep ">
+                                                        <label for="memo" ><?php echo $this->lang->line('memo') ?></label>													
+                                                                  <?php $memo=array('name'=>'memo',
+                                                                                    'class'=>' form-control',
+                                                                                    'id'=>'memo',
+                                                                                   'rows'=>3,
+                                                                                    'value'=>set_value('memo'));
+                                                                     echo form_textarea($memo)?>
+                                                        
+                                                  </div>
+                                               </div>
+                                               <div class="col col-lg-4">
+                                                  
+                                                   <div class="col col-sm-6"  >
+                                                       
+                                              <div class="form_sep " id="save_button" >
+                                                       <label for="" >&nbsp;</label>	
+                                                       <a href="javascript:save_new_payment()" class="btn btn-default  pull-right"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                  </div>
+                                              <div class="form_sep " id="update_button" >
+                                                       <label for="" >&nbsp;</label>	
+                                                       <a href="javascript:update_order()" class="btn btn-default" style="margin-top:-12px"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
+                                                  </div>
+                                               </div>
+                                          <div class="col col-sm-6"  >
+                                                   <div class="form_sep " id="save_clear">
+                                                       <label for="remark" >&nbsp;</label>	
+                                                        <a href="javascript:clear_add_payment()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                  </div>
+                                              <div class="form_sep " id="update_clear" style="margin-top:0 !important">
+                                                       <label for="remark" >&nbsp;</label>	
+                                                        <a href="javascript:clear_update_payment()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                  </div>
+                                               </div>
+                                               </div>
+                                           </div>
+                                     <br>
+                                        </div>                              
+                             
+                          </div>
+                          </div>
+                         
+                         
+         
+                     </div>
+    <input type="hidden" id="balance_amount" name="balance_amount">
+    <input type="hidden" id="payment" name="payment">
+    <input type="hidden" id="payment_id" name="payment_id">
+    <?php echo form_close();?>
+
+</section>    
+<section id="debit_payament" class="container clearfix main_section">
+     <?php   $form =array('id'=>'parsley_ext',
+                          'runat'=>'server',
+                          'name'=>'items_form',
+                          'class'=>'form-horizontal');
+       echo form_open_multipart('customer_payment/upadate_pos_customer_payment_details/',$form);?>
+        
+    <div id="main_content" style="padding: 0 14px !important;">
+                
+        <div class="col col-sm-2"></div>
+                         <div class="row col col-sm-8">
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                     <h4 class="panel-title"><?php echo $this->lang->line('customer_payment')." ".$this->lang->line('details') ?></h4>                                                                               
+                               </div>
+                            
+                                 
+                                       <div id="" class="col col-sm-12" style="padding-right: 25px;padding-left: 25px">
+                                           <div class="row">
+                                               <div class="col col-sm-4" >
+                                                   <div class="form_sep " id="customer_payment_select_2">
+                                                        <label for="sales_return" ><?php echo $this->lang->line('sales_return') ?></label>													
+                                                                  <?php $sales_return=array('name'=>'sales_return',
+                                                                                    'class'=>'required  form-control',
+                                                                                    'id'=>'sales_return',
+                                                                                   
+                                                                                    'value'=>set_value('sales_return'));
+                                                                     echo form_input($sales_return)?>
+                                                        <input type="hidden" id="sales_return_guid" name="sales_return_guid">
                                                   </div>
                                                   
                                                </div>

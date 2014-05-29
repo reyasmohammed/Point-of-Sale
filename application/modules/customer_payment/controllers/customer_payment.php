@@ -190,6 +190,15 @@ function save(){
         echo json_encode($data); /* send data in json fromat*/
     }
     /* function end */
+    /*Search purchase payable purchase return
+     * function start     */
+    function search_sales_return(){
+        $search= $this->input->post('term'); /* get key word*/
+        $this->load->model('payment'); /* load payement model*/
+        $data= $this->payment->search_sales_return($search);   /* get invoice list */   
+        echo json_encode($data); /* send data in json fromat*/
+    }
+    /* function end */
    
     /*
      *  get payment details for edit     

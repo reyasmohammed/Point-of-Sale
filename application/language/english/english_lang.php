@@ -551,6 +551,8 @@ $lang['credit_days']='Credit Days';
   $lang['date']='Date';
   $lang['receiving_stock']='Receiving Stock';
   $lang['access']='Access';
+  $lang['credit_payment']='Credit Payment';
+  $lang['debit_payment']='Debit Payment';
   // modules
   $lang['module_category']='Module Category';
   $lang['module']='Module';

@@ -2,7 +2,12 @@
 <script type="text/javascript" charset="utf-8">
     var point=3;
       $(document).ready( function () {
-       $('#add_new_order').hide();
+            parsley_ext.onsubmit=function()
+                                { 
+                                  return false;
+                                } 
+       $('#credit_payment').hide();
+       $('#debit_payament').hide();
        posnic_table();
    });
            function posnic_table(){
@@ -102,10 +107,10 @@
                         <?php if($this->session->userdata['customer_payment_per']['edit']==1){ ?>
                                 
                             $("#parsley_reg").trigger('reset');
-                            $('#update_button').show();
-                            $('#save_button').hide();
-                            $('#update_clear').show();
-                            $('#save_clear').hide();
+                            $('#parsley_reg #update_button').show();
+                            $('#parsley_reg #save_button').hide();
+                            $('#parsley_reg #update_clear').show();
+                            $('#parsley_reg #save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
                              url: "<?php echo base_url() ?>index.php/customer_payment/get_customer_payment/"+guid,                      
@@ -114,7 +119,7 @@
                              success: function(data)        
                              { 
                                 $("#user_list").hide();
-                                $('#add_new_order').show('slow');
+                                $('#credit_payment').show('slow');
                                
                                 
                                 $('#delete').attr("disabled", "disabled");
