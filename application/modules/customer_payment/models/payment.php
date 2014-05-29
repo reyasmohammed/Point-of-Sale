@@ -46,6 +46,21 @@ class Payment extends CI_Model{
     }
     /* function end*/
     /*
+    /* get purchase return auto suggestion
+    function start      */
+    function  search_sales_return($like){
+        $this->db->select('sales_bill.invoice,customer_payable.guid as p_guid,customer_payable.invoice_id,customer_payable.amount, customer_payable.paid_amount, sales_return.*, customers.first_name as name,customers.company_name as company,customers.address as address')->from('sales_return')->where('sales_return.branch_id',  $this->session->userdata['branch_id']);
+        $this->db->join('sales_bill', 'sales_bill.guid=sales_return.sales_bill_id ','left');  
+        $this->db->join('customers', 'customers.guid=sales_bill.customer_id ','left');  
+        $this->db->join('customer_payable', 'customers.guid=sales_bill.customer_id AND customer_payable.invoice_id=sales_bill.guid','left');  
+        $or_like=array('sales_bill.invoice'=>$like,'customers.company_name'=>$like,'customers.first_name'=>$like);
+        $this->db->or_like($or_like);     
+        $this->db->limit($this->session->userdata['data_limit']);
+        $sql=$this->db->get();
+        return $sql->result();
+    }
+    /* function end*/
+    /*
      * add new supplier payment
      * function start     */
     function save_payment($payment,$amount,$date,$memo,$code){

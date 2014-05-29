@@ -8,7 +8,7 @@ class Supplier_payment extends MX_Controller{
         $this->load->view('template/app/header'); 
         $this->load->view('header/header');         
         $this->load->view('template/branch',$this->posnic->branches());
-        $data['active']='purchase_invoice';
+        $data['active']='supplier_payment';
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
