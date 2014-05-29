@@ -197,14 +197,15 @@ function purchase_return_approve(guid){
                                 $('#loading').modal('hide');
                                 $("#parsley_reg").trigger('reset');
                            
-                                $("#parsley_reg #select_branch").select2('data', {id:data[0]['destination'],text: data[0]['store_name']});
-                                $("#parsley_reg #destination_branch").val(data[0]['destination']);
-                                $("#parsley_reg #branch_name").val(data[0]['store_name']);
-                                $("#parsley_reg #select_branch").select2('disable');
+                                $("#parsley_reg #purchase_invoice").select2('data', {id:data[0]['invoice'],text: data[0]['invoice']});
+                                $("#parsley_reg #purchase_invoice_id").val(data[0]['purchase_invoice_id']);
+                                $("#parsley_reg #customer").val(data[0]['first_name']);
+                                $("#parsley_reg #purchase_invoice").select2('disable');
                                 $("#parsley_reg #purchase_return_guid").val(guid);
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);
-                                $("#parsley_reg #order_number").val(data[0]['po_no']);
+                                $("#parsley_reg #order_number").val(data[0]['code']);
                                 $("#parsley_reg #order_date").val(data[0]['date']);
+                                $("#parsley_reg #sales_date").val(data[0]['sales_date']);
                                 
                                 $("#parsley_reg #note").val(data[0]['note']);
                                 $("#parsley_reg #remark").val(data[0]['remark']);
@@ -232,15 +233,18 @@ function purchase_return_approve(guid){
                                     var  tax_value=data[i]['tax_value'];
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                    
-                                    var  cost=data[i]['cost'];
+                               
                                     var  price=data[i]['sell'];
+                                    
+                                    
+                                    
                                     var  o_i_guid=data[i]['o_i_guid'];
                                     var  items_id=data[i]['item'];
                                   
                                    if(data[i]['tax_Inclusive']==1){
                                      var tax=data[i]['order_tax'];
                                     
-                                      var total=+tax+ +(parseFloat(quty)*parseFloat(cost));
+                                      var total=+tax+ +(parseFloat(quty)*parseFloat(price));
                                       var type='Exc';
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
@@ -248,7 +252,7 @@ function purchase_return_approve(guid){
                                       var type="Inc";
                                   
                                       var tax=data[i]['order_tax'];
-                                      var total=(parseFloat(quty)*parseFloat(cost));
+                                      var total=(parseFloat(quty)*parseFloat(price));
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
@@ -257,10 +261,8 @@ function purchase_return_approve(guid){
                                     name,
                                     sku,
                                     quty,
-                                    cost,
                                     price,
                                     tax+' : '+tax_type+'('+type+')',
-                                    data[i]['s_name'],
                                    
                                     total,
                                     '<input type="hidden" name="index" id="index"><input type="hidden" id="'+o_i_guid+'">\n\
@@ -268,12 +270,8 @@ function purchase_return_approve(guid){
                                 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
                                 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
-                                <input type="hidden" name="items_supplier[]" value="'+data[i]['s_guid']+'" id="items_supplier">\n\
-                                <input type="hidden" name="items_stock[]" value="'+data[i]['stock_id']+'" id="items_stock">\n\
-                                <input type="hidden" name="items_supplier_name[]" value="'+data[i]['s_name']+'" id="items_supplier_name">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
-                                <input type="hidden" name="items_cost[]" value="'+cost+'" id="items_cost"> \n\
                                 <input type="hidden" name="items_price[]" value="'+price+'" id="items_price">\n\
                                 <input type="hidden" name="items_tax[]" value="'+tax+'" id="items_tax">\n\
                                 <input type="hidden" name="items_tax_type[]" value="'+tax_type+'" id="items_tax_type">\n\

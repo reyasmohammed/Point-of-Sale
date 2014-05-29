@@ -17,7 +17,7 @@ class Supplier_payment extends MX_Controller{
     }
     // goods Receiving Note data table
     function data_table(){
-        $aColumns = array( 'guid','code','code','p_invoice','first_name','company_name','payment_date','amount','guid' );	
+        $aColumns = array( 'guid','code','code','p_invoice','first_name','company_name','payment_date','amount','guid','return_id' );	
 	$start = "";
 	$end="";
         if ( $this->input->get_post('iDisplayLength') != '-1' )	{
@@ -89,7 +89,7 @@ function save(){
         $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
         $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
         $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
+        $this->form_validation->set_rules('invoice_id', $this->lang->line('invoice_id'), 'required');
         $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
             if ( $this->form_validation->run() !== false ) {    
              
@@ -98,7 +98,7 @@ function save(){
                 $amount=  $this->input->post('amount');
                 $balance_amount=  $this->input->post('balance_amount');
                 $memo=  $this->input->post('memo');
-                $payment=  $this->input->post('payment');
+                $payment=  $this->input->post('payment_guid');
                 $this->load->model('payment');
                 if($amount>$balance_amount){
                     echo 10;
@@ -187,6 +187,15 @@ function save(){
         $search= $this->input->post('term'); /* get key word*/
         $this->load->model('payment'); /* load payement model*/
         $data= $this->payment->serach_invoice($search);   /* get invoice list */   
+        echo json_encode($data); /* send data in json fromat*/
+    }
+    /* function end */
+     /*Search purchase payable purchase return
+     * function start     */
+    function search_purchase_return(){
+        $search= $this->input->post('term'); /* get key word*/
+        $this->load->model('payment'); /* load payement model*/
+        $data= $this->payment->search_purchase_return($search);   /* get invoice list */   
         echo json_encode($data); /* send data in json fromat*/
     }
     /* function end */

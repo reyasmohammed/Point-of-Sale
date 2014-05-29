@@ -12,6 +12,10 @@ class Purchase_return extends MX_Controller{
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
+//        $this->load->model('stock');
+//        $this->stock->search_items('','62245c40fad9bd6a1acead37243d0b02');
+//         $this->stock->search_items('','667a901118c7eba0cb686b6dbbca1b48');
+//         $this->stock->search_items('','fc157016310c6314cc8b3b69c34d730e');
     }
     // purchase order data table
     function data_table(){
@@ -103,23 +107,21 @@ function save(){
      if($this->session->userdata['purchase_return_per']['add']==1){
     
         $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
+        $this->form_validation->set_rules('purchase_invoice_id', $this->lang->line('purchase_invoice_id'), 'required');
         $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
         $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
 
                        
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
-        $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
-                         
-        $this->form_validation->set_rules('new_item_supplier[]', $this->lang->line('new_item_supplier'), 'required');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                     
+        $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                    
         $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'required|numeric');                      
                          
         $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_stock[]', $this->lang->line('new_item_stock'), 'required');                      
+        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|numeric');                       
            
             if ( $this->form_validation->run() !== false ) {    
                 $pono= $this->input->post('order_number');
+                $bill= $this->input->post('purchase_invoice_id');
                 $podate= strtotime($this->input->post('order_date'));
                 $total_items=$this->input->post('index');
                 $remark=  $this->input->post('remark');
@@ -127,22 +129,19 @@ function save(){
                 $total_amount=  $this->input->post('total_amount');
   
      
-              $value=array('code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
+              $value=array('purchase_invoice_id'=>  $this->input->post('purchase_invoice_id'),'code'=>$pono,'date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
               $guid=   $this->posnic->posnic_add_record($value,'purchase_return');
           
                 $item=  $this->input->post('new_item_id');
                 $quty=  $this->input->post('new_item_quty');
-                $cost=  $this->input->post('new_item_cost');
-                $supplier=  $this->input->post('new_item_supplier');
                 $sell=  $this->input->post('new_item_price');
                 $net=  $this->input->post('new_item_total');
                 $tax=  $this->input->post('new_item_tax');
-                $stock=  $this->input->post('new_item_stock');
            
                 for($i=0;$i<count($item);$i++){
                         $this->load->model('stock');
                        
-                        $this->stock->add_purchase_return($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$tax[$i],$net[$i],$supplier[$i],$stock[$i]);
+                        $this->stock->add_purchase_return($guid,$item[$i],$quty[$i],$sell[$i],$tax[$i],$net[$i]);
                 
                         
                 }
@@ -193,7 +192,6 @@ function save(){
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                 $total_amount=  $this->input->post('total_amount');
-                $total_amount=  $this->input->post('total_amount');
   
      
               $value=array('date'=>$podate,'note'=>$note,'remark'=>$remark,'no_items'=>$total_items,'total_amount'=>$total_amount);
@@ -203,17 +201,14 @@ function save(){
           
                 $item=  $this->input->post('items_id');
                 $quty=  $this->input->post('items_quty');
-                $cost=  $this->input->post('items_cost');
                 $sell=  $this->input->post('items_price');
                 $net=  $this->input->post('items_total');
-                $stock=  $this->input->post('items_stock');
                 $tax=  $this->input->post('items_tax');
-                $supplier=  $this->input->post('items_supplier');
                 for($i=0;$i<count($item);$i++){
                
                         $where=array('order_id'=>$guid,'item'=>$item[$i]);
                         $this->load->model('stock');
-                        $this->stock->update_purchase_return($guid,$item[$i],$quty[$i],$cost[$i],$sell[$i],$tax[$i],$net[$i],$supplier[$i],$stock[$i]);
+                        $this->stock->update_purchase_return($guid,$item[$i],$quty[$i],$sell[$i],$tax[$i],$net[$i]);
                   
                 }
                 $delete=  $this->input->post('r_items');
@@ -264,10 +259,10 @@ function search_supplier(){
  * get branch details forstock transfer 
  *  */       
 // functoon starts
-function search_branch(){
+function search_purchase_invoice(){
     $search= $this->input->post('term');  
     $this->load->model('stock');
-    $data= $this->stock->search_branch($search)    ;
+    $data= $this->stock->search_purchase_invoice($search)    ;
     echo json_encode($data);
 }
 // function end
@@ -324,9 +319,9 @@ function order_number(){
 
 function search_items(){
     $search= $this->input->post('term');
-  
+    $invoice=  $this->input->post('invoice');
     $this->load->model('stock');
-    $data= $this->stock->search_items($search);      
+    $data= $this->stock->search_items($search,$invoice);      
     echo json_encode($data);
        
         
