@@ -778,6 +778,10 @@ function add_new_quty(e){
                 $('#parsley_reg #quantity').val(0);
             }
         }else{
+             if(parseFloat($('#quantity').val())>parseFloat($('#stock_quty').val())){
+               $('#quantity').val($('#stock_quty').val());
+                $.bootstrapGrowl('<?php echo $this->lang->line('avilable_stock_is') ;?> '+$('#stock_quty').val(), { type: "warning" }); 
+           }
            
            if(isNaN($('#parsley_reg #discount').val())){
                 $('#parsley_reg #discount').val(0);
@@ -1536,7 +1540,7 @@ function new_discount_amount(){
                                                     <input type="hidden" name="item_name" id="item_name">
                                                     <input type="hidden" name="sku" id="sku">
                                                     <input type="hidden" name="seleted_row_id" id="seleted_row_id">
-                                                    <input type="hidden" name="stock_quty" id="stock_quty">
+                                                    <input type="text" name="stock_quty" id="stock_quty">
                                                     <input type="hidden" name="stock_id" id="stock_id">
                                                     <input type="hidden" name="discount" id="discount">
                                                     <input type="hidden" name="old_discount" id="old_discount">
