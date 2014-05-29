@@ -1404,7 +1404,7 @@ function new_discount_amount(){
                                                                                         'disabled'=>'disabled',
                                                                                         'value'=>set_value('sales_bill_number'));
                                                                          echo form_input($order_number)?>
-                                                            <input type="hidden" name="sales_bill_number" id="sales_bill_number">
+                                                            <input type="hidden" name="direct_sales_bill_number" id="direct_sales_bill_number">
                                                        </div>
                                                     </div>
                                                 <div class="col col-sm-2" >

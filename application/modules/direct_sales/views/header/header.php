@@ -419,7 +419,7 @@ function direct_sales_approve(guid){
                                   $("#parsley_reg #first_name").select2('disable');
                                 $("#parsley_reg #company").val(data[0]['c_name']);
                                 $("#parsley_reg #demo_sales_bill_number").val(data[data.length-1]);
-                                $("#parsley_reg #sales_bill_number").val(data[data.length-1]);
+                                $("#parsley_reg #direct_sales_bill_number").val(data[data.length-1]);
                                 $("#parsley_reg #address").val(data[0]['address']);
                                 $("#parsley_reg #direct_sales_guid").val(guid);
                                 $("#parsley_reg #demo_order_number").val(data[0]['code']);

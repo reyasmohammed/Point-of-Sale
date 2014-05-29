@@ -253,7 +253,7 @@ function save(){
         $this->form_validation->set_rules('customers_guid',$this->lang->line('customers_guid'), 'required');
         $this->form_validation->set_rules('sales_bill_date', $this->lang->line('order_date'), 'required'); 
         $this->form_validation->set_rules('direct_sales_guid', $this->lang->line('direct_sales_guid'), 'required'); 
-        $this->form_validation->set_rules('sales_bill_number', $this->lang->line('sales_bill_number'), 'required'); 
+        $this->form_validation->set_rules('direct_sales_bill_number', $this->lang->line('direct_sales_bill_number'), 'required'); 
         
         
             if ( $this->form_validation->run() !== false ) {    
@@ -261,7 +261,7 @@ function save(){
                 $direct_sales_guid=  $this->input->post('direct_sales_guid');
              
                 $date= strtotime($this->input->post('sales_bill_date'));
-                $bill_no= strtotime($this->input->post('sales_bill_number'));
+                $bill_no= $this->input->post('direct_sales_bill_number');
                 $remark=  $this->input->post('remark');
                 $note=  $this->input->post('note');
                
@@ -272,7 +272,7 @@ function save(){
             
                  $this->posnic->posnic_master_increment_max('sales_bill')  ;
                  $this->sales->payable_amount($customer,$direct_sales_guid,$invoice)   ;
-                 echo 'TRUE';
+                echo 'TRUE';
     
                 }else{
                    echo 'FALSE';
