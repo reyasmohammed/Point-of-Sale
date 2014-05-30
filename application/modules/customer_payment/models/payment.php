@@ -26,7 +26,7 @@ class Payment extends CI_Model{
     /* get total number of paymant entry 
      * function start   */
     function count($branch){
-        $this->db->select()->from('payment')->where('payment.branch_id',$branch)->where('payment.type','debit');
+        $this->db->select()->from('payment')->where('payment.branch_id',$branch)->where('payment.type','credit');
         $sql=  $this->db->get();
         return $sql->num_rows();
     }
