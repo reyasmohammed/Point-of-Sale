@@ -5,9 +5,11 @@ class Invoice extends CI_Model{
     }
     function get($end,$start,$like,$branch){
                 $this->db->select('purchase_invoice.*,direct_grn.grn_no,purchase_invoice.invoice,purchase_invoice.guid as invoice_guid, purchase_invoice.date as date,suppliers.first_name as s_name,suppliers.company_name as c_name');
-                $this->db->from('purchase_invoice')->where('purchase_invoice.branch_id',$branch)->where('po','non');
+                $this->db->from('purchase_invoice')->where('purchase_invoice.branch_id',$branch);
                 $this->db->join('direct_grn', 'direct_grn.guid=purchase_invoice.grn','left');
-                $this->db->join('suppliers', 'suppliers.guid=purchase_invoice.supplier_id AND direct_grn.guid=purchase_invoice.grn','left');
+                $this->db->join('direct_invoice', 'direct_invoice.guid=purchase_invoice.direct_invoice_id','left');
+                $this->db->join('purchase_order', 'purchase_order.guid=purchase_invoice.po','left');
+                $this->db->join('suppliers', 'suppliers.guid=purchase_order.supplier_id OR suppliers.guid=direct_grn.supplier_id OR suppliers.guid=direct_invoice.supplier_id','left');
                 $this->db->limit($end,$start); 
                 $this->db->or_like($like);     
                 $query=$this->db->get();
@@ -18,25 +20,9 @@ class Invoice extends CI_Model{
                     $data[]=$row;
                    
                 }
-                $this->db->select('purchase_invoice.*,grn.grn_no,purchase_invoice.invoice,purchase_invoice.guid as invoice_guid, purchase_invoice.date as date,suppliers.first_name as s_name,suppliers.company_name as c_name');
-                $this->db->from('purchase_invoice')->where('purchase_invoice.branch_id',$branch)->where('purchase_invoice.po <>','non');
-                $this->db->join('grn', 'grn.guid=purchase_invoice.grn','left');
-                $this->db->join('purchase_order', 'grn.po=purchase_order.guid','left');
-                $this->db->join('suppliers', 'suppliers.guid=purchase_order.supplier_id AND grn.guid=purchase_invoice.grn','left');
-                $this->db->limit($end,$start); 
-                $this->db->or_like($like);     
-                $query=$this->db->get();
-               
-                foreach ($query->result_array() as $row){
-                 
-                    $row['date']=date('d-m-Y',$row['date']);
-                   $data[]=$row;
-                   
-                }
+//              
                 
-                
-                
-                return $data; 
+            return $data;
         
     }
     function search_grn_order($like,$branch){

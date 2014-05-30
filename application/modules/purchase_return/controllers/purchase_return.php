@@ -115,6 +115,7 @@ function save(){
         $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
         $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                    
         $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                      
+        $this->form_validation->set_rules('item_stocks_history[]', $this->lang->line('item_stocks_history'), 'required');                      
                          
         $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
         $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|numeric');                       
@@ -137,11 +138,12 @@ function save(){
                 $cost=  $this->input->post('new_item_cost');
                 $net=  $this->input->post('new_item_total');
                 $tax=  $this->input->post('new_item_tax');
+                $item_stocks_history=  $this->input->post('item_stocks_history');
            
                 for($i=0;$i<count($item);$i++){
                         $this->load->model('stock');
                        
-                        $this->stock->add_purchase_return($guid,$item[$i],$quty[$i],$cost[$i],$tax[$i],$net[$i]);
+                        $this->stock->add_purchase_return($guid,$item[$i],$quty[$i],$cost[$i],$tax[$i],$net[$i],$item_stocks_history[$i]);
                 
                         
                 }
