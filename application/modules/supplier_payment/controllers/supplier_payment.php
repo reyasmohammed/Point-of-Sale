@@ -100,11 +100,47 @@ function save(){
                 $memo=  $this->input->post('memo');
                 $payment=  $this->input->post('payment_guid');
                 $this->load->model('payment');
+                $invoice_id=  $this->input->post('invoice_id');
                 if($amount>$balance_amount){
                     echo 10;
                 }else{
                     
-                        if($this->payment->save_payment($payment,$amount,$date,$memo,$code)){
+                        if($this->payment->save_payment($payment,$amount,$date,$memo,$code,$invoice_id)){
+                        $this->posnic->posnic_master_increment_max('supplier_payment')  ;
+                       echo 1;
+                   }else{
+                       echo 10;
+                   }
+                }
+             }else{
+                  echo 0;
+             }
+    }else{
+                   echo 'Noop';
+                }
+}
+function save_purchase_return_payment(){      
+     if($this->session->userdata['supplier_payment_per']['add']==1){
+        $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
+        $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
+       $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        //$this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
+      $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+            if ( $this->form_validation->run() !== false ) {    
+             
+                $date=strtotime($this->input->post('payment_date'));
+                $code= $this->input->post('payment_code');
+                $amount=  $this->input->post('amount');
+                $balance_amount=  $this->input->post('balance_amount');
+                $memo=  $this->input->post('memo');
+                $supplier=  $this->input->post('supplier_id');
+                 $return_id=  $this->input->post('purchase_return_guid');
+                $invoice_id=  $this->input->post('invoice_id');
+                $this->load->model('payment');
+                if($amount > $balance_amount){
+                  echo 10;
+                }else{
+                   if($this->payment->purchase_return_payment($amount,$date,$memo,$code,$supplier,$invoice_id,$return_id)){
                         $this->posnic->posnic_master_increment_max('supplier_payment')  ;
                        echo 1;
                    }else{
@@ -199,7 +235,49 @@ function save(){
         echo json_encode($data); /* send data in json fromat*/
     }
     /* function end */
-   
+   function get_supplier_credit_payment($guid){
+        $this->load->model('payment');
+        $data=  $this->payment->get_supplier_credit_payment($guid);
+        echo json_encode($data); // encode data array to json
+    }
+     function update_purchase_return(){
+        If($this->session->userdata['customer_payment_per']['add']==1){
+            $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
+            $this->form_validation->set_rules('payment_id',$this->lang->line('payment_id'), 'required');
+            $this->form_validation->set_rules('purchase_return_guid',$this->lang->line('purchase_return_guid'), 'required');
+            $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
+            $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        //    $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
+            $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+                if ( $this->form_validation->run() !== false ) {    
+
+                    $date=strtotime($this->input->post('payment_date'));
+                    $code= $this->input->post('payment_code');
+                    $amount=  $this->input->post('amount');
+                    $balance_amount=  $this->input->post('balance_amount');
+                    $memo=  $this->input->post('memo');
+                   
+                    $return_id=  $this->input->post('purchase_return_guid');
+                    $this->load->model('payment');
+                    $guid=  $this->input->post('payment_id');
+                    if($amount>$balance_amount){
+                        echo 10;
+                    }else{
+                            if($this->payment->update_credit_payment($guid,$amount,$date,$memo,$code,$return_id)){
+                        
+                       echo 1;
+                    }else{
+                        echo 10;
+                    }
+                }
+            }else{
+                 echo 0;
+            }
+        }else{
+            echo 'Noop';
+        }
+          
+   }
     /*
      *  get payment details for edit     
      * function start */

@@ -88,9 +88,9 @@ function save(){
      if($this->session->userdata['customer_payment_per']['add']==1){
         $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
         $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-       $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-       $this->form_validation->set_rules('invoice_id', $this->lang->line('invoice_id'), 'required');
-      $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
+        $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
+        $this->form_validation->set_rules('invoice_id', $this->lang->line('invoice_id'), 'required');
+        $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
             if ( $this->form_validation->run() !== false ) {    
              
                 $date=strtotime($this->input->post('payment_date'));

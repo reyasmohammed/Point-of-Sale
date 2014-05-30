@@ -262,7 +262,7 @@
            $('#parsley_reg #company').val($('#parsley_reg #purchase_invoice').select2('data').company);
            $('#parsley_reg #supplier').val($('#parsley_reg #purchase_invoice').select2('data').name);
            $('#parsley_reg #total').val($('#parsley_reg #purchase_invoice').select2('data').amount);
-           $('#parsley_reg #paid_amount').val(parseFloat($('#parsley_reg #purchase_invoice').select2('data').amount-$('#parsley_reg #purchase_invoice').select2('data').paid_amount));
+           $('#parsley_reg #paid_amount').val(parseFloat($('#parsley_reg #purchase_invoice').select2('data').paid_amount));
            $('#parsley_reg #balance_amount').val(parseFloat($('#parsley_reg #purchase_invoice').select2('data').amount-$('#parsley_reg #purchase_invoice').select2('data').paid_amount));
            
            $('#parsley_reg #invoice_id').val($('#parsley_reg #purchase_invoice').select2('data').id);
@@ -321,7 +321,7 @@
            $('#parsley_ext #company').val($('#parsley_ext #purchase_return').select2('data').company);
            $('#parsley_ext #supplier').val($('#parsley_ext #purchase_return').select2('data').name);
            $('#parsley_ext #total').val($('#parsley_ext #purchase_return').select2('data').amount);
-           $('#parsley_ext #paid_amount').val(parseFloat($('#parsley_ext #purchase_return').select2('data').amount-$('#parsley_ext #purchase_return').select2('data').paid_amount));
+           $('#parsley_ext #paid_amount').val(parseFloat($('#parsley_ext #purchase_return').select2('data').paid_amount));
            $('#parsley_ext #balance_amount').val(parseFloat($('#parsley_ext #purchase_return').select2('data').amount-$('#parsley_ext #purchase_return').select2('data').paid_amount));
            
            $('#parsley_ext #purchase_return_guid').val($('#parsley_ext #purchase_return').select2('data').id);
