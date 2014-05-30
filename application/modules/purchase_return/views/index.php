@@ -423,7 +423,7 @@ function reload_update_user(){
                 <div class="col col-lg-7">
                         <a href="javascript:posnic_add_new()" id="posnic_add_purchase_return" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew') ?></a>  
                      
-                        <a href="javascript:purchase_return_group_approve()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?php echo $this->lang->line('approve') ?></a>
+                        <a href="javascript:purchase_return_group_approve()" class="btn btn-default" id="active"  ><i class="icon icon-play"></i> <?php echo $this->lang->line('approve') ?></a>
                         <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
                         <a href="javascript:posnic_purchase_return_lists()" class="btn btn-default" id="purchase_return_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('purchase_return') ?></a>
                         

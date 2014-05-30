@@ -12,11 +12,6 @@ class Purchase_return extends MX_Controller{
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
-      //  $this->load->model('stock');
-        //$this->stock->get_purchase_return('35850a846dba7b9fdbaa661beb699913');
-     
- //  $this->stock->search_items('','e25014a3d77394c050c70cab9e291d84');
-//         $this->stock->search_items('','fc157016310c6314cc8b3b69c34d730e');
     }
     // purchase order data table
     function data_table(){
