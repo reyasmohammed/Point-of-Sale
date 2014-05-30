@@ -234,7 +234,7 @@ function purchase_return_approve(guid){
                                     var  tax_Inclusive=data[i]['tax_Inclusive'];
                                    
                                
-                                    var  price=data[i]['sell'];
+                                    var  cost=data[i]['cost'];
                                     
                                     
                                     
@@ -244,7 +244,7 @@ function purchase_return_approve(guid){
                                    if(data[i]['tax_Inclusive']==1){
                                      var tax=data[i]['order_tax'];
                                     
-                                      var total=+tax+ +(parseFloat(quty)*parseFloat(price));
+                                      var total=+tax+ +(parseFloat(quty)*parseFloat(cost));
                                       var type='Exc';
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
@@ -252,7 +252,7 @@ function purchase_return_approve(guid){
                                       var type="Inc";
                                   
                                       var tax=data[i]['order_tax'];
-                                      var total=(parseFloat(quty)*parseFloat(price));
+                                      var total=(parseFloat(quty)*parseFloat(cost));
                                       var num = parseFloat(total);
                                       total=num.toFixed(point);
                                   }
@@ -261,7 +261,7 @@ function purchase_return_approve(guid){
                                     name,
                                     sku,
                                     quty,
-                                    price,
+                                    cost,
                                     tax+' : '+tax_type+'('+type+')',
                                    
                                     total,
@@ -272,7 +272,7 @@ function purchase_return_approve(guid){
                                 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
                                 <input type="hidden" name="items_order_guid[]" value="'+o_i_guid+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty"> \n\
-                                <input type="hidden" name="items_price[]" value="'+price+'" id="items_price">\n\
+                                <input type="hidden" name="items_cost[]" value="'+cost+'" id="items_cost">\n\
                                 <input type="hidden" name="items_tax[]" value="'+tax+'" id="items_tax">\n\
                                 <input type="hidden" name="items_tax_type[]" value="'+tax_type+'" id="items_tax_type">\n\
                                 <input type="hidden" name="items_tax_value[]" value="'+tax_value+'" id="items_tax_value">\n\
