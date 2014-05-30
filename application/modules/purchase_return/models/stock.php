@@ -29,8 +29,8 @@ class Stock extends CI_Model{
          $this->db->update('purchase_return_x_items',$item_value);
          
     }
-    function add_purchase_return($guid,$item,$quty,$cost,$tax,$net){
-         $item_value=array('purchase_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'cost'=>$cost,'amount'=>$net);
+    function add_purchase_return($guid,$item,$quty,$cost,$tax,$net,$stock_history_id){
+         $item_value=array('purchase_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'cost'=>$cost,'amount'=>$net,'stocks_history_id'=>$stock_history_id);
          $this->db->insert('purchase_return_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
@@ -39,17 +39,19 @@ class Stock extends CI_Model{
     
     function search_items($search,$bill){
          $data=array();         
-        $this->db->select('purchase_invoice.invoice,direct_grn_items.cost as dgrn_cost,direct_grn_items.quty as dgrn_quty,purchase_order_items.cost as grn_cost,grn_x_items.quty as grn_quty,items.code,items.uom,items.no_of_unit,items_setting.purchase_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id')->from('purchase_invoice')->where('purchase_invoice.guid',$bill)->where('purchase_invoice.branch_id',  $this->session->userdata('branch_id'));
+        $this->db->select('stocks_history.guid as stocks_history,purchase_invoice.invoice,direct_grn_items.cost as dgrn_cost,direct_grn_items.quty as dgrn_quty,purchase_order_items.cost as grn_cost,grn_x_items.quty as grn_quty,items.code,items.uom,items.no_of_unit,items_setting.purchase_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id')->from('purchase_invoice')->where('purchase_invoice.guid',$bill)->where('purchase_invoice.branch_id',  $this->session->userdata('branch_id'));
         $this->db->join('grn_x_items', 'grn_x_items.grn=purchase_invoice.grn','left');
         $this->db->join('purchase_order_items', 'purchase_order_items.order_id=purchase_invoice.po','left');
         $this->db->join('direct_grn_items', 'direct_grn_items.order_id=purchase_invoice.grn AND purchase_invoice.po="non" ','left');     
-        $this->db->join('items', ' items.guid=direct_grn_items.item OR items.guid=direct_grn_items.item','left');
+        $this->db->join('items', ' items.guid=direct_grn_items.item OR items.guid=grn_x_items.item','left');
+        $this->db->join('stocks_history', ' stocks_history.invoice_id=purchase_invoice.guid AND stocks_history.item_id=items.guid OR stocks_history.grn_id=purchase_invoice.grn  AND stocks_history.item_id=items.guid','left');
         $this->db->join('items_category', 'items.category_id=items_category.guid','left');
         $this->db->join('brands', 'items.brand_id=brands.guid','left');
         $this->db->join('items_setting', 'items.guid=items_setting.item_id AND items_setting.purchase=1','left');
         $this->db->join('items_department', 'items.depart_id=items_department.guid','left');
         $this->db->join('taxes', "items.tax_id=taxes.guid  ",'left');
         $this->db->join('tax_types', "taxes.type=tax_types.guid AND items.tax_id=taxes.guid ",'left');
+        $this->db->group_by('items.guid');
            $sql=$this->db->get();
            
             foreach ($sql->result_array() as $row){

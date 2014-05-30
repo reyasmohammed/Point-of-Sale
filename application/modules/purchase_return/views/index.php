@@ -233,6 +233,7 @@
                 $('#parsley_reg #item_name').val($('#parsley_reg #items').select2('data').text);
                 $('#parsley_reg #cost').val($('#parsley_reg #items').select2('data').cost);
                 $('#parsley_reg #delivered_quty').val($('#parsley_reg #items').select2('data').quty);
+                $('#parsley_reg #stock').val($('#parsley_reg #items').select2('data').stocks_history);
                 $('#parsley_reg #tax_value').val($('#parsley_reg #items').select2('data').tax_value);
                 $('#parsley_reg #tax_type').val($('#parsley_reg #items').select2('data').tax_type);
                 var tax=$('#parsley_reg #items').select2('data').tax_Inclusive;
@@ -324,6 +325,7 @@
                           start : item.start_date ,
                           end : item.end_state ,
                           discount : item.discount ,
+                          stocks_history : item.stocks_history ,
                          
                         });
                       });  
@@ -660,6 +662,7 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
   var  cost=$('#parsley_reg #cost').val();
   var  items_id=$('#parsley_reg #item_id').val();
   var  limit=$('#parsley_reg #delivered_quty').val();
+  var  stocks_history=$('#parsley_reg #stock').val();
   var  tax_value=$('#parsley_reg #tax_value').val();
   
   var  tax_type=$('#parsley_reg #tax_type').val();
@@ -700,6 +703,7 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
 <input type="hidden" name="items_id[]" id="items_id" value="'+items_id+'">\n\
 <input type="hidden" name="items_sku[]" value="'+sku+'" id="items_sku">\n\
 <input type="hidden" name="item_limit" id="item_limit" value="'+limit+'">\n\
+<input type="hidden" name="item_stocks_history[]" id="item_stocks_history" value="'+stocks_history+'">\n\
 <input type="hidden" name="items_quty[]" value="'+quty+'" id="items_quty">\n\
 <input type="hidden" name="items_cost[]" value="'+cost+'" id="items_cost">\n\
 <input type="hidden" name="items_order_guid[]" value="" id="items_order_guid">\n\
@@ -763,6 +767,7 @@ function edit_order_item(guid){
     $('#parsley_reg #item_name').val($('#selected_item_table #new_item_row_id_'+guid+' #row_item_name').val());
     $('#parsley_reg #sku').val($('#selected_item_table #new_item_row_id_'+guid+' #items_sku').val());
     $('#parsley_reg #delivered_quty').val($('#selected_item_table #new_item_row_id_'+guid+' #item_limit').val());
+    $('#parsley_reg #stock').val($('#selected_item_table #new_item_row_id_'+guid+' #item_stocks_history').val());
     $('#parsley_reg #quantity').val($('#selected_item_table #new_item_row_id_'+guid+' #items_quty').val());
 
     $('#parsley_reg #cost').val($('#selected_item_table #new_item_row_id_'+guid+' #items_cost').val());
@@ -1001,6 +1006,7 @@ function new_order_date(e){
                                                     <input type="hidden" name="sku" id="sku">
                                                     <input type="hidden" name="seleted_row_id" id="seleted_row_id">
                                                     <input type="hidden" name="delivered_quty" id="delivered_quty">
+                                                    <input type="hidden" name="stock" id="stock">
                                                         </div>
                                                 
                                                  <div class="col col-lg-1" style="padding:1px;width: 120px;">

@@ -75,8 +75,18 @@ class Purchase extends CI_Model{
           $this->db->delete('direct_invoice_items');
     }
     function approve_invoice($guid){
-         $this->db->where('guid',$guid);
-         $this->db->update('direct_invoice',array('order_status'=>1));
+        $this->db->where('guid',$guid);
+        $this->db->update('direct_invoice',array('order_status'=>1));
+        $this->db->select()->from('direct_invoice')->where('guid',$guid);
+        $sql=  $this->db->get();
+        foreach ($sql->result() as $row){
+             
+            $value=array('branch_id'=>  $this->session->userdata('branch_id'),'supplier_id'=>$row->supplier_id,'invoice'=>$row->invoice_no,'direct_invoice_id'=>$guid,'date'=>$row->invoice_date,'remark'=>$row->remark,'note'=>$row->note);
+            $this->db->insert('purchase_invoice',$value);
+            $id=  $this->db->insert_id();
+            $this->db->where('id',$id);
+            $this->db->update('purchase_invoice',array('guid'=>  md5('purchase_invoice'.$id)));
+         }
         
     }
     function  check_approve($guid){
