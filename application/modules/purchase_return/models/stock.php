@@ -39,11 +39,12 @@ class Stock extends CI_Model{
     
     function search_items($search,$bill){
          $data=array();         
-        $this->db->select('stocks_history.guid as stocks_history,purchase_invoice.invoice,direct_grn_items.cost as dgrn_cost,direct_grn_items.quty as dgrn_quty,purchase_order_items.cost as grn_cost,grn_x_items.quty as grn_quty,items.code,items.uom,items.no_of_unit,items_setting.purchase_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id')->from('purchase_invoice')->where('purchase_invoice.guid',$bill)->where('purchase_invoice.branch_id',  $this->session->userdata('branch_id'));
+        $this->db->select('direct_invoice_items.item,stocks_history.guid as stocks_history,purchase_invoice.invoice,direct_invoice_items.cost as di_cost,direct_invoice_items.quty as di_quty,,direct_grn_items.cost as dgrn_cost,direct_grn_items.quty as dgrn_quty,purchase_order_items.cost as grn_cost,grn_x_items.quty as grn_quty,items.code,items.uom,items.no_of_unit,items_setting.purchase_return,items.tax_Inclusive ,tax_types.type as tax_type_name,taxes.value as tax_value,taxes.type as tax_type,brands.name as b_name,items_department.department_name as d_name,items_category.category_name as c_name,items.name,items.guid as i_guid,items.code,items.image,items.tax_Inclusive,items.tax_id')->from('purchase_invoice')->where('purchase_invoice.guid',$bill)->where('purchase_invoice.branch_id',  $this->session->userdata('branch_id'));
         $this->db->join('grn_x_items', 'grn_x_items.grn=purchase_invoice.grn','left');
         $this->db->join('purchase_order_items', 'purchase_order_items.order_id=purchase_invoice.po','left');
+        $this->db->join('direct_invoice_items', 'direct_invoice_items.order_id=purchase_invoice.direct_invoice_id','left');
         $this->db->join('direct_grn_items', 'direct_grn_items.order_id=purchase_invoice.grn AND purchase_invoice.po="non" ','left');     
-        $this->db->join('items', ' items.guid=direct_grn_items.item OR items.guid=grn_x_items.item','left');
+        $this->db->join('items', ' items.guid=direct_grn_items.item OR items.guid=grn_x_items.item OR items.guid=direct_invoice_items.item','left');
         $this->db->join('stocks_history', ' stocks_history.invoice_id=purchase_invoice.guid AND stocks_history.item_id=items.guid OR stocks_history.grn_id=purchase_invoice.grn  AND stocks_history.item_id=items.guid','left');
         $this->db->join('items_category', 'items.category_id=items_category.guid','left');
         $this->db->join('brands', 'items.brand_id=brands.guid','left');
@@ -55,6 +56,12 @@ class Stock extends CI_Model{
            $sql=$this->db->get();
            
             foreach ($sql->result_array() as $row){
+                if($row['di_cost']!=""){
+                    $row['cost']=$row['di_cost'];
+                }
+                if($row['di_quty']!=""){
+                    $row['quty']=$row['di_quty'];
+                }
                 if($row['dgrn_cost']!=""){
                     $row['cost']=$row['dgrn_cost'];
                 }
@@ -72,9 +79,9 @@ class Stock extends CI_Model{
              
             }
             
-            
-            
-         return $data;
+           
+           // print_r($data)    ;
+        return $data;
      
      }
      function get_purchase_return($guid){
@@ -96,38 +103,32 @@ class Stock extends CI_Model{
          }
          return $data;
      }
-     function delete_order_item($guid){      
-          $this->db->where('guid',$guid);
-          $this->db->delete('purchase_return_x_items');
-     }
-     function purchase_return_approve($guid){
-         $this->db->select()->from('purchase_return_x_items')->where('purchase_return_id',$guid);
-         $sql= $this->db->get();
+    function delete_order_item($guid){      
+        $this->db->where('guid',$guid);
+        $this->db->delete('purchase_return_x_items');
+    }
+    function purchase_return_approve($guid){
+        $this->db->select('purchase_invoice.invoice,purchase_return_x_items.quty as return_quty,stock.quty as stock_quty,purchase_return_x_items.item,stock.guid');
+        $this->db->from('purchase_return')->where('purchase_return.guid',$guid);
+        $this->db->join('purchase_invoice', 'purchase_invoice.guid=purchase_return.purchase_invoice_id','left');
+        $this->db->join('direct_grn', 'direct_grn.guid=purchase_invoice.grn','left');
+        $this->db->join('direct_invoice', 'direct_invoice.guid=purchase_invoice.direct_invoice_id','left');                
+        $this->db->join('stocks_history', 'stocks_history.invoice_id=direct_invoice.guid OR stocks_history.grn_id=direct_grn.guid','left');
+        $this->db->join('stock', 'stock.guid=stocks_history.stock_id','left');
+        $this->db->join('purchase_return_x_items', 'purchase_return_x_items.purchase_return_id=purchase_return.guid','left');
+        $this->db->group_by('purchase_return_x_items.item');
+        $sql=$this->db->get();
          foreach ($sql->result() as $row){
-             $price=$row->cost;
-             $quty=$row->quty;
-             $item=$row->item;
-             $stock_history=$row->stocks_history_id;
-               $this->db->select('stock.quty,stock.guid')->from('stocks_history')->where('stocks_history.guid',$stock_history);
-               $this->db->join('stock','stock.guid=stocks_history.stock_id','left');
-               $sql_order= $this->db->get();
-            
-                $stock_quty;
-                $stock_id;
-                foreach ($sql_order->result() as $stock){
-                    $stock_quty= $stock->quty;
-                    $stock_id=$stock->guid;
-                }
-           
-                $this->db->where('guid',$stock_id);
-                $this->db->update('stock',array('quty'=>$stock_quty-$quty));
-                
-               
-                
+             $stock_id=$row->guid;
+             $stock_quty=$row->stock_quty;
+             $return_quty=$row->return_quty;
+             $this->db->where('guid',$stock_id);
+             $this->db->update('stock',array('quty'=>$stock_quty-$return_quty));
+             
              
          }
-         
-        $this->db->where('guid',$guid);
+        
+    $this->db->where('guid',$guid);
     $this->db->update('purchase_return',array('stock_status'=>1));
       
         

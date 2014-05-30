@@ -12,8 +12,6 @@ class Purchase_invoice extends MX_Controller{
         $this->load->view('index',$data);
         $this->load->view('template/app/navigation',$this->posnic->modules());
         $this->load->view('template/app/footer');
-       // $this->load->model('invoice');
-        //$this->invoice->get('','','',  $this->session->userdata('branch_id'));
         
     }
     // goods Receiving Note data table

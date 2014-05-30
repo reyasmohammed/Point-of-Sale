@@ -162,6 +162,7 @@
      $(document).ready( function () {
          
        $('#parsley_reg #purchase_invoice').change(function() {
+           clear_inputs();
             refresh_items_table();
            
                    var guid = $('#parsley_reg #purchase_invoice').select2('data').id;
