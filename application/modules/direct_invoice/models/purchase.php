@@ -90,27 +90,39 @@ class Purchase extends CI_Model{
             
     }
     function direct_invoice_stock($guid,$Bid){
-        $this->db->select()->from('direct_invoice_items')->where('order_id',$guid);
+        $this->db->select('direct_invoice_items.*,direct_invoice.supplier_id')->from('direct_invoice')->where('direct_invoice.guid',$guid);
+        $this->db->join('direct_invoice_items','direct_invoice_items.order_id=direct_invoice.guid','left');
         $invoice=$this->db->get();
         foreach ($invoice->result() as $invoice_row){
             $price=$invoice_row->sell;
+            $cost=$invoice_row->cost;
             $this->db->select()->from('stock')->where('branch_id',$Bid)->where('item',$invoice_row->item);
             $sql_order=  $this->db->get();
             if($sql_order->num_rows()>0){
                 $stock_quty;
+                $stock_guid;
                 foreach ($sql_order->result() as $stock){
                     $stock_quty=  $stock->quty;
                       $selling=$stock->price;
+                      $stock_guid=$stock->guid;
                 }
                  if($selling==$price){
-            $this->db->where('branch_id',$Bid)->where('item',$invoice_row->item);
-            $this->db->update('stock',array('quty'=>$invoice_row->quty+$stock_quty,'price'=>$price));
+                $this->db->where('branch_id',$Bid)->where('item',$invoice_row->item);
+                $this->db->update('stock',array('quty'=>$invoice_row->quty+$stock_quty,'price'=>$price));
+                $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'invoice_id'=>$guid,'supplier_id'=>$invoice_row->supplier_id,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$invoice_row->item,'quty'=>$invoice_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$invoice_row->item.$id)));
             }else{
-             $this->db->insert('stock',array('item'=>$invoice_row->item,'quty'=>$invoice_row->quty,'price'=>$price,'branch_id'=>$Bid));
-            $id=  $this->db->insert_id();
-            $this->db->where('id',$id);
+                $this->db->insert('stock',array('item'=>$invoice_row->item,'quty'=>$invoice_row->quty,'price'=>$price,'branch_id'=>$Bid));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
              
-            $this->db->update('stock',array('guid'=>  md5('stock'.$invoice_row->item.$id)));
+                $this->db->update('stock',array('guid'=>  md5('stock'.$invoice_row->item.$id)));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$invoice_row->item.$id),'invoice_id'=>$guid,'supplier_id'=>$invoice_row->supplier_id,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$invoice_row->item,'quty'=>$invoice_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$invoice_row->item.$id)));
             }
 
             }else{
@@ -118,6 +130,10 @@ class Purchase extends CI_Model{
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stock',array('guid'=>  md5('stock'.$invoice_row->item.$id)));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$invoice_row->item.$id),'invoice_id'=>$guid,'supplier_id'=>$invoice_row->supplier_id,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$invoice_row->item,'quty'=>$invoice_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $id=  $this->db->insert_id();
+                $this->db->where('id',$id);
+                $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$invoice_row->item.$id)));
             }
         }
          

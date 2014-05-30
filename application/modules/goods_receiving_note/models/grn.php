@@ -60,38 +60,14 @@ class Grn extends CI_Model{
                 return $query->result_array(); 
         
     }
-    function edit_supplier($guid){
-                $this->db->select('suppliers.* ,suppliers_category.category_name as c_name,supplier_contacts.guid as c_guid,supplier_contacts.address as c_address,supplier_contacts.city as c_city,supplier_contacts.state as c_state,supplier_contacts.country as c_country,supplier_contacts.zip as c_zip ,supplier_contacts.email as c_email,supplier_contacts.phone as c_phone')->from('suppliers')->where('suppliers.guid',$guid);
-                $this->db->join('supplier_contacts', 'supplier_contacts.supplier=suppliers.guid','left');
-                $this->db->join('suppliers_category', 'suppliers.category=suppliers_category.guid','left');
-                   
-                $query=$this->db->get();
-                return $query->result(); 
-    }
-    function add_contact($guid,$address,$city,$state,$country,$zip,$email,$phone){
-        $this->db->insert('supplier_contacts',array('supplier'=>$guid,'address'=>$address,'city'=>$city,'state'=>$state,'country'=>$country,'zip'=>$zip,'email'=>$email,'phone'=>$phone));
-        $id=$this->db->insert_id();
-        $this->db->where('id',$id);
-        $this->db->update('supplier_contacts',array('guid'=>  md5('supplier_conatct'.$id)));
-    }
-    function update_suplier_contact($guid,$address,$city,$state,$country,$zip,$phone,$email){
-        $this->db->where('guid',$guid);
-        $this->db->update('suppliers',array('address1'=>$address,'city'=>$city,'state'=>$state,'zip'=>$zip,'country'=>$country,'email'=>$email,'phone'=>$phone));
-    }
-    function delete_conatct($guid){
-        $this->db->where('supplier',$guid);
-        $this->db->delete('supplier_contacts');
-    }
+    
+  
     function count($branch){
         $this->db->select()->from('purchase_order')->where('branch_id',$branch)->where('active_status',1)->where('delete_status',0);
         $sql=  $this->db->get();
         return $sql->num_rows();
     }
-    function supplier_vs_items_count($branch,$guid){
-        $this->db->select()->from('suppliers_x_items')->where('supplier_id',$guid)->where('branch_id',$branch)->where('active_status',1)->where('delete_status',0);
-        $sql=  $this->db->get();
-        return $sql->num_rows();
-    }
+   
     function search_items($search,$branch){
           $this->db->select('items.* ,items_category.guid as c_guid,items_category.category_name as c_name,brands.guid as b_guid,brands.name as b_name,items_department.department_name as d_name')->from('items')->where('items.branch_id',$branch)->where('items.active_status',1)->where('items.delete_status',1);
                 $this->db->join('items_category', 'items.category_id=items_category.guid','left');
@@ -254,7 +230,7 @@ class Grn extends CI_Model{
             if($selling==$price){
             $this->db->where('branch_id',$Bid)->where('item',$grn_row->item);
             $this->db->update('stock',array('quty'=>$grn_row->quty+$stock_quty,'price'=>$price));
-            $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+            $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'po_id'=>$grn_row->po,'grn_id'=>$guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
@@ -265,7 +241,7 @@ class Grn extends CI_Model{
             $this->db->where('id',$id);
              
             $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
-                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'po_id'=>$grn_row->po,'grn_id'=>$guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
@@ -278,7 +254,7 @@ class Grn extends CI_Model{
             $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
             
             
-                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'po_id'=>$grn_row->po,'grn_id'=>$guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$cost,'date'=>strtotime(date("Y/m/d"))));
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));

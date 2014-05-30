@@ -23,14 +23,14 @@ class Stock extends CI_Model{
         return $sql->num_rows();
     }
 
-    function update_purchase_return($guid,$item,$quty,$sell,$tax,$net){
+    function update_purchase_return($guid,$item,$quty,$cost,$tax,$net){
          $this->db->where(array('purchase_return_id'=>$guid,'item'=>$item));
-         $item_value=array('tax'=>$tax,'quty'=>$quty,'sell'=>$sell,'amount'=>$net);
+         $item_value=array('tax'=>$tax,'quty'=>$quty,'cost'=>$cost,'amount'=>$net);
          $this->db->update('purchase_return_x_items',$item_value);
          
     }
-    function add_purchase_return($guid,$item,$quty,$sell,$tax,$net){
-         $item_value=array('purchase_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'sell'=>$sell,'amount'=>$net);
+    function add_purchase_return($guid,$item,$quty,$cost,$tax,$net){
+         $item_value=array('purchase_return_id'=>$guid,'tax'=>$tax,'item'=>$item,'quty'=>$quty,'cost'=>$cost,'amount'=>$net);
          $this->db->insert('purchase_return_x_items',$item_value);
          $os_item=  $this->db->insert_id();
          $this->db->where('id',$os_item);
@@ -53,19 +53,19 @@ class Stock extends CI_Model{
            $sql=$this->db->get();
            
             foreach ($sql->result_array() as $row){
-        if($row['dgrn_cost']!=""){
-            $row['cost']=$row['dgrn_cost'];
-        }
-        if($row['dgrn_quty']!=""){
-            $row['quty']=$row['dgrn_quty'];
-        }
-        
-        if($row['grn_cost']!=""){
-            $row['cost']=$row['grn_cost'];
-        }
-        if($row['grn_quty']!=""){
-            $row['quty']=$row['grn_quty'];
-        }
+                if($row['dgrn_cost']!=""){
+                    $row['cost']=$row['dgrn_cost'];
+                }
+                if($row['dgrn_quty']!=""){
+                    $row['quty']=$row['dgrn_quty'];
+                }
+
+                if($row['grn_cost']!=""){
+                    $row['cost']=$row['grn_cost'];
+                }
+                if($row['grn_quty']!=""){
+                    $row['quty']=$row['grn_quty'];
+                }
                 $data[]=$row;
              
             }
@@ -99,25 +99,21 @@ class Stock extends CI_Model{
           $this->db->delete('purchase_return_x_items');
      }
      function purchase_return_approve($guid){
-         $this->db->select('items.no_of_unit,purchase_return_x_items.*')->from('purchase_return_x_items')->where('purchase_return_x_items.purchase_return_id',$guid);
-         $this->db->join('items','items.guid=purchase_return_x_items.item','left');
-         $sql=  $this->db->get();
+         $this->db->select()->from('purchase_return_x_items')->where('purchase_return_id',$guid);
+         $sql= $this->db->get();
          foreach ($sql->result() as $row){
-             $price=$row->sell;
+             $price=$row->cost;
              $quty=$row->quty;
              $item=$row->item;
-             $no_of_unit=$row->no_of_unit;
-             if($no_of_unit==0){
-                 $no_of_unit=1;
-             }
-               $this->db->select('stock.quty,stock.guid')->from('stock')->where('item',$item)->where('price',$price*$no_of_unit);
-              
-               $sql_order=  $this->db->get();
+             $stock_history=$row->stocks_history_id;
+               $this->db->select('stock.quty,stock.guid')->from('stocks_history')->where('stocks_history.guid',$stock_history);
+               $this->db->join('stock','stock.guid=stocks_history.stock_id','left');
+               $sql_order= $this->db->get();
             
                 $stock_quty;
                 $stock_id;
                 foreach ($sql_order->result() as $stock){
-                    $stock_quty=  $stock->quty;
+                    $stock_quty= $stock->quty;
                     $stock_id=$stock->guid;
                 }
            
