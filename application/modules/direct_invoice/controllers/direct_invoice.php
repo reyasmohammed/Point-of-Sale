@@ -343,7 +343,7 @@ function direct_invoice_approve(){
             $id=  $this->input->post('guid');
             $this->load->model('purchase');
             $this->purchase->approve_invoice($id);
-            $this->purchase->direct_invoice_stock($id,$this->session->userdata['branch_id']);
+            $this->purchase->direct_invoice_stock($id,$this->session->userdata['branch_id']);            
             echo 1;
      }else{
          echo 0;
