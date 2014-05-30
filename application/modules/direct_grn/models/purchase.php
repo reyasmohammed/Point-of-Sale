@@ -90,8 +90,8 @@ class Purchase extends CI_Model{
             
     }
     function direct_grn_stock($guid,$Bid){
-        $this->db->select('direct_grn_items.*,direct_grn.supplier_id')->from('direct_grn')->where('direct_grn.guid',$guid);
-        $this->db->join('direct_grn_items', 'direct_grn_items.order_id=direct_grn.guid','left');
+        $this->db->select('direct_grn_items.*,direct_grn.supplier_id')->from('direct_grn_items')->where('direct_grn.guid',$guid);
+        $this->db->join('direct_grn', 'direct_grn.guid=direct_grn_items.order_id','left');
         $grn=$this->db->get();
         foreach ($grn->result() as $grn_row){
             $price=$grn_row->sell;
@@ -109,7 +109,7 @@ class Purchase extends CI_Model{
             if($selling==$price){
             $this->db->where('branch_id',$Bid)->where('item',$grn_row->item);
             $this->db->update('stock',array('quty'=>$grn_row->quty+$stock_quty,'price'=>$price));
-                $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
+                $this->db->insert('stocks_history',array('stock_id'=>$stock_guid,'supplier_id'=>$supplier,'grn_id'=>$guid,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
@@ -121,7 +121,7 @@ class Purchase extends CI_Model{
              
             $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
             
-            $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
+            $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'grn_id'=>$guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
             $id=  $this->db->insert_id();
             $this->db->where('id',$id);
             $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
@@ -132,7 +132,7 @@ class Purchase extends CI_Model{
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stock',array('guid'=>  md5('stock'.$grn_row->item.$id)));
-                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
+                $this->db->insert('stocks_history',array('stock_id'=>md5('stock'.$grn_row->item.$id),'grn_id'=>$guid,'supplier_id'=>$supplier,'branch_id'=>  $this->session->userdata('branch_id'),'added_by'=>  $this->session->userdata('guid'),'item_id'=>$grn_row->item,'quty'=>$grn_row->quty,'price'=>$price,'cost'=>$grn_row->cost,'date'=>strtotime(date("Y/m/d"))));
                 $id=  $this->db->insert_id();
                 $this->db->where('id',$id);
                 $this->db->update('stocks_history',array('guid'=>  md5('stocks_history'.$grn_row->item.$id)));
