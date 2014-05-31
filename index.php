@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+///	define('ENVIRONMENT', 'development');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -35,7 +35,7 @@ if (defined('ENVIRONMENT'))
 		case 'development':
 			error_reporting(E_ALL);
 		break;
-	
+  hello error	
 		case 'testing':
 		case 'production':
 			error_reporting(0);
@@ -103,7 +103,7 @@ if (defined('ENVIRONMENT'))
 
 	// The controller function you wish to be called.
 	// $routing['function']	= '';
-
+i can give errors... 
 
 /*
  * -------------------------------------------------------------------
@@ -173,24 +173,9 @@ if (defined('ENVIRONMENT'))
 	define('FCPATH', str_replace(SELF, '', __FILE__));
 
 	// Name of the "system folder"
-	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
-
-
-	// The path to the "application" folder
-	if (is_dir($application_folder))
-	{
-		define('APPPATH', $application_folder.'/');
+	define('SYSDIR', trimBASEPATH.$application_folder.'/');
 	}
-	else
-	{
-		if ( ! is_dir(BASEPATH.$application_folder.'/'))
-		{
-			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
-		}
-
-		define('APPPATH', BASEPATH.$application_folder.'/');
-	}
-
+dfd
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
