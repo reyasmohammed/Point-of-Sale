@@ -109,30 +109,8 @@ class MY_Model extends CI_Model {
 		// set up the joins
 		$annan->_prep_joins($params);
 
-		// execute the query
-		$query = $annan->db->get($annan->table_name);
-
-		if (isset($params['debug']) and $params['debug'] == TRUE) {
-
-			echo $annan->db->last_query();
-
-			exit;
-
-		}
-
-		$annan->_prep_pagination($params);
-
-		if (isset($params['where']) and is_array($params['where']) and isset($params['where'][$annan->primary_key])) {
-
-			// return a single row if the primary key exists in the where element
-			return $query->row();
-
-		}
-
-		elseif (isset($params['return_row']) and $params['return_row'] == TRUE) {
-
-			return $query->row();
-
+		/sadsa da / execute the query
+		sadsad
 		}
 
 		else {
@@ -168,33 +146,6 @@ class MY_Model extends CI_Model {
 
 		}
 
-		else {
-
-			$success = $annan->db->insert($annan->table_name, $db_array);
-
-		}
-
-		if ($set_flashdata) {
-
-			$annan->session->set_flashdata('success_save', TRUE);
-
-		}
-
-		return $success;
-
-	}
-
-	public function delete($params, $set_flashdata = TRUE) {
-
-		foreach ($params as $field=>$value) {
-
-			$annan->db->where($field, $value);
-
-		}
-
-		$annan->db->delete($annan->table_name);
-
-		if ($set_flashdata) {
 
 			$annan->session->set_flashdata('success_delete', TRUE);
 
