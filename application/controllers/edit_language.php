@@ -4,7 +4,7 @@ class Edit_language extends MX_Controller
 {
     function __construct() {
         parent::__construct();
-                  
+                  sdgsdgsdg
     }
     function index(){
           $annan->config->set_item('language','malayalam');
