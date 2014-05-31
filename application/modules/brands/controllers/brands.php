@@ -1,40 +1,40 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Brands extends MX_Controller 
 {
     function __construct() {
         parent::__construct();
-          $this->load->library('posnic');              
+          $annan->load->library('posnic');              
     }
     function index(){
-      $this->get_brands(); 
+      $annan->get_brands(); 
   //print_r(Modules::load('users/edit_users','7c9888196685a12a83eecf9c0d05a525'));
     }
      function get_brands(){
-        $this->load->view('template/app/header'); 
-        $this->load->view('header/header');         
-        $this->load->view('template/branch',$this->posnic->branches());
+        $annan->load->view('template/app/header'); 
+        $annan->load->view('header/header');         
+        $annan->load->view('template/branch',$annan->posnic->branches());
         $data['active']='brands';
-        $this->load->view('index',$data);
-        $this->load->view('template/app/navigation',$this->posnic->modules());
-        $this->load->view('template/app/footer');
+        $annan->load->view('index',$data);
+        $annan->load->view('template/app/navigation',$annan->posnic->modules());
+        $annan->load->view('template/app/footer');
     }
     function brands_data_table(){
         $aColumns = array( 'guid','name','name','name','name','active_status' );	
 	$start = "";
 	$end="";
-	if ( $this->input->get_post('iDisplayLength') != '-1' )	{
-                $start = $this->input->get_post('iDisplayStart');
-                $end=	 $this->input->get_post('iDisplayLength');              
+	if ( $annan->input->get_post('iDisplayLength') != '-1' )	{
+                $start = $annan->input->get_post('iDisplayStart');
+                $end=	 $annan->input->get_post('iDisplayLength');              
         }	
 		$order="";
 		if ( isset( $_GET['iSortCol_0'] ) )
 		{	
-			for ( $i=0 ; $i<intval($this->input->get_post('iSortingCols') ) ; $i++ )
+			for ( $i=0 ; $i<intval($annan->input->get_post('iSortingCols') ) ; $i++ )
 			{
-				if ( $_GET[ 'bSortable_'.intval($this->input->get_post('iSortCol_'.$i)) ] == "true" )
+				if ( $_GET[ 'bSortable_'.intval($annan->input->get_post('iSortCol_'.$i)) ] == "true" )
 				{
-					$order.= $aColumns[ intval( $this->input->get_post('iSortCol_'.$i) ) ]." ".$this->input->get_post('sSortDir_'.$i ) .",";
+					$order.= $aColumns[ intval( $annan->input->get_post('iSortCol_'.$i) ) ]." ".$annan->input->get_post('sSortDir_'.$i ) .",";
 				}
 			}
 			
@@ -46,13 +46,13 @@ class Brands extends MX_Controller
 		
 			if ( $_GET['sSearch'] != "" )
 		{
-		$like =array('name'=>  $this->input->get_post('sSearch'));
+		$like =array('name'=>  $annan->input->get_post('sSearch'));
 				
 			}
 					   
-			 $rResult1 = $this->posnic->posnic_data_table($end,$start,$order,$like,'brands');
+			 $rResult1 = $annan->posnic->posnic_data_table($end,$start,$order,$like,'brands');
 		   
-		$iFilteredTotal =$this->posnic->data_table_count('brands');
+		$iFilteredTotal =$annan->posnic->data_table_count('brands');
 		
 		$iTotal =$iFilteredTotal;
 		
@@ -88,17 +88,17 @@ class Brands extends MX_Controller
    
    
     function update_brands(){
-           if($this->session->userdata['brands_per']['edit']==1){
-           if($this->input->post('brands_name')){
-                $this->form_validation->set_rules("brands_name",$this->lang->line('brands_name'),'required'); 
-                if ( $this->form_validation->run() !== false ) {  
-                      $id=  $this->input->post('guid');
-                      $name=$this->input->post('brands_name');                
+           if($annan->session->userdata['brands_per']['edit']==1){
+           if($annan->input->post('brands_name')){
+                $annan->form_validation->set_rules("brands_name",$annan->lang->line('brands_name'),'required'); 
+                if ( $annan->form_validation->run() !== false ) {  
+                      $id=  $annan->input->post('guid');
+                      $name=$annan->input->post('brands_name');                
                       $where=array('guid !='=>$id,'name'=>$name);
-                if($this->posnic->check_record_unique($where,'brands')){
+                if($annan->posnic->check_record_unique($where,'brands')){
                     $value=array('name'=>$name);
                     $update_where=array('guid'=>$id);
-                    $this->posnic->posnic_update_record($value,$update_where,'brands');
+                    $annan->posnic->posnic_update_record($value,$update_where,'brands');
                     echo 'TRUE';
                 }else{
                         echo "ALREADY";
@@ -115,8 +115,8 @@ class Brands extends MX_Controller
     }
     
     function active(){
-            $id=  $this->input->post('guid');
-            $report= $this->posnic->posnic_module_active($id,'brands'); 
+            $id=  $annan->input->post('guid');
+            $report= $annan->posnic->posnic_module_active($id,'brands'); 
             if (!$report['error']) {
                 echo 'TRUE';
               } else {
@@ -124,8 +124,8 @@ class Brands extends MX_Controller
               }
     }
     function deactive(){
-            $id=  $this->input->post('guid');
-            $report= $this->posnic->posnic_module_deactive($id,'brands'); 
+            $id=  $annan->input->post('guid');
+            $report= $annan->posnic->posnic_module_deactive($id,'brands'); 
             if (!$report['error']) {
                 echo 'TRUE';
               } else {
@@ -133,8 +133,8 @@ class Brands extends MX_Controller
               }
     }
     function edit_brands($guid){
-        if($this->session->userdata['brands_per']['edit']==1){
-        $data=  $this->posnic->get_module_details_for_update($guid,'brands');
+        if($annan->session->userdata['brands_per']['edit']==1){
+        $data=  $annan->posnic->get_module_details_for_update($guid,'brands');
         echo json_encode($data);
         }else{
             echo 'FALSE';
@@ -143,10 +143,10 @@ class Brands extends MX_Controller
             
     
     function delete(){
-        if($this->session->userdata['brands_per']['delete']==1){
-            if($this->input->post('guid')){
-             $guid=  $this->input->post('guid');
-              $this->posnic->posnic_delete($guid,'brands');
+        if($annan->session->userdata['brands_per']['delete']==1){
+            if($annan->input->post('guid')){
+             $guid=  $annan->input->post('guid');
+              $annan->posnic->posnic_delete($guid,'brands');
              echo 'TRUE';
             }
            }else{
@@ -155,15 +155,15 @@ class Brands extends MX_Controller
     }
     
     function add_brands(){
-            if($this->session->userdata['brands_per']['add']==1){
-           if($this->input->post('brands_name')){
-                $this->form_validation->set_rules("brands_name",$this->lang->line('brands_name'),'required'); 
-                if ( $this->form_validation->run() !== false ) { 
-                      $name=$this->input->post('brands_name');                
+            if($annan->session->userdata['brands_per']['add']==1){
+           if($annan->input->post('brands_name')){
+                $annan->form_validation->set_rules("brands_name",$annan->lang->line('brands_name'),'required'); 
+                if ( $annan->form_validation->run() !== false ) { 
+                      $name=$annan->input->post('brands_name');                
                       $where=array('name'=>$name);
-                if($this->posnic->check_record_unique($where,'brands')){
+                if($annan->posnic->check_record_unique($where,'brands')){
                     $value=array('name'=>$name);
-                    $this->posnic->posnic_add_record($value,'brands');
+                    $annan->posnic->posnic_add_record($value,'brands');
                     echo 'TRUE';
                 }else{
                         echo "ALREADY";
@@ -180,7 +180,7 @@ class Brands extends MX_Controller
          
     }
     function language($lang){
-       $lang= $this->lang->load($lang);
+       $lang= $annan->lang->load($lang);
        return $lang;
     }
    

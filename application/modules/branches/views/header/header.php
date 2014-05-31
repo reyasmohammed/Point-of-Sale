@@ -19,7 +19,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/branches/branches_data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/branches/branches_data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -41,9 +41,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[9]==1){
-                                                                            return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?php echo $this->lang->line('active') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?asp echo $annan->lang->line('active') ?></span>';
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?php echo $this->lang->line('active') ?>" ><?php echo $this->lang->line('deactive') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?asp echo $annan->lang->line('active') ?>" ><?asp echo $annan->lang->line('deactive') ?></span>';
                                                                         }
 								},
 								
@@ -55,9 +55,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                 if(oObj.aData[9]==1){
-                   							return '<a href=javascript:posnic_deactive("'+oObj.aData[0]+'")><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?php echo $this->lang->line('deactive') ?>"><i class="icon-pause"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                   							return '<a href=javascript:posnic_deactive("'+oObj.aData[0]+'")><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?asp echo $annan->lang->line('deactive') ?>"><i class="icon-pause"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $annan->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $annan->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
 								}else{
-                                                                        return '<a href=javascript:posnic_active("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('active') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php  echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:posnic_active("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $annan->lang->line('active') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp  echo $annan->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $annan->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -76,11 +76,11 @@
 			}
     function user_function(guid){
          var name=$('#name_'+guid).val();
-    <?php if($this->session->userdata['branches_per']['delete']==1){ ?>
-             bootbox.confirm("Are you Sure To Delete This branches ", function(result) {
+    <?asp if($annan->session->userdata['branches_per']['delete']==1){ ?>
+             bootbox.confirm("Are you Sure To Delete annan branches ", function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/branches/delete',
+                url: '<?asp echo base_url() ?>/index.asp/branches/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -89,22 +89,22 @@
                 success: function(response)
                 {
                     if(response){
-                           $.bootstrapGrowl('<?php echo $this->lang->line('customer') ?> ' +name+ ' <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl('<?asp echo $annan->lang->line('customer') ?> ' +name+ ' <?asp echo $annan->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }}
             });
         
 
                         }
-    }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('customer');?>', { type: "error" });                       
-   <?php }
+    }); <?asp }else{?>
+           $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Delete')." ".$annan->lang->line('customer');?>', { type: "error" });                       
+   <?asp }
 ?>
                         }
             function posnic_deactive(guid){
                 var name=$('#name_'+guid).val();
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/branches/deactive',
+                url: '<?asp echo base_url() ?>index.asp/branches/deactive',
                 type: "POST",
                 data: {
                     guid: guid
@@ -113,7 +113,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl(name+' <?php echo $this->lang->line('isdeactivated');?>', { type: "danger" });
+                         $.bootstrapGrowl(name+' <?asp echo $annan->lang->line('isdeactivated');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -122,7 +122,7 @@
             function posnic_active(guid){
             var name=$('#name_'+guid).val();
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/branches/active',
+                url: '<?asp echo base_url() ?>index.asp/branches/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -131,7 +131,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl(name+' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                         $.bootstrapGrowl(name+' <?asp echo $annan->lang->line('isactivated');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -140,9 +140,9 @@
            function edit_function(guid){
            $('#loading').modal('show');
                        $("#parsley_reg").trigger('reset');
-                        <?php if($this->session->userdata['branches_per']['edit']==1){ ?>
+                        <?asp if($annan->session->userdata['branches_per']['edit']==1){ ?>
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/branches/edit_branches/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/branches/edit_branches/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -184,12 +184,12 @@
                         
                               
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Edit')." ".$annan->lang->line('customer');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
 
   

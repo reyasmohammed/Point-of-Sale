@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Module_category extends MX_Controller
 {

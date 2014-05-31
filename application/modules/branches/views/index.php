@@ -29,9 +29,9 @@
                 $('#add_customer_details_form #category').val(guid);
           });
           $('#add_customer_details_form #customer_category').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $annan->lang->line('search').' '.$annan->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/branches/get_category',
+                     url: '<?asp echo base_url() ?>index.asp/branches/get_category',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -66,9 +66,9 @@
                 $('#add_customer_details_form #payment').val(guid);
           });
           $('#add_customer_details_form #payment_type').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $annan->lang->line('search').' '.$annan->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/branches/get_payment',
+                     url: '<?asp echo base_url() ?>index.asp/branches/get_payment',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -103,9 +103,9 @@
                 $('#parsley_reg #category').val(guid);
           });
           $('#parsley_reg #customer_category').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $annan->lang->line('search').' '.$annan->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/branches/get_category',
+                     url: '<?asp echo base_url() ?>index.asp/branches/get_category',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -140,9 +140,9 @@
                 $('#parsley_reg #payment').val(guid);
           });
           $('#parsley_reg #payment_type').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $annan->lang->line('search').' '.$annan->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/branches/get_payment',
+                     url: '<?asp echo base_url() ?>index.asp/branches/get_payment',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -175,59 +175,59 @@
         
         
         $('#add_new_branch').click(function() { 
-                <?php if($this->session->userdata['branches_per']['add']==1){ ?>
+                <?asp if($annan->session->userdata['branches_per']['add']==1){ ?>
                 var inputs = $('#add_customer_form').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/branches/add_branches')?>",
+                            url: "<?asp echo base_url('index.asp/branches/add_branches')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('customer').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $annan->lang->line('customer').' '.$annan->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#add_customer_details").trigger('reset');
                                        posnic_branches_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#branches_name').val()+' <?php echo $this->lang->line('customer').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#branches_name').val()+' <?asp echo $annan->lang->line('customer').' '.$annan->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $annan->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Add')." ".$annan->lang->line('customer');?>', { type: "error" });                           
                                     }
                        }
-                });<?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer');?>', { type: "error" });                       
-                    <?php }?>
+                });<?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Add')." ".$annan->lang->line('customer');?>', { type: "error" });                       
+                    <?asp }?>
         });
          $('#update_branch').click(function() { 
-                <?php if($this->session->userdata['branches_per']['edit']==1){ ?>
+                <?asp if($annan->session->userdata['branches_per']['edit']==1){ ?>
                 var inputs = $('#add_customer_form').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/branches/update_branches')?>",
+                            url: "<?asp echo base_url('index.asp/branches/update_branches')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                   if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('customer').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $annan->lang->line('customer').' '.$annan->lang->line('updated');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_branches_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#branches_name').val()+' <?php echo $this->lang->line('customer').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#branches_name').val()+' <?asp echo $annan->lang->line('customer').' '.$annan->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $annan->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Edit')." ".$annan->lang->line('customer');?>', { type: "error" });                           
                                     }
                        }
                  });
-                 <?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer');?>', { type: "error" });                        
-                    <?php }?>
+                 <?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Edit')." ".$annan->lang->line('customer');?>', { type: "error" });                        
+                    <?asp }?>
         });
      });
 function posnic_add_new(){
-    <?php if($this->session->userdata['branches_per']['add']==1){ ?>
+    <?asp if($annan->session->userdata['branches_per']['add']==1){ ?>
       $("#user_list").hide();
       $('#add_customer_details_form').show('slow');
       $('#delete').attr("disabled", "disabled");
@@ -235,9 +235,9 @@ function posnic_add_new(){
       $('#active').attr("disabled", "disabled");
       $('#deactive').attr("disabled", "disabled");
       $('#branches_lists').removeAttr("disabled");
-      <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('customer');?>', { type: "error" });                         
-                    <?php }?>
+      <?asp }else{ ?>
+                    $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Add')." ".$annan->lang->line('customer');?>', { type: "error" });                         
+                    <?asp }?>
 }
 function posnic_branches_lists(){
       $('#edit_customer_form').hide('hide');
@@ -261,11 +261,11 @@ function reload_update_user(){
     <div class="container">
             <div class="row">
                 <div class="col col-lg-7">
-                        <a href="javascript:posnic_add_new()" id="posnic_add_branches" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew') ?></a>  
-                        <a href="javascript:posnic_group_deactive()" id="active" class="btn btn-default" ><i class="icon icon-pause"></i> <?php echo $this->lang->line('deactive') ?></a>
-                        <a href="javascript:posnic_group_active()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?php echo $this->lang->line('active') ?></a>
-                        <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
-                        <a href="javascript:posnic_branches_lists()" class="btn btn-default" id="branches_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('branches') ?></a>
+                        <a href="javascript:posnic_add_new()" id="posnic_add_branches" class="btn btn-default" ><i class="icon icon-user"></i> <?asp echo $annan->lang->line('addnew') ?></a>  
+                        <a href="javascript:posnic_group_deactive()" id="active" class="btn btn-default" ><i class="icon icon-pause"></i> <?asp echo $annan->lang->line('deactive') ?></a>
+                        <a href="javascript:posnic_group_active()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?asp echo $annan->lang->line('active') ?></a>
+                        <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?asp echo $annan->lang->line('delete') ?></a>
+                        <a href="javascript:posnic_branches_lists()" class="btn btn-default" id="branches_lists"><i class="icon icon-list"></i> <?asp echo $annan->lang->line('branches') ?></a>
                 </div>
             </div>
     </div>
@@ -275,27 +275,27 @@ function reload_update_user(){
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
-                        <?php $form =array('name'=>'posnic'); 
+                        <?asp $form =array('name'=>'posnic'); 
                     echo form_open('branches/branches_manage',$form) ?>
                         <div class="row">
                             <div class="col-sm-12" id="user_list"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('branches') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $annan->lang->line('branches') ?></h4>                                                                               
                                     </div>
                                     <table id="dt_table_tools" class="table-striped table-condensed" style="width: 100%"><thead>
                                         <tr>
                                          <th>Id</th>
-                                          <th ><?php echo $this->lang->line('select') ?></th>
-                                          <th ><?php echo $this->lang->line('name') ?></th>
+                                          <th ><?asp echo $annan->lang->line('select') ?></th>
+                                          <th ><?asp echo $annan->lang->line('name') ?></th>
                                           
-                                          <th><?php echo $this->lang->line('company') ?></th>
-                                          <th><?php echo $this->lang->line('phone') ?></th>
-                                          <th><?php echo $this->lang->line('email') ?></th>
-                                          <th><?php echo $this->lang->line('category') ?></th>
-                                          <th><?php echo $this->lang->line('payment') ?></th>
-                                          <th><?php echo $this->lang->line('status') ?></th>
-                                          <th><?php echo $this->lang->line('action') ?></th>
+                                          <th><?asp echo $annan->lang->line('company') ?></th>
+                                          <th><?asp echo $annan->lang->line('phone') ?></th>
+                                          <th><?asp echo $annan->lang->line('email') ?></th>
+                                          <th><?asp echo $annan->lang->line('category') ?></th>
+                                          <th><?asp echo $annan->lang->line('payment') ?></th>
+                                          <th><?asp echo $annan->lang->line('status') ?></th>
+                                          <th><?asp echo $annan->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
                                       <tbody></tbody>
@@ -303,19 +303,19 @@ function reload_update_user(){
                                   </div>
                              </div>
                           </div>
-                <?php echo form_close(); ?>
+                <?asp echo form_close(); ?>
              </div>
         </div>
 </section>    
 <div class="modal fade" id="loading">
     <div class="modal-dialog" style="width: 146px;margin-top: 20%">
                 
-        <img src="<?php echo base_url('loader.gif') ?>" style="margin: auto">
+        <img src="<?asp echo base_url('loader.gif') ?>" style="margin: auto">
                     
         </div>
 </div>
 <section id="add_customer_details_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'add_customer_form',
+     <?asp   $form =array('id'=>'add_customer_form',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('branches/add_pos_branches_details/',$form);?>
@@ -327,7 +327,7 @@ function reload_update_user(){
                          <div class="row">
                           <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('branch')." ".$this->lang->line('details') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $annan->lang->line('branch')." ".$annan->lang->line('details') ?></h4>                                                                               
                                </div>
                               <div class="row">
                                  
@@ -336,8 +336,8 @@ function reload_update_user(){
                                            <div class="row">
                                                 <div class="col col-sm-4">
                                                    <div class="form_sep">
-                                                        <label for="branch_id" class="req"><?php echo $this->lang->line('branch_id') ?></label>													
-                                                                  <?php $branch_id=array('name'=>'branch_id',
+                                                        <label for="branch_id" class="req"><?asp echo $annan->lang->line('branch_id') ?></label>													
+                                                                  <?asp $branch_id=array('name'=>'branch_id',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'branch_id',
                                                                                     'value'=>set_value('branch_id'));
@@ -347,8 +347,8 @@ function reload_update_user(){
                                                    </div>
                                                <div class="col col-sm-4">
                                                    <div class="form_sep">
-                                                        <label for="branch_name" class="req"><?php echo $this->lang->line('branch_name') ?></label>													
-                                                                  <?php $branch_name=array('name'=>'branch_name',
+                                                        <label for="branch_name" class="req"><?asp echo $annan->lang->line('branch_name') ?></label>													
+                                                                  <?asp $branch_name=array('name'=>'branch_name',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'branch_name',
                                                                                     'value'=>set_value('branch_name'));
@@ -366,8 +366,8 @@ function reload_update_user(){
                                  
                                   <div class="col-sm-4" style="padding-left: 25px;">
                                            <div class="step_info">
-                                              <label for="address" class="req"><?php echo $this->lang->line('address') ?></label>													
-                                                    <?php 
+                                              <label for="address" class="req"><?asp echo $annan->lang->line('address') ?></label>													
+                                                    <?asp 
                                                     $address = array(
                                                                     'name'        => 'address',
                                                                     'id'          => 'address',
@@ -386,8 +386,8 @@ function reload_update_user(){
                                            <div class="row">
                                                <div class="col col-sm-6">
                                                    <div class="form_sep">
-                                                        <label for="city" class="req"><?php echo $this->lang->line('city') ?></label>													
-                                                                  <?php $city=array('name'=>'city',
+                                                        <label for="city" class="req"><?asp echo $annan->lang->line('city') ?></label>													
+                                                                  <?asp $city=array('name'=>'city',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'city',
                                                                                     'value'=>set_value('city'));
@@ -396,8 +396,8 @@ function reload_update_user(){
                                                    </div>
                                                <div class="col col-sm-6">
                                                     <div class="form_sep">
-                                                            <label for="state" class="req"><?php echo $this->lang->line('state') ?></label>													
-                                                                     <?php $state=array('name'=>'state',
+                                                            <label for="state" class="req"><?asp echo $annan->lang->line('state') ?></label>													
+                                                                     <?asp $state=array('name'=>'state',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'state',
                                                                                         'value'=>set_value('state'));
@@ -408,9 +408,9 @@ function reload_update_user(){
                                            <div class="row">
                                                   <div class="col col-sm-6">
                                                       <div class="form_sep">
-                                                            <label for="zip" class="req"><?php echo $this->lang->line('zip') ?></label>
+                                                            <label for="zip" class="req"><?asp echo $annan->lang->line('zip') ?></label>
 
-                                                                       <?php $zip=array('name'=>'zip',
+                                                                       <?asp $zip=array('name'=>'zip',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'zip',
                                                                                         'value'=>set_value('zip'));
@@ -419,8 +419,8 @@ function reload_update_user(){
                                                    </div>
                                                    <div class="col col-sm-6">
                                                        <div class="form_sep">
-                                                                        <label for="country" class="req"><?php echo $this->lang->line('country') ?></label>													
-                                                                               <?php $country=array('name'=>'country',
+                                                                        <label for="country" class="req"><?asp echo $annan->lang->line('country') ?></label>													
+                                                                               <?asp $country=array('name'=>'country',
                                                                                                     'class'=>'required  form-control',
                                                                                                     'id'=>'country',
                                                                                                     'value'=>set_value('country'));
@@ -431,8 +431,8 @@ function reload_update_user(){
                                            <div class="row">
                                                   <div class="col col-sm-6">
                                                        <div class="form_sep">
-                                                                <label for="email" class="req"><?php echo $this->lang->line('email') ?></label>													
-                                                                         <?php $email=array('name'=>'email',
+                                                                <label for="email" class="req"><?asp echo $annan->lang->line('email') ?></label>													
+                                                                         <?asp $email=array('name'=>'email',
                                                                                             'class'=>'required  form-control email',
                                                                                             'id'=>'email',
                                                                                             'value'=>set_value('email'));
@@ -442,9 +442,9 @@ function reload_update_user(){
                                                    <div class="col col-sm-6">
                                                        <div class="form_sep">
                                                             
-                                                                <label for="phone" class="req"><?php echo $this->lang->line('phone') ?></label>
+                                                                <label for="phone" class="req"><?asp echo $annan->lang->line('phone') ?></label>
 
-                                                                 <?php $phone=array('name'=>'phone',
+                                                                 <?asp $phone=array('name'=>'phone',
                                                                                             'class'=>'required  form-control number',
                                                                                             'id'=>'phone',
                                                                                             'value'=>set_value('phone'));
@@ -456,9 +456,9 @@ function reload_update_user(){
                                                   <div class="col col-sm-6">
                                                         <div class="form_sep">
                                                             
-                                                                <label for="phone" ><?php echo $this->lang->line('fax') ?></label>
+                                                                <label for="phone" ><?asp echo $annan->lang->line('fax') ?></label>
 
-                                                                 <?php $fax=array('name'=>'fax',
+                                                                 <?asp $fax=array('name'=>'fax',
                                                                                             'class'=>'form-control number',
                                                                                             'id'=>'fax',
                                                                                             'value'=>set_value('fax'));
@@ -468,9 +468,9 @@ function reload_update_user(){
                                                    <div class="col col-sm-6">
                                                        <div class="form_sep">
                                                             
-                                                                <label for="website" ><?php echo $this->lang->line('website') ?></label>
+                                                                <label for="website" ><?asp echo $annan->lang->line('website') ?></label>
 
-                                                                 <?php $website=array('name'=>'website',
+                                                                 <?asp $website=array('name'=>'website',
                                                                                             'class'=>' form-control',
                                                                                             'id'=>'website',
                                                                                             'value'=>set_value('website'));
@@ -489,7 +489,7 @@ function reload_update_user(){
                          <div class="row">
                              <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('bank_details') ?></h4>                                                                                 
+                                     <h4 class="panel-title"><?asp echo $annan->lang->line('bank_details') ?></h4>                                                                                 
                                </div>
                              <div class="row">
                                  
@@ -500,9 +500,9 @@ function reload_update_user(){
                                                  
                                                   <div class="col col-sm-4">
                                                       <div class="form_sep">
-                                                            <label for="bank_name" ><?php echo $this->lang->line('bank_name') ?></label>
+                                                            <label for="bank_name" ><?asp echo $annan->lang->line('bank_name') ?></label>
 
-                                                                       <?php $bank_name=array('name'=>'bank_name',
+                                                                       <?asp $bank_name=array('name'=>'bank_name',
                                                                                         'class'=>'form-control',
                                                                                         'id'=>'bank_name',
                                                                                         'value'=>set_value('bank_name'));
@@ -511,8 +511,8 @@ function reload_update_user(){
                                                    </div>
                                                    <div class="col col-sm-4">
                                                        <div class="form_sep">
-                                                                        <label for="bank_location" ><?php echo $this->lang->line('bank_location') ?></label>													
-                                                                               <?php $bank_location=array('name'=>'bank_location',
+                                                                        <label for="bank_location" ><?asp echo $annan->lang->line('bank_location') ?></label>													
+                                                                               <?asp $bank_location=array('name'=>'bank_location',
                                                                                                     'class'=>' form-control',
                                                                                                     'id'=>'bank_location',
                                                                                                     'value'=>set_value('bank_location'));
@@ -521,8 +521,8 @@ function reload_update_user(){
                                                      </div>
                                                <div class="col col-sm-4">
                                                        <div class="form_sep">
-                                                                <label for="account_no" ><?php echo $this->lang->line('account_no') ?></label>													
-                                                                         <?php $account_no=array('name'=>'account_no',
+                                                                <label for="account_no" ><?asp echo $annan->lang->line('account_no') ?></label>													
+                                                                         <?asp $account_no=array('name'=>'account_no',
                                                                                             'class'=>'form-control',
                                                                                             'id'=>'account_no',
                                                                                             'value'=>set_value('account_no'));
@@ -538,7 +538,7 @@ function reload_update_user(){
                          <div class="row">
                              <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('tax_details') ?></h4>                                                                                 
+                                     <h4 class="panel-title"><?asp echo $annan->lang->line('tax_details') ?></h4>                                                                                 
                                </div>
                              <div class="row">
                                  
@@ -550,8 +550,8 @@ function reload_update_user(){
                                                   
                                                   <div class="col col-sm-4">
                                                        <div class="form_sep">
-                                                                <label for="cst" ><?php echo $this->lang->line('cst') ?></label>													
-                                                                         <?php $cst=array('name'=>'cst',
+                                                                <label for="cst" ><?asp echo $annan->lang->line('cst') ?></label>													
+                                                                         <?asp $cst=array('name'=>'cst',
                                                                                             'class'=>' form-control',
                                                                                             'id'=>'cst',
                                                                                             'value'=>set_value('cst'));
@@ -561,9 +561,9 @@ function reload_update_user(){
                                                    <div class="col col-sm-4">
                                                        <div class="form_sep">
                                                             
-                                                                <label for="gst" ><?php echo $this->lang->line('gst') ?></label>
+                                                                <label for="gst" ><?asp echo $annan->lang->line('gst') ?></label>
 
-                                                                 <?php $gst=array('name'=>'gst',
+                                                                 <?asp $gst=array('name'=>'gst',
                                                                                             'class'=>' form-control ',
                                                                                             'id'=>'gst',
                                                                                             'value'=>set_value('gst'));
@@ -572,8 +572,8 @@ function reload_update_user(){
                                                    </div>
                                                <div class="col col-sm-4">
                                                        <div class="form_sep">
-                                                                <label for="tax_no" ><?php echo $this->lang->line('tax_no') ?></label>													
-                                                                         <?php $tax_no=array('name'=>'tax_no',
+                                                                <label for="tax_no" ><?asp echo $annan->lang->line('tax_no') ?></label>													
+                                                                         <?asp $tax_no=array('name'=>'tax_no',
                                                                                             'class'=>'form-control',
                                                                                             'id'=>'tax_no',
                                                                                             'value'=>set_value('tax_no'));
@@ -590,9 +590,9 @@ function reload_update_user(){
                          <div  class="row">
                           
                                   <div class="col col-lg-6 text-center"><br><br>
-                                      <button id="add_new_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
-                                      <button id="update_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('update') ?></button>
-                                      <a href="javascript:clear_add_users()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('clear') ?></a>
+                                      <button id="add_new_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $annan->lang->line('save') ?></button>
+                                      <button id="update_branch"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $annan->lang->line('update') ?></button>
+                                      <a href="javascript:clear_add_users()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?asp echo $annan->lang->line('clear') ?></a>
                                   </div>
                               </div>
                          
@@ -603,7 +603,7 @@ function reload_update_user(){
                 </div>
                 </div>
                 
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section> 
 
     
@@ -624,14 +624,14 @@ function reload_update_user(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('customer');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?asp echo $annan->lang->line('Select Atleast One')."".$annan->lang->line('customer');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
                       for (i = 0; i < posnic.length-1; i++){
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/branches/active',
+                                url: '<?asp echo base_url() ?>/index.asp/branches/active',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -640,7 +640,7 @@ function reload_update_user(){
                                 success: function(response)
                                 {
                                     if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('activated');?>', { type: "success" });
+                                         $.bootstrapGrowl('<?asp echo $annan->lang->line('activated');?>', { type: "success" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }
                                 }
@@ -665,9 +665,9 @@ function reload_update_user(){
                       }
                       if (flag<1) {
                         
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('customer');?>', { type: "warning" });
+                          $.bootstrapGrowl('<?asp echo $annan->lang->line('Select Atleast One')."".$annan->lang->line('customer');?>', { type: "warning" });
                       }else{
-                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('Are you Sure To Delete') ?>", function(result) {
+                            bootbox.confirm("<?asp echo $annan->lang->line('Are you Sure To Delete')."".$annan->lang->line('Are you Sure To Delete') ?>", function(result) {
              if(result){
               
              
@@ -675,7 +675,7 @@ function reload_update_user(){
                         for (i = 0; i < posnic.length; i++){
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/branches/delete',
+                                url: '<?asp echo base_url() ?>/index.asp/branches/delete',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -684,7 +684,7 @@ function reload_update_user(){
                                 success: function(response)
                                 {
                                     if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('deleted');?>', { type: "success" });
+                                         $.bootstrapGrowl('<?asp echo $annan->lang->line('deleted');?>', { type: "success" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }
                                 }
@@ -711,14 +711,14 @@ function reload_update_user(){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('customer');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?asp echo $annan->lang->line('Select Atleast One')."".$annan->lang->line('customer');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
                       for (i = 0; i < posnic.length-1; i++){
                           if(posnic[i].checked==true){                             
                                  $.ajax({
-                                    url: '<?php echo base_url() ?>/index.php/branches/deactive',
+                                    url: '<?asp echo base_url() ?>/index.asp/branches/deactive',
                                     type: "POST",
                                     data: {
                                         guid: posnic[i].value
@@ -727,7 +727,7 @@ function reload_update_user(){
                                     success: function(response)
                                     {
                                         if(response){
-                                             $.bootstrapGrowl('<?php echo $this->lang->line('deactivated');?>', { type: "danger" });
+                                             $.bootstrapGrowl('<?asp echo $annan->lang->line('deactivated');?>', { type: "danger" });
                                             $("#dt_table_tools").dataTable().fnDraw();
                                         }
                                     }

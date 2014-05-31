@@ -2,14 +2,14 @@
 <html>
 <head>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>auto/js/jquery-1.9.1.js"></script>
-<script type='text/javascript' src='<?php echo base_url(); ?>auto/js/jquery.ui.core.js'></script>
-<script type='text/javascript' src='<?php echo base_url(); ?>auto/js/jquery.ui.widget.js'></script>
-<script type='text/javascript' src='<?php echo base_url(); ?>auto/js/jquery.ui.menu.js'></script>
-<script type='text/javascript' src='<?php echo base_url(); ?>auto/js/jquery.ui.autocomplete.js'></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>auto/css/demos.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>auto/css/jquery.ui.base.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>auto/css/jquery.ui.theme.css" />
+<script type="text/javascript" src="<?asp echo base_url(); ?>auto/js/jquery-1.9.1.js"></script>
+<script type='text/javascript' src='<?asp echo base_url(); ?>auto/js/jquery.ui.core.js'></script>
+<script type='text/javascript' src='<?asp echo base_url(); ?>auto/js/jquery.ui.widget.js'></script>
+<script type='text/javascript' src='<?asp echo base_url(); ?>auto/js/jquery.ui.menu.js'></script>
+<script type='text/javascript' src='<?asp echo base_url(); ?>auto/js/jquery.ui.autocomplete.js'></script>
+<link rel="stylesheet" type="text/css" href="<?asp echo base_url(); ?>auto/css/demos.css" />
+<link rel="stylesheet" type="text/css" href="<?asp echo base_url(); ?>auto/css/jquery.ui.base.css" />
+<link rel="stylesheet" type="text/css" href="<?asp echo base_url(); ?>auto/css/jquery.ui.theme.css" />
 
     <script>      
 $(function() {   
@@ -33,7 +33,7 @@ $(function() {
     }    
     $( "#project" ).autocomplete({
         minLength: 0,
-        source:"<?php echo base_url() ?>index.php/purchase_main/get_item_details/",
+        source:"<?asp echo base_url() ?>index.asp/purchase_main/get_item_details/",
         focus: function( event, ui ) {
             $( "#project" ).val( ui.item.label );
             return false;
@@ -68,7 +68,7 @@ $(function() {
     };
     $( "#supplier" ).autocomplete({
         minLength: 0,
-        source:"<?php echo base_url() ?>index.php/purchase_main/get_selected_supplier/",
+        source:"<?asp echo base_url() ?>index.asp/purchase_main/get_selected_supplier/",
         focus: function( event, ui ) {
             $( "#supplier" ).val( ui.item.label );
             return false;
@@ -92,7 +92,7 @@ function set_item_details(value){
 document.getElementById('item_div').style.visibility="visible";
                        var item_name=value.val();  
                        if(item_name=="") { item_name='pos'}
-document.getElementById('item_image').style.backgroundImage="url(<?php echo base_url() ?>item_images/"+item_name+")";
+document.getElementById('item_image').style.backgroundImage="url(<?asp echo base_url() ?>item_images/"+item_name+")";
 var xmlhttp;
 if (window.XMLHttpRequest)
   {
@@ -102,7 +102,7 @@ else
   {
   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   }
-xmlhttp.open("GET","<?php echo base_url() ?>index.php/purchase_main/get_item_details_for_view/"+item_name,false);
+xmlhttp.open("GET","<?asp echo base_url() ?>index.asp/purchase_main/get_item_details_for_view/"+item_name,false);
 
 xmlhttp.send();
 document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
@@ -397,19 +397,19 @@ function remove_item(id){
    <form action="supplier_vs_items/save_items" method="post" id="form">
 	  
        <table style="margin-left: 150px">
-            <tr><td><?php echo form_label($this->lang->line('supplier code'))?></td>
+            <tr><td><?asp echo form_label($this->lang->line('supplier code'))?></td>
                 <td><input type="text" id="supplier"  name="estado"  autocomplete="off" style="width: 100px" /></td>
-                <td><?php echo form_label($this->lang->line('exp_date'))?></td><td><input type="text" name="expdate" style="width: 100px"></td>
-                <td><?php echo form_label($this->lang->line('podate'))?></td><td><input type="text" name="podate" style="width: 100px"></td>
-                <td><?php echo form_label($this->lang->line('disamount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
-                <td><?php echo form_label($this->lang->line('Round off Amount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
+                <td><?asp echo form_label($this->lang->line('exp_date'))?></td><td><input type="text" name="expdate" style="width: 100px"></td>
+                <td><?asp echo form_label($this->lang->line('podate'))?></td><td><input type="text" name="podate" style="width: 100px"></td>
+                <td><?asp echo form_label($this->lang->line('disamount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
+                <td><?asp echo form_label($this->lang->line('Round off Amount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
             </tr>
-            <tr><td><?php echo form_label($this->lang->line('supplier name'))?></td><td>
+            <tr><td><?asp echo form_label($this->lang->line('supplier name'))?></td><td>
                     <input type="text" id="name" name="estado" autocomplete="off" disabled style="width: 100px"/>
                     <input type="hidden"   name="supplier"> </td>
-             <td><?php echo form_label($this->lang->line('pono'))?></td><td><input type="text" name="pono" style="width: 100px"></td>
-             <td><?php echo form_label($this->lang->line('discount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
-             <td><?php echo form_label($this->lang->line('Freight'))?></td><td><input type="text" name="date" style="width: 100px"></td>
+             <td><?asp echo form_label($this->lang->line('pono'))?></td><td><input type="text" name="pono" style="width: 100px"></td>
+             <td><?asp echo form_label($this->lang->line('discount'))?></td><td><input type="text" name="date" style="width: 100px"></td>
+             <td><?asp echo form_label($this->lang->line('Freight'))?></td><td><input type="text" name="date" style="width: 100px"></td>
             </tr>
               </table>
 <div><div class="ui-widget item_details_css ">

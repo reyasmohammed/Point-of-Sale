@@ -17,7 +17,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/module_category/module_category_data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/module_category/module_category_data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -55,7 +55,7 @@
                                                                 if(oObj.aData[5]==1){
                    							return '&nbsp<a ><span data-toggle="tooltip" class="label label-info hint--top hint--info" ><i class="icon-edit"></i></span></a>'+"&nbsp;<a  ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' ><i class='icon-trash'></i></span> </a>";
 								}else{
-                                                                        return '&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php  echo $this->lang->line('delete'); ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp  echo $this->lang->line('delete'); ?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -74,11 +74,11 @@
 			}
     function user_function(guid){
     var module_category=$('#name_'+guid).val();
-    <?php if($this->session->userdata['module_category_per']['delete']==1){ ?>
+    <?asp if($this->session->userdata['module_category_per']['delete']==1){ ?>
              bootbox.confirm("Are you Sure To Delete This module_category ("+module_category+")", function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/module_category/delete',
+                url: '<?asp echo base_url() ?>/index.asp/module_category/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -87,22 +87,22 @@
                 success: function(response)
                 {
                     if(response){
-                          $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('deleted');?>', { type: "danger" });
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('module_category') ?> '+module_category+' <?asp echo $this->lang->line('deleted');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }}
             });
         
 
                         }
-    }); <?php }else{?>
-             $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('module_category');?>', { type: "error" });         
-   <?php }
+    }); <?asp }else{?>
+             $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('module_category');?>', { type: "error" });         
+   <?asp }
 ?>
                         }
             function posnic_deactive(guid){
                 var module_category=$('#name_'+guid).val();
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/module_category/deactive',
+                url: '<?asp echo base_url() ?>index.asp/module_category/deactive',
                 type: "POST",
                 data: {
                     guid: guid
@@ -111,7 +111,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('isdeactivated');?>', { type: "danger" });
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('module_category') ?> '+module_category+' <?asp echo $this->lang->line('isdeactivated');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -120,7 +120,7 @@
             function posnic_active(guid){
             var module_category=$('#name_'+guid).val();
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/module_category/active',
+                url: '<?asp echo base_url() ?>index.asp/module_category/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -130,7 +130,7 @@
                 {
                     if(response){
                          
-                          $.bootstrapGrowl('<?php echo $this->lang->line('module_category') ?> '+module_category+' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('module_category') ?> '+module_category+' <?asp echo $this->lang->line('isactivated');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -140,9 +140,9 @@
                        $("#parsley_reg").trigger('reset');
                        $("#update_button").show();
                        $("#add_button").hide();
-                        <?php if($this->session->userdata['module_category_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['module_category_per']['edit']==1){ ?>
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/module_category/edit_module_category/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/module_category/edit_module_category/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -165,12 +165,12 @@
                         
                               
                          
-                        <?php }else{?>
-                                bootbox.alert("<?php echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
-                        <?php }?>
+                        <?asp }else{?>
+                                bootbox.alert("<?asp echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
 
   

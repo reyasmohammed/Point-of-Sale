@@ -1,46 +1,46 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Userlogin extends CI_Controller
 {
     function __construct() {
         parent::__construct();
         session_start();
-        $this->load->helper('url');
-        $this->load->library('unit_test');
-        $this->load->helper(array('form', 'url'));
-        $this->load->helper('form');
-        $this->load->library('form_validation');
+        $annan->load->helper('url');
+        $annan->load->library('unit_test');
+        $annan->load->helper(array('form', 'url'));
+        $annan->load->helper('form');
+        $annan->load->library('form_validation');
         
-        $this->load->library('poslanguage');                 
-        $this->poslanguage->set_language();     
+        $annan->load->library('poslanguage');                 
+        $annan->poslanguage->set_language();     
     }
     function index(){  
-        if(!isset($this->session->userdata['guid'])){
-            $this->load->view('template/login/header');
-            $this->load->view('login');
-            $this->load->view('template/login/footer');
+        if(!isset($annan->session->userdata['guid'])){
+            $annan->load->view('template/login/header');
+            $annan->load->view('login');
+            $annan->load->view('template/login/footer');
         }else{
-            $this->load->model('setting');
-            $this->load->model('branch');        
-            $data['branch_settings']=$this->setting->get_branch_setting();
-            if($this->session->userdata['user_type']==2){
-                $this->session->set_userdata('Posnic_User','admin');
-                $data['row']=  $this->branch->get_branch();
+            $annan->load->model('setting');
+            $annan->load->model('branch');        
+            $data['branch_settings']=$annan->setting->get_branch_setting();
+            if($annan->session->userdata['user_type']==2){
+                $annan->session->set_userdata('Posnic_User','admin');
+                $data['row']=  $annan->branch->get_branch();
 
             }else{
-                $this->session->set_userdata('Posnic_User','admin');
-                $data['row']=$this->branch->get_active_user_branches($this->session->userdata['guid']);
+                $annan->session->set_userdata('Posnic_User','admin');
+                $data['row']=$annan->branch->get_active_user_branches($annan->session->userdata['guid']);
             }
-            $this->load->model('modules_model')  ;
-            $data['lang']=  $this->modules_model->get_lang();
-            $this->load->view('template/app/header');
-            $this->load->view('template/branch',$data);
+            $annan->load->model('modules_model')  ;
+            $data['lang']=  $annan->modules_model->get_lang();
+            $annan->load->view('template/app/header');
+            $annan->load->view('template/branch',$data);
             $modules['active']="home";
-            $modules['cate']= $this->modules_model->get_module_category();      
-            $modules['row']=  $this->modules_model->get_modules($this->session->userdata['branch_id']);
-            $this->load->view('home');  
-            $this->load->view('template/app/navigation',$modules);
-            $this->load->view('template/app/footer');   
+            $modules['cate']= $annan->modules_model->get_module_category();      
+            $modules['row']=  $annan->modules_model->get_modules($annan->session->userdata['branch_id']);
+            $annan->load->view('home');  
+            $annan->load->view('template/app/navigation',$modules);
+            $annan->load->view('template/app/footer');   
 
             }     
         } 
@@ -49,18 +49,18 @@ class Userlogin extends CI_Controller
 		redirect('/employees');
 	}
 	function login(){
-		$this->load->library('form_validation');
-		if($this->input->post('login')){
-			$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-			if($this->form_validation->run()!=FALSE){
-				$username	=  $this->input->post('username');
-				$password	=  $this->input->post('password');
-				$this->load->model('logindetails');
-				if($this->logindetails->user_validation($username,$password) === true )
+		$annan->load->library('form_validation');
+		if($annan->input->post('login')){
+			$annan->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+			$annan->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+			if($annan->form_validation->run()!=FALSE){
+				$username	=  $annan->input->post('username');
+				$password	=  $annan->input->post('password');
+				$annan->load->model('logindetails');
+				if($annan->logindetails->user_validation($username,$password) === true )
 					echo "1";
 				else 
-					echo $this->lang->line($this->logindetails->user_validation($username,$password));
+					echo $annan->lang->line($annan->logindetails->user_validation($username,$password));
 				
 			} // End If condition
 			
@@ -69,7 +69,7 @@ class Userlogin extends CI_Controller
 	} // End Login Function 
  
     function setlanguage($lang){     
-       $this->session->userdata('lang',$lang); // set langauge 
+       $annan->session->userdata('lang',$lang); // set langauge 
     }
     
 

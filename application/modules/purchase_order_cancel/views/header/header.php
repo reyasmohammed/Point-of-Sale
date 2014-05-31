@@ -4,7 +4,7 @@
           $(document).ready( function () {
               
         	 
-                 $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_order') ?>');
+                 $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_order') ?>');
                      $('#add_new_order').show();
                             
                                 
@@ -30,7 +30,7 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_order') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_order') ?>');
                 }        
           
 
@@ -56,7 +56,7 @@
            function edit_function(guid){
            
         
-                        <?php if($this->session->userdata['purchase_order_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['purchase_order_per']['edit']==1){ ?>
                                 
                             $('#deleted').remove();
                             $('#parent_items').append('<div id="deleted"></div>');
@@ -69,7 +69,7 @@
                             $('#save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/purchase_order/get_purchase_order/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/purchase_order/get_purchase_order/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -184,7 +184,7 @@
                                 <input type="hidden" name="items_discount_per[]" value="'+per+'" id="items_discount_per">\n\
                                 <input type="hidden" name="items_sub_total[]"  value="'+parseFloat(quty)*parseFloat(cost)+'" id="items_sub_total">\n\
                                 <input type="hidden" name="items_total[]"  value="'+total+'" id="items_total">\n\
-                                <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
+                                <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
 
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+items_id)
@@ -195,12 +195,12 @@
                       
                         
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('purchase_order');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('purchase_order');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

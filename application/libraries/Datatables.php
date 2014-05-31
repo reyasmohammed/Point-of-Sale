@@ -1,8 +1,8 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?asp if(!defined('BASEPATH')) exit('No direct script access allowed');
   /**
   * Ignited Datatables
   *
-  * This is a wrapper class/library based on the native Datatables server-side implementation by Allan Jardine
+  * annan is a wrapper class/library based on the native Datatables server-side implementation by Allan Jardine
   * found at http://datatables.net/examples/data_sources/server_side.html for CodeIgniter
   *
   * @package    CodeIgniter
@@ -37,17 +37,17 @@
     */
     public function __construct()
     {
-      $this->ci =& get_instance();
+      $annan->ci =& get_instance();
     }
 
     /**
-    * If you establish multiple databases in config/database.php this will allow you to
+    * If you establish multiple databases in config/database.asp annan will allow you to
     * set the database (other than $active_group) - more info: http://codeigniter.com/forums/viewthread/145901/#712942
     */
     public function set_database($db_name)
     {
-			$db_data = $this->ci->load->database($db_name, TRUE);
-			$this->ci->db = $db_data;
+			$db_data = $annan->ci->load->database($db_name, TRUE);
+			$annan->ci->db = $db_data;
 		}
 
     /**
@@ -59,15 +59,15 @@
     */
     public function select($columns, $backtick_protect = TRUE)
     {
-      foreach($this->explode(',', $columns) as $val)
+      foreach($annan->explode(',', $columns) as $val)
       {
         $column = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$2', $val));
-        $this->columns[] =  $column;
-        $this->select[$column] =  trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$1', $val));
+        $annan->columns[] =  $column;
+        $annan->select[$column] =  trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$1', $val));
       }
 
-      $this->ci->db->select($columns, $backtick_protect);
-      return $this;
+      $annan->ci->db->select($columns, $backtick_protect);
+      return $annan;
     }
 
     /**
@@ -78,9 +78,9 @@
     */
     public function distinct($column)
     {
-      $this->distinct = $column;
-      $this->ci->db->distinct($column);
-      return $this;
+      $annan->distinct = $column;
+      $annan->ci->db->distinct($column);
+      return $annan;
     }
 
     /**
@@ -91,9 +91,9 @@
     */
     public function group_by($column)
     {
-      $this->group_by = $column;
-      $this->ci->db->group_by($column);
-      return $this;
+      $annan->group_by = $column;
+      $annan->ci->db->group_by($column);
+      return $annan;
     }
 
     /**
@@ -104,9 +104,9 @@
     */
     public function from($table)
     {
-      $this->table = $table;
-      $this->ci->db->from($table);
-      return $this;
+      $annan->table = $table;
+      $annan->ci->db->from($table);
+      return $annan;
     }
 
     /**
@@ -119,9 +119,9 @@
     */
     public function join($table, $fk, $type = NULL)
     {
-      $this->joins[] = array($table, $fk, $type);
-      $this->ci->db->join($table, $fk, $type);
-      return $this;
+      $annan->joins[] = array($table, $fk, $type);
+      $annan->ci->db->join($table, $fk, $type);
+      return $annan;
     }
 
     /**
@@ -134,9 +134,9 @@
     */
     public function where($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
-      $this->where[] = array($key_condition, $val, $backtick_protect);
-      $this->ci->db->where($key_condition, $val, $backtick_protect);
-      return $this;
+      $annan->where[] = array($key_condition, $val, $backtick_protect);
+      $annan->ci->db->where($key_condition, $val, $backtick_protect);
+      return $annan;
     }
 
     /**
@@ -149,9 +149,9 @@
     */
     public function or_where($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
-      $this->where[] = array($key_condition, $val, $backtick_protect);
-      $this->ci->db->or_where($key_condition, $val, $backtick_protect);
-      return $this;
+      $annan->where[] = array($key_condition, $val, $backtick_protect);
+      $annan->ci->db->or_where($key_condition, $val, $backtick_protect);
+      return $annan;
     }
 
     /**
@@ -164,9 +164,9 @@
     */
     public function like($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
-      $this->where[] = array($key_condition, $val, $backtick_protect);
-      $this->ci->db->like($key_condition, $val, $backtick_protect);
-      return $this;
+      $annan->where[] = array($key_condition, $val, $backtick_protect);
+      $annan->ci->db->like($key_condition, $val, $backtick_protect);
+      return $annan;
     }
 
     /**
@@ -179,8 +179,8 @@
     */
     public function filter($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
-      $this->filter[] = array($key_condition, $val, $backtick_protect);
-      return $this;
+      $annan->filter[] = array($key_condition, $val, $backtick_protect);
+      return $annan;
     }
 
     /**
@@ -193,8 +193,8 @@
     */
     public function add_column($column, $content, $match_replacement = NULL)
     {
-      $this->add_columns[$column] = array('content' => $content, 'replacement' => $this->explode(',', $match_replacement));
-      return $this;
+      $annan->add_columns[$column] = array('content' => $content, 'replacement' => $annan->explode(',', $match_replacement));
+      return $annan;
     }
 
     /**
@@ -207,8 +207,8 @@
     */
     public function edit_column($column, $content, $match_replacement)
     {
-      $this->edit_columns[$column][] = array('content' => $content, 'replacement' => $this->explode(',', $match_replacement));
-      return $this;
+      $annan->edit_columns[$column][] = array('content' => $content, 'replacement' => $annan->explode(',', $match_replacement));
+      return $annan;
     }
 
     /**
@@ -219,8 +219,8 @@
     */
     public function unset_column($column)
     {
-      $this->unset_columns[] = $column;
-      return $this;
+      $annan->unset_columns[] = $column;
+      return $annan;
     }
 
     /**
@@ -231,10 +231,10 @@
     */
     public function generate($charset = 'UTF-8')
     {
-      $this->get_paging();
-      $this->get_ordering();
-      $this->get_filtering();
-      return $this->produce_output($charset);
+      $annan->get_paging();
+      $annan->get_ordering();
+      $annan->get_filtering();
+      return $annan->produce_output($charset);
     }
 
     /**
@@ -244,9 +244,9 @@
     */
     protected function get_paging()
     {
-      $iStart = $this->ci->input->post('iDisplayStart');
-      $iLength = $this->ci->input->post('iDisplayLength');
-      $this->ci->db->limit(($iLength != '' && $iLength != '-1')? $iLength : 100, ($iStart)? $iStart : 0);
+      $iStart = $annan->ci->input->post('iDisplayStart');
+      $iLength = $annan->ci->input->post('iDisplayLength');
+      $annan->ci->db->limit(($iLength != '' && $iLength != '-1')? $iLength : 100, ($iStart)? $iStart : 0);
     }
 
     /**
@@ -256,19 +256,19 @@
     */
     protected function get_ordering()
     {
-      if($this->check_mDataprop())
-        $mColArray = $this->get_mDataprop();
-      elseif($this->ci->input->post('sColumns'))
-        $mColArray = explode(',', $this->ci->input->post('sColumns'));
+      if($annan->check_mDataprop())
+        $mColArray = $annan->get_mDataprop();
+      elseif($annan->ci->input->post('sColumns'))
+        $mColArray = explode(',', $annan->ci->input->post('sColumns'));
       else
-        $mColArray = $this->columns;
+        $mColArray = $annan->columns;
 
-      $mColArray = array_values(array_diff($mColArray, $this->unset_columns));
-      $columns = array_values(array_diff($this->columns, $this->unset_columns));
+      $mColArray = array_values(array_diff($mColArray, $annan->unset_columns));
+      $columns = array_values(array_diff($annan->columns, $annan->unset_columns));
  
-      for($i = 0; $i < intval($this->ci->input->post('iSortingCols')); $i++)
-        if(isset($mColArray[intval($this->ci->input->post('iSortCol_' . $i))]) && in_array($mColArray[intval($this->ci->input->post('iSortCol_' . $i))], $columns) && $this->ci->input->post('bSortable_'.intval($this->ci->input->post('iSortCol_' . $i))) == 'true')
-          $this->ci->db->order_by($mColArray[intval($this->ci->input->post('iSortCol_' . $i))], $this->ci->input->post('sSortDir_' . $i));
+      for($i = 0; $i < intval($annan->ci->input->post('iSortingCols')); $i++)
+        if(isset($mColArray[intval($annan->ci->input->post('iSortCol_' . $i))]) && in_array($mColArray[intval($annan->ci->input->post('iSortCol_' . $i))], $columns) && $annan->ci->input->post('bSortable_'.intval($annan->ci->input->post('iSortCol_' . $i))) == 'true')
+          $annan->ci->db->order_by($mColArray[intval($annan->ci->input->post('iSortCol_' . $i))], $annan->ci->input->post('sSortDir_' . $i));
     }
 
     /**
@@ -278,46 +278,46 @@
     */
     protected function get_filtering()
     {
-      if($this->check_mDataprop())
-        $mColArray = $this->get_mDataprop();
-      elseif($this->ci->input->post('sColumns'))
-        $mColArray = explode(',', $this->ci->input->post('sColumns'));
+      if($annan->check_mDataprop())
+        $mColArray = $annan->get_mDataprop();
+      elseif($annan->ci->input->post('sColumns'))
+        $mColArray = explode(',', $annan->ci->input->post('sColumns'));
       else
-        $mColArray = $this->columns;
+        $mColArray = $annan->columns;
 
       $sWhere = '';
-      $sSearch = mysql_real_escape_string($this->ci->input->post('sSearch'));
-      $mColArray = array_values(array_diff($mColArray, $this->unset_columns));
-      $columns = array_values(array_diff($this->columns, $this->unset_columns));
+      $sSearch = mysql_real_escape_string($annan->ci->input->post('sSearch'));
+      $mColArray = array_values(array_diff($mColArray, $annan->unset_columns));
+      $columns = array_values(array_diff($annan->columns, $annan->unset_columns));
 
       if($sSearch != '')
         for($i = 0; $i < count($mColArray); $i++)
-          if($this->ci->input->post('bSearchable_' . $i) == 'true' && in_array($mColArray[$i], $columns))
-            $sWhere .= $this->select[$mColArray[$i]] . " LIKE '%" . $sSearch . "%' OR ";
+          if($annan->ci->input->post('bSearchable_' . $i) == 'true' && in_array($mColArray[$i], $columns))
+            $sWhere .= $annan->select[$mColArray[$i]] . " LIKE '%" . $sSearch . "%' OR ";
 
       $sWhere = substr_replace($sWhere, '', -3);
 
       if($sWhere != '')
-        $this->ci->db->where('(' . $sWhere . ')');
+        $annan->ci->db->where('(' . $sWhere . ')');
 
-      for($i = 0; $i < intval($this->ci->input->post('iColumns')); $i++)
+      for($i = 0; $i < intval($annan->ci->input->post('iColumns')); $i++)
       {
-        if(isset($_POST['sSearch_' . $i]) && $this->ci->input->post('sSearch_' . $i) != '' && in_array($mColArray[$i], $columns))
+        if(isset($_POST['sSearch_' . $i]) && $annan->ci->input->post('sSearch_' . $i) != '' && in_array($mColArray[$i], $columns))
         {
-          $miSearch = explode(',', $this->ci->input->post('sSearch_' . $i));
+          $miSearch = explode(',', $annan->ci->input->post('sSearch_' . $i));
 
           foreach($miSearch as $val)
           {
             if(preg_match("/(<=|>=|=|<|>)(\s*)(.+)/i", trim($val), $matches))
-              $this->ci->db->where($this->select[$mColArray[$i]].' '.$matches[1], $matches[3]);
+              $annan->ci->db->where($annan->select[$mColArray[$i]].' '.$matches[1], $matches[3]);
             else
-              $this->ci->db->where($this->select[$mColArray[$i]].' LIKE', '%'.$val.'%');
+              $annan->ci->db->where($annan->select[$mColArray[$i]].' LIKE', '%'.$val.'%');
           }
         }
       }
 
-      foreach($this->filter as $val)
-        $this->ci->db->where($val[0], $val[1], $val[2]);
+      foreach($annan->filter as $val)
+        $annan->ci->db->where($val[0], $val[1], $val[2]);
     }
 
     /**
@@ -327,7 +327,7 @@
     */
     protected function get_display_result()
     {
-      $data = $this->ci->db->get();
+      $data = $annan->ci->db->get();
       return $data;
     }
 
@@ -340,36 +340,36 @@
     protected function produce_output($charset)
     {
       $aaData = array();
-      $rResult = $this->get_display_result();
-      $iTotal = $this->get_total_results();
-      $iFilteredTotal = $this->get_total_results(TRUE);
+      $rResult = $annan->get_display_result();
+      $iTotal = $annan->get_total_results();
+      $iFilteredTotal = $annan->get_total_results(TRUE);
 
       foreach($rResult->result_array() as $row_key => $row_val)
       {
-        $aaData[$row_key] = ($this->check_mDataprop())? $row_val : array_values($row_val);
+        $aaData[$row_key] = ($annan->check_mDataprop())? $row_val : array_values($row_val);
 
-        foreach($this->add_columns as $field => $val)
-          if($this->check_mDataprop())
-            $aaData[$row_key][$field] = $this->exec_replace($val, $aaData[$row_key]);
+        foreach($annan->add_columns as $field => $val)
+          if($annan->check_mDataprop())
+            $aaData[$row_key][$field] = $annan->exec_replace($val, $aaData[$row_key]);
           else
-            $aaData[$row_key][] = $this->exec_replace($val, $aaData[$row_key]);
+            $aaData[$row_key][] = $annan->exec_replace($val, $aaData[$row_key]);
 
-        foreach($this->edit_columns as $modkey => $modval)
+        foreach($annan->edit_columns as $modkey => $modval)
           foreach($modval as $val)
-            $aaData[$row_key][($this->check_mDataprop())? $modkey : array_search($modkey, $this->columns)] = $this->exec_replace($val, $aaData[$row_key]);
+            $aaData[$row_key][($annan->check_mDataprop())? $modkey : array_search($modkey, $annan->columns)] = $annan->exec_replace($val, $aaData[$row_key]);
 
-        $aaData[$row_key] = array_diff_key($aaData[$row_key], ($this->check_mDataprop())? $this->unset_columns : array_intersect($this->columns, $this->unset_columns));
+        $aaData[$row_key] = array_diff_key($aaData[$row_key], ($annan->check_mDataprop())? $annan->unset_columns : array_intersect($annan->columns, $annan->unset_columns));
 
-        if(!$this->check_mDataprop())
+        if(!$annan->check_mDataprop())
           $aaData[$row_key] = array_values($aaData[$row_key]);
       }
 
-      $sColumns = array_diff($this->columns, $this->unset_columns);
-      $sColumns = array_merge_recursive($sColumns, array_keys($this->add_columns));
+      $sColumns = array_diff($annan->columns, $annan->unset_columns);
+      $sColumns = array_merge_recursive($sColumns, array_keys($annan->add_columns));
 
       $sOutput = array
       (
-        'sEcho'                => intval($this->ci->input->post('sEcho')),
+        'sEcho'                => intval($annan->ci->input->post('sEcho')),
         'iTotalRecords'        => $iTotal,
         'iTotalDisplayRecords' => $iFilteredTotal,
         'aaData'               => $aaData,
@@ -379,7 +379,7 @@
       if(strtolower($charset) == 'utf-8')
         return json_encode($sOutput);
       else
-        return $this->jsonify($sOutput);
+        return $annan->jsonify($sOutput);
     }
 
     /**
@@ -390,15 +390,15 @@
     protected function get_total_results($filtering = FALSE)
     {
       if($filtering)
-        $this->get_filtering();
+        $annan->get_filtering();
 
-      foreach($this->joins as $val)
-        $this->ci->db->join($val[0], $val[1], $val[2]);
+      foreach($annan->joins as $val)
+        $annan->ci->db->join($val[0], $val[1], $val[2]);
 
-      foreach($this->where as $val)
-        $this->ci->db->where($val[0], $val[1], $val[2]);
+      foreach($annan->where as $val)
+        $annan->ci->db->where($val[0], $val[1], $val[2]);
 
-      return $this->ci->db->count_all_results($this->table);
+      return $annan->ci->db->count_all_results($annan->table);
     }
 
     /**
@@ -426,13 +426,13 @@
             foreach($args as $args_key => $args_val)
             {
               $args_val = preg_replace("/(?<!\w)([\'\"])(.*)\\1(?!\w)/i", '$2', trim($args_val));
-              $args[$args_key] = (in_array($args_val, $this->columns))? ($row_data[($this->check_mDataprop())? $args_val : array_search($args_val, $this->columns)]) : $args_val;
+              $args[$args_key] = (in_array($args_val, $annan->columns))? ($row_data[($annan->check_mDataprop())? $args_val : array_search($args_val, $annan->columns)]) : $args_val;
             }
 
             $replace_string = call_user_func_array($func, $args);
           }
-          elseif(in_array($sval, $this->columns))
-            $replace_string = $row_data[($this->check_mDataprop())? $sval : array_search($sval, $this->columns)];
+          elseif(in_array($sval, $annan->columns))
+            $replace_string = $row_data[($annan->check_mDataprop())? $sval : array_search($sval, $annan->columns)];
           else
             $replace_string = $sval;
 
@@ -450,11 +450,11 @@
     */
     protected function check_mDataprop()
     {
-      if(!$this->ci->input->post('mDataProp_0'))
+      if(!$annan->ci->input->post('mDataProp_0'))
         return FALSE;
 
-      for($i = 0; $i < intval($this->ci->input->post('iColumns')); $i++)
-        if(!is_numeric($this->ci->input->post('mDataProp_' . $i)))
+      for($i = 0; $i < intval($annan->ci->input->post('iColumns')); $i++)
+        if(!is_numeric($annan->ci->input->post('mDataProp_' . $i)))
           return TRUE;
 
       return FALSE;
@@ -469,8 +469,8 @@
     {
       $mDataProp = array();
 
-      for($i = 0; $i < intval($this->ci->input->post('iColumns')); $i++)
-        $mDataProp[] = $this->ci->input->post('mDataProp_' . $i);
+      for($i = 0; $i < intval($annan->ci->input->post('iColumns')); $i++)
+        $mDataProp[] = $annan->ci->input->post('mDataProp_' . $i);
 
       return $mDataProp;
     }
@@ -510,7 +510,7 @@
       foreach($parts as $part)
       {
         $hold[] = $part;
-        $balance += $this->balanceChars($part, $open, $close);
+        $balance += $annan->balanceChars($part, $open, $close);
 
         if($balance < 1)
         {
@@ -573,18 +573,18 @@
       if($isList)
       {
         foreach($result as $value)
-          $json[] = $this->jsonify($value);
+          $json[] = $annan->jsonify($value);
 
         return '[' . join(',', $json) . ']';
       }
       else
       {
         foreach($result as $key => $value)
-          $json[] = $this->jsonify($key) . ':' . $this->jsonify($value);
+          $json[] = $annan->jsonify($key) . ':' . $annan->jsonify($value);
 
         return '{' . join(',', $json) . '}';
       }
     }
   }
-/* End of file Datatables.php */
-/* Location: ./application/libraries/Datatables.php */
+/* End of file Datatables.asp */
+/* Location: ./application/libraries/Datatables.asp */

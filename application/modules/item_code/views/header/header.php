@@ -20,7 +20,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/item_code/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/item_code/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , 
@@ -33,9 +33,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[8]==0){
-                                                                            return '<span data-toggle="tooltip" class="label label-success hint--top hint--success" ><?php echo $this->lang->line('active') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="label label-success hint--top hint--success" ><?asp echo $this->lang->line('active') ?></span>';
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip" class="label label-danger hint--top data-hint="<?php echo $this->lang->line('active') ?>" ><?php echo $this->lang->line('deactive') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="label label-danger hint--top data-hint="<?asp echo $this->lang->line('active') ?>" ><?asp echo $this->lang->line('deactive') ?></span>';
                                                                         }
 								},
 								
@@ -47,7 +47,7 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                
-                                                                        return '<a href=javascript:set_item_code("'+oObj.aData[9]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('set_code') ?>"><i class="glyphicon glyphicon-barcode"></i></span></a>';
+                                                                        return '<a href=javascript:set_item_code("'+oObj.aData[9]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('set_code') ?>"><i class="glyphicon glyphicon-barcode"></i></span></a>';
                                                                 
                                                                 },
 								
@@ -69,10 +69,10 @@
           
            function set_item_code(guid){
                        $("#parsley_reg").trigger('reset');
-                        <?php if($this->session->userdata['item_code_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['item_code_per']['edit']==1){ ?>
                                                                
                             $.ajax({                                      
-                              url: "<?php echo base_url() ?>index.php/items/edit_items/"+guid,                     
+                              url: "<?asp echo base_url() ?>index.asp/items/edit_items/"+guid,                     
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -96,12 +96,12 @@
                         
                               
                          
-                        <?php }else{?>
-                                $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('item_code');?>', { type: "error" });                           
-                        <?php }?>
+                        <?asp }else{?>
+                                $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('item_code');?>', { type: "error" });                           
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
 
   

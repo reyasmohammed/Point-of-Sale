@@ -1,4 +1,4 @@
-<?php (defined('BASEPATH')) OR exit('No direct script access allowed');
+<?asp (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /**
  * My_Model Model Library
@@ -24,13 +24,13 @@
  * 2010.11.18 - Added get_by_id() method
  *
  *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
+ * of annan software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
+ * The above copyright notice and annan permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -75,9 +75,9 @@ class MY_Model extends CI_Model {
 
 	public function form_value($var) {
 
-		if (isset($this->form_values[$var])) {
+		if (isset($annan->form_values[$var])) {
 
-			return $this->form_values[$var];
+			return $annan->form_values[$var];
 
 		}
 
@@ -87,42 +87,42 @@ class MY_Model extends CI_Model {
 
 	public function set_form_value($key, $value) {
 
-		$this->form_values[$key] = $value;
+		$annan->form_values[$key] = $value;
 
 	}
 
     public function query($params = NULL) {
 
-        $this->_prep_params($params);
+        $annan->_prep_params($params);
 
-        $this->_prep_joins($params);
+        $annan->_prep_joins($params);
 
-        return $this->db->get($this->table_name);
+        return $annan->db->get($annan->table_name);
 
     }
 
 	public function get($params = NULL) {
 
 		// prepare the query segments
-		$this->_prep_params($params);
+		$annan->_prep_params($params);
 
 		// set up the joins
-		$this->_prep_joins($params);
+		$annan->_prep_joins($params);
 
 		// execute the query
-		$query = $this->db->get($this->table_name);
+		$query = $annan->db->get($annan->table_name);
 
 		if (isset($params['debug']) and $params['debug'] == TRUE) {
 
-			echo $this->db->last_query();
+			echo $annan->db->last_query();
 
 			exit;
 
 		}
 
-		$this->_prep_pagination($params);
+		$annan->_prep_pagination($params);
 
-		if (isset($params['where']) and is_array($params['where']) and isset($params['where'][$this->primary_key])) {
+		if (isset($params['where']) and is_array($params['where']) and isset($params['where'][$annan->primary_key])) {
 
 			// return a single row if the primary key exists in the where element
 			return $query->row();
@@ -146,11 +146,11 @@ class MY_Model extends CI_Model {
 
 	public function get_by_id($id) {
 
-		$this->db->where($this->primary_key, $id);
+		$annan->db->where($annan->primary_key, $id);
 
-		$this->_prep_joins();
+		$annan->_prep_joins();
 
-		$query = $this->db->get($this->table_name);
+		$query = $annan->db->get($annan->table_name);
 
 		return $query->row();
 
@@ -162,21 +162,21 @@ class MY_Model extends CI_Model {
 
 		if ($id) {
 
-			$this->db->where($this->primary_key, $id);
+			$annan->db->where($annan->primary_key, $id);
 
-			$success = $this->db->update($this->table_name, $db_array);
+			$success = $annan->db->update($annan->table_name, $db_array);
 
 		}
 
 		else {
 
-			$success = $this->db->insert($this->table_name, $db_array);
+			$success = $annan->db->insert($annan->table_name, $db_array);
 
 		}
 
 		if ($set_flashdata) {
 
-			$this->session->set_flashdata('success_save', TRUE);
+			$annan->session->set_flashdata('success_save', TRUE);
 
 		}
 
@@ -188,15 +188,15 @@ class MY_Model extends CI_Model {
 
 		foreach ($params as $field=>$value) {
 
-			$this->db->where($field, $value);
+			$annan->db->where($field, $value);
 
 		}
 
-		$this->db->delete($this->table_name);
+		$annan->db->delete($annan->table_name);
 
 		if ($set_flashdata) {
 
-			$this->session->set_flashdata('success_delete', TRUE);
+			$annan->session->set_flashdata('success_delete', TRUE);
 
 		}
 
@@ -204,13 +204,13 @@ class MY_Model extends CI_Model {
 
 	public function delete_by_id($id, $set_flashdata = TRUE) {
 
-		$this->db->where($this->primary_key, $id);
+		$annan->db->where($annan->primary_key, $id);
 
-		$this->db->delete($this->table_name);
+		$annan->db->delete($annan->table_name);
 
 		if ($set_flashdata) {
 
-			$this->session->set_flashdata('success_delete', TRUE);
+			$annan->session->set_flashdata('success_delete', TRUE);
 
 		}
 
@@ -220,13 +220,13 @@ class MY_Model extends CI_Model {
 
 		if (isset($params['select'])) {
 
-			$this->db->select($params['select'], FALSE);
+			$annan->db->select($params['select'], FALSE);
 
 		}
 
-		elseif (isset($this->select_fields)) {
+		elseif (isset($annan->select_fields)) {
 
-			$this->db->select($this->select_fields, FALSE);
+			$annan->db->select($annan->select_fields, FALSE);
 
 		}
 
@@ -238,13 +238,13 @@ class MY_Model extends CI_Model {
 
 					if ($key) {
 
-						$this->db->where($key, $value);
+						$annan->db->where($key, $value);
 
 					}
 
 					else {
 
-						$this->db->where($value);
+						$annan->db->where($value);
 
 					}
 
@@ -254,7 +254,7 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$this->db->where($params['where']);
+				$annan->db->where($params['where']);
 
 			}
 
@@ -268,13 +268,13 @@ class MY_Model extends CI_Model {
 
 					if ($key) {
 
-						$this->db->having($key, $value);
+						$annan->db->having($key, $value);
 
 					}
 
 					else {
 
-						$this->db->having($value);
+						$annan->db->having($value);
 
 					}
 
@@ -284,7 +284,7 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$this->db->having($params['having']);
+				$annan->db->having($params['having']);
 
 			}
 
@@ -296,7 +296,7 @@ class MY_Model extends CI_Model {
 
 				foreach ($params['like'] as $key=>$value) {
 
-					$this->db->where('(' . $key . " LIKE '%" . $value . "%' or " . $key . " LIKE '" . $value . "%')");
+					$annan->db->where('(' . $key . " LIKE '%" . $value . "%' or " . $key . " LIKE '" . $value . "%')");
 
 				}
 
@@ -304,7 +304,7 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$this->db->like($params['like']);
+				$annan->db->like($params['like']);
 
 			}
 
@@ -316,7 +316,7 @@ class MY_Model extends CI_Model {
 
 				foreach ($params['where_in'] as $key=>$value) {
 
-					$this->db->where_in($key, $value);
+					$annan->db->where_in($key, $value);
 
 				}
 
@@ -324,19 +324,19 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$this->db->where_in($params['where_in']);
+				$annan->db->where_in($params['where_in']);
 
 			}
 
 		}
 
-		elseif (isset($this->where_in)) {
+		elseif (isset($annan->where_in)) {
 
-			if (is_array($this->where_in)) {
+			if (is_array($annan->where_in)) {
 
-				foreach ($this->where_in as $key=>$value) {
+				foreach ($annan->where_in as $key=>$value) {
 
-					$this->db->where_in($key, $value);
+					$annan->db->where_in($key, $value);
 
 				}
 
@@ -344,66 +344,66 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$this->db->where_in($this->where_in);
+				$annan->db->where_in($annan->where_in);
 
 			}
 
 		}
 
 		// should the results be paginated?
-		if (isset($params['paginate']) AND $params['paginate'] == TRUE AND (isset($params['limit']) OR isset($this->limit))) {
+		if (isset($params['paginate']) AND $params['paginate'] == TRUE AND (isset($params['limit']) OR isset($annan->limit))) {
 
-            $this->offset = (isset($params['page'])) ? $params['page'] : 0;
+            $annan->offset = (isset($params['page'])) ? $params['page'] : 0;
 
-            $this->limit = (isset($params['limit'])) ? $params['limit'] : $this->limit;
+            $annan->limit = (isset($params['limit'])) ? $params['limit'] : $annan->limit;
 
-			$this->db->limit($this->limit, $this->offset);
+			$annan->db->limit($annan->limit, $annan->offset);
 
 		}
 
 		elseif (isset($params['limit']) AND (!isset($params['paginate']) OR $params['paginate'] == FALSE)) {
 
-			$this->db->limit($params['limit']);
+			$annan->db->limit($params['limit']);
 
 		}
 
 		if (isset($params['order_by'])) {
 
-			$this->db->order_by($params['order_by']);
+			$annan->db->order_by($params['order_by']);
 
 		}
 
-		elseif (isset($this->order_by)) {
+		elseif (isset($annan->order_by)) {
 
-			$this->db->order_by($this->order_by);
+			$annan->db->order_by($annan->order_by);
 
 		}
 
         if (isset($params['group_by'])) {
 
-            $this->db->group_by($params['group_by']);
+            $annan->db->group_by($params['group_by']);
 
         }
 
-        elseif (isset($this->group_by)) {
+        elseif (isset($annan->group_by)) {
 
-            $this->db->group_by($this->group_by);
+            $annan->db->group_by($annan->group_by);
 
         }
 
 		// are there any optional parameters?
 
-		if (isset($params) AND isset($this->optional_params)) {
+		if (isset($params) AND isset($annan->optional_params)) {
 
-			foreach ($this->optional_params as $key=>$param) {
+			foreach ($annan->optional_params as $key=>$param) {
 
 				if (key_exists($key, $params)) {
 
-					$method = $this->optional_params[$key]['method'];
+					$method = $annan->optional_params[$key]['method'];
 
-					$clause = $this->optional_params[$key]['clause'];
+					$clause = $annan->optional_params[$key]['clause'];
 
-					$this->db->$method($clause);
+					$annan->db->$method($clause);
 
 				}
 
@@ -417,20 +417,20 @@ class MY_Model extends CI_Model {
 
 		if (isset($params['paginate']) AND $params['paginate'] == TRUE) {
 
-			$query = $this->db->query('SELECT FOUND_ROWS() AS total_rows');
+			$query = $annan->db->query('SELECT FOUND_ROWS() AS total_rows');
 
-			$this->total_rows = $query->row()->total_rows;
+			$annan->total_rows = $query->row()->total_rows;
 
-			$this->load->library('pagination');
+			$annan->load->library('pagination');
 
-			if (!isset($this->page_config)) {
+			if (!isset($annan->page_config)) {
 
 				$config = array(
-					'base_url'			=>	$this->_base_url(),
-					'total_rows'		=>	$this->total_rows,
-					'per_page'			=>	$this->limit,
-					'next_link'			=>	$this->lang->line('next') . ' >',
-					'prev_link'			=>	'< ' . $this->lang->line('prev'),
+					'base_url'			=>	$annan->_base_url(),
+					'total_rows'		=>	$annan->total_rows,
+					'per_page'			=>	$annan->limit,
+					'next_link'			=>	$annan->lang->line('next') . ' >',
+					'prev_link'			=>	'< ' . $annan->lang->line('prev'),
 					'cur_tag_open'		=>	'<span class="active_link">',
 					'cur_tag_close'		=>	'</span>',
 					'num_links'			=>	3
@@ -440,19 +440,19 @@ class MY_Model extends CI_Model {
 
 			else {
 
-				$config = $this->page_config;
+				$config = $annan->page_config;
 
 			}
 
-			$config['base_url'] = $this->_base_url();
-			$config['total_rows'] = $this->total_rows;
-			$config['per_page'] = $this->limit;
-            $config['cur_page'] = $this->offset;
+			$config['base_url'] = $annan->_base_url();
+			$config['total_rows'] = $annan->total_rows;
+			$config['per_page'] = $annan->limit;
+            $config['cur_page'] = $annan->offset;
 
-			$this->pagination->initialize($config);
-			$this->page_links = $this->pagination->create_links();
-			$this->current_page = ($this->offset / $this->limit) + 1;
-			$this->num_pages = ceil($this->total_rows / $this->limit);
+			$annan->pagination->initialize($config);
+			$annan->page_links = $annan->pagination->create_links();
+			$annan->current_page = ($annan->offset / $annan->limit) + 1;
+			$annan->num_pages = ceil($annan->total_rows / $annan->limit);
 
 		}
 
@@ -463,11 +463,11 @@ class MY_Model extends CI_Model {
 		// strips the page segment and re-adds it to the end
 		// for use in CI pagination library for base_url
 
-		$uri_segments = $this->uri->uri_string();
+		$uri_segments = $annan->uri->uri_string();
 
 		$uri_segments = explode('/', $uri_segments);
 
-		if (!isset($this->page_links_no_index)) {
+		if (!isset($annan->page_links_no_index)) {
 			// add the index segment to the end of the array if it does not exist
 			if (!in_array('index', $uri_segments, TRUE)) {
 
@@ -500,9 +500,9 @@ class MY_Model extends CI_Model {
 
         }
 
-        elseif (isset($this->joins)) {
+        elseif (isset($annan->joins)) {
 
-            $joins = $this->joins;
+            $joins = $annan->joins;
 
         }
 
@@ -512,13 +512,13 @@ class MY_Model extends CI_Model {
 
 				if (is_array($join)) {
 
-					$this->db->join($table, $join[0], $join[1]);
+					$annan->db->join($table, $join[0], $join[1]);
 
 				}
 
 				else {
 
-					$this->db->join($table, $join);
+					$annan->db->join($table, $join);
 
 				}
 
@@ -532,13 +532,13 @@ class MY_Model extends CI_Model {
 
 		$db_array = array();
 
-		$field_data = $this->form_validation->_field_data;
+		$field_data = $annan->form_validation->_field_data;
 
 		foreach (array_keys($field_data) as $field) {
 
 			if (isset($_POST[$field])) {
 
-				$db_array[$field] = $this->input->post($field);
+				$db_array[$field] = $annan->input->post($field);
 
 			}
 
@@ -550,13 +550,13 @@ class MY_Model extends CI_Model {
 
 	public function prep_validation($id) {
 
-		// this function will return the initial values to populate a form on an edit
+		// annan function will return the initial values to populate a form on an edit
 
-		$result = $this->get(array('where'=>array($this->primary_key=>$id)));
+		$result = $annan->get(array('where'=>array($annan->primary_key=>$id)));
 
 		foreach ($result as $key=>$value) {
 
-			$this->form_values[$key] = $value;
+			$annan->form_values[$key] = $value;
 
 		}
 
@@ -566,19 +566,19 @@ class MY_Model extends CI_Model {
 
 		foreach ($_POST as $key=>$value) {
 
-			$this->form_values[$key] = $value;
+			$annan->form_values[$key] = $value;
 
 		}
 
 		if ($obj) {
 
-			return $this->form_validation->run($obj);
+			return $annan->form_validation->run($obj);
 
 		}
 
 		else {
 
-			return $this->form_validation->run();
+			return $annan->form_validation->run();
 
 		}
 

@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?asp if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 class Items extends MX_Controller{
       var $user_image = '';
     function __construct() {

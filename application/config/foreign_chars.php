@@ -1,9 +1,9 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | Foreign Characters
 | -------------------------------------------------------------------
-| This file contains an array of foreign characters for transliteration
+| annan file contains an array of foreign characters for transliteration
 | conversion used by the Text helper
 |
 */
@@ -60,5 +60,5 @@ $foreign_characters = array(
 	'/ƒ/' => 'f'
 );
 
-/* End of file foreign_chars.php */
-/* Location: ./application/config/foreign_chars.php */
+/* End of file foreign_chars.asp */
+/* Location: ./application/config/foreign_chars.asp */

@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?asp if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 class Items_setting extends MX_Controller{
     function __construct() {
                 parent::__construct();

@@ -38,9 +38,9 @@
                 $('#parsley_reg #item_department').val(guid);
           });
           $('#parsley_reg #search_department').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('item_department') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('item_department') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_department',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_department',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -76,9 +76,9 @@
                 $('#parsley_reg #category').val(guid);
           });
           $('#parsley_reg #search_category').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_category',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_category',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -114,9 +114,9 @@
                 $('#parsley_reg #brand').val(guid);
           });
           $('#parsley_reg #search_brand').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('brand') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('brand') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_brand',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_brand',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -152,9 +152,9 @@
                 $('#parsley_reg #taxes_area').val(guid);
           });
           $('#parsley_reg #search_taxes_area').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('taxes_area') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('taxes_area') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_taxes_area',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_taxes_area',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -198,9 +198,9 @@
                 formatResult: format_tax,
                 formatSelection: format_tax,
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('taxes') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('taxes') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_taxes',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_taxes',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -245,9 +245,9 @@
                formatResult: format,
                formatSelection: format,
                escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('supplier') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('supplier') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_supplier',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_supplier',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -288,9 +288,9 @@
                 $('#add_item #item_department').val(guid);
           });
           $('#add_item #search_department').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('item_department') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('item_department') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_department',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_department',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -326,9 +326,9 @@
                 $('#add_item #category').val(guid);
           });
           $('#add_item #search_category').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('category') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_category',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_category',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -364,9 +364,9 @@
                 $('#add_item #brand').val(guid);
           });
           $('#add_item #search_brand').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('brand') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('brand') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_brand',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_brand',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -402,9 +402,9 @@
                 $('#add_item #taxes_area').val(guid);
           });
           $('#add_item #search_taxes_area').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('taxes_area') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('taxes_area') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_taxes_area',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_taxes_area',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -448,9 +448,9 @@
                 formatResult: format_tax,
                 formatSelection: format_tax,
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('taxes') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('taxes') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_taxes',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_taxes',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -495,9 +495,9 @@
                formatResult: format,
                formatSelection: format,
                escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('supplier') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('supplier') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/items/get_supplier',
+                     url: '<?asp echo base_url() ?>index.asp/items/get_supplier',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -534,66 +534,66 @@
        
         
         $('#add_new_item').click(function() { 
-                <?php if($this->session->userdata['items_per']['add']==1){ ?>
+                <?asp if($this->session->userdata['items_per']['add']==1){ ?>
                 var inputs = $('#add_item').serialize();
                 if($('#add_item').valid()){
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/items/add_new_item')?>",
+                            url: "<?asp echo base_url('index.asp/items/add_new_item')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('item').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('item').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#add_item").trigger('reset');
                                        posnic_items_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#items_name').val()+' <?php echo $this->lang->line('item').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#items_name').val()+' <?asp echo $this->lang->line('item').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('item');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('item');?>', { type: "error" });                           
                                     }
                        }
                 });}else{
-                        $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
-                }<?php }else{ ?>
-                  bootbox.alert("<?php echo $this->lang->line('You Have NO Permission To Add Record')?>");  
-                    <?php }?>
+                        $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                }<?asp }else{ ?>
+                  bootbox.alert("<?asp echo $this->lang->line('You Have NO Permission To Add Record')?>");  
+                    <?asp }?>
         });
          $('#update_items').click(function() { 
-                <?php if($this->session->userdata['items_per']['edit']==1){ ?>
+                <?asp if($this->session->userdata['items_per']['edit']==1){ ?>
                 var inputs = $('#parsley_reg').serialize();
                  if($('#parsley_reg').valid()){
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/items/update_items')?>",
+                            url: "<?asp echo base_url('index.asp/items/update_items')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                   if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('item').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('item').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_items_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#items_name').val()+' <?php echo $this->lang->line('item').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#items_name').val()+' <?asp echo $this->lang->line('item').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('item');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('item');?>', { type: "error" });                           
                                     }
                        }
                  });
                  }else{
-                        $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                        $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                 }
-                 <?php }else{ ?>
-                  bootbox.alert("<?php echo $this->lang->line('You Have NO permission To Edit This Records')?>");  
-                    <?php }?>
+                 <?asp }else{ ?>
+                  bootbox.alert("<?asp echo $this->lang->line('You Have NO permission To Edit This Records')?>");  
+                    <?asp }?>
         });
      });
 function posnic_add_new(){
-    <?php if($this->session->userdata['items_per']['add']==1){ ?>
+    <?asp if($this->session->userdata['items_per']['add']==1){ ?>
       $("#user_list").hide();
       $('#add_item_form').show('slow');
       $('#delete').attr("disabled", "disabled");
@@ -602,9 +602,9 @@ function posnic_add_new(){
       $('#deactive').attr("disabled", "disabled");
       $('#items_lists').removeAttr("disabled");
       change_orm_to_unit();
-      <?php }else{ ?>
-                  bootbox.alert("<?php echo $this->lang->line('You Have NO Permission To Add User')?>");  
-                    <?php }?>
+      <?asp }else{ ?>
+                  bootbox.alert("<?asp echo $this->lang->line('You Have NO Permission To Add User')?>");  
+                    <?asp }?>
 }
 function posnic_items_lists(){
       $('#edit_item_form').hide('hide');
@@ -641,11 +641,11 @@ function change_orm_to_case_update(){
     <div class="container">
             <div class="row">
                 <div class="col col-lg-7">
-                        <a href="javascript:posnic_add_new()" id="posnic_add_items" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew') ?></a>  
-                        <a href="javascript:posnic_group_deactive()" id="active" class="btn btn-default" ><i class="icon icon-pause"></i> <?php echo $this->lang->line('deactive') ?></a>
-                        <a href="javascript:posnic_group_active()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?php echo $this->lang->line('active') ?></a>
-                        <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?php echo $this->lang->line('delete') ?></a>
-                        <a href="javascript:posnic_items_lists()" class="btn btn-default" id="items_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('items') ?></a>
+                        <a href="javascript:posnic_add_new()" id="posnic_add_items" class="btn btn-default" ><i class="icon icon-user"></i> <?asp echo $this->lang->line('addnew') ?></a>  
+                        <a href="javascript:posnic_group_deactive()" id="active" class="btn btn-default" ><i class="icon icon-pause"></i> <?asp echo $this->lang->line('deactive') ?></a>
+                        <a href="javascript:posnic_group_active()" class="btn btn-default" id="deactive"  ><i class="icon icon-play"></i> <?asp echo $this->lang->line('active') ?></a>
+                        <a href="javascript:posnic_delete()" class="btn btn-default" id="delete"><i class="icon icon-trash"></i> <?asp echo $this->lang->line('delete') ?></a>
+                        <a href="javascript:posnic_items_lists()" class="btn btn-default" id="items_lists"><i class="icon icon-list"></i> <?asp echo $this->lang->line('items') ?></a>
                 </div>
             </div>
     </div>
@@ -655,27 +655,27 @@ function change_orm_to_case_update(){
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
-                        <?php $form =array('name'=>'posnic'); 
+                        <?asp $form =array('name'=>'posnic'); 
                     echo form_open('items/items_manage',$form) ?>
                         <div class="row">
                             <div class="col-sm-12" id="user_list"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('items') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('items') ?></h4>                                                                               
                                     </div>
                                     <table id="dt_table_tools" class="table-striped table-condensed" style="width: 100%"><thead>
                                         <tr>
                                           <th>Id</th>
-                                          <th ><?php echo $this->lang->line('select') ?></th>
-                                          <th ><?php echo $this->lang->line('sku') ?></th>
-                                          <th ><?php echo $this->lang->line('name') ?></th>
-                                          <th ><?php echo $this->lang->line('location') ?></th>
-                                          <th ><?php echo $this->lang->line('brand') ?></th>
-                                          <th ><?php echo $this->lang->line('category') ?> </th>
-                                          <th ><?php echo $this->lang->line('item_department') ?></th>
+                                          <th ><?asp echo $this->lang->line('select') ?></th>
+                                          <th ><?asp echo $this->lang->line('sku') ?></th>
+                                          <th ><?asp echo $this->lang->line('name') ?></th>
+                                          <th ><?asp echo $this->lang->line('location') ?></th>
+                                          <th ><?asp echo $this->lang->line('brand') ?></th>
+                                          <th ><?asp echo $this->lang->line('category') ?> </th>
+                                          <th ><?asp echo $this->lang->line('item_department') ?></th>
                                           
-                                          <th><?php echo $this->lang->line('status') ?></th>
-                                          <th ><?php echo $this->lang->line('action') ?></th>
+                                          <th><?asp echo $this->lang->line('status') ?></th>
+                                          <th ><?asp echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
                                       <tbody></tbody>
@@ -683,12 +683,12 @@ function change_orm_to_case_update(){
                                   </div>
                              </div>
                           </div>
-                <?php echo form_close(); ?>
+                <?asp echo form_close(); ?>
              </div>
         </div>
 </section>    
 <section id="add_items_image" class="container clearfix main_section">
-       <form id="add_image_form" action="<?php echo base_url() ?>index.php/items/add_item_image" method="post" enctype="multipart/form-data">
+       <form id="add_image_form" action="<?asp echo base_url() ?>index.asp/items/add_item_image" method="post" enctype="multipart/form-data">
         <div id="main_content_outer" class="clearfix">
            <div id="main_content">
                  <div class="row">
@@ -696,15 +696,15 @@ function change_orm_to_case_update(){
                      <div class="col col-lg-6">
                          <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item_details') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item_details') ?></h4>  
                                    
                                </div>
                          <div class="row">
                              <div class="col col-lg-2"> </div>
                              <div class="col col-lg-4">
                                  <div class="form_sep">
-                                                         <label for="name" ><?php echo $this->lang->line('name') ?></label>                                                                                                       
-                                                           <?php $name=array('name'=>'name',
+                                                         <label for="name" ><?asp echo $this->lang->line('name') ?></label>                                                                                                       
+                                                           <?asp $name=array('name'=>'name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'name',
                                                                                     'disabled'=>'disabled',
@@ -714,8 +714,8 @@ function change_orm_to_case_update(){
                              </div>
                              <div class="col col-lg-4">
                                                     <div class="form_sep">
-                                                         <label for="sku" ><?php echo $this->lang->line('sku') ?></label>                                                                                                       
-                                                           <?php $sku=array('name'=>'sku',
+                                                         <label for="sku" ><?asp echo $this->lang->line('sku') ?></label>                                                                                                       
+                                                           <?asp $sku=array('name'=>'sku',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'sku',
                                                                                     'disabled'=>'disabled',
@@ -735,14 +735,14 @@ function change_orm_to_case_update(){
                               <br>
 
                               <div class="step_info" style="margin: auto">
-                                                <label for="firstname" ><?php echo $this->lang->line('image') ?></label>                     
+                                                <label for="firstname" ><?asp echo $this->lang->line('image') ?></label>                     
                                                 <div class="fileupload fileupload-new " data-provides="fileupload">
                                                      <div class="fileupload-new img-thumbnail" style="width: 178px; height: 120px;"><img src="img/no_img_180.png" alt=""></div>
                                                        <div  class="fileupload-preview fileupload-exists img-thumbnail" style="width: 178px; height: 120px"></div>
                                                        <div>
-                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?php echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?php echo $this->lang->line('change') ?></span>
+                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?asp echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?asp echo $this->lang->line('change') ?></span>
                                                             <input type="file" name="userfile" /></span>
-                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?php echo $this->lang->line('remove') ?></a>
+                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?asp echo $this->lang->line('remove') ?></a>
                                                        </div>
                                                  </div>
                                             </div>
@@ -769,16 +769,16 @@ $(document).ready(function()
 	var options = { 
 	complete: function(response) { 
                   if(response['responseText']=='TRUE'){
-                                     $.bootstrapGrowl('<?php echo $this->lang->line('items').' '.$this->lang->line('added');?>', { type: "success" });                                                                                    
+                                     $.bootstrapGrowl('<?asp echo $this->lang->line('items').' '.$this->lang->line('added');?>', { type: "success" });                                                                                    
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#add_item").trigger('reset');
                                        posnic_items_lists();
                   }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#add_item #name').val()+' <?php echo $this->lang->line('items').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#add_item #name').val()+' <?asp echo $this->lang->line('items').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                   }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                   }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items');?>', { type: "error" });                           
                   }
 	 
                   
@@ -793,16 +793,16 @@ $(document).ready(function()
 	var update = { 
 	complete: function(response) { 
                   if(response['responseText']=='TRUE'){
-                                     $.bootstrapGrowl('<?php echo $this->lang->line('items').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                    
+                                     $.bootstrapGrowl('<?asp echo $this->lang->line('items').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                    
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_items_lists();
                   }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#add_item #name').val()+' <?php echo $this->lang->line('items').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#add_item #name').val()+' <?asp echo $this->lang->line('items').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                   }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                   }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('items');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('items');?>', { type: "error" });                           
                   }
 	 
                   
@@ -819,16 +819,16 @@ $(document).ready(function()
      $("#add_item").ajaxForm(options);
      $("#parsley_reg").ajaxForm(update);
      
-     <?php if($this->session->userdata['items_per']['add']==1){ ?>
+     <?asp if($this->session->userdata['items_per']['add']==1){ ?>
           if($('#add_item').valid()){
             $("#add_item").ajaxForm(options);
           }else{
               
-            $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields')." ".$this->lang->line('add_item');?>', { type: "error" });         
+            $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields')." ".$this->lang->line('add_item');?>', { type: "error" });         
           }         
-       <?php }else{ ?>
-                  bootbox.alert("<?php echo $this->lang->line('You Have NO Permission To Add Record')?>");  
-       <?php }?>
+       <?asp }else{ ?>
+                  bootbox.alert("<?asp echo $this->lang->line('You Have NO Permission To Add Record')?>");  
+       <?asp }?>
 
 });
 function new_no_of_unit(e){    
@@ -1096,7 +1096,7 @@ function new_discount(e){
     }
 </script>
 <section id="add_item_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'add_item',
+     <?asp   $form =array('id'=>'add_item',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('items/add_new_item/',$form);?>
@@ -1107,7 +1107,7 @@ function new_discount(e){
                      <div class="col-lg-7">
                           <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item_details') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item_details') ?></h4>  
                                    
                                </div>
                               <br>
@@ -1117,8 +1117,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="sku" class="req"><?php echo $this->lang->line('sku') ?></label>                                                                                                       
-                                                           <?php $sku=array('name'=>'sku',
+                                                         <label for="sku" class="req"><?asp echo $this->lang->line('sku') ?></label>                                                                                                       
+                                                           <?asp $sku=array('name'=>'sku',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'sku',
                                                                                     'value'=>set_value('sku'));
@@ -1130,8 +1130,8 @@ function new_discount(e){
                                    <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="barcode" class="req"><?php echo $this->lang->line('barcode') ?></label>                                                                                                       
-                                                           <?php $barcode=array('name'=>'barcode',
+                                                         <label for="barcode" class="req"><?asp echo $this->lang->line('barcode') ?></label>                                                                                                       
+                                                           <?asp $barcode=array('name'=>'barcode',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'barcode',
                                                                                     'value'=>set_value('barcode'));
@@ -1143,8 +1143,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="name" class="req"><?php echo $this->lang->line('name') ?></label>                                                                                                       
-                                                           <?php $name=array('name'=>'name',
+                                                         <label for="name" class="req"><?asp echo $this->lang->line('name') ?></label>                                                                                                       
+                                                           <?asp $name=array('name'=>'name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'name',
                                                                                     'value'=>set_value('mrp'));
@@ -1158,8 +1158,8 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                     <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="item_department" class="req"><?php echo $this->lang->line('item_department') ?></label>                                                                                                       
-                                                           <?php $item_department=array('name'=>'search_department',
+                                                         <label for="item_department" class="req"><?asp echo $this->lang->line('item_department') ?></label>                                                                                                       
+                                                           <?asp $item_department=array('name'=>'search_department',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_department',
                                                                                     'value'=>set_value('item_department'));
@@ -1169,8 +1169,8 @@ function new_discount(e){
                                                     </div>    
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="category" class="req"><?php echo $this->lang->line('category') ?></label>                                                                                                       
-                                                           <?php $category=array('name'=>'search_category',
+                                                         <label for="category" class="req"><?asp echo $this->lang->line('category') ?></label>                                                                                                       
+                                                           <?asp $category=array('name'=>'search_category',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_category',
                                                                                     'value'=>set_value('category'));
@@ -1181,8 +1181,8 @@ function new_discount(e){
                                         </div>
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="brand" class="req"><?php echo $this->lang->line('brand') ?></label>                                                                                                       
-                                                           <?php $brand=array('name'=>'search_brand',
+                                                         <label for="brand" class="req"><?asp echo $this->lang->line('brand') ?></label>                                                                                                       
+                                                           <?asp $brand=array('name'=>'search_brand',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_brand',
                                                                                     'value'=>set_value('brand'));
@@ -1195,8 +1195,8 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="location" ><?php echo $this->lang->line('location') ?></label>                                                                                                       
-                                                           <?php $location=array('name'=>'location',
+                                                         <label for="location" ><?asp echo $this->lang->line('location') ?></label>                                                                                                       
+                                                           <?asp $location=array('name'=>'location',
                                                                                     'class'=>'form-control',
                                                                                     'id'=>'location',
                                                                                     'value'=>set_value('location'));
@@ -1206,8 +1206,8 @@ function new_discount(e){
                                         </div>
                                   <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="supplier" class="req"><?php echo $this->lang->line('supplier') ?></label>                                                                                                       
-                                                           <?php $supplier=array('name'=>'search_supplier',
+                                                         <label for="supplier" class="req"><?asp echo $this->lang->line('supplier') ?></label>                                                                                                       
+                                                           <?asp $supplier=array('name'=>'search_supplier',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_supplier',
                                                                                     'value'=>set_value('supplier'));
@@ -1221,8 +1221,8 @@ function new_discount(e){
                                    <div class="col col-lg-4" >
                                          
                                                     <div class="form_sep">
-                                                         <label for="description" ><?php echo $this->lang->line('description') ?></label>                                                                                                       
-                                                           <?php $description=array('name'=>'description',
+                                                         <label for="description" ><?asp echo $this->lang->line('description') ?></label>                                                                                                       
+                                                           <?asp $description=array('name'=>'description',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'description',
                                                                                     'rows'=>2,
@@ -1236,18 +1236,18 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="tax_Inclusive" class="req"><?php echo $this->lang->line('tax_Inclusive') ?></label>                                                                                                       
+                                                         <label for="tax_Inclusive" class="req"><?asp echo $this->lang->line('tax_Inclusive') ?></label>                                                                                                       
                                                          <select name="tax_Inclusive" id="tax_Inclusive" class="form-control">
-                                                             <option value="1"><?php echo $this->lang->line('yes') ?></option>
-                                                             <option value="0"><?php echo $this->lang->line('no') ?></option>
+                                                             <option value="1"><?asp echo $this->lang->line('yes') ?></option>
+                                                             <option value="0"><?asp echo $this->lang->line('no') ?></option>
                                                          </select>
                                                     </div>
                                                    
                                         </div> 
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="taxes_area" class="req"><?php echo $this->lang->line('taxes_area') ?></label>                                                                                                       
-                                                           <?php $taxes_area=array('name'=>'search_taxes_area',
+                                                         <label for="taxes_area" class="req"><?asp echo $this->lang->line('taxes_area') ?></label>                                                                                                       
+                                                           <?asp $taxes_area=array('name'=>'search_taxes_area',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_taxes_area',
                                                                                     'value'=>set_value('taxes_area'));
@@ -1258,8 +1258,8 @@ function new_discount(e){
                                         </div>                              
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="taxes" class="req"><?php echo $this->lang->line('taxes') ?></label>                                                                                                       
-                                                           <?php $taxes=array('name'=>'search_taxes',
+                                                         <label for="taxes" class="req"><?asp echo $this->lang->line('taxes') ?></label>                                                                                                       
+                                                           <?asp $taxes=array('name'=>'search_taxes',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_taxes',
                                                                                     'value'=>set_value('taxes'));
@@ -1275,8 +1275,8 @@ function new_discount(e){
                                   <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="cost" class="req"><?php echo $this->lang->line('cost') ?></label>                                                                                                       
-                                                           <?php $cost=array('name'=>'cost',
+                                                         <label for="cost" class="req"><?asp echo $this->lang->line('cost') ?></label>                                                                                                       
+                                                           <?asp $cost=array('name'=>'cost',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'cost',
                                                                                     'onKeyPress'=>"new_cost(event);return numbersonly(event)",
@@ -1287,8 +1287,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="mrp" class="req"><?php echo $this->lang->line('mrp') ?></label>                                                                                                       
-                                                           <?php $mrp=array('name'=>'mrp',
+                                                         <label for="mrp" class="req"><?asp echo $this->lang->line('mrp') ?></label>                                                                                                       
+                                                           <?asp $mrp=array('name'=>'mrp',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'mrp',
                                                                                     'onKeyPress'=>"new_mrp(event);return numbersonly(event)",
@@ -1300,8 +1300,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="selling_price" class="req"><?php echo $this->lang->line('selling_price') ?></label>                                                                                                       
-                                                           <?php $selling_price=array('name'=>'selling_price',
+                                                         <label for="selling_price" class="req"><?asp echo $this->lang->line('selling_price') ?></label>                                                                                                       
+                                                           <?asp $selling_price=array('name'=>'selling_price',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'selling_price',
                                                                                     'onKeyPress'=>"new_price(event);return numbersonly(event)",
@@ -1322,15 +1322,15 @@ function new_discount(e){
                           </div>
                          <div class="panel panel-default" style="margin-top: 6px">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item')." ".$this->lang->line('discount') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item')." ".$this->lang->line('discount') ?></h4>  
                                    
                                </div>
                               
                               <div class="row "  style="margin-left:10px;margin-right: 10px" >
                                          <div class="col col-lg-4" >
                                                                  <div class="form_sep">
-                                                                      <label for="discount_per" ><?php echo $this->lang->line('discount_per') ?></label>                                                                                                       
-                                                                        <?php $discount_per=array('name'=>'discount_per',
+                                                                      <label for="discount_per" ><?asp echo $this->lang->line('discount_per') ?></label>                                                                                                       
+                                                                        <?asp $discount_per=array('name'=>'discount_per',
                                                                                                  'class'=>'form-control',
                                                                                                  'onKeyPress'=>"new_discount(event);return numbersonly(event)",
                                                                                                  'id'=>'discount_per',
@@ -1342,9 +1342,9 @@ function new_discount(e){
                                                     <div class="col col-lg-4" >
 
                                                                  <div class="form_sep">
-                                                                      <label for="starting_date" ><?php echo $this->lang->line('starting_date') ?></label>                                                                                                       
+                                                                      <label for="starting_date" ><?asp echo $this->lang->line('starting_date') ?></label>                                                                                                       
                                                                        <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                                    <?php $starting_date=array('name'=>'starting_date',
+                                                                                    <?asp $starting_date=array('name'=>'starting_date',
                                                                                                  'class'=>' form-control',
                                                                                                  'id'=>'starting_date',
                                                                                                  'value'=>set_value('starting_date'));
@@ -1357,9 +1357,9 @@ function new_discount(e){
                                                     <div class="col col-lg-4" >
 
                                                                  <div class="form_sep">
-                                                                      <label for="ending_date" ><?php echo $this->lang->line('ending_date') ?></label>                                                                                                       
+                                                                      <label for="ending_date" ><?asp echo $this->lang->line('ending_date') ?></label>                                                                                                       
                                                                       <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                       <?php $ending_date=array('name'=>'ending_date',
+                                                                       <?asp $ending_date=array('name'=>'ending_date',
                                                                                                  'class'=>' form-control',
                                                                                                  'id'=>'ending_date',
                                                                                                  'value'=>set_value('ending_date'));
@@ -1382,7 +1382,7 @@ function new_discount(e){
                       <div class="col-lg-5">
                               <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('uom') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('uom') ?></h4>  
                                    
                                </div>
                               <br>
@@ -1391,10 +1391,10 @@ function new_discount(e){
                               <div class="row "  style="margin-left:1px;margin-right: 1px" >
                                          <div class="col col-lg-6" >
                                                                  <div class="form_sep">
-                                                                      <label for="purchase" ><?php echo $this->lang->line('purchase') ?></label>                                                                                                       
+                                                                      <label for="purchase" ><?asp echo $this->lang->line('purchase') ?></label>                                                                                                       
                                                                       <select class="form-control" name="unit_of_mes" id="unit_of_mes">
-                                                                          <option value="0" onclick="change_orm_to_unit()"><?php echo $this->lang->line('unit_or_pics') ?></option>
-                                                                          <option value="1" onclick="change_orm_to_case()"><?php echo $this->lang->line('case_or_box') ?></option>
+                                                                          <option value="0" onclick="change_orm_to_unit()"><?asp echo $this->lang->line('unit_or_pics') ?></option>
+                                                                          <option value="1" onclick="change_orm_to_case()"><?asp echo $this->lang->line('case_or_box') ?></option>
                                                                       </select>
                                                                  </div>
 
@@ -1402,9 +1402,9 @@ function new_discount(e){
                                                     <div class="col col-lg-6" id="hidden_no_unit">
 
                                                                  <div class="form_sep">
-                                                                      <label for="no_of_unit" ><?php echo $this->lang->line('no_of_unit') ?></label>                                                                                                       
+                                                                      <label for="no_of_unit" ><?asp echo $this->lang->line('no_of_unit') ?></label>                                                                                                       
                                                                    
-                                                                                    <?php $no_of_unit=array('name'=>'no_of_unit',
+                                                                                    <?asp $no_of_unit=array('name'=>'no_of_unit',
                                                                                                  'class'=>'required form-control',
                                                                                                  'id'=>'no_of_unit',
                                                                                                  'onKeyPress'=>"new_no_of_unit(event);return numbersonly(event)",
@@ -1426,7 +1426,7 @@ function new_discount(e){
                           </div>
                               <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item')." ".$this->lang->line('image') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item')." ".$this->lang->line('image') ?></h4>  
                                    
                                </div>
                               <br>
@@ -1435,14 +1435,14 @@ function new_discount(e){
                               <div class="row "  style="margin-left:1px;margin-right: 1px" >
                                          <div class="col col-lg-6" >
                                                             <div class="step_info" style="margin: auto">
-                                                <label for="firstname" ><?php echo $this->lang->line('image') ?></label>                     
+                                                <label for="firstname" ><?asp echo $this->lang->line('image') ?></label>                     
                                                 <div class="fileupload fileupload-new " data-provides="fileupload">
                                                      <div class="fileupload-new img-thumbnail" style="width: 178px; height: 120px;"><img src="img/no_img_180.png" alt=""></div>
                                                        <div  class="fileupload-preview fileupload-exists img-thumbnail" style="width: 178px; height: 120px"></div>
                                                        <div>
-                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?php echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?php echo $this->lang->line('change') ?></span>
+                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?asp echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?asp echo $this->lang->line('change') ?></span>
                                                             <input type="file" name="userfile" /></span>
-                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?php echo $this->lang->line('remove') ?></a>
+                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?asp echo $this->lang->line('remove') ?></a>
                                                        </div>
                                                  </div>
                                             </div>
@@ -1461,15 +1461,15 @@ function new_discount(e){
                           <div class="row">
                                 <div class="col-lg-1"></div>
                                   <div class="col col-lg-10 text-center"><br><br>
-                                      <button id=""  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
-                                      <a href="javascript:clear_add_items()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('clear') ?></a>
+                                      <button id=""  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $this->lang->line('save') ?></button>
+                                      <a href="javascript:clear_add_items()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?asp echo $this->lang->line('clear') ?></a>
                                   </div>
                               </div>
                           </div>
 <!--                          <div class="row">
                                 <div class="panel panel-default">
                                      <div class="panel-heading">
-                                           <h4 class="panel-title"><?php echo $this->lang->line('item_details') ?></h4>  
+                                           <h4 class="panel-title"><?asp echo $this->lang->line('item_details') ?></h4>  
 
                                      </div>
                                 </div>
@@ -1478,10 +1478,10 @@ function new_discount(e){
                 </div>
                     
                 </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
 <section id="edit_item_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
+     <?asp   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('items/update_items/',$form);?>
@@ -1491,7 +1491,7 @@ function new_discount(e){
                      <div class="col-lg-7">
                           <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item_details') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item_details') ?></h4>  
                                      <input type="hidden" name="guid" id="guid">
                                </div>
                               <br>
@@ -1501,8 +1501,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="sku" class="req"><?php echo $this->lang->line('sku') ?></label>                                                                                                       
-                                                           <?php $sku=array('name'=>'sku',
+                                                         <label for="sku" class="req"><?asp echo $this->lang->line('sku') ?></label>                                                                                                       
+                                                           <?asp $sku=array('name'=>'sku',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'sku',
                                                                                     'value'=>set_value('sku'));
@@ -1514,8 +1514,8 @@ function new_discount(e){
                                    <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="barcode" class="req"><?php echo $this->lang->line('barcode') ?></label>                                                                                                       
-                                                           <?php $barcode=array('name'=>'barcode',
+                                                         <label for="barcode" class="req"><?asp echo $this->lang->line('barcode') ?></label>                                                                                                       
+                                                           <?asp $barcode=array('name'=>'barcode',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'barcode',
                                                                                     'value'=>set_value('barcode'));
@@ -1527,8 +1527,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="name" class="req"><?php echo $this->lang->line('name') ?></label>                                                                                                       
-                                                           <?php $name=array('name'=>'name',
+                                                         <label for="name" class="req"><?asp echo $this->lang->line('name') ?></label>                                                                                                       
+                                                           <?asp $name=array('name'=>'name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'name',
                                                                                     'value'=>set_value('mrp'));
@@ -1542,8 +1542,8 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                     <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="item_department" class="req"><?php echo $this->lang->line('item_department') ?></label>                                                                                                       
-                                                           <?php $item_department=array('name'=>'search_department',
+                                                         <label for="item_department" class="req"><?asp echo $this->lang->line('item_department') ?></label>                                                                                                       
+                                                           <?asp $item_department=array('name'=>'search_department',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_department',
                                                                                     'value'=>set_value('item_department'));
@@ -1553,8 +1553,8 @@ function new_discount(e){
                                                     </div>    
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="category" class="req"><?php echo $this->lang->line('category') ?></label>                                                                                                       
-                                                           <?php $category=array('name'=>'search_category',
+                                                         <label for="category" class="req"><?asp echo $this->lang->line('category') ?></label>                                                                                                       
+                                                           <?asp $category=array('name'=>'search_category',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_category',
                                                                                     'value'=>set_value('category'));
@@ -1565,8 +1565,8 @@ function new_discount(e){
                                         </div>
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="brand" class="req"><?php echo $this->lang->line('brand') ?></label>                                                                                                       
-                                                           <?php $brand=array('name'=>'search_brand',
+                                                         <label for="brand" class="req"><?asp echo $this->lang->line('brand') ?></label>                                                                                                       
+                                                           <?asp $brand=array('name'=>'search_brand',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_brand',
                                                                                     'value'=>set_value('brand'));
@@ -1579,8 +1579,8 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="location" ><?php echo $this->lang->line('location') ?></label>                                                                                                       
-                                                           <?php $location=array('name'=>'location',
+                                                         <label for="location" ><?asp echo $this->lang->line('location') ?></label>                                                                                                       
+                                                           <?asp $location=array('name'=>'location',
                                                                                     'class'=>'form-control',
                                                                                     'id'=>'location',
                                                                                     'value'=>set_value('location'));
@@ -1590,8 +1590,8 @@ function new_discount(e){
                                         </div>
                                   <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="supplier" class="req"><?php echo $this->lang->line('supplier') ?></label>                                                                                                       
-                                                           <?php $supplier=array('name'=>'search_supplier',
+                                                         <label for="supplier" class="req"><?asp echo $this->lang->line('supplier') ?></label>                                                                                                       
+                                                           <?asp $supplier=array('name'=>'search_supplier',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_supplier',
                                                                                     'value'=>set_value('supplier'));
@@ -1605,8 +1605,8 @@ function new_discount(e){
                                    <div class="col col-lg-4" >
                                          
                                                     <div class="form_sep">
-                                                         <label for="description" ><?php echo $this->lang->line('description') ?></label>                                                                                                       
-                                                           <?php $description=array('name'=>'description',
+                                                         <label for="description" ><?asp echo $this->lang->line('description') ?></label>                                                                                                       
+                                                           <?asp $description=array('name'=>'description',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'description',
                                                                                     'rows'=>2,
@@ -1620,18 +1620,18 @@ function new_discount(e){
                               <div class="row" style="margin-left:10px;margin-right: 10px">
                                    <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="tax_Inclusive" class="req"><?php echo $this->lang->line('tax_Inclusive') ?></label>                                                                                                       
+                                                         <label for="tax_Inclusive" class="req"><?asp echo $this->lang->line('tax_Inclusive') ?></label>                                                                                                       
                                                          <select name="tax_Inclusive" id="tax_Inclusive" class="form-control">
-                                                             <option value="1"><?php echo $this->lang->line('yes') ?></option>
-                                                             <option value="0"><?php echo $this->lang->line('no') ?></option>
+                                                             <option value="1"><?asp echo $this->lang->line('yes') ?></option>
+                                                             <option value="0"><?asp echo $this->lang->line('no') ?></option>
                                                          </select>
                                                     </div>
                                                    
                                         </div> 
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="taxes_area" class="req"><?php echo $this->lang->line('taxes_area') ?></label>                                                                                                       
-                                                           <?php $taxes_area=array('name'=>'search_taxes_area',
+                                                         <label for="taxes_area" class="req"><?asp echo $this->lang->line('taxes_area') ?></label>                                                                                                       
+                                                           <?asp $taxes_area=array('name'=>'search_taxes_area',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_taxes_area',
                                                                                     'value'=>set_value('taxes_area'));
@@ -1642,8 +1642,8 @@ function new_discount(e){
                                         </div>                              
                                        <div class="col col-lg-4" >
                                                     <div class="form_sep">
-                                                         <label for="taxes" class="req"><?php echo $this->lang->line('taxes') ?></label>                                                                                                       
-                                                           <?php $taxes=array('name'=>'search_taxes',
+                                                         <label for="taxes" class="req"><?asp echo $this->lang->line('taxes') ?></label>                                                                                                       
+                                                           <?asp $taxes=array('name'=>'search_taxes',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'search_taxes',
                                                                                     'value'=>set_value('taxes'));
@@ -1659,8 +1659,8 @@ function new_discount(e){
                                   <div class="col col-lg-4" >
                                            
                                                     <div class="form_sep">
-                                                         <label for="cost" class="req"><?php echo $this->lang->line('cost') ?></label>                                                                                                       
-                                                           <?php $cost=array('name'=>'cost',
+                                                         <label for="cost" class="req"><?asp echo $this->lang->line('cost') ?></label>                                                                                                       
+                                                           <?asp $cost=array('name'=>'cost',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'cost',
                                                                                     'onKeyPress'=>"new_cost(event);return numbersonly(event)",
@@ -1671,8 +1671,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="mrp" class="req"><?php echo $this->lang->line('mrp') ?></label>                                                                                                       
-                                                           <?php $mrp=array('name'=>'mrp',
+                                                         <label for="mrp" class="req"><?asp echo $this->lang->line('mrp') ?></label>                                                                                                       
+                                                           <?asp $mrp=array('name'=>'mrp',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'mrp',
                                                                                     'onKeyPress'=>"new_mrp(event);return numbersonly(event)",
@@ -1684,8 +1684,8 @@ function new_discount(e){
                                        <div class="col col-lg-4" >
                                           
                                                     <div class="form_sep">
-                                                         <label for="selling_price" class="req"><?php echo $this->lang->line('selling_price') ?></label>                                                                                                       
-                                                           <?php $selling_price=array('name'=>'selling_price',
+                                                         <label for="selling_price" class="req"><?asp echo $this->lang->line('selling_price') ?></label>                                                                                                       
+                                                           <?asp $selling_price=array('name'=>'selling_price',
                                                                                     'class'=>'required form-control number',
                                                                                     'id'=>'selling_price',
                                                                                     'onKeyPress'=>"new_price(event);return numbersonly(event)",
@@ -1706,15 +1706,15 @@ function new_discount(e){
                           </div>
                          <div class="panel panel-default" style="margin-top: 6px">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item')." ".$this->lang->line('discount') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item')." ".$this->lang->line('discount') ?></h4>  
                                    
                                </div>
                               
                               <div class="row "  style="margin-left:10px;margin-right: 10px" >
                                          <div class="col col-lg-4" >
                                                                  <div class="form_sep">
-                                                                      <label for="discount_per" ><?php echo $this->lang->line('discount_per') ?></label>                                                                                                       
-                                                                        <?php $discount_per=array('name'=>'discount_per',
+                                                                      <label for="discount_per" ><?asp echo $this->lang->line('discount_per') ?></label>                                                                                                       
+                                                                        <?asp $discount_per=array('name'=>'discount_per',
                                                                                                  'class'=>'form-control',
                                                                                                  'onKeyPress'=>"new_discount(event);return numbersonly(event)",
                                                                                                  'id'=>'discount_per',
@@ -1726,9 +1726,9 @@ function new_discount(e){
                                                     <div class="col col-lg-4" >
 
                                                                  <div class="form_sep">
-                                                                      <label for="starting_date" ><?php echo $this->lang->line('starting_date') ?></label>                                                                                                       
+                                                                      <label for="starting_date" ><?asp echo $this->lang->line('starting_date') ?></label>                                                                                                       
                                                                        <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                                    <?php $starting_date=array('name'=>'starting_date',
+                                                                                    <?asp $starting_date=array('name'=>'starting_date',
                                                                                                  'class'=>' form-control',
                                                                                                  'id'=>'starting_date',
                                                                                                  'value'=>set_value('starting_date'));
@@ -1741,9 +1741,9 @@ function new_discount(e){
                                                     <div class="col col-lg-4" >
 
                                                                  <div class="form_sep">
-                                                                      <label for="ending_date" ><?php echo $this->lang->line('ending_date') ?></label>                                                                                                       
+                                                                      <label for="ending_date" ><?asp echo $this->lang->line('ending_date') ?></label>                                                                                                       
                                                                       <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                       <?php $ending_date=array('name'=>'ending_date',
+                                                                       <?asp $ending_date=array('name'=>'ending_date',
                                                                                                  'class'=>' form-control',
                                                                                                  'id'=>'ending_date',
                                                                                                  'value'=>set_value('ending_date'));
@@ -1766,7 +1766,7 @@ function new_discount(e){
                       <div class="col-lg-5">
                               <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('uom') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('uom') ?></h4>  
                                    
                                </div>
                               <br>
@@ -1775,10 +1775,10 @@ function new_discount(e){
                               <div class="row "  style="margin-left:1px;margin-right: 1px" >
                                          <div class="col col-lg-6" >
                                                                  <div class="form_sep">
-                                                                      <label for="purchase" ><?php echo $this->lang->line('purchase') ?></label>                                                                                                       
+                                                                      <label for="purchase" ><?asp echo $this->lang->line('purchase') ?></label>                                                                                                       
                                                                       <select class="form-control" name="unit_of_mes" id="unit_of_mes">
-                                                                          <option value="0" onclick="change_orm_to_unit_update()"><?php echo $this->lang->line('unit_or_pics') ?></option>
-                                                                          <option value="1" onclick="change_orm_to_case_update()"><?php echo $this->lang->line('case_or_box') ?></option>
+                                                                          <option value="0" onclick="change_orm_to_unit_update()"><?asp echo $this->lang->line('unit_or_pics') ?></option>
+                                                                          <option value="1" onclick="change_orm_to_case_update()"><?asp echo $this->lang->line('case_or_box') ?></option>
                                                                       </select>
                                                                       
                                                                         
@@ -1788,9 +1788,9 @@ function new_discount(e){
                                                     <div class="col col-lg-6" id="hidden_no_unit">
 
                                                                  <div class="form_sep">
-                                                                      <label for="no_of_unit" ><?php echo $this->lang->line('no_of_unit') ?></label>                                                                                                       
+                                                                      <label for="no_of_unit" ><?asp echo $this->lang->line('no_of_unit') ?></label>                                                                                                       
                                                                    
-                                                                                    <?php $no_of_unit=array('name'=>'no_of_unit',
+                                                                                    <?asp $no_of_unit=array('name'=>'no_of_unit',
                                                                                                  'class'=>'required form-control',
                                                                                                  'id'=>'no_of_unit',
                                                                                                  'onKeyPress'=>"new_no_of_unit(event);return numbersonly(event)",
@@ -1812,7 +1812,7 @@ function new_discount(e){
                           </div>
                               <div class="panel panel-default">
                                <div class="panel-heading">
-                                     <h4 class="panel-title"><?php echo $this->lang->line('item')." ".$this->lang->line('image') ?></h4>  
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('item')." ".$this->lang->line('image') ?></h4>  
                                    
                                </div>
                               <br>
@@ -1821,14 +1821,14 @@ function new_discount(e){
                               <div class="row "  style="margin-left:1px;margin-right: 1px" >
                                          <div class="col col-lg-6" >
                                                             <div class="step_info" style="margin: auto">
-                                                <label for="firstname" ><?php echo $this->lang->line('image') ?></label>                     
+                                                <label for="firstname" ><?asp echo $this->lang->line('image') ?></label>                     
                                                 <div class="fileupload fileupload-new " data-provides="fileupload">
                                                      <div class="fileupload-new img-thumbnail" style="width: 178px; height: 120px;"><img src="img/no_img_180.png" alt=""></div>
                                                        <div  class="fileupload-preview fileupload-exists img-thumbnail" style="width: 178px; height: 120px"></div>
                                                        <div>
-                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?php echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?php echo $this->lang->line('change') ?></span>
+                                                            <span class="btn btn-default btn-file"><span class="fileupload-new"><?asp echo $this->lang->line('select_image') ?></span><span class="fileupload-exists"><?asp echo $this->lang->line('change') ?></span>
                                                             <input type="file" name="userfile" /></span>
-                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?php echo $this->lang->line('remove') ?></a>
+                                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?asp echo $this->lang->line('remove') ?></a>
                                                        </div>
                                                  </div>
                                             </div>
@@ -1847,15 +1847,15 @@ function new_discount(e){
                           <div class="row">
                                 <div class="col-lg-1"></div>
                                   <div class="col col-lg-10 text-center"><br><br>
-                                      <button id=""  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('save') ?></button>
-                                      <a href="javascript:clear_add_items()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?php echo $this->lang->line('clear') ?></a>
+                                      <button id=""  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $this->lang->line('save') ?></button>
+                                      <a href="javascript:clear_add_items()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-list"> </i> <?asp echo $this->lang->line('clear') ?></a>
                                   </div>
                               </div>
                           </div>
 <!--                          <div class="row">
                                 <div class="panel panel-default">
                                      <div class="panel-heading">
-                                           <h4 class="panel-title"><?php echo $this->lang->line('item_details') ?></h4>  
+                                           <h4 class="panel-title"><?asp echo $this->lang->line('item_details') ?></h4>  
 
                                      </div>
                                 </div>
@@ -1863,7 +1863,7 @@ function new_discount(e){
                       </div>
                 </div>
          
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
            <div id="footer_space">
               
@@ -1882,14 +1882,14 @@ function new_discount(e){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?asp echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
                       for (i = 0; i < posnic.length-1; i++){
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/items/active',
+                                url: '<?asp echo base_url() ?>/index.asp/items/active',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -1898,7 +1898,7 @@ function new_discount(e){
                                 success: function(response)
                                 {
                                     if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('activated');?>', { type: "success" });
+                                         $.bootstrapGrowl('<?asp echo $this->lang->line('activated');?>', { type: "success" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }
                                 }
@@ -1923,9 +1923,9 @@ function new_discount(e){
                       }
                       if (flag<1) {
                         
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
                       }else{
-                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('Are you Sure To Delete') ?>", function(result) {
+                            bootbox.confirm("<?asp echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('Are you Sure To Delete') ?>", function(result) {
              if(result){
               
              
@@ -1933,7 +1933,7 @@ function new_discount(e){
                         for (i = 0; i < posnic.length; i++){
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/items/delete',
+                                url: '<?asp echo base_url() ?>/index.asp/items/delete',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -1942,7 +1942,7 @@ function new_discount(e){
                                 success: function(response)
                                 {
                                     if(response){
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('deleted');?>', { type: "success" });
+                                         $.bootstrapGrowl('<?asp echo $this->lang->line('deleted');?>', { type: "success" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }
                                 }
@@ -1969,14 +1969,14 @@ function new_discount(e){
 
                       }
                       if (flag<1) {
-                                               $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
+                                               $.bootstrapGrowl('<?asp echo $this->lang->line('Select Atleast One')."".$this->lang->line('item');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
                       for (i = 0; i < posnic.length-1; i++){
                           if(posnic[i].checked==true){                             
                                  $.ajax({
-                                    url: '<?php echo base_url() ?>/index.php/items/deactive',
+                                    url: '<?asp echo base_url() ?>/index.asp/items/deactive',
                                     type: "POST",
                                     data: {
                                         guid: posnic[i].value
@@ -1985,7 +1985,7 @@ function new_discount(e){
                                     success: function(response)
                                     {
                                         if(response){
-                                             $.bootstrapGrowl('<?php echo $this->lang->line('deactivated');?>', { type: "danger" });
+                                             $.bootstrapGrowl('<?asp echo $this->lang->line('deactivated');?>', { type: "danger" });
                                             $("#dt_table_tools").dataTable().fnDraw();
                                         }
                                     }

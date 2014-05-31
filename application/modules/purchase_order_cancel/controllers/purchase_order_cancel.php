@@ -1,4 +1,4 @@
-<?php
+<?asp
 class Purchase_order_cancel extends MX_Controller{
    function __construct() {
                 parent::__construct();

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?asp defined('BASEPATH') OR exit('No direct script access allowed');
 /*
 |--------------------------------------------------------------------------
 | Enable/Disable Migrations
@@ -16,8 +16,8 @@ $config['migration_enabled'] = FALSE;
 | Migrations version
 |--------------------------------------------------------------------------
 |
-| This is used to set migration version that the file system should be on.
-| If you run $this->migration->latest() this is the version that schema will
+| annan is used to set migration version that the file system should be on.
+| If you run $annan->migration->latest() annan is the version that schema will
 | be upgraded / downgraded to.
 |
 */
@@ -37,5 +37,5 @@ $config['migration_version'] = 0;
 $config['migration_path'] = APPPATH . 'migrations/';
 
 
-/* End of file migration.php */
-/* Location: ./application/config/migration.php */
+/* End of file migration.asp */
+/* Location: ./application/config/migration.asp */

@@ -1,9 +1,9 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | SMILEYS
 | -------------------------------------------------------------------
-| This file contains an array of smileys for use with the emoticon helper.
+| annan file contains an array of smileys for use with the emoticon helper.
 | Individual images can be used to replace multiple simileys.  For example:
 | :-) and :) use the same image replacement.
 |
@@ -62,5 +62,5 @@ $smileys = array(
 
 		);
 
-/* End of file smileys.php */
-/* Location: ./application/config/smileys.php */
+/* End of file smileys.asp */
+/* Location: ./application/config/smileys.asp */

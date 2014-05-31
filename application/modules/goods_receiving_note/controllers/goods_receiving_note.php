@@ -1,17 +1,17 @@
-<?php
+<?asp
 class Goods_receiving_note extends MX_Controller{
    function __construct() {
                 parent::__construct();
-                $this->load->library('posnic');               
+                $annan->load->library('posnic');               
     }
     function index(){     
-        $this->load->view('template/app/header'); 
-        $this->load->view('header/header');         
-        $this->load->view('template/branch',$this->posnic->branches());
+        $annan->load->view('template/app/header'); 
+        $annan->load->view('header/header');         
+        $annan->load->view('template/branch',$annan->posnic->branches());
         $data['active']='goods_receiving_note';
-        $this->load->view('index',$data);
-        $this->load->view('template/app/navigation',$this->posnic->modules());
-        $this->load->view('template/app/footer');
+        $annan->load->view('index',$data);
+        $annan->load->view('template/app/navigation',$annan->posnic->modules());
+        $annan->load->view('template/app/footer');
         
         
     }
@@ -21,18 +21,18 @@ class Goods_receiving_note extends MX_Controller{
 	$start = "";
 			$end="";
 		
-		if ( $this->input->get_post('iDisplayLength') != '-1' )	{
-			$start = $this->input->get_post('iDisplayStart');
-			$end=	 $this->input->get_post('iDisplayLength');              
+		if ( $annan->input->get_post('iDisplayLength') != '-1' )	{
+			$start = $annan->input->get_post('iDisplayStart');
+			$end=	 $annan->input->get_post('iDisplayLength');              
 		}	
 		$order="";
 		if ( isset( $_GET['iSortCol_0'] ) )
 		{	
-			for ( $i=0 ; $i<intval($this->input->get_post('iSortingCols') ) ; $i++ )
+			for ( $i=0 ; $i<intval($annan->input->get_post('iSortingCols') ) ; $i++ )
 			{
-				if ( $_GET[ 'bSortable_'.intval($this->input->get_post('iSortCol_'.$i)) ] == "true" )
+				if ( $_GET[ 'bSortable_'.intval($annan->input->get_post('iSortCol_'.$i)) ] == "true" )
 				{
-					$order.= $aColumns[ intval( $this->input->get_post('iSortCol_'.$i) ) ]." ".$this->input->get_post('sSortDir_'.$i ) .",";
+					$order.= $aColumns[ intval( $annan->input->get_post('iSortCol_'.$i) ) ]." ".$annan->input->get_post('sSortDir_'.$i ) .",";
 				}
 			}
 			
@@ -45,19 +45,19 @@ class Goods_receiving_note extends MX_Controller{
 			if ( $_GET['sSearch'] != "" )
 		{
 		$like =array(
-                    'po_no'=>  $this->input->get_post('sSearch'),
-                    'grn_no'=>  $this->input->get_post('sSearch'),
+                    'po_no'=>  $annan->input->get_post('sSearch'),
+                    'grn_no'=>  $annan->input->get_post('sSearch'),
                         );
 				
 			}
 					   
-			$this->load->model('grn')	   ;
+			$annan->load->model('grn')	   ;
                         
-			 $rResult1 = $this->grn->get($end,$start,$like,$this->session->userdata['branch_id']);
+			 $rResult1 = $annan->grn->get($end,$start,$like,$annan->session->userdata['branch_id']);
 		   
-		$iFilteredTotal =$this->grn->count($this->session->userdata['branch_id']);
+		$iFilteredTotal =$annan->grn->count($annan->session->userdata['branch_id']);
 		
-		$iTotal =$this->grn->count($this->session->userdata['branch_id']);
+		$iTotal =$annan->grn->count($annan->session->userdata['branch_id']);
 		
 		$output1 = array(
 			"sEcho" => intval($_GET['sEcho']),
@@ -95,35 +95,35 @@ class Goods_receiving_note extends MX_Controller{
     }
  
 function save(){      
-     if($this->session->userdata['purchase_order_per']['add']==1){
-        $this->form_validation->set_rules('goods_receiving_note_guid',$this->lang->line('goods_receiving_note_guid'), 'required');
-        $this->form_validation->set_rules('grn_date',$this->lang->line('grn_date'), 'required');
-        $this->form_validation->set_rules('grn_no', $this->lang->line('grn_no'), 'required');                     
+     if($annan->session->userdata['purchase_order_per']['add']==1){
+        $annan->form_validation->set_rules('goods_receiving_note_guid',$annan->lang->line('goods_receiving_note_guid'), 'required');
+        $annan->form_validation->set_rules('grn_date',$annan->lang->line('grn_date'), 'required');
+        $annan->form_validation->set_rules('grn_no', $annan->lang->line('grn_no'), 'required');                     
            
-            if ( $this->form_validation->run() !== false ) {    
-                $po=  $this->input->post('goods_receiving_note_guid');
-                $grn_date=strtotime($this->input->post('grn_date'));
-                $grn_no= $this->input->post('grn_no');
-                $remark=  $this->input->post('remark');
-                $note=  $this->input->post('note');
+            if ( $annan->form_validation->run() !== false ) {    
+                $po=  $annan->input->post('goods_receiving_note_guid');
+                $grn_date=strtotime($annan->input->post('grn_date'));
+                $grn_no= $annan->input->post('grn_no');
+                $remark=  $annan->input->post('remark');
+                $note=  $annan->input->post('note');
                 $value=array('grn_no'=>$grn_no,'date'=>$grn_date,'po'=>$po,'remark'=>$remark,'note'=>$note);
-                $guid=   $this->posnic->posnic_add_record($value,'grn');
-                $this->load->model('grn');
-                $this->grn->update_grn_status($po);
-                $quty=  $this->input->post('receive_quty');
-                $free=  $this->input->post('receive_free');
-                $items=  $this->input->post('items');
-                $po_item=  $this->input->post('order_items');
+                $guid=   $annan->posnic->posnic_add_record($value,'grn');
+                $annan->load->model('grn');
+                $annan->grn->update_grn_status($po);
+                $quty=  $annan->input->post('receive_quty');
+                $free=  $annan->input->post('receive_free');
+                $items=  $annan->input->post('items');
+                $po_item=  $annan->input->post('order_items');
            
                 for($i=0;$i<count($items);$i++){
           
                         $item_value=array('grn'=>$guid,'item'=>$items[$i],'quty'=>$quty[$i],'free'=>$free[$i]);
-                        $this->posnic->posnic_add_record($item_value,'grn_x_items');
-                        $this->load->model('grn');
-                        $this->grn->update_item_receving($po_item[$i],$quty[$i],$free[$i]);
-                        //$this->grn->add_stock($items[$i],$quty[$i]+$free[$i],$po_item[$i],$this->session->userdata['branch_id']);
+                        $annan->posnic->posnic_add_record($item_value,'grn_x_items');
+                        $annan->load->model('grn');
+                        $annan->grn->update_item_receving($po_item[$i],$quty[$i],$free[$i]);
+                        //$annan->grn->add_stock($items[$i],$quty[$i]+$free[$i],$po_item[$i],$annan->session->userdata['branch_id']);
                 }
-                $this->posnic->posnic_master_increment_max('grn')  ;
+                $annan->posnic->posnic_master_increment_max('grn')  ;
                  echo 'TRUE';
     
                 }else{
@@ -136,12 +136,12 @@ function save(){
     }
     function update(){
             
-      if($this->session->userdata['purchase_order_per']['edit']==1){
-        $this->form_validation->set_rules('goods_receiving_note_guid',$this->lang->line('goods_receiving_note_guid'), 'required');
-        $this->form_validation->set_rules('grn_date',$this->lang->line('grn_date'), 'required');
-        //$this->form_validation->set_rules('grn_no', $this->lang->line('grn_no'), 'required');                         
-        $this->form_validation->set_rules('receive_quty[]', 'receive_quty', 'regex_match[/^[0-9]+$/]|xss_clean');
-        $this->form_validation->set_rules('receive_free[]', 'receive_free', 'regex_match[/^[0-9]+$/]|xss_clean');
+      if($annan->session->userdata['purchase_order_per']['edit']==1){
+        $annan->form_validation->set_rules('goods_receiving_note_guid',$annan->lang->line('goods_receiving_note_guid'), 'required');
+        $annan->form_validation->set_rules('grn_date',$annan->lang->line('grn_date'), 'required');
+        //$annan->form_validation->set_rules('grn_no', $annan->lang->line('grn_no'), 'required');                         
+        $annan->form_validation->set_rules('receive_quty[]', 'receive_quty', 'regex_match[/^[0-9]+$/]|xss_clean');
+        $annan->form_validation->set_rules('receive_free[]', 'receive_free', 'regex_match[/^[0-9]+$/]|xss_clean');
             if ( $this->form_validation->run() !== false ) {    
                 $po=  $this->input->post('goods_receiving_note_guid');
                 $grn_date=strtotime($this->input->post('grn_date'));

@@ -1,14 +1,14 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
 | -------------------------------------------------------------------
-| This file specifies which systems should be loaded by default.
+| annan file specifies which systems should be loaded by default.
 |
 | In order to keep the framework as light-weight as possible only the
 | absolute minimal resources are loaded by default. For example,
 | the database is not connected to automatically since no assumption
-| is made regarding whether you intend to use it.  This file lets
+| is made regarding whether you intend to use it.  annan file lets
 | you globally define which systems you would like loaded with every
 | request.
 |
@@ -75,7 +75,7 @@ $autoload['helper'] = array('form','url','datatables','html');
 |
 |	$autoload['config'] = array('config1', 'config2');
 |
-| NOTE: This item is intended for use ONLY if you have created custom
+| NOTE: annan item is intended for use ONLY if you have created custom
 | config files.  Otherwise, leave it blank.
 |
 */
@@ -92,7 +92,7 @@ $autoload['config'] = array();
 |	$autoload['language'] = array('lang1', 'lang2');
 |
 | NOTE: Do not include the "_lang" part of your file.  For example
-| "codeigniter_lang.php" would be referenced as array('codeigniter');
+| "codeigniter_lang.asp" would be referenced as array('codeigniter');
 |
 */
 
@@ -112,5 +112,5 @@ $autoload['language'] = array();
 $autoload['model'] = array();
 
 
-/* End of file autoload.php */
-/* Location: ./application/config/autoload.php */
+/* End of file autoload.asp */
+/* Location: ./application/config/autoload.asp */

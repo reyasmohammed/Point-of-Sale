@@ -4,7 +4,7 @@
           $(document).ready( function () {
               
         	 refresh_items_table();
-                 $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('sales_order') ?>');
+                 $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('sales_order') ?>');
                      $('#add_new_order').hide();
                               posnic_table();
                                 
@@ -30,13 +30,13 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('sales_order') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('sales_order') ?>');
                 }        
            function posnic_table(){
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/sales_order/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/sales_order/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -74,9 +74,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[9]==1){
-                                                                             return '<span data-toggle="tooltip" class="text-success" ><?php echo $this->lang->line('approved') ?></span>'
+                                                                             return '<span data-toggle="tooltip" class="text-success" ><?asp echo $this->lang->line('approved') ?></span>'
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip"  class=" text-warning" ><?php echo $this->lang->line('waiting') ?></span>';
+                                                                            return '<span data-toggle="tooltip"  class=" text-warning" ><?asp echo $this->lang->line('waiting') ?></span>';
                                                                         }
 								},
 								
@@ -90,7 +90,7 @@
                                                                 if(oObj.aData[9]==1){
                                                                          	 return '<a  ><span data-toggle="tooltip" class="label label-success hint--top hint--success"  ><i class="icon-play"></i></span></a>&nbsp<a  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" ><i class="icon-edit"></i></span></a>'+"&nbsp;<a><span data-toggle='tooltip' class='label label-danger hint--top hint--error' ><i class='icon-trash'></i></span> </a>"
 								}else{
-                                                                        return '<a href=javascript:sales_order_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:sales_order_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -122,11 +122,11 @@
                                    
 			}
  function user_function(guid){
-    <?php if($this->session->userdata['sales_order_per']['delete']==1){ ?>
-             bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('items') ?> "+$('#order__number_'+guid).val(), function(result) {
+    <?asp if($this->session->userdata['sales_order_per']['delete']==1){ ?>
+             bootbox.confirm("<?asp echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('items') ?> "+$('#order__number_'+guid).val(), function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/sales_order/delete',
+                url: '<?asp echo base_url() ?>/index.asp/sales_order/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -134,28 +134,28 @@
                 },
                  complete: function(response) {
                     if(response['responseText']=='TRUE'){
-                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('sales_order') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('sales_order') ?>  <?asp echo $this->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else{
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
                     }
                     }
             });
         
 
                         }
-    }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
-   <?php }
+    }); <?asp }else{?>
+           $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
+   <?asp }
 ?>
                         }
            
           
         
 function sales_order_approve(guid){
-        <?php if($this->session->userdata['sales_order_per']['approve']==1){ ?>
+        <?asp if($this->session->userdata['sales_order_per']['approve']==1){ ?>
             $.ajax({
-                url: '<?php echo base_url() ?>index.php/sales_order/sales_order_approve',
+                url: '<?asp echo base_url() ?>index.asp/sales_order/sales_order_approve',
                 type: "POST",
                 data: {
                     guid: guid
@@ -163,18 +163,18 @@ function sales_order_approve(guid){
                 },
                 complete: function(response) {
                     if(response['responseText']=='TRUE'){
-                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('sales_order') ?>  <?php echo $this->lang->line('approved');?>', { type: "success" });
+                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('sales_order') ?>  <?asp echo $this->lang->line('approved');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else if(response['responseText']=='Approved'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>   <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is') ?>   <?asp echo $this->lang->line('already');?> <?asp echo $this->lang->line('approved');?>', { type: "warning" });
                     }else{
-                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                              
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                              
                     }
                     }
             });
-            <?php }else{?>
-                        $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
-                <?php }
+            <?asp }else{?>
+                        $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
+                <?asp }
              ?>
 }
           
@@ -182,7 +182,7 @@ function sales_order_approve(guid){
             $('#sales_quotation_select').hide();
             $('#customer_select').show();
         
-                        <?php if($this->session->userdata['sales_order_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['sales_order_per']['edit']==1){ ?>
                                 
                             $('#deleted').remove();
                             $('#parent_items').append('<div id="deleted"></div>');
@@ -195,7 +195,7 @@ function sales_order_approve(guid){
                             $('#save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/sales_order/get_sales_order/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/sales_order/get_sales_order/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -341,7 +341,7 @@ function sales_order_approve(guid){
                                 <input type="hidden" name="items_order_guid[]" value="'+data[i]['o_i_guid']+'" id="items_order_guid">\n\
                                 <input type="hidden" name="items_sub_total[]"  value="'+parseFloat(quty)*parseFloat(price)+'" id="items_sub_total">\n\
                                 <input type="hidden" name="items_total[]"  value="'+total+'" id="items_total">\n\
-                                <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
+                                <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
 
                               var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
                               theNode.setAttribute('id','new_item_row_id_'+items_id)
@@ -352,12 +352,12 @@ function sales_order_approve(guid){
                       
                         
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('sales_order');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

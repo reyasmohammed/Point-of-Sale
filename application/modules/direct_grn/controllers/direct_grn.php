@@ -1,18 +1,18 @@
-<?php
+<?asp
 class Direct_grn extends MX_Controller{
    function __construct() {
                 parent::__construct();
-                $this->load->library('posnic');               
+                $annan->load->library('posnic');               
     }
     function index(){     
-        //   $this->get_list();
-        $this->load->view('template/app/header'); 
-        $this->load->view('header/header');         
-        $this->load->view('template/branch',$this->posnic->branches());
+        //   $annan->get_list();
+        $annan->load->view('template/app/header'); 
+        $annan->load->view('header/header');         
+        $annan->load->view('template/branch',$annan->posnic->branches());
         $data['active']='direct_grn';
-        $this->load->view('index',$data);
-        $this->load->view('template/app/navigation',$this->posnic->modules());
-        $this->load->view('template/app/footer');
+        $annan->load->view('index',$data);
+        $annan->load->view('template/app/navigation',$annan->posnic->modules());
+        $annan->load->view('template/app/footer');
     }
     // Direct G R N Data table
     function data_table(){
@@ -20,18 +20,18 @@ class Direct_grn extends MX_Controller{
 	$start = "";
 			$end="";
 		
-		if ( $this->input->get_post('iDisplayLength') != '-1' )	{
-			$start = $this->input->get_post('iDisplayStart');
-			$end=	 $this->input->get_post('iDisplayLength');              
+		if ( $annan->input->get_post('iDisplayLength') != '-1' )	{
+			$start = $annan->input->get_post('iDisplayStart');
+			$end=	 $annan->input->get_post('iDisplayLength');              
 		}	
 		$order="";
 		if ( isset( $_GET['iSortCol_0'] ) )
 		{	
-			for ( $i=0 ; $i<intval($this->input->get_post('iSortingCols') ) ; $i++ )
+			for ( $i=0 ; $i<intval($annan->input->get_post('iSortingCols') ) ; $i++ )
 			{
-				if ( $_GET[ 'bSortable_'.intval($this->input->get_post('iSortCol_'.$i)) ] == "true" )
+				if ( $_GET[ 'bSortable_'.intval($annan->input->get_post('iSortCol_'.$i)) ] == "true" )
 				{
-					$order.= $aColumns[ intval( $this->input->get_post('iSortCol_'.$i) ) ]." ".$this->input->get_post('sSortDir_'.$i ) .",";
+					$order.= $aColumns[ intval( $annan->input->get_post('iSortCol_'.$i) ) ]." ".$annan->input->get_post('sSortDir_'.$i ) .",";
 				}
 			}
 			
@@ -44,16 +44,16 @@ class Direct_grn extends MX_Controller{
 			if ( $_GET['sSearch'] != "" )
 		{
 		$like =array(
-                    'po_no'=>  $this->input->get_post('sSearch'),
+                    'po_no'=>  $annan->input->get_post('sSearch'),
                         );
 				
 			}
 					   
-			$this->load->model('purchase')	   ;
+			$annan->load->model('purchase')	   ;
                         
-			 $rResult1 = $this->purchase->get($end,$start,$like,$this->session->userdata['branch_id']);
+			 $rResult1 = $annan->purchase->get($end,$start,$like,$annan->session->userdata['branch_id']);
 		   
-		$iFilteredTotal =$this->purchase->count($this->session->userdata['branch_id']);
+		$iFilteredTotal =$annan->purchase->count($annan->session->userdata['branch_id']);
 		
 		$iTotal =$iFilteredTotal;
 		
@@ -93,7 +93,7 @@ class Direct_grn extends MX_Controller{
     }
   
     function  set_seleted_item_suppier($suid){
-        $this->session->userdata['supplier_guid']=$suid;
+        $annan->session->userdata['supplier_guid']=$suid;
     }
     
    
@@ -101,8 +101,8 @@ class Direct_grn extends MX_Controller{
        $q= addslashes($_REQUEST['term']);
                 $like=array('code'=>$q);    
                
-                $where='suppliers_x_items.item_id=items.guid AND suppliers_x_items.active = 0  AND suppliers_x_items.item_active  = 0 AND suppliers_x_items.supplier_id ="'.$this->session->userdata['supplier_guid'].'" AND items.active_status=0  AND items.active=0  ';
-                $data=$this->posnic-> posnic_join_like('suppliers_x_items','items',$like,$where);
+                $where='suppliers_x_items.item_id=items.guid AND suppliers_x_items.active = 0  AND suppliers_x_items.item_active  = 0 AND suppliers_x_items.supplier_id ="'.$annan->session->userdata['supplier_guid'].'" AND items.active_status=0  AND items.active=0  ';
+                $data=$annan->posnic-> posnic_join_like('suppliers_x_items','items',$like,$where);
         echo json_encode($data);
     }   
     
@@ -111,65 +111,65 @@ class Direct_grn extends MX_Controller{
     
   
 function save(){      
-     if($this->session->userdata['direct_grn_per']['add']==1){
-        $this->form_validation->set_rules('supplier_guid',$this->lang->line('supplier_guid'), 'required');
-        $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
-        $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                      
-        $this->form_validation->set_rules('grand_total', $this->lang->line('grand_total'), 'numeric');                      
-        $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
-        $this->form_validation->set_rules('round_off_amount', $this->lang->line('round_off_amount'), 'numeric');                      
-        $this->form_validation->set_rules('discount', $this->lang->line('discount'), 'numeric');                      
-        $this->form_validation->set_rules('freight', $this->lang->line('freight'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_id[]', $this->lang->line('new_item_id'), 'required');                      
-        $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_free[]', $this->lang->line('new_item_free'), 'required|numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'required|is_money_multi');                      
-        $this->form_validation->set_rules('new_item_mrp[]', $this->lang->line('new_item_mrp'), 'required|is_money_multi');                      
-        $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'required|is_money_multi');                      
-        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'is_money_multi');                      
-        $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'is_money_multi');                      
-        $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'is_money_multi');                      
-        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'required|is_money_multi');                      
+     if($annan->session->userdata['direct_grn_per']['add']==1){
+        $annan->form_validation->set_rules('supplier_guid',$annan->lang->line('supplier_guid'), 'required');
+        $annan->form_validation->set_rules('order_number', $annan->lang->line('order_number'), 'required');
+        $annan->form_validation->set_rules('order_date', $annan->lang->line('order_date'), 'required');                      
+        $annan->form_validation->set_rules('grand_total', $annan->lang->line('grand_total'), 'numeric');                      
+        $annan->form_validation->set_rules('total_amount', $annan->lang->line('total_amount'), 'numeric'); 
+        $annan->form_validation->set_rules('round_off_amount', $annan->lang->line('round_off_amount'), 'numeric');                      
+        $annan->form_validation->set_rules('discount', $annan->lang->line('discount'), 'numeric');                      
+        $annan->form_validation->set_rules('freight', $annan->lang->line('freight'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_id[]', $annan->lang->line('new_item_id'), 'required');                      
+        $annan->form_validation->set_rules('new_item_quty[]', $annan->lang->line('new_item_quty'), 'required|numeric');                      
+        $annan->form_validation->set_rules('new_item_cost[]', $annan->lang->line('new_item_cost'), 'required|numeric');                      
+        $annan->form_validation->set_rules('new_item_free[]', $annan->lang->line('new_item_free'), 'required|numeric');                      
+        $annan->form_validation->set_rules('new_item_cost[]', $annan->lang->line('new_item_cost'), 'required|is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_mrp[]', $annan->lang->line('new_item_mrp'), 'required|is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_price[]', $annan->lang->line('new_item_price'), 'required|is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_discount_per[]', $annan->lang->line('new_item_discount_per'), 'is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_discount[]', $annan->lang->line('new_item_discount'), 'is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_total[]', $annan->lang->line('new_item_total'), 'is_money_multi');                      
+        $annan->form_validation->set_rules('new_item_tax[]', $annan->lang->line('new_item_tax'), 'required|is_money_multi');                      
            
-            if ( $this->form_validation->run() !== false ) {    
-                $supplier=  $this->input->post('supplier_guid');
-                $pono= $this->input->post('order_number');
-                $podate= strtotime($this->input->post('order_date'));
-                $discount=  $this->input->post('discount');
-                $discount_amount=  $this->input->post('discount_amount');
-                $freight=  $this->input->post('freight');
-                $round_amt=  $this->input->post('round_off_amount');
-                $total_items=$this->input->post('index');
-                $remark=  $this->input->post('remark');
-                $note=  $this->input->post('note');
-                $total_amount=  $this->input->post('total_amount');
-                $grand_total=  $this->input->post('grand_total');
+            if ( $annan->form_validation->run() !== false ) {    
+                $supplier=  $annan->input->post('supplier_guid');
+                $pono= $annan->input->post('order_number');
+                $podate= strtotime($annan->input->post('order_date'));
+                $discount=  $annan->input->post('discount');
+                $discount_amount=  $annan->input->post('discount_amount');
+                $freight=  $annan->input->post('freight');
+                $round_amt=  $annan->input->post('round_off_amount');
+                $total_items=$annan->input->post('index');
+                $remark=  $annan->input->post('remark');
+                $note=  $annan->input->post('note');
+                $total_amount=  $annan->input->post('total_amount');
+                $grand_total=  $annan->input->post('grand_total');
   
      
-              $value=array('supplier_id'=>$supplier,'grn_no'=>$pono,'grn_date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'order_status'=>0,'total_item_amt'=>$total_amount,'branch_id'=>  $this->session->userdata['branch_id'],'added_by'=>  $this->session->userdata['guid']);
-              $guid=   $this->posnic->posnic_add_record($value,'direct_grn');
+              $value=array('supplier_id'=>$supplier,'grn_no'=>$pono,'grn_date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'order_status'=>0,'total_item_amt'=>$total_amount,'branch_id'=>  $annan->session->userdata['branch_id'],'added_by'=>  $annan->session->userdata['guid']);
+              $guid=   $annan->posnic->posnic_add_record($value,'direct_grn');
           
-                $item=  $this->input->post('new_item_id');
-                $quty=  $this->input->post('new_item_quty');
-                $cost=  $this->input->post('new_item_cost');
-                $free=  $this->input->post('new_item_free');
-                $sell=  $this->input->post('new_item_price');
-                $mrp=  $this->input->post('new_item_mrp');
-                $net=  $this->input->post('new_item_total');
-                $per=  $this->input->post('new_item_discount_per');
-                $dis=  $this->input->post('new_item_discount');
-                $tax=  $this->input->post('new_item_tax');
+                $item=  $annan->input->post('new_item_id');
+                $quty=  $annan->input->post('new_item_quty');
+                $cost=  $annan->input->post('new_item_cost');
+                $free=  $annan->input->post('new_item_free');
+                $sell=  $annan->input->post('new_item_price');
+                $mrp=  $annan->input->post('new_item_mrp');
+                $net=  $annan->input->post('new_item_total');
+                $per=  $annan->input->post('new_item_discount_per');
+                $dis=  $annan->input->post('new_item_discount');
+                $tax=  $annan->input->post('new_item_tax');
            
                 for($i=0;$i<count($item);$i++){
               
                         $item_value=array('order_id'=>$guid,'discount_per'=>$per[$i],'discount_amount'=>$dis[$i],'tax'=>$tax[$i],'item'=>$item[$i],'quty'=>$quty[$i],'free'=>$free[$i],'cost'=>$cost[$i],'sell'=>$sell[$i],'mrp'=>$mrp[$i],'amount'=>$net[$i]);
-                        $this->load->model('purchase');
-                        $this->purchase->add_items($item_value);
+                        $annan->load->model('purchase');
+                        $annan->purchase->add_items($item_value);
                 
                         
                 }
-                $this->posnic->posnic_master_increment_max('direct_grn')  ;
+                $annan->posnic->posnic_master_increment_max('direct_grn')  ;
                  echo 'TRUE';
     
                 }else{
@@ -182,102 +182,102 @@ function save(){
     }
     function update(){
             if(isset($_POST['direct_grn_guid'])){
-      if($this->session->userdata['direct_grn_per']['edit']==1){
-        $this->form_validation->set_rules('supplier_guid',$this->lang->line('supplier_guid'), 'required');
-        $this->form_validation->set_rules('order_number', $this->lang->line('order_number'), 'required');
-        $this->form_validation->set_rules('order_date', $this->lang->line('order_date'), 'required');                     
-        $this->form_validation->set_rules('grand_total', $this->lang->line('grand_total'), 'numeric');                      
-        $this->form_validation->set_rules('total_amount', $this->lang->line('total_amount'), 'numeric'); 
+      if($annan->session->userdata['direct_grn_per']['edit']==1){
+        $annan->form_validation->set_rules('supplier_guid',$annan->lang->line('supplier_guid'), 'required');
+        $annan->form_validation->set_rules('order_number', $annan->lang->line('order_number'), 'required');
+        $annan->form_validation->set_rules('order_date', $annan->lang->line('order_date'), 'required');                     
+        $annan->form_validation->set_rules('grand_total', $annan->lang->line('grand_total'), 'numeric');                      
+        $annan->form_validation->set_rules('total_amount', $annan->lang->line('total_amount'), 'numeric'); 
         
         
-        $this->form_validation->set_rules('round_off_amount', $this->lang->line('round_off_amount'), 'numeric');                      
-        $this->form_validation->set_rules('discount', $this->lang->line('discount'), 'numeric');                      
-        $this->form_validation->set_rules('freight', $this->lang->line('freight'), 'numeric');    
+        $annan->form_validation->set_rules('round_off_amount', $annan->lang->line('round_off_amount'), 'numeric');                      
+        $annan->form_validation->set_rules('discount', $annan->lang->line('discount'), 'numeric');                      
+        $annan->form_validation->set_rules('freight', $annan->lang->line('freight'), 'numeric');    
         
-        $this->form_validation->set_rules('new_item_quty[]', $this->lang->line('new_item_quty'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_cost[]', $this->lang->line('new_item_cost'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_free[]', $this->lang->line('new_item_free'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_mrp[]', $this->lang->line('new_item_mrp'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_quty[]', $annan->lang->line('new_item_quty'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_cost[]', $annan->lang->line('new_item_cost'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_free[]', $annan->lang->line('new_item_free'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_mrp[]', $annan->lang->line('new_item_mrp'), 'numeric');                      
       
-        $this->form_validation->set_rules('new_item_price[]', $this->lang->line('new_item_price'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_discount_per[]', $this->lang->line('new_item_discount_per'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_discount[]', $this->lang->line('new_item_discount'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_total[]', $this->lang->line('new_item_total'), 'numeric');                      
-        $this->form_validation->set_rules('new_item_tax[]', $this->lang->line('new_item_tax'), 'numeric');
+        $annan->form_validation->set_rules('new_item_price[]', $annan->lang->line('new_item_price'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_discount_per[]', $annan->lang->line('new_item_discount_per'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_discount[]', $annan->lang->line('new_item_discount'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_total[]', $annan->lang->line('new_item_total'), 'numeric');                      
+        $annan->form_validation->set_rules('new_item_tax[]', $annan->lang->line('new_item_tax'), 'numeric');
         
         
-        $this->form_validation->set_rules('items_quty[]', $this->lang->line('items_quty'), 'numeric');                      
-        $this->form_validation->set_rules('items_cost[]', $this->lang->line('items_cost'), 'numeric');                      
-        $this->form_validation->set_rules('items_free[]', $this->lang->line('items_free'), 'numeric');                      
-        $this->form_validation->set_rules('items_mrp[]', $this->lang->line('items_mrp'), 'numeric');                      
-        $this->form_validation->set_rules('items_price[]', $this->lang->line('items_price'), 'numeric');                      
-        $this->form_validation->set_rules('items_discount_per[]', $this->lang->line('items_discount_per'), 'numeric');                      
-        $this->form_validation->set_rules('items_discount[]', $this->lang->line('items_discount'), 'numeric');                      
-        $this->form_validation->set_rules('items_total[]', $this->lang->line('items_total'), 'numeric');                      
-        $this->form_validation->set_rules('items_tax[]', $this->lang->line('items_tax'), 'numeric');                      
+        $annan->form_validation->set_rules('items_quty[]', $annan->lang->line('items_quty'), 'numeric');                      
+        $annan->form_validation->set_rules('items_cost[]', $annan->lang->line('items_cost'), 'numeric');                      
+        $annan->form_validation->set_rules('items_free[]', $annan->lang->line('items_free'), 'numeric');                      
+        $annan->form_validation->set_rules('items_mrp[]', $annan->lang->line('items_mrp'), 'numeric');                      
+        $annan->form_validation->set_rules('items_price[]', $annan->lang->line('items_price'), 'numeric');                      
+        $annan->form_validation->set_rules('items_discount_per[]', $annan->lang->line('items_discount_per'), 'numeric');                      
+        $annan->form_validation->set_rules('items_discount[]', $annan->lang->line('items_discount'), 'numeric');                      
+        $annan->form_validation->set_rules('items_total[]', $annan->lang->line('items_total'), 'numeric');                      
+        $annan->form_validation->set_rules('items_tax[]', $annan->lang->line('items_tax'), 'numeric');                      
            
-            if ( $this->form_validation->run() !== false ) {    
-                $supplier=  $this->input->post('supplier_guid');
+            if ( $annan->form_validation->run() !== false ) {    
+                $supplier=  $annan->input->post('supplier_guid');
              
-                $pono= $this->input->post('order_number');
-                $podate= strtotime($this->input->post('order_date'));
-                $discount=  $this->input->post('discount');
-                $discount_amount=  $this->input->post('discount_amount');
-                $freight=  $this->input->post('freight');
-                $round_amt=  $this->input->post('round_off_amount');
-                $total_items=$this->input->post('index');
-                $remark=  $this->input->post('remark');
-                $note=  $this->input->post('note');
-                $total_amount=  $this->input->post('total_amount');
-                $grand_total=  $this->input->post('grand_total');
+                $pono= $annan->input->post('order_number');
+                $podate= strtotime($annan->input->post('order_date'));
+                $discount=  $annan->input->post('discount');
+                $discount_amount=  $annan->input->post('discount_amount');
+                $freight=  $annan->input->post('freight');
+                $round_amt=  $annan->input->post('round_off_amount');
+                $total_items=$annan->input->post('index');
+                $remark=  $annan->input->post('remark');
+                $note=  $annan->input->post('note');
+                $total_amount=  $annan->input->post('total_amount');
+                $grand_total=  $annan->input->post('grand_total');
   
      
               $value=array('supplier_id'=>$supplier,'grn_date'=>$podate,'discount'=>$discount,'discount_amt'=>$discount_amount,'freight'=>$freight,'round_amt'=>$round_amt,'total_items'=>$total_items,'total_amt'=>$grand_total,'remark'=>$remark,'note'=>$note,'total_item_amt'=>$total_amount);
-              $guid=  $this->input->post('direct_grn_guid');
+              $guid=  $annan->input->post('direct_grn_guid');
               $update_where=array('guid'=>$guid);
-              $this->posnic->posnic_update_record($value,$update_where,'direct_grn');
+              $annan->posnic->posnic_update_record($value,$update_where,'direct_grn');
           
-                $item=  $this->input->post('items_id');
-                $quty=  $this->input->post('items_quty');
-                $cost=  $this->input->post('items_cost');
-                $free=  $this->input->post('items_free');
-                $sell=  $this->input->post('items_price');
-                $mrp=  $this->input->post('items_mrp');
-                $net=  $this->input->post('items_total');
-                $per=  $this->input->post('items_discount_per');
-                $dis=  $this->input->post('items_discount');
-                $tax=  $this->input->post('items_tax');
+                $item=  $annan->input->post('items_id');
+                $quty=  $annan->input->post('items_quty');
+                $cost=  $annan->input->post('items_cost');
+                $free=  $annan->input->post('items_free');
+                $sell=  $annan->input->post('items_price');
+                $mrp=  $annan->input->post('items_mrp');
+                $net=  $annan->input->post('items_total');
+                $per=  $annan->input->post('items_discount_per');
+                $dis=  $annan->input->post('items_discount');
+                $tax=  $annan->input->post('items_tax');
                 for($i=0;$i<count($item);$i++){
                
                        $where=array('order_id'=>$guid,'item'=>$item[$i]);
                        $item_value=array('order_id'=>$guid,'discount_per'=>$per[$i],'discount_amount'=>$dis[$i],'tax'=>$tax[$i],'item'=>$item[$i],'quty'=>$quty[$i],'free'=>$free[$i],'cost'=>$cost[$i],'sell'=>$sell[$i],'mrp'=>$mrp[$i],'amount'=>$net[$i]);
-                       $this->posnic->posnic_update_record($item_value,$where,'direct_grn_items');
+                       $annan->posnic->posnic_update_record($item_value,$where,'direct_grn_items');
                 
                         
                 }
-                $delete=  $this->input->post('r_items');
+                $delete=  $annan->input->post('r_items');
                     for($j=0;$j<count($delete);$j++){
-                        $this->load->model('purchase');
+                        $annan->load->model('purchase');
                         
-                         $this->purchase->delete_order_item($delete[$j]);
+                         $annan->purchase->delete_order_item($delete[$j]);
                     }
                     
-                $new_item=  $this->input->post('new_item_id');
-                $new_quty=  $this->input->post('new_item_quty');
-                $new_cost=  $this->input->post('new_item_cost');
-                $new_free=  $this->input->post('new_item_free');
-                $new_sell=  $this->input->post('new_item_price');
-                $new_mrp=  $this->input->post('new_item_mrp');
-                $new_net=  $this->input->post('new_item_total');
-                $new_per=  $this->input->post('new_item_discount_per');
-                $new_dis=  $this->input->post('new_item_discount');
-                $new_tax=  $this->input->post('new_item_tax');
+                $new_item=  $annan->input->post('new_item_id');
+                $new_quty=  $annan->input->post('new_item_quty');
+                $new_cost=  $annan->input->post('new_item_cost');
+                $new_free=  $annan->input->post('new_item_free');
+                $new_sell=  $annan->input->post('new_item_price');
+                $new_mrp=  $annan->input->post('new_item_mrp');
+                $new_net=  $annan->input->post('new_item_total');
+                $new_per=  $annan->input->post('new_item_discount_per');
+                $new_dis=  $annan->input->post('new_item_discount');
+                $new_tax=  $annan->input->post('new_item_tax');
                 for($i=0;$i<count($new_quty);$i++){
                     if($new_quty[$i]!=""){
 
                                   $new_item_value=array('order_id'=>$guid,'discount_per'=>$new_per[$i],'discount_amount'=>$new_dis[$i],'tax'=>$new_tax[$i],'item'=>$new_item[$i],'quty'=>$new_quty[$i],'free'=>$new_free[$i],'cost'=>$new_cost[$i],'sell'=>$new_sell[$i],'mrp'=>$new_mrp[$i],'amount'=>$new_net[$i]);
-                                  $this->load->model('purchase');
-                                  $this->purchase->add_items($item_value);
+                                  $annan->load->model('purchase');
+                                  $annan->purchase->add_items($item_value);
                     }
                         
                 }
@@ -304,20 +304,20 @@ function convert_date($date){
    echo json_encode($new);
 }
 function search_supplier(){
-    $search= $this->input->post('term');
+    $search= $annan->input->post('term');
     $like=array('first_name'=>$search,'last_name'=>$search,'company_name'=>$search,'phone'=>$search,'email'=>$search);       
-    $data= $this->posnic->posnic_select2('suppliers',$like)    ;
+    $data= $annan->posnic->posnic_select2('suppliers',$like)    ;
     echo json_encode($data);
         
 }
 function delete(){
-   if($this->session->userdata['brands_per']['delete']==1){
-            if($this->input->post('guid')){
-                $this->load->model('purchase');
-                $guid=$this->input->post('guid');
-                $status=$this->purchase->check_approve($guid);
+   if($annan->session->userdata['brands_per']['delete']==1){
+            if($annan->input->post('guid')){
+                $annan->load->model('purchase');
+                $guid=$annan->input->post('guid');
+                $status=$annan->purchase->check_approve($guid);
                     if($status!=FALSE){
-                         $this->posnic->posnic_delete($guid,'direct_grn');
+                         $annan->posnic->posnic_delete($guid,'direct_grn');
                             
                         echo 'TRUE';
                     }else{
@@ -331,40 +331,40 @@ function delete(){
     
 }
 function  get_direct_grn($guid){
-    if($this->session->userdata['direct_grn_per']['edit']==1){
-    $this->load->model('purchase');
-    $data=  $this->purchase->get_direct_grn($guid);
+    if($annan->session->userdata['direct_grn_per']['edit']==1){
+    $annan->load->model('purchase');
+    $data=  $annan->purchase->get_direct_grn($guid);
     echo json_encode($data);
     }
 }
 
 function direct_grn_approve(){
-     if($this->session->userdata['direct_grn_per']['approve']==1){
-            $id=  $this->input->post('guid');
-            $this->load->model('purchase');
-            $this->purchase->approve_grn($id);
-            $this->purchase->direct_grn_stock($id,$this->session->userdata['branch_id']);
+     if($annan->session->userdata['direct_grn_per']['approve']==1){
+            $id=  $annan->input->post('guid');
+            $annan->load->model('purchase');
+            $annan->purchase->approve_grn($id);
+            $annan->purchase->direct_grn_stock($id,$annan->session->userdata['branch_id']);
             echo 'TRUE';
      }else{
          echo 'FALSE';
      }
     }
 function order_number(){
-       $data[]= $this->posnic->posnic_master_max('direct_grn')    ;
+       $data[]= $annan->posnic->posnic_master_max('direct_grn')    ;
        echo json_encode($data);
 }
 function search_items(){
-        $search= $this->input->post('term');
-        $guid= $this->input->post('suppler');
-        $this->load->model('purchase');
-        $data= $this->purchase->search_items($search,$this->session->userdata['branch_id'],$guid);      
+        $search= $annan->input->post('term');
+        $guid= $annan->input->post('suppler');
+        $annan->load->model('purchase');
+        $data= $annan->purchase->search_items($search,$annan->session->userdata['branch_id'],$guid);      
         echo json_encode($data);
        
        
         
 }   
     function language($lang){
-       $lang= $this->lang->load($lang);
+       $lang= $annan->lang->load($lang);
        return $lang;
     }
 }

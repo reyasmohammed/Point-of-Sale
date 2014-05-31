@@ -4,7 +4,7 @@
           $(document).ready( function () {
               //$(document).fullScreen(true);
         	 refresh_items_table();
-                 $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('receiving_stock') ?>');
+                 $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('receiving_stock') ?>');
                      $('#add_new_order').hide();
                               posnic_table();
                                 
@@ -30,13 +30,13 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('receiving_stock') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('receiving_stock') ?>');
                 }        
            function posnic_table(){
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/receiving_stock/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/receiving_stock/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , 
@@ -50,7 +50,7 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                 
-                                                                        return '<a href=javascript:view_stock_transfer("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('view') ?>"><i class="icon icon-list"></i></span></a>';
+                                                                        return '<a href=javascript:view_stock_transfer("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('view') ?>"><i class="icon icon-list"></i></span></a>';
                                               
                                                                 },
 								
@@ -90,14 +90,14 @@
            function view_stock_transfer(guid){
            
         
-                        <?php if($this->session->userdata['receiving_stock_per']['read']==1){ ?>
+                        <?asp if($this->session->userdata['receiving_stock_per']['read']==1){ ?>
                                 
                            
                             refresh_items_table();
                             
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/receiving_stock/get_stock_transfer/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/receiving_stock/get_stock_transfer/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -184,12 +184,12 @@
                       
                         
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('receiving_stock');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('receiving_stock');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

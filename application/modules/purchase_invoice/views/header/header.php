@@ -4,7 +4,7 @@
           $(document).ready( function () {
               
         	 refresh_items_table();
-                 $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
+                 $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
                      $('#add_new_order').hide();
                               posnic_table();
                                 
@@ -30,13 +30,13 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('purchase_order')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('purchase_order')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
                 }        
            function posnic_table(){
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/purchase_invoice/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/purchase_invoice/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , 
@@ -50,7 +50,7 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                 
-                                                                        return '<a  ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('print') ?>"><i class="icon-print"></i></span></a>';
+                                                                        return '<a  ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('print') ?>"><i class="icon-print"></i></span></a>';
                                                                 
                                                                 },
 								
@@ -82,11 +82,11 @@
                                    
 			}
  function user_function(guid){
-    <?php if($this->session->userdata['purchase_invoice_per']['delete']==1){ ?>
-             bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('purchase_invoice') ?> "+$('#order__number_'+guid).val(), function(result) {
+    <?asp if($this->session->userdata['purchase_invoice_per']['delete']==1){ ?>
+             bootbox.confirm("<?asp echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('purchase_invoice') ?> "+$('#order__number_'+guid).val(), function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/purchase_invoice/delete',
+                url: '<?asp echo base_url() ?>/index.asp/purchase_invoice/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -94,27 +94,27 @@
                 },
                complete: function(response) {
                     if(response['responseText']=='TRUE'){
-                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('purchase_invoice') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('purchase_invoice') ?>  <?asp echo $this->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else if(response['responseText']=='Approved'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>  <?php echo $this->lang->line('is');?> <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is') ?>  <?asp echo $this->lang->line('is');?> <?asp echo $this->lang->line('already');?> <?asp echo $this->lang->line('approved');?>', { type: "warning" });
                     }else{
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
                     }
                     }
             });
         
 
                         }
-    }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
-   <?php }
+    }); <?asp }else{?>
+           $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+   <?asp }
 ?>
                         }
         function good_receiving_note_approve(guid,po){
-            <?php if($this->session->userdata['purchase_invoice_per']['approve']==1){ ?>
+            <?asp if($this->session->userdata['purchase_invoice_per']['approve']==1){ ?>
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/purchase_invoice/good_receiving_note_approve',
+                url: '<?asp echo base_url() ?>index.asp/purchase_invoice/good_receiving_note_approve',
                 type: "POST",
                 data: {
                     guid: guid,
@@ -123,25 +123,25 @@
                 },
                   complete: function(response) {
                      if(response['responseText']=='TRUE'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('approved');?>', { type: "success" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('approved');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else if(response['responseText']=='approve'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
                     }else if(response['responseText']=='Noop'){
-                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                           $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
                     }
                 }
             });
-             <?php }else{?>
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
-                <?php }?>
+             <?asp }else{?>
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                <?asp }?>
                }
         
           
         
         function posnic_active(guid){
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/purchase_invoice/active',
+                url: '<?asp echo base_url() ?>index.asp/purchase_invoice/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -150,7 +150,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('isactivated');?>', { type: "success" });
                          $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -158,7 +158,7 @@
         }
           
         function edit_function(guid){
-                        <?php if($this->session->userdata['purchase_invoice_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['purchase_invoice_per']['edit']==1){ ?>
                                 
                             $('#deleted').remove();
                             $('#parent_items').append('<div id="deleted"></div>');
@@ -171,7 +171,7 @@
                             $('#save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/purchase_invoice/get_purchase_invoice/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/purchase_invoice/get_purchase_invoice/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -315,12 +315,12 @@
                        $('#loading').modal('hide');
                     }, 0);
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

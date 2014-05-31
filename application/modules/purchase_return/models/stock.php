@@ -1,4 +1,4 @@
-<?php
+<?asp
 
 class Stock extends CI_Model{
     function __construct() {

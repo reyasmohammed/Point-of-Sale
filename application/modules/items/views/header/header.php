@@ -15,7 +15,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/items/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/items/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -37,9 +37,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[9]==1){
-                                                                             return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?php echo $this->lang->line('active') ?></span>';
+                                                                             return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?asp echo $this->lang->line('active') ?></span>';
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?php echo $this->lang->line('active') ?>" ><?php echo $this->lang->line('deactive') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?asp echo $this->lang->line('active') ?>" ><?asp echo $this->lang->line('deactive') ?></span>';
                                                                         }
 								},
 								
@@ -51,9 +51,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                 if(oObj.aData[9]==1){
-                   							return '<a href=javascript:posnic_deactive("'+oObj.aData[0]+'")><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?php echo $this->lang->line('deactive') ?>"><i class="icon-pause"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-success hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>&nbsp'+"<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>";
+                   							return '<a href=javascript:posnic_deactive("'+oObj.aData[0]+'")><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?asp echo $this->lang->line('deactive') ?>"><i class="icon-pause"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-success hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>&nbsp'+"<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>";
 								}else{
-                                                                        return '<a href=javascript:posnic_active("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('active') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>&nbsp'+"<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:posnic_active("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('active') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>&nbsp'+"<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -72,11 +72,11 @@
 			}
     function user_function(guid){
      var items=$('#name_'+guid).val();
-    <?php if($this->session->userdata['items_per']['delete']==1){ ?>
+    <?asp if($this->session->userdata['items_per']['delete']==1){ ?>
              bootbox.confirm("Are you Sure To Delete This Items ("+items+")", function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/items/delete',
+                url: '<?asp echo base_url() ?>/index.asp/items/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -92,15 +92,15 @@
         
 
                         }
-    }); <?php }else{?>
-           bootbox.alert("<?php echo $this->lang->line('You Have NO permission To Delete This Records') ?>");
-   <?php }
+    }); <?asp }else{?>
+           bootbox.alert("<?asp echo $this->lang->line('You Have NO permission To Delete This Records') ?>");
+   <?asp }
 ?>
                         }
             function posnic_deactive(guid){
                  var items=$('#name_'+guid).val();
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/items/deactive',
+                url: '<?asp echo base_url() ?>index.asp/items/deactive',
                 type: "POST",
                 data: {
                     guid: guid
@@ -109,7 +109,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl(items+' <?php echo $this->lang->line('isdeactivated');?>', { type: "danger" });
+                         $.bootstrapGrowl(items+' <?asp echo $this->lang->line('isdeactivated');?>', { type: "danger" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -118,7 +118,7 @@
             function posnic_active(guid){
               var items=$('#name_'+guid).val();
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/items/active',
+                url: '<?asp echo base_url() ?>index.asp/items/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -127,7 +127,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl(items+' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                         $.bootstrapGrowl(items+' <?asp echo $this->lang->line('isactivated');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -137,9 +137,9 @@
                        $("#parsley_reg").trigger('reset');
                          $('#add_item_form').hide('hide');      
                           $('#edit_item_form').show('slow');
-                        <?php if($this->session->userdata['items_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['items_per']['edit']==1){ ?>
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/items/edit_items/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/items/edit_items/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -168,7 +168,7 @@
                                  $('#parsley_reg #unit_of_mes').val(data[0]['uom']);
                                  $('#parsley_reg #no_of_unit').val(data[0]['no_of_unit']);
                                  $('#parsley_reg .fileupload-preview').empty();
-                               $('#parsley_reg .fileupload-preview').append('<img src="<?php echo base_url('uploads/items') ?>/'+data[0]['image']+'">');
+                               $('#parsley_reg .fileupload-preview').append('<img src="<?asp echo base_url('uploads/items') ?>/'+data[0]['image']+'">');
     $("#parsley_reg .fileupload-preview").css('display' ,'block')  ;                       
     $("#parsley_reg .fileupload-new").css('display' ,'inline')                         ;
     if(data[0]['uom']==0){
@@ -204,15 +204,15 @@
                         
                               
                          
-                        <?php }else{?>
-                                bootbox.alert("<?php echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
-                        <?php }?>
+                        <?asp }else{?>
+                                bootbox.alert("<?asp echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
+                        <?asp }?>
                        }
            function add_image_function(guid){
                        $("#add_image_form").trigger('reset');
-                        <?php if($this->session->userdata['items_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['items_per']['edit']==1){ ?>
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/items/edit_items/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/items/edit_items/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -230,7 +230,7 @@
                                   $('#add_image_form #preview_image #items_preview_image').remove();
                                   $('#add_image_form #preview_image #saved_image').remove();
                                if(data[0]['image']!=""){
-                              $('#add_image_form #preview_image').append('<label id="saved_image"><?php echo $this->lang->line('saved_image') ?></label><img id="items_preview_image" style="width:90%;height:90%" src="<?php echo base_url('uploads/items') ?>/'+data[0]['image']+'"></img>');
+                              $('#add_image_form #preview_image').append('<label id="saved_image"><?asp echo $this->lang->line('saved_image') ?></label><img id="items_preview_image" style="width:90%;height:90%" src="<?asp echo base_url('uploads/items') ?>/'+data[0]['image']+'"></img>');
                                }
                                  
                                
@@ -240,12 +240,12 @@
                         
                               
                          
-                        <?php }else{?>
-                                bootbox.alert("<?php echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
-                        <?php }?>
+                        <?asp }else{?>
+                                bootbox.alert("<?asp echo $this->lang->line('You Have NO permission To Edit This Records') ?>");
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
-        <script type="text/javascript" src="<?php echo base_url('template/form_post/jquery.form.js') ?>"></script>
+        <script type="text/javascript" src="<?asp echo base_url('template/form_post/jquery.form.js') ?>"></script>
   

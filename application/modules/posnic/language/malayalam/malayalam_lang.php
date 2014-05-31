@@ -1,4 +1,4 @@
-<?php
+<?asp
 
 $lang['user_name']='ഉദ്യോഗസ്ഥന്‍ ശകലം';;
 $lang['password']='രഹസ്യസൂചകപദം ';

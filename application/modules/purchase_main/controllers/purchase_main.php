@@ -1,4 +1,4 @@
-<?php
+<?asp
 class Purchase_main extends MX_Controller{
     function __construct() {
         parent::__construct();
@@ -25,7 +25,7 @@ class Purchase_main extends MX_Controller{
                 $this->load->library("pagination"); 
                
                 $this->load->model('purchase');
-	        $config["base_url"] = base_url()."index.php/purchase_main/get_suppliers";
+	        $config["base_url"] = base_url()."index.asp/purchase_main/get_suppliers";
 	        $config["total_rows"] = $this->purchase->supplier_count_for_admin($this->session->userdata['branch_id']);// get supplier count
 	        $config["per_page"] = 8;
 	        $config["uri_segment"] = 3;
@@ -43,7 +43,7 @@ class Purchase_main extends MX_Controller{
                 $this->load->library("pagination"); 
                 
                 $this->load->model('purchase');
-	        $config["base_url"] = base_url()."index.php/purchase_main/get_suppliers";
+	        $config["base_url"] = base_url()."index.asp/purchase_main/get_suppliers";
                 $config["total_rows"] = $this->purchase->get_purchase_order_user($this->session->userdata['branch_id']);
 	        $config["per_page"] = 8;
 	        $config["uri_segment"] = 3;

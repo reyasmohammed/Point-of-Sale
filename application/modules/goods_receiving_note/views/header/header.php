@@ -4,7 +4,7 @@
           $(document).ready( function () {
               
         	 refresh_items_table();
-                 $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('goods_receiving_note') ?>');
+                 $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('items')." ".$this->lang->line('for')." ".$this->lang->line('goods_receiving_note') ?>');
                      $('#add_new_order').hide();
                               posnic_table();
                                 
@@ -30,13 +30,13 @@
             },
                 });
             }
-              $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('purchase_order')." ".$this->lang->line('for')." ".$this->lang->line('goods_receiving_note') ?>');
+              $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('purchase_order')." ".$this->lang->line('for')." ".$this->lang->line('goods_receiving_note') ?>');
                 }        
            function posnic_table(){
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/goods_receiving_note/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/goods_receiving_note/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -74,9 +74,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[10]==1){
-                                                                           return '<span data-toggle="tooltip" class="text-success" ><?php echo $this->lang->line('approved') ?></span>'
+                                                                           return '<span data-toggle="tooltip" class="text-success" ><?asp echo $this->lang->line('approved') ?></span>'
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip"  class=" text-warning" ><?php echo $this->lang->line('waiting') ?></span>';
+                                                                            return '<span data-toggle="tooltip"  class=" text-warning" ><?asp echo $this->lang->line('waiting') ?></span>';
                                                                         }
 								},
 								
@@ -88,10 +88,10 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                 if(oObj.aData[10]==1){
-                                                                        //return '<a ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approved') ?>"><i class="icon-play"></i></span></a>&nbsp<a   ><span data-toggle="tooltip" class="label label-info hint--top hint--success" data-hint="<?php echo $this->lang->line('approved') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a  ><span data-toggle='tooltip' class='label label-danger hint--top hint--success' data-hint='<?php echo $this->lang->line('approved') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        //return '<a ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('approved') ?>"><i class="icon-play"></i></span></a>&nbsp<a   ><span data-toggle="tooltip" class="label label-info hint--top hint--success" data-hint="<?asp echo $this->lang->line('approved') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a  ><span data-toggle='tooltip' class='label label-danger hint--top hint--success' data-hint='<?asp echo $this->lang->line('approved') ?>'><i class='icon-trash'></i></span> </a>";
                                                                        return '<a  ><span data-toggle="tooltip" class="label label-success hint--top hint--success"  ><i class="icon-play"></i></span></a>&nbsp<a  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" ><i class="icon-edit"></i></span></a>'+"&nbsp;<a><span data-toggle='tooltip' class='label label-danger hint--top hint--error' ><i class='icon-trash'></i></span> </a>"
 								}else{
-                                                                        return '<a href=javascript:good_receiving_note_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:good_receiving_note_approve("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('approve') ?>"><i class="icon-play"></i></span></a>&nbsp<a href=javascript:edit_function("'+oObj.aData[0]+'")  ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                 }
                                                                 },
 								
@@ -123,11 +123,11 @@
                                    
 			}
  function user_function(guid){
-    <?php if($this->session->userdata['goods_receiving_note_per']['delete']==1){ ?>
-             bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('goods_receiving_note') ?> "+$('#order__number_'+guid).val(), function(result) {
+    <?asp if($this->session->userdata['goods_receiving_note_per']['delete']==1){ ?>
+             bootbox.confirm("<?asp echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('goods_receiving_note') ?> "+$('#order__number_'+guid).val(), function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/goods_receiving_note/delete',
+                url: '<?asp echo base_url() ?>/index.asp/goods_receiving_note/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -135,28 +135,28 @@
                 },
                complete: function(response) {
                     if(response['responseText']=='TRUE'){
-                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('goods_receiving_note') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('goods_receiving_note') ?>  <?asp echo $this->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else if(response['responseText']=='Approved'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>  <?php echo $this->lang->line('is');?> <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is') ?>  <?asp echo $this->lang->line('is');?> <?asp echo $this->lang->line('already');?> <?asp echo $this->lang->line('approved');?>', { type: "warning" });
                     }else{
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
                     }
                     }
             });
         
 
                         }
-    }); <?php }else{?>
-           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
-   <?php }
+    }); <?asp }else{?>
+           $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+   <?asp }
 ?>
                         }
         function good_receiving_note_approve(guid){
             var po=$('#purchase_order__number_'+guid).val();
-            <?php if($this->session->userdata['goods_receiving_note_per']['approve']==1){ ?>
+            <?asp if($this->session->userdata['goods_receiving_note_per']['approve']==1){ ?>
                 $.ajax({
-                url: '<?php echo base_url() ?>index.php/goods_receiving_note/good_receiving_note_approve',
+                url: '<?asp echo base_url() ?>index.asp/goods_receiving_note/good_receiving_note_approve',
                 type: "POST",
                 data: {
                     guid: guid,
@@ -165,25 +165,25 @@
                 },
                   complete: function(response) {
                      if(response['responseText']=='TRUE'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('approved');?>', { type: "success" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('approved');?>', { type: "success" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else if(response['responseText']=='approve'){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
                     }else if(response['responseText']=='Noop'){
-                           $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+                           $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
                     }
                 }
             });
-             <?php }else{?>
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
-                <?php }?>
+             <?asp }else{?>
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+                <?asp }?>
                }
         
           
         
         function posnic_active(guid){
                            $.ajax({
-                url: '<?php echo base_url() ?>index.php/goods_receiving_note/active',
+                url: '<?asp echo base_url() ?>index.asp/goods_receiving_note/active',
                 type: "POST",
                 data: {
                     guid: guid
@@ -192,7 +192,7 @@
                 success: function(response)
                 {
                     if(response){
-                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('isactivated');?>', { type: "success" });
+                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('isactivated');?>', { type: "success" });
                          $("#dt_table_tools").dataTable().fnDraw();
                     }
                 }
@@ -200,7 +200,7 @@
         }
           
         function edit_function(guid){
-                        <?php if($this->session->userdata['goods_receiving_note_per']['edit']==1){ ?>
+                        <?asp if($this->session->userdata['goods_receiving_note_per']['edit']==1){ ?>
                                 
                             $('#deleted').remove();
                             $('#parent_items').append('<div id="deleted"></div>');
@@ -213,7 +213,7 @@
                             $('#save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/goods_receiving_note/get_goods_receiving_note/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/goods_receiving_note/get_goods_receiving_note/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -359,12 +359,12 @@
                        $('#loading').modal('hide');
                     }, 0);
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('goods_receiving_note');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

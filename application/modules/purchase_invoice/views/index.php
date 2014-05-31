@@ -181,7 +181,7 @@
         }
         }
         }else{
-         $.bootstrapGrowl('<?php echo $this->lang->line('please_select')." ".$this->lang->line('purchase_order');?>', { type: "warning" }); 
+         $.bootstrapGrowl('<?asp echo $this->lang->line('please_select')." ".$this->lang->line('purchase_order');?>', { type: "warning" }); 
          $('#parsley_reg #demo_order_number').select2('open');
 
         }
@@ -207,82 +207,82 @@
             }
     }
     function save_new_grn(){
-         <?php if($this->session->userdata['purchase_invoice_per']['add']==1){ ?>
+         <?asp if($this->session->userdata['purchase_invoice_per']['add']==1){ ?>
                    if($('#parsley_reg').valid()){
                        var oTable = $('#selected_item_table').dataTable();
                        if(oTable.fnGetData().length>0){
                 var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/purchase_invoice/save')?>",
+                            url: "<?asp echo base_url('index.asp/purchase_invoice/save')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('purchase_invoice').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('purchase_invoice').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_purchase_invoice_lists();
                                        refresh_items_table();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('purchase').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?asp echo $this->lang->line('purchase').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                           
                                     }
                        }
                 });
                     }else{
                   
-                     $.bootstrapGrowl('<?php echo $this->lang->line('purchase_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('all_items_was_received') ?>', { type: "success" });                         
+                     $.bootstrapGrowl('<?asp echo $this->lang->line('purchase_order')?> '+$('#parsley_reg #demo_order_number').select2('data').text+' <?asp echo $this->lang->line('all_items_was_received') ?>', { type: "success" });                         
                      $('#parsley_reg #demo_order_number').select2('open');
                      $("#parsley_reg").trigger('reset');
-                      $('#selected_item_table .dataTables_empty').html('<?php echo $this->lang->line('please_select').' '.$this->lang->line('grn')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
+                      $('#selected_item_table .dataTables_empty').html('<?asp echo $this->lang->line('please_select').' '.$this->lang->line('grn')." ".$this->lang->line('for')." ".$this->lang->line('purchase_invoice') ?>');
                      $('#invoice_no').val(grn_number);
                      $('#demo_invoice_no').val(grn_number);
                     }
                     }else{
-                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
-                    }<?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
-                    <?php }?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
+                    <?asp }?>
     }
     function update_order(){
-         <?php if($this->session->userdata['purchase_invoice_per']['edit']==1){ ?>
+         <?asp if($this->session->userdata['purchase_invoice_per']['edit']==1){ ?>
                    if($('#parsley_reg').valid()){
                        var oTable = $('#selected_item_table').dataTable();
                        if(oTable.fnGetData().length>0){
                 var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/purchase_invoice/update')?>",
+                            url: "<?asp echo base_url('index.asp/purchase_invoice/update')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('purchase_invoice').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('purchase_invoice').' '.$this->lang->line('updated');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_purchase_invoice_lists();
                                        refresh_items_table();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('supplier').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?asp echo $this->lang->line('supplier').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                           
                                     }
                        }
                 });
                     }else{
                   
-                   $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
                      $('#parsley_reg #items').select2('open');
                     }
                     }else{
-                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
-                    }<?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
-                    <?php }?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('supplier');?>', { type: "error" });                       
+                    <?asp }?>
     }
     
      $(document).ready( function () {
@@ -303,7 +303,7 @@
                       $('#purchase_order').val($('#parsley_reg #demo_order_number').select2('data').po);
                       $('#goods_receiving_note_guid').val(guid);
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/purchase_invoice/get_grn/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/purchase_invoice/get_grn/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -414,7 +414,7 @@
              // get data from direct grn
              $('#goods_receiving_note_guid').val(guid);
                   $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/purchase_invoice/get_direct_grn/"+guid,              
+                             url: "<?asp echo base_url() ?>index.asp/purchase_invoice/get_direct_grn/"+guid,              
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -533,7 +533,7 @@
                        $('#loading').modal('hide');
                     }, 0); 
 }else{
- $.bootstrapGrowl($('#parsley_reg #demo_order_number').select2('data').text+' <?php echo $this->lang->line('grn').' '.$this->lang->line('is_already_invoice');?>', { type: "warning" });                           
+ $.bootstrapGrowl($('#parsley_reg #demo_order_number').select2('data').text+' <?asp echo $this->lang->line('grn').' '.$this->lang->line('is_already_invoice');?>', { type: "warning" });                           
            }
               
                     
@@ -542,9 +542,9 @@
               dropdownCssClass : 'supplier_select',
                 
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('purchase_order') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('purchase_order') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/purchase_invoice/search_grn_order',
+                     url: '<?asp echo base_url() ?>index.asp/purchase_invoice/search_grn_order',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -585,7 +585,7 @@
 function posnic_add_new(){
 refresh_items_table();
    $("#parsley_reg").trigger('reset');
-    <?php if($this->session->userdata['purchase_invoice_per']['add']==1){ ?>
+    <?asp if($this->session->userdata['purchase_invoice_per']['add']==1){ ?>
             $('#update_button').hide();
             $(".supplier_select_2").show();
             $(".porchase_order_for_grn").hide();
@@ -602,7 +602,7 @@ refresh_items_table();
             $('#parent_items').append('<div id="newly_added"></div>');
             $("#parsley_reg #demo_order_number").select2('data', {id:'',text: 'Search PO'});
              $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/purchase_invoice/order_number/",                      
+                             url: "<?asp echo base_url() ?>index.asp/purchase_invoice/order_number/",                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -629,9 +629,9 @@ refresh_items_table();
                     {
                        $('#parsley_reg #demo_order_number').select2('open');
                     }, 1000);
-      <?php }else{ ?>
-                    $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                         
-                    <?php }?>
+      <?asp }else{ ?>
+                    $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                         
+                    <?asp }?>
 }
 function posnic_purchase_invoice_lists(){
       $('#edit_brand_form').hide('hide');
@@ -661,9 +661,9 @@ function reload_update_user(){
     <div class="container">
             <div class="row">
                 <div class="col col-lg-7">
-                        <a href="javascript:posnic_add_new()" id="posnic_add_purchase_invoice" class="btn btn-default" ><i class="icon icon-user"></i> <?php echo $this->lang->line('addnew')." ".$this->lang->line('invoice') ?></a>  
+                        <a href="javascript:posnic_add_new()" id="posnic_add_purchase_invoice" class="btn btn-default" ><i class="icon icon-user"></i> <?asp echo $this->lang->line('addnew')." ".$this->lang->line('invoice') ?></a>  
                       
-                        <a href="javascript:posnic_purchase_invoice_lists()" class="btn btn-default" id="purchase_invoice_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('purchase_invoice') ?></a>
+                        <a href="javascript:posnic_purchase_invoice_lists()" class="btn btn-default" id="purchase_invoice_lists"><i class="icon icon-list"></i> <?asp echo $this->lang->line('purchase_invoice') ?></a>
                         
                 </div>
             </div>
@@ -672,7 +672,7 @@ function reload_update_user(){
 <div class="modal fade" id="loading">
     <div class="modal-dialog" style="width: 146px;margin-top: 20%">
                 
-        <img src="<?php echo base_url('loader.gif') ?>" style="margin: auto">
+        <img src="<?asp echo base_url('loader.gif') ?>" style="margin: auto">
                     
         </div>
 </div>
@@ -681,26 +681,26 @@ function reload_update_user(){
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
-                        <?php $form =array('name'=>'posnic'); 
+                        <?asp $form =array('name'=>'posnic'); 
                     echo form_open('purchase_invoice/purchase_invoice_manage',$form) ?>
                         <div class="row">
                             <div class="col-sm-12" id="user_list"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('purchase_invoice') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('purchase_invoice') ?></h4>                                                                               
                                     </div>
                                     <table id="dt_table_tools" class="table-striped table-condensed " style="width: 100%"><thead>
                                         <tr>
                                          <th>Id</th>
                                          
-                                          <th ><?php echo $this->lang->line('invoice') ?></th>
-                                          <th ><?php echo $this->lang->line('grn_number') ?></th>
+                                          <th ><?asp echo $this->lang->line('invoice') ?></th>
+                                          <th ><?asp echo $this->lang->line('grn_number') ?></th>
                                           
-                                          <th><?php echo $this->lang->line('company') ?></th>
-                                           <th><?php echo $this->lang->line('name') ?></th>
-                                          <th><?php echo $this->lang->line('order_date') ?></th>
+                                          <th><?asp echo $this->lang->line('company') ?></th>
+                                           <th><?asp echo $this->lang->line('name') ?></th>
+                                          <th><?asp echo $this->lang->line('order_date') ?></th>
                                           
-                                          <th style="width: 120px"><?php echo $this->lang->line('action') ?></th>
+                                          <th style="width: 120px"><?asp echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
                                       <tbody></tbody>
@@ -708,7 +708,7 @@ function reload_update_user(){
                                   </div>
                              </div>
                           </div>
-                <?php echo form_close(); ?>
+                <?asp echo form_close(); ?>
              </div>
         </div>
 </section>    
@@ -718,7 +718,7 @@ function reload_update_user(){
 
   
 <section id="add_new_order" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
+     <?asp   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'name'=>'items_form',
                           'class'=>'form-horizontal');
@@ -732,7 +732,7 @@ function reload_update_user(){
                          <div class="row">
                           <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('purchase_invoice')." ".$this->lang->line('details') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('purchase_invoice')." ".$this->lang->line('details') ?></h4>                                                                               
                                </div>
                             
                                  
@@ -740,8 +740,8 @@ function reload_update_user(){
                                            <div class="row">
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep supplier_select_2">
-                                                        <label for="demo_order_number" ><?php echo $this->lang->line('grn_no') ?></label>													
-                                                                  <?php $demo_order_number=array('name'=>'demo_order_number',
+                                                        <label for="demo_order_number" ><?asp echo $this->lang->line('grn_no') ?></label>													
+                                                                  <?asp $demo_order_number=array('name'=>'demo_order_number',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_order_number',
                                                                                    
@@ -751,14 +751,14 @@ function reload_update_user(){
                                                        
                                                   </div> 
                                                    <div class="form_sep porchase_order_for_grn" style="margin-top:0px">
-                                                         <label for="demo_order_number" ><?php echo $this->lang->line('order_number') ?></label>	
+                                                         <label for="demo_order_number" ><?asp echo $this->lang->line('order_number') ?></label>	
                                                          <input type="text" disabled="disabled" id="edit_grn_node" class='form-control'>
                                                    </div>
                                                </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="name" ><?php echo $this->lang->line('supplier')." ".$this->lang->line('name') ?></label>													
-                                                                     <?php $name=array('name'=>'name',
+                                                            <label for="name" ><?asp echo $this->lang->line('supplier')." ".$this->lang->line('name') ?></label>													
+                                                                     <?asp $name=array('name'=>'name',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'first_name',
                                                                                         'disabled'=>'disabled',
@@ -769,8 +769,8 @@ function reload_update_user(){
                                                     </div>
                                                <div class="col col-sm-2" >
                                                     <div class="form_sep">
-                                                            <label for="company" ><?php echo $this->lang->line('company') ?></label>													
-                                                                     <?php $last_name=array('name'=>'last_name',
+                                                            <label for="company" ><?asp echo $this->lang->line('company') ?></label>													
+                                                                     <?asp $last_name=array('name'=>'last_name',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'company',
                                                                                         'disabled'=>'disabled',
@@ -781,8 +781,8 @@ function reload_update_user(){
                                               
                                                <div class="col col-sm-2" >
                                                     <div class="form_sep">
-                                                            <label for="address" ><?php echo $this->lang->line('address') ?></label>													
-                                                                     <?php $address=array('name'=>'address',
+                                                            <label for="address" ><?asp echo $this->lang->line('address') ?></label>													
+                                                                     <?asp $address=array('name'=>'address',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'address',
                                                                                         'disabled'=>'disabled',
@@ -793,9 +793,9 @@ function reload_update_user(){
                                               
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="order_date" ><?php echo $this->lang->line('order_date') ?></label>													
+                                                            <label for="order_date" ><?asp echo $this->lang->line('order_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $order_date=array('name'=>'order_date',
+                                                                           <?asp $order_date=array('name'=>'order_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'order_date',
                                                                                             'disabled'=>'disabled',
@@ -807,9 +807,9 @@ function reload_update_user(){
                                                    </div>
                                                <div class="col col-sm-2" >
                                                      <div class="form_sep">
-                                                            <label for="received_date" ><?php echo $this->lang->line('received_date') ?></label>													
+                                                            <label for="received_date" ><?asp echo $this->lang->line('received_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $received_date=array('name'=>'received_date',
+                                                                           <?asp $received_date=array('name'=>'received_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'received_date',
                                                                                              'disabled'=>'disabled',
@@ -825,8 +825,8 @@ function reload_update_user(){
                                            <div class="row">
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="discount" ><?php echo $this->lang->line('discount') ?>%</label>													
-                                                                     <?php $discount=array('name'=>'discount',
+                                                            <label for="discount" ><?asp echo $this->lang->line('discount') ?>%</label>													
+                                                                     <?asp $discount=array('name'=>'discount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'id_discount',
                                                                                         'maxlength'=>2,
@@ -841,8 +841,8 @@ function reload_update_user(){
                                                 
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="discount_amount" ><?php echo $this->lang->line('discount_amount') ?></label>													
-                                                                     <?php $discount_amount=array('name'=>'discount_amount',
+                                                            <label for="discount_amount" ><?asp echo $this->lang->line('discount_amount') ?></label>													
+                                                                     <?asp $discount_amount=array('name'=>'discount_amount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'discount_amount',
                                                                                      
@@ -853,8 +853,8 @@ function reload_update_user(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="freight" ><?php echo $this->lang->line('freight') ?></label>													
-                                                                     <?php $freight=array('name'=>'freight',
+                                                            <label for="freight" ><?asp echo $this->lang->line('freight') ?></label>													
+                                                                     <?asp $freight=array('name'=>'freight',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'freight',
                                                                                      
@@ -865,8 +865,8 @@ function reload_update_user(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="round_off_amount" ><?php echo $this->lang->line('round_off_amount') ?></label>													
-                                                                     <?php $round_off_amount=array('name'=>'round_off_amount',
+                                                            <label for="round_off_amount" ><?asp echo $this->lang->line('round_off_amount') ?></label>													
+                                                                     <?asp $round_off_amount=array('name'=>'round_off_amount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'round_off_amount',
                                                                                         'disabled'=>'disabled',
@@ -876,8 +876,8 @@ function reload_update_user(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="grn_no" ><?php echo $this->lang->line('invoice_no') ?></label>													
-                                                                     <?php $round_off_amount=array('name'=>'demo_invoice_no',
+                                                            <label for="grn_no" ><?asp echo $this->lang->line('invoice_no') ?></label>													
+                                                                     <?asp $round_off_amount=array('name'=>'demo_invoice_no',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'demo_invoice_no',
                                                                                         'disabled'=>'disabled',
@@ -888,9 +888,9 @@ function reload_update_user(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="grn_date" ><?php echo $this->lang->line('invoice_date') ?></label>													
+                                                            <label for="grn_date" ><?asp echo $this->lang->line('invoice_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $grn_date=array('name'=>'grn_date',
+                                                                           <?asp $grn_date=array('name'=>'grn_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'grn_date',
                                                                                             'onKeyPress'=>"new_order_date(event)", 
@@ -920,22 +920,22 @@ function reload_update_user(){
                             <div class="image_items">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('order_items') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('order_items') ?></h4>                                                                               
                                     </div>
                                 <table id='selected_item_table' class="table table-striped dataTable ">
                                     <thead>
                                         <tr>
-                                            <th><?php echo $this->lang->line('sl_no') ?></th>
-                                            <th><?php echo $this->lang->line('name') ?></th>
-                                            <th><?php echo $this->lang->line('sku') ?></th>
-                                            <th><?php echo $this->lang->line('cost') ?></th>
-                                            <th><?php echo $this->lang->line('mrp') ?></th>
-                                            <th><?php echo $this->lang->line('quantity') ?></th>
-                                            <th><?php echo $this->lang->line('free') ?></th>
-                                            <th><?php echo $this->lang->line('sub_total') ?></th>
-                                            <th><?php echo $this->lang->line('tax') ?></th>
-                                            <th><?php echo $this->lang->line('discount') ?></th>
-                                            <th><?php echo $this->lang->line('total') ?></th>                                 
+                                            <th><?asp echo $this->lang->line('sl_no') ?></th>
+                                            <th><?asp echo $this->lang->line('name') ?></th>
+                                            <th><?asp echo $this->lang->line('sku') ?></th>
+                                            <th><?asp echo $this->lang->line('cost') ?></th>
+                                            <th><?asp echo $this->lang->line('mrp') ?></th>
+                                            <th><?asp echo $this->lang->line('quantity') ?></th>
+                                            <th><?asp echo $this->lang->line('free') ?></th>
+                                            <th><?asp echo $this->lang->line('sub_total') ?></th>
+                                            <th><?asp echo $this->lang->line('tax') ?></th>
+                                            <th><?asp echo $this->lang->line('discount') ?></th>
+                                            <th><?asp echo $this->lang->line('total') ?></th>                                 
                                         </tr>
                                     </thead>
                                     <tbody id="new_order_items" class="ordered_items_table" >
@@ -955,12 +955,12 @@ function reload_update_user(){
                                        <div id="" class="col col-lg-6" style="padding-right: 0px;padding-left: 0px">
                                            <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
                               </div> <div class="row" style="padding-left:25px;padding-right:25px;padding-bottom:  25px">
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                        <label for="note" ><?php echo $this->lang->line('note') ?></label>													
-                                                                  <?php $note=array('name'=>'note',
+                                                        <label for="note" ><?asp echo $this->lang->line('note') ?></label>													
+                                                                  <?asp $note=array('name'=>'note',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'note',
                                                                                    'rows'=>3,
@@ -971,8 +971,8 @@ function reload_update_user(){
                                                </div>
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                         <label for="remark" ><?php echo $this->lang->line('remark') ?></label>													
-                                                                  <?php $remark=array('name'=>'remark',
+                                                         <label for="remark" ><?asp echo $this->lang->line('remark') ?></label>													
+                                                                  <?asp $remark=array('name'=>'remark',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'remark',
                                                                                    'rows'=>3,
@@ -994,21 +994,21 @@ function reload_update_user(){
                                           <div class="col col-sm-3" style="padding-top: 50px" >
                                               <div class="form_sep " id="save_button" style="padding-left: 50px">
                                                        <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:save_new_grn()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                       <a href="javascript:save_new_grn()" class="btn btn-default"  ><i class="icon icon-save"></i> <?asp echo " ".$this->lang->line('save') ?></a>
                                                   </div>
                                               <div class="form_sep " id="update_button" style=" margin-top: 0 !important;padding-left: 50px">
                                                        <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:update_order()" class="btn btn-default"  ><i class="icon icon-edit"></i> <?php echo " ".$this->lang->line('update') ?></a>
+                                                       <a href="javascript:update_order()" class="btn btn-default"  ><i class="icon icon-edit"></i> <?asp echo " ".$this->lang->line('update') ?></a>
                                                   </div>
                                                </div>
                                           <div class="col col-sm-3" style="padding-top: 50px"  >
                                                    <div class="form_sep " id="save_clear">
                                                        <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_add_purchase_invoice()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                        <a href="javascript:clear_add_purchase_invoice()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?asp echo " ".$this->lang->line('clear') ?></a>
                                                   </div>
                                               <div class="form_sep " id="update_clear" style="margin-top:0 !important">
                                                        <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_update_purchase_invoice()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                        <a href="javascript:clear_update_purchase_invoice()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?asp echo " ".$this->lang->line('clear') ?></a>
                                                   </div>
                                                </div>
                                          
@@ -1016,11 +1016,11 @@ function reload_update_user(){
                                                <div class="col col-sm-6" >
                                                      <div class="panel panel-default">
                                                     <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('amount') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('amount') ?></h4>                                                                               
                               </div>
                                                          <div class="form_sep " style="padding: 0 25px">
-                                                        <label for="total_amount" ><?php echo $this->lang->line('total_amount') ?></label>													
-                                                                  <?php $total_amount=array('name'=>'demo_total_amount',
+                                                        <label for="total_amount" ><?asp echo $this->lang->line('total_amount') ?></label>													
+                                                                  <?asp $total_amount=array('name'=>'demo_total_amount',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_total_amount',
                                                                                     'disabled'=>'disabled',
@@ -1030,8 +1030,8 @@ function reload_update_user(){
                                                         
                                                   </div>
                                                          <div class="form_sep " style="padding: 0 25px">
-                                                        <label for="grand_total" ><?php echo $this->lang->line('grand_total') ?></label>													
-                                                                  <?php $grand_total=array('name'=>'demo_grand_total',
+                                                        <label for="grand_total" ><?asp echo $this->lang->line('grand_total') ?></label>													
+                                                                  <?asp $grand_total=array('name'=>'demo_grand_total',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_grand_total',
                                                                                     'disabled'=>'disabled',
@@ -1057,7 +1057,7 @@ function reload_update_user(){
                         </div>
                     
           </div>  </div>  </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
            <div id="footer_space">
               
@@ -1066,7 +1066,7 @@ function reload_update_user(){
 	
     <script type="text/javascript">
         function posnic_group_approve(){
-              <?php if($this->session->userdata['purchase_invoice_per']['approve']==1){ ?>
+              <?asp if($this->session->userdata['purchase_invoice_per']['approve']==1){ ?>
                      var flag=0;
                      var field=document.forms.posnic;
                       for (i = 0; i < field.length; i++){
@@ -1077,7 +1077,7 @@ function reload_update_user(){
 
                       }
                       if (flag<1) {
-                              $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('purchase_invoice');?>', { type: "warning" });
+                              $.bootstrapGrowl('<?asp echo $this->lang->line('Select Atleast One')."".$this->lang->line('purchase_invoice');?>', { type: "warning" });
                       
                       }else{
                             var posnic=document.forms.posnic;
@@ -1085,7 +1085,7 @@ function reload_update_user(){
                           var guid=posnic[i].value;
                           if(posnic[i].checked==true){                             
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/purchase_invoice/good_receiving_note_approve',
+                                url: '<?asp echo base_url() ?>/index.asp/purchase_invoice/good_receiving_note_approve',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -1093,12 +1093,12 @@ function reload_update_user(){
                                 },
                                  complete: function(response) {
                                     if(response['responseText']=='TRUE'){
-                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('approved');?>', { type: "success" });
+                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('approved');?>', { type: "success" });
                                        $("#dt_table_tools").dataTable().fnDraw();
                                    }else if(response['responseText']=='approve'){
-                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
+                                        $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is')." ".$this->lang->line('already')." ".$this->lang->line('approved');?>', { type: "warning" });
                                    }else if(response['responseText']=='Noop'){
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
                                    }
                                }
                             });
@@ -1109,14 +1109,14 @@ function reload_update_user(){
                   
 
                       }  
-               <?php }else{?>
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
-                <?php }?>
+               <?asp }else{?>
+                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                <?asp }?>
                }
                       
                    
     function grn_group_delete(){
-                     <?php if($this->session->userdata['purchase_invoice_per']['delete']==1){ ?>
+                     <?asp if($this->session->userdata['purchase_invoice_per']['delete']==1){ ?>
                      var flag=0;
                      var field=document.forms.posnic;
                       for (i = 0; i < field.length; i++){
@@ -1128,9 +1128,9 @@ function reload_update_user(){
                       }
                       if (flag<1) {
                         
-                          $.bootstrapGrowl('<?php echo $this->lang->line('Select Atleast One')."".$this->lang->line('purchase_invoice');?>', { type: "warning" });
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('Select Atleast One')."".$this->lang->line('purchase_invoice');?>', { type: "warning" });
                       }else{
-                            bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('purchase_invoice') ?>", function(result) {
+                            bootbox.confirm("<?asp echo $this->lang->line('Are you Sure To Delete')."".$this->lang->line('purchase_invoice') ?>", function(result) {
              if(result){
               
              
@@ -1139,7 +1139,7 @@ function reload_update_user(){
                           if(posnic[i].checked==true){   
                               var guid=posnic[i].value;
                               $.ajax({
-                                url: '<?php echo base_url() ?>/index.php/purchase_invoice/delete',
+                                url: '<?asp echo base_url() ?>/index.asp/purchase_invoice/delete',
                                 type: "POST",
                                 data: {
                                     guid:posnic[i].value
@@ -1147,12 +1147,12 @@ function reload_update_user(){
                                 },
                                  complete: function(response) {
                                     if(response['responseText']=='TRUE'){
-                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('purchase_invoice') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('purchase_invoice') ?>  <?asp echo $this->lang->line('deleted');?>', { type: "error" });
                                         $("#dt_table_tools").dataTable().fnDraw();
                                     }else if(response['responseText']=='Approved'){
-                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('is') ?>  <?php echo $this->lang->line('is');?> <?php echo $this->lang->line('already');?> <?php echo $this->lang->line('approved');?>', { type: "warning" });
+                                         $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $this->lang->line('is') ?>  <?asp echo $this->lang->line('is');?> <?asp echo $this->lang->line('already');?> <?asp echo $this->lang->line('approved');?>', { type: "warning" });
                                     }else{
-                                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                                         $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
                                     }
                                     }
                             });
@@ -1163,9 +1163,9 @@ function reload_update_user(){
                       }
                       });
                       }  
-                      <?php }else{?>
-                               $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
-                       <?php }
+                      <?asp }else{?>
+                               $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('purchase_invoice');?>', { type: "error" });                       
+                       <?asp }
                     ?>
                       }
                     

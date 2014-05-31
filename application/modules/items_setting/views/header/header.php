@@ -16,7 +16,7 @@
                                    $('#item_name_data').change(function() {
                    var guid = $('#item_name_data').select2('data').id;
                    $.ajax({                                      
-                              url: "<?php echo base_url() ?>index.php/items/edit_items/"+guid,                     
+                              url: "<?asp echo base_url() ?>index.asp/items/edit_items/"+guid,                     
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -30,11 +30,11 @@
                              } 
                            });
                         $.ajax({                                      
-                              url: "<?php echo base_url() ?>index.php/items_setting/get_items_setting_details/"+guid,                     
+                              url: "<?asp echo base_url() ?>index.asp/items_setting/get_items_setting_details/"+guid,                     
                              data: "", 
                              dataType: 'json',  
 //                              beforeSend: function() {
-//                                $('#main_content').html('<img src="<?php echo base_url('loading.gif') ?>" />');
+//                                $('#main_content').html('<img src="<?asp echo base_url('loading.gif') ?>" />');
 //                            },
                              success: function(data)        
                              {    
@@ -79,9 +79,9 @@
                            
           });
          $('#add_item_form #item_name_data').select2({
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('item') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('item') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/item_code/get_items_details',
+                     url: '<?asp echo base_url() ?>index.asp/item_code/get_items_details',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -116,7 +116,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/items_setting/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/items_setting/data_table",
                                        aoColumns: [  
                                     
          { "bVisible": false} , 
@@ -129,9 +129,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                    							if(oObj.aData[7]==1){
-                                                                            return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?php echo $this->lang->line('active') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="text-success hint--top hint--success" ><?asp echo $this->lang->line('active') ?></span>';
                                                                         }else{
-                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?php echo $this->lang->line('active') ?>" ><?php echo $this->lang->line('deactive') ?></span>';
+                                                                            return '<span data-toggle="tooltip" class="text-danger hint--top data-hint="<?asp echo $this->lang->line('active') ?>" ><?asp echo $this->lang->line('deactive') ?></span>';
                                                                         }
 								},
 								
@@ -143,7 +143,7 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                
-                                                                        return '<a href=javascript:set_items_setting("'+oObj.aData[8]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('setting') ?>"><i class="glyphicon glyphicon-cog"></i></span></a>';
+                                                                        return '<a href=javascript:set_items_setting("'+oObj.aData[8]+'") ><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('setting') ?>"><i class="glyphicon glyphicon-cog"></i></span></a>';
                                                                 
                                                                 },
 								
@@ -165,14 +165,14 @@
           
            function set_items_setting(guid){
                        $("#parsley_reg").trigger('reset');
-                        <?php if($this->session->userdata['items_setting_per']['set']==1){ ?>
+                        <?asp if($this->session->userdata['items_setting_per']['set']==1){ ?>
                                                                
                             $.ajax({                                      
-                              url: "<?php echo base_url() ?>index.php/items_setting/get_items_setting_details/"+guid,                     
+                              url: "<?asp echo base_url() ?>index.asp/items_setting/get_items_setting_details/"+guid,                     
                              data: "", 
                              dataType: 'json',  
 //                              beforeSend: function() {
-//                                $('#main_content').html('<img src="<?php echo base_url('loading.gif') ?>" />');
+//                                $('#main_content').html('<img src="<?asp echo base_url('loading.gif') ?>" />');
 //                            },
                              success: function(data)        
                              {    
@@ -236,12 +236,12 @@
                         
                               
                          
-                        <?php }else{?>
-                                $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
-                        <?php }?>
+                        <?asp }else{?>
+                                $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
 
   

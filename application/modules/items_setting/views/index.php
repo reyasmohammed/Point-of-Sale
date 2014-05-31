@@ -25,59 +25,59 @@
          
 
          $('#set_new_code').click(function() { 
-                <?php if($this->session->userdata['items_setting_per']['set']==1){ ?>
+                <?asp if($this->session->userdata['items_setting_per']['set']==1){ ?>
                 var inputs = $('#add_item').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/items_setting/set_items_setting')?>",
+                            url: "<?asp echo base_url('index.asp/items_setting/set_items_setting')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('items_setting').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('items_setting').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#add_item").trigger('reset');
                                        posnic_items_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#items_name').val()+' <?php echo $this->lang->line('items_setting').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#items_name').val()+' <?asp echo $this->lang->line('items_setting').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Set')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Set')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
                                     }
                        }
-                });<?php }else{ ?>
-                  $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
-                    <?php }?>
+                });<?asp }else{ ?>
+                  $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                    <?asp }?>
         });
          $('#update_items').click(function() { 
-                <?php if($this->session->userdata['items_setting_per']['set']==1){ ?>
+                <?asp if($this->session->userdata['items_setting_per']['set']==1){ ?>
                 var inputs = $('#parsley_reg').serialize();
                        $.ajax ({
-                            url: "<?php echo base_url('index.php/items_setting/set_items_setting')?>",
+                            url: "<?asp echo base_url('index.asp/items_setting/set_items_setting')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('items_setting').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('items_setting').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#add_item").trigger('reset');
                                        posnic_items_lists();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#items_name').val()+' <?php echo $this->lang->line('items_setting').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#items_name').val()+' <?asp echo $this->lang->line('items_setting').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Set')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Set')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
                                     }
                        }
                  });
-                 <?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
-                    <?php }?>
+                 <?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                    <?asp }?>
         });
      });
 function posnic_add_new(){
-    <?php if($this->session->userdata['items_setting_per']['set']==1){ ?>
+    <?asp if($this->session->userdata['items_setting_per']['set']==1){ ?>
              $("#add_item").trigger('reset');
               $('#add_item_form #item_name_data').val('');
                  $("#add_item_form #item_name_data").select2('data', {id:'',text:''});
@@ -93,9 +93,9 @@ function posnic_add_new(){
 
           $("#add_item_form #item_name_data").select2('open');
         }, 500);
-      <?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
-                    <?php }?>
+      <?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('items_setting');?>', { type: "error" });                           
+                    <?asp }?>
 }
 function posnic_items_lists(){
       $('#edit_item_form').hide('hide');
@@ -118,8 +118,8 @@ function reload_update_user(){
     <div class="container">
             <div class="row">
                 <div class="col col-lg-7">
-                        <a href="javascript:posnic_add_new()" id="posnic_add_items" class="btn btn-default" ><i class="glyphicon glyphicon-cog"></i> <?php echo $this->lang->line('setting') ?></a>  
-                        <a href="javascript:posnic_items_lists()" class="btn btn-default" id="items_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('items') ?></a>
+                        <a href="javascript:posnic_add_new()" id="posnic_add_items" class="btn btn-default" ><i class="glyphicon glyphicon-cog"></i> <?asp echo $this->lang->line('setting') ?></a>  
+                        <a href="javascript:posnic_items_lists()" class="btn btn-default" id="items_lists"><i class="icon icon-list"></i> <?asp echo $this->lang->line('items') ?></a>
                 </div>
             </div>
     </div>
@@ -129,26 +129,26 @@ function reload_update_user(){
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
-                        <?php $form =array('name'=>'posnic'); 
+                        <?asp $form =array('name'=>'posnic'); 
                     echo form_open('items/items_manage',$form) ?>
                         <div class="row">
                             <div class="col-sm-12" id="user_list"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('items') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('items') ?></h4>                                                                               
                                     </div>
                                     <table id="dt_table_tools" class="table-striped table-condensed" style="width: 100%"><thead>
                                         <tr>
                                           <th>Id</th>
                                           
-                                          <th ><?php echo $this->lang->line('sku'); ?></th>
-                                          <th ><?php echo $this->lang->line('name'); ?></th>
-                                          <th ><?php echo $this->lang->line('location'); ?></th>
-                                          <th ><?php echo $this->lang->line('brand'); ?></th>
-                                          <th ><?php echo $this->lang->line('category'); ?> </th>
+                                          <th ><?asp echo $this->lang->line('sku'); ?></th>
+                                          <th ><?asp echo $this->lang->line('name'); ?></th>
+                                          <th ><?asp echo $this->lang->line('location'); ?></th>
+                                          <th ><?asp echo $this->lang->line('brand'); ?></th>
+                                          <th ><?asp echo $this->lang->line('category'); ?> </th>
                                           
-                                          <th><?php echo $this->lang->line('status'); ?></th>
-                                          <th><?php echo $this->lang->line('action'); ?></th>
+                                          <th><?asp echo $this->lang->line('status'); ?></th>
+                                          <th><?asp echo $this->lang->line('action'); ?></th>
                                          </tr>
                                       </thead>
                                       <tbody></tbody>
@@ -156,12 +156,12 @@ function reload_update_user(){
                                   </div>
                              </div>
                           </div>
-                <?php echo form_close(); ?>
+                <?asp echo form_close(); ?>
              </div>
         </div>
 </section>    
 <section id="add_item_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'add_item',
+     <?asp   $form =array('id'=>'add_item',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('items/add_pos_items_details/',$form);?>
@@ -171,7 +171,7 @@ function reload_update_user(){
                      <div class="col-lg-12">
                           <div class="panel panel-default">
                                <div class="panel-heading">
-                                       <h4 class="panel-title"><?php echo $this->lang->line('items_setting') ?></h4>  
+                                       <h4 class="panel-title"><?asp echo $this->lang->line('items_setting') ?></h4>  
                                        <input type="hidden" name="guid" id="guid">
                                      <input type="checkbox" style="display: none" >
                                </div>
@@ -183,9 +183,9 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep" id="select_item">
-                                                         <label for="items_category_name" class="req"><?php echo $this->lang->line('item') ?></label>                                                                                                       
+                                                         <label for="items_category_name" class="req"><?asp echo $this->lang->line('item') ?></label>                                                                                                       
                                                            
-                                                            <?php $name=array('name'=>'name',
+                                                            <?asp $name=array('name'=>'name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'item_name_data',
                                                                                     'value'=>set_value('name'));
@@ -198,8 +198,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="sku" ><?php echo $this->lang->line('sku') ?></label>                                                                                                       
-                                                           <?php $sku=array('name'=>'sku',
+                                                         <label for="sku" ><?asp echo $this->lang->line('sku') ?></label>                                                                                                       
+                                                           <?asp $sku=array('name'=>'sku',
                                                                                     'class'=>'required form-control',
                                                                                     'disabled'=>'disabled',
                                                                                     'id'=>'sku',
@@ -213,8 +213,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="location" ><?php echo $this->lang->line('location') ?></label>                                                                                                       
-                                                           <?php $location=array('name'=>'location',
+                                                         <label for="location" ><?asp echo $this->lang->line('location') ?></label>                                                                                                       
+                                                           <?asp $location=array('name'=>'location',
                                                                                     'class'=>'required form-control',
                                                                                     'disabled'=>'disabled',
                                                                                     'id'=>'location',
@@ -233,8 +233,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="brand" ><?php echo $this->lang->line('brand') ?></label>                                                                                                       
-                                                           <?php $brand=array('name'=>'brand',
+                                                         <label for="brand" ><?asp echo $this->lang->line('brand') ?></label>                                                                                                       
+                                                           <?asp $brand=array('name'=>'brand',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'brand',
                                                                                     'disabled'=>'disabled',
@@ -248,8 +248,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="category" ><?php echo $this->lang->line('category') ?></label>                                                                                                       
-                                                           <?php $category=array('name'=>'category',
+                                                         <label for="category" ><?asp echo $this->lang->line('category') ?></label>                                                                                                       
+                                                           <?asp $category=array('name'=>'category',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'category',
                                                                                     'disabled'=>'disabled',
@@ -263,8 +263,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="department_name" ><?php echo $this->lang->line('department_name') ?></label>                                                                                                       
-                                                           <?php $department_name=array('name'=>'department_name',
+                                                         <label for="department_name" ><?asp echo $this->lang->line('department_name') ?></label>                                                                                                       
+                                                           <?asp $department_name=array('name'=>'department_name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'department_name',
                                                                                     'disabled'=>'disabled',
@@ -282,8 +282,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="min_quty" ><?php echo $this->lang->line('min_quty') ?></label>                                                                                                       
-                                                              <?php $min_quty=array('name'=>'min_quty',
+                                                         <label for="min_quty" ><?asp echo $this->lang->line('min_quty') ?></label>                                                                                                       
+                                                              <?asp $min_quty=array('name'=>'min_quty',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'min_quty',
                                                                                     'value'=>set_value('min_quty'));
@@ -296,8 +296,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="max_quty" ><?php echo $this->lang->line('max_quty') ?></label>                                                                                                       
-                                                              <?php $max_quty=array('name'=>'max_quty',
+                                                         <label for="max_quty" ><?asp echo $this->lang->line('max_quty') ?></label>                                                                                                       
+                                                              <?asp $max_quty=array('name'=>'max_quty',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'max_quty',
                                                                                     'value'=>set_value('max_quty'));
@@ -310,10 +310,10 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="allow_negative" ><?php echo $this->lang->line('allow_negative') ?></label>                                                                                                       
+                                                         <label for="allow_negative" ><?asp echo $this->lang->line('allow_negative') ?></label>                                                                                                       
                                                          <select class="form-control" name="allow_negative" id="allow_negative">
-                                                             <option value="0" id="yes"><?php  echo $this->lang->line('no') ?></option>
-                                                             <option value="1" id="no" ><?php  echo $this->lang->line('yes') ?></option>
+                                                             <option value="0" id="yes"><?asp  echo $this->lang->line('no') ?></option>
+                                                             <option value="1" id="no" ><?asp  echo $this->lang->line('yes') ?></option>
                                                          </select>
                                                     </div>
                                                </div>
@@ -334,8 +334,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="sale_or_non_sale" ></label>                                                                                                       
-                                                      <input type="radio" value="1" name="sales" id="sales_yes"> <label for="sales_yes" class="icheck_label"><?php echo $this->lang->line('sales') ?></label><br>
-                                                      <input type="radio" value="0" name="sales" id="sales_no" > <label for="sales_No" class="icheck_label"><?php echo $this->lang->line('non_sales') ?></label>
+                                                      <input type="radio" value="1" name="sales" id="sales_yes"> <label for="sales_yes" class="icheck_label"><?asp echo $this->lang->line('sales') ?></label><br>
+                                                      <input type="radio" value="0" name="sales" id="sales_no" > <label for="sales_No" class="icheck_label"><?asp echo $this->lang->line('non_sales') ?></label>
                                                     </div>
                                                </div>
                                                 <div class="col col-lg-1"></div>
@@ -345,8 +345,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="brand" ></label>                                                                                                       
-                                                    <input type="radio" value="1" name="sales_return" id="sales_return_yes"> <label for="sales_return_yes" class="icheck_label"><?php echo $this->lang->line('sales_return') ?></label><br>
-                                                      <input type="radio" value="0" name="sales_return" id="sales_return_no" > <label for="sales_return_No" class="icheck_label"><?php echo $this->lang->line('non_sales_return') ?></label>
+                                                    <input type="radio" value="1" name="sales_return" id="sales_return_yes"> <label for="sales_return_yes" class="icheck_label"><?asp echo $this->lang->line('sales_return') ?></label><br>
+                                                      <input type="radio" value="0" name="sales_return" id="sales_return_no" > <label for="sales_return_No" class="icheck_label"><?asp echo $this->lang->line('non_sales_return') ?></label>
                                                     </div>
                                                    </div>
                                                 <div class="col col-lg-1"></div>
@@ -356,8 +356,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="purchase" ></label>                                                                                                       
-                                                         <input type="radio" autocomplete="o" value="1" name="purchase" id="purchase_yes"> <label for="purchase_yes" class="icheck_label"><?php echo $this->lang->line('purchase') ?></label><br>
-                                                      <input type="radio" value="0" name="purchase" id="purchase_no" > <label for="purchase_No" class="icheck_label"><?php echo $this->lang->line('non_purchase') ?></label>
+                                                         <input type="radio" autocomplete="o" value="1" name="purchase" id="purchase_yes"> <label for="purchase_yes" class="icheck_label"><?asp echo $this->lang->line('purchase') ?></label><br>
+                                                      <input type="radio" value="0" name="purchase" id="purchase_no" > <label for="purchase_No" class="icheck_label"><?asp echo $this->lang->line('non_purchase') ?></label>
                                                     
                                                     </div>
                                                </div>
@@ -368,8 +368,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="purchase_return" ></label>                                                                                                       
-                                                      <input type="radio" value="0" name="purchase_return" id="purchase_return_yes"> <label for="purchase_return_yes" class="icheck_label"><?php echo $this->lang->line('purchase_return') ?></label><br>
-                                                      <input type="radio" value="1" name="purchase_return" id="purchase_return_no" > <label for="purchase_return_No" class="icheck_label"><?php echo $this->lang->line('non_purchase_return') ?></label>
+                                                      <input type="radio" value="0" name="purchase_return" id="purchase_return_yes"> <label for="purchase_return_yes" class="icheck_label"><?asp echo $this->lang->line('purchase_return') ?></label><br>
+                                                      <input type="radio" value="1" name="purchase_return" id="purchase_return_no" > <label for="purchase_return_No" class="icheck_label"><?asp echo $this->lang->line('non_purchase_return') ?></label>
                                                     
                                                     </div>
                                                    </div>
@@ -384,18 +384,18 @@ function reload_update_user(){
                    <div class="row">
                         <div class="col-lg-4"></div>
                       <div class="col col-lg-4 text-center"><br><br>
-                          <button id="set_new_code"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('set_or_reset') ?></button>
-                          <a href="javascript:reload_update_user()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-cancel"> </i> <?php echo $this->lang->line('cancel') ?></a>
+                          <button id="set_new_code"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $this->lang->line('set_or_reset') ?></button>
+                          <a href="javascript:reload_update_user()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-cancel"> </i> <?asp echo $this->lang->line('cancel') ?></a>
                       </div>
                   </div>
                 </div>
           </div>
           </div>
           </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
 <section id="edit_item_form" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
+     <?asp   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'class'=>'form-horizontal');
        echo form_open_multipart('items/upadate_pos_items_details/',$form);?>
@@ -405,7 +405,7 @@ function reload_update_user(){
                      <div class="col-lg-12">
                           <div class="panel panel-default">
                                <div class="panel-heading">
-                                       <h4 class="panel-title"><?php echo $this->lang->line('items_setting') ?></h4>  
+                                       <h4 class="panel-title"><?asp echo $this->lang->line('items_setting') ?></h4>  
                                      <input type="hidden" name="guid" id="guid">
                                   
                                </div>
@@ -417,9 +417,9 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep" id="select_item">
-                                                         <label for="items_category_name" class="req"><?php echo $this->lang->line('item') ?></label>                                                                                                       
+                                                         <label for="items_category_name" class="req"><?asp echo $this->lang->line('item') ?></label>                                                                                                       
                                                            
-                                                            <?php $name=array('name'=>'name',
+                                                            <?asp $name=array('name'=>'name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'item_name',
                                                                                     'disabled'=>'disabled',
@@ -433,8 +433,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="sku" ><?php echo $this->lang->line('sku') ?></label>                                                                                                       
-                                                           <?php $sku=array('name'=>'sku',
+                                                         <label for="sku" ><?asp echo $this->lang->line('sku') ?></label>                                                                                                       
+                                                           <?asp $sku=array('name'=>'sku',
                                                                                     'class'=>'required form-control',
                                                                                     'disabled'=>'disabled',
                                                                                     'id'=>'sku',
@@ -448,8 +448,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="location" ><?php echo $this->lang->line('location') ?></label>                                                                                                       
-                                                           <?php $location=array('name'=>'location',
+                                                         <label for="location" ><?asp echo $this->lang->line('location') ?></label>                                                                                                       
+                                                           <?asp $location=array('name'=>'location',
                                                                                     'class'=>'required form-control',
                                                                                     'disabled'=>'disabled',
                                                                                     'id'=>'location',
@@ -468,8 +468,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="brand" ><?php echo $this->lang->line('brand') ?></label>                                                                                                       
-                                                           <?php $brand=array('name'=>'brand',
+                                                         <label for="brand" ><?asp echo $this->lang->line('brand') ?></label>                                                                                                       
+                                                           <?asp $brand=array('name'=>'brand',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'brand',
                                                                                     'disabled'=>'disabled',
@@ -483,8 +483,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="category" ><?php echo $this->lang->line('category') ?></label>                                                                                                       
-                                                           <?php $category=array('name'=>'category',
+                                                         <label for="category" ><?asp echo $this->lang->line('category') ?></label>                                                                                                       
+                                                           <?asp $category=array('name'=>'category',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'category',
                                                                                     'disabled'=>'disabled',
@@ -498,8 +498,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="department_name" ><?php echo $this->lang->line('department_name') ?></label>                                                                                                       
-                                                           <?php $department_name=array('name'=>'department_name',
+                                                         <label for="department_name" ><?asp echo $this->lang->line('department_name') ?></label>                                                                                                       
+                                                           <?asp $department_name=array('name'=>'department_name',
                                                                                     'class'=>'required form-control',
                                                                                     'id'=>'department_name',
                                                                                     'disabled'=>'disabled',
@@ -517,8 +517,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="min_quty" ><?php echo $this->lang->line('min_quty') ?></label>                                                                                                       
-                                                              <?php $min_quty=array('name'=>'min_quty',
+                                                         <label for="min_quty" ><?asp echo $this->lang->line('min_quty') ?></label>                                                                                                       
+                                                              <?asp $min_quty=array('name'=>'min_quty',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'min_quty',
                                                                                     'value'=>set_value('min_quty'));
@@ -531,8 +531,8 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="max_quty" ><?php echo $this->lang->line('max_quty') ?></label>                                                                                                       
-                                                              <?php $max_quty=array('name'=>'max_quty',
+                                                         <label for="max_quty" ><?asp echo $this->lang->line('max_quty') ?></label>                                                                                                       
+                                                              <?asp $max_quty=array('name'=>'max_quty',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'max_quty',
                                                                                     'value'=>set_value('max_quty'));
@@ -545,10 +545,10 @@ function reload_update_user(){
                                                <div class="col col-lg-1"></div>
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
-                                                         <label for="allow_negative" ><?php echo $this->lang->line('allow_negative') ?></label>                                                                                                       
+                                                         <label for="allow_negative" ><?asp echo $this->lang->line('allow_negative') ?></label>                                                                                                       
                                                          <select class="form-control" name="allow_negative" id="allow_negative">
-                                                             <option value="0" ><?php  echo $this->lang->line('no') ?></option>
-                                                             <option value="1" ><?php  echo $this->lang->line('yes') ?></option>
+                                                             <option value="0" ><?asp  echo $this->lang->line('no') ?></option>
+                                                             <option value="1" ><?asp  echo $this->lang->line('yes') ?></option>
                                                          </select>
                                                     </div>
                                                </div>
@@ -569,8 +569,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="sale_or_non_sale" ></label>                                                                                                       
-                                                      <input type="radio" value="1" name="sales" id="sales_yes"> <label for="sales_yes" class="icheck_label"><?php echo $this->lang->line('sales') ?></label><br>
-                                                      <input type="radio" value="0" name="sales" id="sales_no" > <label for="sales_No" class="icheck_label"><?php echo $this->lang->line('non_sales') ?></label>
+                                                      <input type="radio" value="1" name="sales" id="sales_yes"> <label for="sales_yes" class="icheck_label"><?asp echo $this->lang->line('sales') ?></label><br>
+                                                      <input type="radio" value="0" name="sales" id="sales_no" > <label for="sales_No" class="icheck_label"><?asp echo $this->lang->line('non_sales') ?></label>
                                                     </div>
                                                </div>
                                                 <div class="col col-lg-1"></div>
@@ -580,8 +580,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="brand" ></label>                                                                                                       
-                                                    <input type="radio" value="1" name="sales_return" id="sales_return_yes"> <label for="sales_return_yes" class="icheck_label"><?php echo $this->lang->line('sales_return') ?></label><br>
-                                                      <input type="radio" value="0" name="sales_return" id="sales_return_no" > <label for="sales_return_No" class="icheck_label"><?php echo $this->lang->line('non_sales_return') ?></label>
+                                                    <input type="radio" value="1" name="sales_return" id="sales_return_yes"> <label for="sales_return_yes" class="icheck_label"><?asp echo $this->lang->line('sales_return') ?></label><br>
+                                                      <input type="radio" value="0" name="sales_return" id="sales_return_no" > <label for="sales_return_No" class="icheck_label"><?asp echo $this->lang->line('non_sales_return') ?></label>
                                                     </div>
                                                    </div>
                                                 <div class="col col-lg-1"></div>
@@ -591,8 +591,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="purchase" ></label>                                                                                                       
-                                                     <input type="radio" value="1" name="purchase" id="purchase_yes"> <label for="purchase_yes" class="icheck_label"><?php echo $this->lang->line('purchase') ?></label><br>
-                                                      <input type="radio" value="0" name="purchase" id="purchase_no" > <label for="purchase_No" class="icheck_label"><?php echo $this->lang->line('non_purchase') ?></label>
+                                                     <input type="radio" value="1" name="purchase" id="purchase_yes"> <label for="purchase_yes" class="icheck_label"><?asp echo $this->lang->line('purchase') ?></label><br>
+                                                      <input type="radio" value="0" name="purchase" id="purchase_no" > <label for="purchase_No" class="icheck_label"><?asp echo $this->lang->line('non_purchase') ?></label>
                                                     
                                                     </div>
                                                </div>
@@ -603,8 +603,8 @@ function reload_update_user(){
                                                <div class="col col-lg-10">
                                                     <div class="form_sep">
                                                          <label for="purchase_return" ></label>                                                                                                       
-                                                      <input type="radio" value="1" name="purchase_return" id="purchase_return_yes"> <label for="purchase_return_yes" class="icheck_label"><?php echo $this->lang->line('purchase_return') ?></label><br>
-                                                      <input type="radio" value="0" name="purchase_return" id="purchase_return_no" > <label for="purchase_return_No" class="icheck_label"><?php echo $this->lang->line('non_purchase_return') ?></label>
+                                                      <input type="radio" value="1" name="purchase_return" id="purchase_return_yes"> <label for="purchase_return_yes" class="icheck_label"><?asp echo $this->lang->line('purchase_return') ?></label><br>
+                                                      <input type="radio" value="0" name="purchase_return" id="purchase_return_no" > <label for="purchase_return_No" class="icheck_label"><?asp echo $this->lang->line('non_purchase_return') ?></label>
                                                     
                                                     </div>
                                                    </div>
@@ -619,15 +619,15 @@ function reload_update_user(){
                    <div class="row">
                         <div class="col-lg-4"></div>
                       <div class="col col-lg-4 text-center"><br><br>
-                          <button id="update_items"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?php echo $this->lang->line('set_or_reset') ?></button>
-                          <a href="javascript:reload_update_user()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-cancel"> </i> <?php echo $this->lang->line('cancel') ?></a>
+                          <button id="update_items"  type="submit" name="save" class="btn btn-default"><i class="icon icon-save"> </i> <?asp echo $this->lang->line('set_or_reset') ?></button>
+                          <a href="javascript:reload_update_user()" name="clear" id="clear_user" class="btn btn-default"><i class="icon icon-cancel"> </i> <?asp echo $this->lang->line('cancel') ?></a>
                       </div>
                   </div>
                 </div>
           </div>
           </div>
           </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
            <div id="footer_space">
               

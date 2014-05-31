@@ -1,17 +1,17 @@
-<?php
+<?asp
 class Customer_payment extends MX_Controller{
    function __construct() {
                 parent::__construct();
-                $this->load->library('posnic');               
+                $annan->load->library('posnic');               
     }
     function index(){     
-        $this->load->view('template/app/header'); 
-        $this->load->view('header/header');         
-        $this->load->view('template/branch',$this->posnic->branches());
+        $annan->load->view('template/app/header'); 
+        $annan->load->view('header/header');         
+        $annan->load->view('template/branch',$annan->posnic->branches());
         $data['active']='customer_payment';
-        $this->load->view('index',$data);
-        $this->load->view('template/app/navigation',$this->posnic->modules());
-        $this->load->view('template/app/footer');
+        $annan->load->view('index',$data);
+        $annan->load->view('template/app/navigation',$annan->posnic->modules());
+        $annan->load->view('template/app/footer');
         
         
     }
@@ -20,18 +20,18 @@ class Customer_payment extends MX_Controller{
         $aColumns = array( 'guid','code','code','p_invoice','first_name','company_name','payment_date','amount','guid','return_id' );	
 	$start = "";
 	$end="";
-        if ( $this->input->get_post('iDisplayLength') != '-1' )	{
-                $start = $this->input->get_post('iDisplayStart');
-                $end=	 $this->input->get_post('iDisplayLength');              
+        if ( $annan->input->get_post('iDisplayLength') != '-1' )	{
+                $start = $annan->input->get_post('iDisplayStart');
+                $end=	 $annan->input->get_post('iDisplayLength');              
         }	
         $order="";
         if ( isset( $_GET['iSortCol_0'] ) )
             {	
-                for ( $i=0 ; $i<intval($this->input->get_post('iSortingCols') ) ; $i++ )
+                for ( $i=0 ; $i<intval($annan->input->get_post('iSortingCols') ) ; $i++ )
                 {
-                    if ( $_GET[ 'bSortable_'.intval($this->input->get_post('iSortCol_'.$i)) ] == "true" )
+                    if ( $_GET[ 'bSortable_'.intval($annan->input->get_post('iSortCol_'.$i)) ] == "true" )
                     {
-                        $order.= $aColumns[ intval( $this->input->get_post('iSortCol_'.$i) ) ]." ".$this->input->get_post('sSortDir_'.$i ) .",";
+                        $order.= $aColumns[ intval( $annan->input->get_post('iSortCol_'.$i) ) ]." ".$annan->input->get_post('sSortDir_'.$i ) .",";
                     }
                 }
                 $order = substr_replace( $order, "", -1 );
@@ -42,14 +42,14 @@ class Customer_payment extends MX_Controller{
 	if ( $_GET['sSearch'] != "" )
             {
                 $like =array(
-                    'po_no'=>  $this->input->get_post('sSearch'),
-                    'grn_no'=>  $this->input->get_post('sSearch'),
+                    'po_no'=>  $annan->input->get_post('sSearch'),
+                    'grn_no'=>  $annan->input->get_post('sSearch'),
                     );
 
             }
-            $this->load->model('payment')	   ;
-            $rResult1 = $this->payment->get($end,$start,$like,$this->session->userdata['branch_id']);
-            $iFilteredTotal =$this->payment->count($this->session->userdata['branch_id']);
+            $annan->load->model('payment')	   ;
+            $rResult1 = $annan->payment->get($end,$start,$like,$annan->session->userdata['branch_id']);
+            $iFilteredTotal =$annan->payment->count($annan->session->userdata['branch_id']);
             $iTotal =$iFilteredTotal;
             $output1 = array(
 			"sEcho" => intval($_GET['sEcho']),
@@ -85,28 +85,28 @@ class Customer_payment extends MX_Controller{
     }
  
 function save(){      
-     if($this->session->userdata['customer_payment_per']['add']==1){
-        $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
-        $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-        $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        $this->form_validation->set_rules('invoice_id', $this->lang->line('invoice_id'), 'required');
-        $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
-            if ( $this->form_validation->run() !== false ) {    
+     if($annan->session->userdata['customer_payment_per']['add']==1){
+        $annan->form_validation->set_rules('payment_date',$annan->lang->line('payment_date'), 'required');
+        $annan->form_validation->set_rules('balance_amount',$annan->lang->line('balance_amount'), 'required|numeric');
+        $annan->form_validation->set_rules('payment_code', $annan->lang->line('payment_code'), 'required');
+        $annan->form_validation->set_rules('invoice_id', $annan->lang->line('invoice_id'), 'required');
+        $annan->form_validation->set_rules('amount', $annan->lang->line('amount'), 'required|numeric');
+            if ( $annan->form_validation->run() !== false ) {    
              
-                $date=strtotime($this->input->post('payment_date'));
-                $code= $this->input->post('payment_code');
-                $amount=  $this->input->post('amount');
-                $balance_amount=  $this->input->post('balance_amount');
-                $memo=  $this->input->post('memo');
-                $payment=  $this->input->post('payment_guid');
-                $invoice_id=  $this->input->post('invoice_id');
-                $this->load->model('payment');
+                $date=strtotime($annan->input->post('payment_date'));
+                $code= $annan->input->post('payment_code');
+                $amount=  $annan->input->post('amount');
+                $balance_amount=  $annan->input->post('balance_amount');
+                $memo=  $annan->input->post('memo');
+                $payment=  $annan->input->post('payment_guid');
+                $invoice_id=  $annan->input->post('invoice_id');
+                $annan->load->model('payment');
                 if($amount>$balance_amount){
                     echo 10;
                 }else{
                     
-                        if($this->payment->save_payment($payment,$amount,$date,$memo,$code,$invoice_id)){
-                        $this->posnic->posnic_master_increment_max('customer_payment')  ;
+                        if($annan->payment->save_payment($payment,$amount,$date,$memo,$code,$invoice_id)){
+                        $annan->posnic->posnic_master_increment_max('customer_payment')  ;
                        echo 1;
                    }else{
                        echo 10;
@@ -120,28 +120,28 @@ function save(){
                 }
 }
 function save_sales_return_payment(){      
-     if($this->session->userdata['customer_payment_per']['add']==1){
-        $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
-        $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-       $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        //$this->form_validation->set_rules('payment_guid', $this->lang->line('payment_guid'), 'required');
-      $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
-            if ( $this->form_validation->run() !== false ) {    
+     if($annan->session->userdata['customer_payment_per']['add']==1){
+        $annan->form_validation->set_rules('payment_date',$annan->lang->line('payment_date'), 'required');
+        $annan->form_validation->set_rules('balance_amount',$annan->lang->line('balance_amount'), 'required|numeric');
+       $annan->form_validation->set_rules('payment_code', $annan->lang->line('payment_code'), 'required');
+        //$annan->form_validation->set_rules('payment_guid', $annan->lang->line('payment_guid'), 'required');
+      $annan->form_validation->set_rules('amount', $annan->lang->line('amount'), 'required|numeric');
+            if ( $annan->form_validation->run() !== false ) {    
              
-                $date=strtotime($this->input->post('payment_date'));
-                $code= $this->input->post('payment_code');
-                $amount=  $this->input->post('amount');
-                $balance_amount=  $this->input->post('balance_amount');
-                $memo=  $this->input->post('memo');
-                $customer=  $this->input->post('customer_id');
-                 $return_id=  $this->input->post('sales_return_guid');
-                $invoice_id=  $this->input->post('invoice_id');
-                $this->load->model('payment');
+                $date=strtotime($annan->input->post('payment_date'));
+                $code= $annan->input->post('payment_code');
+                $amount=  $annan->input->post('amount');
+                $balance_amount=  $annan->input->post('balance_amount');
+                $memo=  $annan->input->post('memo');
+                $customer=  $annan->input->post('customer_id');
+                 $return_id=  $annan->input->post('sales_return_guid');
+                $invoice_id=  $annan->input->post('invoice_id');
+                $annan->load->model('payment');
                 if($amount > $balance_amount){
                   echo 10;
                 }else{
-                   if($this->payment->sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id)){
-                        $this->posnic->posnic_master_increment_max('customer_payment')  ;
+                   if($annan->payment->sales_return_payment($amount,$date,$memo,$code,$customer,$invoice_id,$return_id)){
+                        $annan->posnic->posnic_master_increment_max('customer_payment')  ;
                        echo 1;
                    }else{
                        echo 10;
@@ -155,27 +155,27 @@ function save_sales_return_payment(){
                 }
 }
     function update(){
-        If($this->session->userdata['customer_payment_per']['add']==1){
-            $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
-            $this->form_validation->set_rules('payment_id',$this->lang->line('payment_id'), 'required');
-            $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-            $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-            $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
-            $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
-                if ( $this->form_validation->run() !== false ) {    
+        If($annan->session->userdata['customer_payment_per']['add']==1){
+            $annan->form_validation->set_rules('payment_date',$annan->lang->line('payment_date'), 'required');
+            $annan->form_validation->set_rules('payment_id',$annan->lang->line('payment_id'), 'required');
+            $annan->form_validation->set_rules('balance_amount',$annan->lang->line('balance_amount'), 'required|numeric');
+            $annan->form_validation->set_rules('payment_code', $annan->lang->line('payment_code'), 'required');
+            $annan->form_validation->set_rules('payment', $annan->lang->line('payment'), 'required');
+            $annan->form_validation->set_rules('amount', $annan->lang->line('amount'), 'required|numeric');
+                if ( $annan->form_validation->run() !== false ) {    
 
-                    $date=strtotime($this->input->post('payment_date'));
-                    $code= $this->input->post('payment_code');
-                    $amount=  $this->input->post('amount');
-                    $balance_amount=  $this->input->post('balance_amount');
-                    $memo=  $this->input->post('memo');
-                     $payment=  $this->input->post('payment');
-                    $this->load->model('payment');
-                    $guid=  $this->input->post('payment_id');
+                    $date=strtotime($annan->input->post('payment_date'));
+                    $code= $annan->input->post('payment_code');
+                    $amount=  $annan->input->post('amount');
+                    $balance_amount=  $annan->input->post('balance_amount');
+                    $memo=  $annan->input->post('memo');
+                     $payment=  $annan->input->post('payment');
+                    $annan->load->model('payment');
+                    $guid=  $annan->input->post('payment_id');
                     if($amount>$balance_amount){
                         echo 10;
                     }else{
-                            if($this->payment->update_payment($guid,$payment,$amount,$date,$memo,$code)){
+                            if($annan->payment->update_payment($guid,$payment,$amount,$date,$memo,$code)){
                         
                        echo 1;
                     }else{
@@ -191,29 +191,29 @@ function save_sales_return_payment(){
           
    }
     function update_sales_return(){
-        If($this->session->userdata['customer_payment_per']['add']==1){
-            $this->form_validation->set_rules('payment_date',$this->lang->line('payment_date'), 'required');
-            $this->form_validation->set_rules('payment_id',$this->lang->line('payment_id'), 'required');
-            $this->form_validation->set_rules('sales_return_guid',$this->lang->line('sales_return_guid'), 'required');
-            $this->form_validation->set_rules('balance_amount',$this->lang->line('balance_amount'), 'required|numeric');
-            $this->form_validation->set_rules('payment_code', $this->lang->line('payment_code'), 'required');
-        //    $this->form_validation->set_rules('payment', $this->lang->line('payment'), 'required');
-            $this->form_validation->set_rules('amount', $this->lang->line('amount'), 'required|numeric');
-                if ( $this->form_validation->run() !== false ) {    
+        If($annan->session->userdata['customer_payment_per']['add']==1){
+            $annan->form_validation->set_rules('payment_date',$annan->lang->line('payment_date'), 'required');
+            $annan->form_validation->set_rules('payment_id',$annan->lang->line('payment_id'), 'required');
+            $annan->form_validation->set_rules('sales_return_guid',$annan->lang->line('sales_return_guid'), 'required');
+            $annan->form_validation->set_rules('balance_amount',$annan->lang->line('balance_amount'), 'required|numeric');
+            $annan->form_validation->set_rules('payment_code', $annan->lang->line('payment_code'), 'required');
+        //    $annan->form_validation->set_rules('payment', $annan->lang->line('payment'), 'required');
+            $annan->form_validation->set_rules('amount', $annan->lang->line('amount'), 'required|numeric');
+                if ( $annan->form_validation->run() !== false ) {    
 
-                    $date=strtotime($this->input->post('payment_date'));
-                    $code= $this->input->post('payment_code');
-                    $amount=  $this->input->post('amount');
-                    $balance_amount=  $this->input->post('balance_amount');
-                    $memo=  $this->input->post('memo');
+                    $date=strtotime($annan->input->post('payment_date'));
+                    $code= $annan->input->post('payment_code');
+                    $amount=  $annan->input->post('amount');
+                    $balance_amount=  $annan->input->post('balance_amount');
+                    $memo=  $annan->input->post('memo');
                    
-                    $return_id=  $this->input->post('sales_return_guid');
-                    $this->load->model('payment');
-                    $guid=  $this->input->post('payment_id');
+                    $return_id=  $annan->input->post('sales_return_guid');
+                    $annan->load->model('payment');
+                    $guid=  $annan->input->post('payment_id');
                     if($amount>$balance_amount){
                         echo 10;
                     }else{
-                            if($this->payment->update_debit_payment($guid,$amount,$date,$memo,$code,$return_id)){
+                            if($annan->payment->update_debit_payment($guid,$amount,$date,$memo,$code,$return_id)){
                         
                        echo 1;
                     }else{
@@ -229,12 +229,12 @@ function save_sales_return_payment(){
           
    }
     function delete(){
-       if($this->session->userdata['goods_receiving_note_per']['delete']==1){
-            if($this->input->post('guid')){
-                $guid=  $this->input->post('guid');
+       if($annan->session->userdata['goods_receiving_note_per']['delete']==1){
+            if($annan->input->post('guid')){
+                $guid=  $annan->input->post('guid');
                 
-                $this->load->model('payment');
-                $this->payment->delete_payment($guid);
+                $annan->load->model('payment');
+                $annan->payment->delete_payment($guid);
                 echo 1;
             }
         }else{
@@ -249,7 +249,7 @@ function save_sales_return_payment(){
     get payment code form master data
      * function start     */
     function payment_code(){
-           $data[]= $this->posnic->posnic_master_max('customer_payment')    ;
+           $data[]= $annan->posnic->posnic_master_max('customer_payment')    ;
            echo json_encode($data);
     }
     /*
@@ -258,18 +258,18 @@ function save_sales_return_payment(){
     Search purchase payable purchase invoice
      * function start     */
     function search_sales_bill(){
-        $search= $this->input->post('term'); /* get key word*/
-        $this->load->model('payment'); /* load payement model*/
-        $data= $this->payment->serach_invoice($search);   /* get invoice list */   
+        $search= $annan->input->post('term'); /* get key word*/
+        $annan->load->model('payment'); /* load payement model*/
+        $data= $annan->payment->serach_invoice($search);   /* get invoice list */   
         echo json_encode($data); /* send data in json fromat*/
     }
     /* function end */
     /*Search purchase payable purchase return
      * function start     */
     function search_sales_return(){
-        $search= $this->input->post('term'); /* get key word*/
-        $this->load->model('payment'); /* load payement model*/
-        $data= $this->payment->search_sales_return($search);   /* get invoice list */   
+        $search= $annan->input->post('term'); /* get key word*/
+        $annan->load->model('payment'); /* load payement model*/
+        $data= $annan->payment->search_sales_return($search);   /* get invoice list */   
         echo json_encode($data); /* send data in json fromat*/
     }
     /* function end */
@@ -278,8 +278,8 @@ function save_sales_return_payment(){
      *  get payment details for edit     
      * function start */
     function get_customer_payment($guid){
-        $this->load->model('payment');
-        $data=  $this->payment->get_payment_details($guid);
+        $annan->load->model('payment');
+        $data=  $annan->payment->get_payment_details($guid);
         echo json_encode($data); // encode data array to json
     }
     /* function end*/
@@ -287,15 +287,15 @@ function save_sales_return_payment(){
     get customer debit payment     
         function start     */
     function get_customer_debit_payment($guid){
-        $this->load->model('payment');
-        $data=  $this->payment->get_customer_debit_payment($guid);
+        $annan->load->model('payment');
+        $data=  $annan->payment->get_customer_debit_payment($guid);
         echo json_encode($data); // encode data array to json
     }
     
     
     /* function end*/
     function language($lang){
-       $lang= $this->lang->load($lang);
+       $lang= $annan->lang->load($lang);
        return $lang;
     }
     }

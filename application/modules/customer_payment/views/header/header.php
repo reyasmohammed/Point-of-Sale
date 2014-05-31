@@ -14,7 +14,7 @@
            $('#dt_table_tools').dataTable({
                                       "bProcessing": true,
 				      "bServerSide": true,
-                                      "sAjaxSource": "<?php echo base_url() ?>index.php/customer_payment/data_table",
+                                      "sAjaxSource": "<?asp echo base_url() ?>index.asp/customer_payment/data_table",
                                        aoColumns: [   
                                     
          { "bVisible": false} , {	"sName": "ID",
@@ -39,9 +39,9 @@
                    						"fnRender": function (oObj) {
                    							//if(oObj.aData[8]==0)
                                                                       if(oObj.aData[9]!=""){
-                                                                          return "<?php echo $this->lang->line('debit') ?>";
+                                                                          return "<?asp echo $annan->lang->line('debit') ?>";
                                                                       }else{
-                                                                          return "<?php echo $this->lang->line('credit') ?>";
+                                                                          return "<?asp echo $annan->lang->line('credit') ?>";
                                                                       }
 								},
 								
@@ -54,9 +54,9 @@
                                                                 
                    						"fnRender": function (oObj) {
                                                                  if(oObj.aData[9]==""){
-                                                                        return '<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                        return '<a href=javascript:edit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $annan->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $annan->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                     }else{
-                                                                          return '<a href=javascript:edit_debit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
+                                                                          return '<a href=javascript:edit_debit_function("'+oObj.aData[0]+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $annan->lang->line('edit') ?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:user_function('"+oObj.aData[0]+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $annan->lang->line('delete') ?>'><i class='icon-trash'></i></span> </a>";
                                                                     }
                                                                 },
 								
@@ -88,11 +88,11 @@
                                    
 			}
  function user_function(guid){
-    <?php if($this->session->userdata['customer_payment_per']['delete']==1){ ?>
-             bootbox.confirm("<?php echo $this->lang->line('Are you Sure To Delete')." ".$this->lang->line('customer_payment') ?> "+$('#order__number_'+guid).val(), function(result) {
+    <?asp if($annan->session->userdata['customer_payment_per']['delete']==1){ ?>
+             bootbox.confirm("<?asp echo $annan->lang->line('Are you Sure To Delete')." ".$annan->lang->line('customer_payment') ?> "+$('#order__number_'+guid).val(), function(result) {
              if(result){
             $.ajax({
-                url: '<?php echo base_url() ?>/index.php/customer_payment/delete',
+                url: '<?asp echo base_url() ?>/index.asp/customer_payment/delete',
                 type: "POST",
                 data: {
                     guid: guid
@@ -100,19 +100,19 @@
                 },
                complete: function(response) {
                     if(response['responseText']==1){
-                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?php echo $this->lang->line('customer_payment') ?>  <?php echo $this->lang->line('deleted');?>', { type: "error" });
+                           $.bootstrapGrowl($('#order__number_'+guid).val()+ ' <?asp echo $annan->lang->line('customer_payment') ?>  <?asp echo $annan->lang->line('deleted');?>', { type: "error" });
                         $("#dt_table_tools").dataTable().fnDraw();
                     }else{
-                         $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission')." ".$this->lang->line('to')." ".$this->lang->line('approve')." ".$this->lang->line('customer_payment');?>', { type: "error" });                       
+                         $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission')." ".$annan->lang->line('to')." ".$annan->lang->line('approve')." ".$annan->lang->line('customer_payment');?>', { type: "error" });                       
                     }
                     }
             });
         
 
                         }
-                }); <?php }else{?>
-                       $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Delete')." ".$this->lang->line('customer_payment');?>', { type: "error" });                       
-               <?php }
+                }); <?asp }else{?>
+                       $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Delete')." ".$annan->lang->line('customer_payment');?>', { type: "error" });                       
+               <?asp }
             ?>
                         }
        
@@ -120,7 +120,7 @@
     
           
         function edit_function(guid){
-                        <?php if($this->session->userdata['customer_payment_per']['edit']==1){ ?>
+                        <?asp if($annan->session->userdata['customer_payment_per']['edit']==1){ ?>
                                 
                             $("#parsley_reg").trigger('reset');
                             $('#parsley_reg #update_button').show();
@@ -129,7 +129,7 @@
                             $('#parsley_reg #save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/customer_payment/get_customer_payment/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/customer_payment/get_customer_payment/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -182,12 +182,12 @@
                        $('#loading').modal('hide');
                     }, 0);
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer_payment');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Edit')." ".$annan->lang->line('customer_payment');?>', { type: "error" });                       
+                        <?asp }?>
                        }
         function edit_debit_function(guid){
-                        <?php if($this->session->userdata['customer_payment_per']['edit']==1){ ?>
+                        <?asp if($annan->session->userdata['customer_payment_per']['edit']==1){ ?>
                                 
                             $("#parsley_ext").trigger('reset');
                             $('#parsley_ext #update_button').show();
@@ -196,7 +196,7 @@
                             $('#parsley_ext #save_clear').hide();
                             $('#loading').modal('show');
                             $.ajax({                                      
-                             url: "<?php echo base_url() ?>index.php/customer_payment/get_customer_debit_payment/"+guid,                      
+                             url: "<?asp echo base_url() ?>index.asp/customer_payment/get_customer_debit_payment/"+guid,                      
                              data: "", 
                              dataType: 'json',               
                              success: function(data)        
@@ -254,12 +254,12 @@
                        $('#loading').modal('hide');
                     }, 0);
                          
-                        <?php }else{?>
-                                 $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Edit')." ".$this->lang->line('customer_payment');?>', { type: "error" });                       
-                        <?php }?>
+                        <?asp }else{?>
+                                 $.bootstrapGrowl('<?asp echo $annan->lang->line('You Have NO Permission To Edit')." ".$annan->lang->line('customer_payment');?>', { type: "error" });                       
+                        <?asp }?>
                        }
 		</script>
-                <script type="text/javascript" charset="utf-8" language="javascript" src="<?php echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
+                <script type="text/javascript" charset="utf-8" language="javascript" src="<?asp echo base_url() ?>template/data_table/js/DT_bootstrap.js"></script>
 
             
               

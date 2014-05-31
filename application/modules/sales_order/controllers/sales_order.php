@@ -1,4 +1,4 @@
-<?php
+<?asp
 class Sales_order extends MX_Controller{
    function __construct() {
                 parent::__construct();

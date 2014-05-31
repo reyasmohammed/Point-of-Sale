@@ -79,28 +79,28 @@
           }
     }
     function save_new_order(){
-         <?php if($this->session->userdata['sales_quotation_per']['add']==1){ ?>
+         <?asp if($this->session->userdata['sales_quotation_per']['add']==1){ ?>
                    if($('#parsley_reg').valid()){
                        var oTable = $('#selected_item_table').dataTable();
                        if(oTable.fnGetData().length>0){
                 var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/sales_quotation/save')?>",
+                            url: "<?asp echo base_url('index.asp/sales_quotation/save')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('sales_quotation').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('sales_quotation').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                        $("#dt_table_tools").dataTable().fnDraw();
                                        $("#parsley_reg").trigger('reset');
                                        posnic_sales_quotation_lists();
                                        refresh_items_table();
                                     }else  if(response['responseText']=='ALREADY'){
-                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?php echo $this->lang->line('customers').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl($('#parsley_reg #order_number').val()+' <?asp echo $this->lang->line('customers').' '.$this->lang->line('is_already_added');?>', { type: "warning" });                           
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_quotation');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('sales_quotation');?>', { type: "error" });                           
                                     }
                        }
                 });

@@ -79,38 +79,38 @@
           }
     }
     function save_new_order(){
-         <?php if($this->session->userdata['purchase_order_per']['add']==1){ ?>
+         <?asp if($this->session->userdata['purchase_order_per']['add']==1){ ?>
                    if($('#parsley_reg').valid()){
                        var oTable = $('#selected_item_table').dataTable();
                        if(oTable.fnGetData().length>0){
                 var inputs = $('#parsley_reg').serialize();
                       $.ajax ({
-                            url: "<?php echo base_url('index.php/purchase_order_cancel/save')?>",
+                            url: "<?asp echo base_url('index.asp/purchase_order_cancel/save')?>",
                             data: inputs,
                             type:'POST',
                             complete: function(response) {
                                 if(response['responseText']=='TRUE'){
-                                      $.bootstrapGrowl('<?php echo $this->lang->line('purchase_order_cancel').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
+                                      $.bootstrapGrowl('<?asp echo $this->lang->line('purchase_order_cancel').' '.$this->lang->line('added');?>', { type: "success" });                                                                                  
                                      $("#parsley_reg #purchase_order_guid").select2('data', {id:'',text:""});
                                        $("#parsley_reg").trigger('reset');
                                        refresh_items_table();
                                     }else  if(response['responseText']=='FALSE'){
-                                           $.bootstrapGrowl('<?php echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
+                                           $.bootstrapGrowl('<?asp echo $this->lang->line('Please Enter All Required Fields');?>', { type: "warning" });                           
                                     }else{
-                                          $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_order_cancel');?>', { type: "error" });                           
+                                          $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_order_cancel');?>', { type: "error" });                           
                                     }
                        }
                 });
                     }else{
                   
-                   $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
                      $('#parsley_reg #items').select2('open');
                     }
                     }else{
-                   $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
-                    }<?php }else{ ?>
-                   $.bootstrapGrowl('<?php echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_order_cancel');?>', { type: "error" });                       
-                    <?php }?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('all_require_elements');?>', { type: "error" });                        
+                    }<?asp }else{ ?>
+                   $.bootstrapGrowl('<?asp echo $this->lang->line('You Have NO Permission To Add')." ".$this->lang->line('purchase_order_cancel');?>', { type: "error" });                       
+                    <?asp }?>
     }
   
     
@@ -119,7 +119,7 @@
        
           $('#parsley_reg #items').change(function() {
               if(document.getElementById('new_item_row_id_'+$('#parsley_reg #items').select2('data').id) && $('#parsley_reg #diabled_item').val()!=$('#parsley_reg #items').select2('data').id){
-                     $.bootstrapGrowl('<?php echo $this->lang->line('this item already added');?> '+$('#parsley_reg #first_name').val(), { type: "warning" });  
+                     $.bootstrapGrowl('<?asp echo $this->lang->line('this item already added');?> '+$('#parsley_reg #first_name').val(), { type: "warning" });  
                        $('#parsley_reg #items').select2('open');
               }else{
                    var guid = $('#parsley_reg #items').select2('data').id;
@@ -184,7 +184,7 @@
           });
           function format_item(sup) {
             if (!sup.id) return sup.text;
-    return  "<p >"+sup.text+"<img src='<?php echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:59px'></img></p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
+    return  "<p >"+sup.text+"<img src='<?asp echo base_url() ?>/uploads/items/"+sup.image+"' style='float:right;height:59px'></img></p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.value+"</p><p style='float:left;width:130px;  margin-left: 10px'> "+sup.category+"</p> <p style='width:130px;  margin-left: 218px'> "+sup.brand+"</p><p style='width:120px;  margin-left: 380px;margin-top: -28px;'> "+sup.department+"</p>";
             }
           $('#parsley_reg #items').select2({
              
@@ -193,9 +193,9 @@
                 formatSelection: format_item,
                 
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('items') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('items') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/purchase_order_cancel/search_items/',
+                     url: '<?asp echo base_url() ?>index.asp/purchase_order_cancel/search_items/',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: 2,
@@ -238,7 +238,7 @@
                           tax_Inclusive : item.tax_Inclusive ,
                         });
                       });   if($('#supplier_guid').val()==""){
-                          $.bootstrapGrowl('<?php echo $this->lang->line('please_select')." ".$this->lang->line('purchase_order');?>', { type: "warning" }); 
+                          $.bootstrapGrowl('<?asp echo $this->lang->line('please_select')." ".$this->lang->line('purchase_order');?>', { type: "warning" }); 
      $('#parsley_reg #items').select2('close');   
     $('#parsley_reg #first_name').select2('open');
         
@@ -286,9 +286,9 @@
                 formatSelection: format_supplier,
                 
                 escapeMarkup: function(m) { return m; },
-                placeholder: "<?php echo $this->lang->line('search').' '.$this->lang->line('purchase_order') ?>",
+                placeholder: "<?asp echo $this->lang->line('search').' '.$this->lang->line('purchase_order') ?>",
                 ajax: {
-                     url: '<?php echo base_url() ?>index.php/purchase_order_cancel/purchase_order_number',
+                     url: '<?asp echo base_url() ?>index.asp/purchase_order_cancel/purchase_order_number',
                      data: function(term, page) {
                             return {types: ["exercise"],
                                 limit: -1,
@@ -373,7 +373,7 @@ function reload_update_user(){
 <div class="modal fade" id="loading">
     <div class="modal-dialog" style="width: 146px;margin-top: 20%">
                 
-        <img src="<?php echo base_url('loader.gif') ?>" style="margin: auto">
+        <img src="<?asp echo base_url('loader.gif') ?>" style="margin: auto">
                     
         </div>
 </div>
@@ -404,7 +404,7 @@ function add_new_quty(e){
         }
         }
         }else{
- $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+ $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
          $('#parsley_reg #items').select2('open');
 
         }
@@ -443,7 +443,7 @@ function add_new_discount(e){
            }
         
         }else{
- $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+ $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
          $("#parsley_reg #items").focus();
 
         }
@@ -467,7 +467,7 @@ function add_new_free(e){
         }
         }
     }else{
-         $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+         $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
     
        $('#parsley_reg #items').select2('open');
     }
@@ -490,7 +490,7 @@ function add_new_cost(e){
         }
         }
     }else{
-         $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+         $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
     
        $('#parsley_reg #items').select2('open');
     }
@@ -514,7 +514,7 @@ function add_new_price(e){
         }
     }else{
        $('#parsley_reg #items').select2('open');
-        $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+        $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
     }
     }
  function add_new_mrp(e){
@@ -534,7 +534,7 @@ function add_new_price(e){
                   
                             
        }else{
-                                        $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+                                        $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
           $('#parsley_reg #items').select2('open');
         }
        }
@@ -546,26 +546,26 @@ function add_new_price(e){
         }
         }else{
         if($('#parsley_reg #quantity').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('quantity');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('quantity');?>', { type: "warning" });          
            $('#parsley_reg #quantity').focus();
         }else if($('#parsley_reg #cost').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('cost');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('cost');?>', { type: "warning" });          
            $('#parsley_reg #cost').focus();
         }else if($('#parsley_reg #price').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('price');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('price');?>', { type: "warning" });          
            $('#parsley_reg #price').focus();
         }
         else if($('#parsley_reg #mrp').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('mrp');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('mrp');?>', { type: "warning" });          
            $('#parsley_reg #mrp').focus();
     }   
     else{
-             $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
+             $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
        $('#parsley_reg #items').select2('open');
         }
         }
         }else{
-        $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
+        $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
        $('#parsley_reg #items').select2('open');
     }
     }
@@ -590,7 +590,7 @@ function add_new_price(e){
                     }, 0);
                       //      
        }else{
-                                        $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
+                                        $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" }); 
           $('#parsley_reg #items').select2('open');
         }
        }
@@ -602,7 +602,7 @@ function add_new_price(e){
         }
         }
         }else{
-        $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
+        $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
         $('#parsley_reg #items').select2('open');
     }
     }
@@ -778,7 +778,7 @@ var old_free=$('#item_free').val()
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_sub_total').val(parseFloat(quty)*parseFloat(cost));
   
   $('#selected_item_table #new_item_row_id_'+$('#parsley_reg #item_id').val()+' #items_total').val(total);
-    $.bootstrapGrowl('<?php echo $this->lang->line('item') ?> '+name+' <?php echo $this->lang->line('updated');?> ', { type: "success" });  
+    $.bootstrapGrowl('<?asp echo $this->lang->line('item') ?> '+name+' <?asp echo $this->lang->line('updated');?> ', { type: "success" });  
       if (isNaN($("#parsley_reg #total_amount").val())) 
     $("#parsley_reg #total_amount").val(0)    
         if (isNaN($("#parsley_reg #discount_amount").val())) 
@@ -899,11 +899,11 @@ var old_free=$('#item_free').val()
 <input type="hidden" name="items_discount_per[]" value="'+per+'" id="items_discount_per">\n\
 <input type="hidden" name="items_sub_total[]"  value="'+sub_total+'" id="items_sub_total">\n\
 <input type="hidden" name="items_total[]"  value="'+total+'" id="items_total">\n\
-        <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?php echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?php echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
+        <a href=javascript:edit_order_item("'+items_id+'") ><span data-toggle="tooltip" class="label label-info hint--top hint--info" data-hint="<?asp echo $this->lang->line('edit')?>"><i class="icon-edit"></i></span></a>'+"&nbsp;<a href=javascript:delete_order_item('"+items_id+"'); ><span data-toggle='tooltip' class='label label-danger hint--top hint--error' data-hint='<?asp echo $this->lang->line('delete')?>'><i class='icon-trash'></i></span> </a>" ] );
 
 var theNode = $('#selected_item_table').dataTable().fnSettings().aoData[addId[0]].nTr;
 theNode.setAttribute('id','new_item_row_id_'+items_id)
-    $.bootstrapGrowl('<?php echo $this->lang->line('new')." ".$this->lang->line('item') ?> '+name+' <?php echo $this->lang->line('added');?> ', { type: "success" });  
+    $.bootstrapGrowl('<?asp echo $this->lang->line('new')." ".$this->lang->line('item') ?> '+name+' <?asp echo $this->lang->line('added');?> ', { type: "success" });  
      if (isNaN($("#parsley_reg #total_amount").val())) 
     $("#parsley_reg #total_amount").val(0)    
         if (isNaN($("#parsley_reg #discount_amount").val())) 
@@ -938,25 +938,25 @@ $('#parsley_reg #demo_total_amount').val($('#parsley_reg #total_amount').val());
         
         }else{
          if($('#parsley_reg #item_id').val()==""){
-            $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
+            $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
            $('#parsley_reg #items').select2('open');
         }
           else if($('#parsley_reg #quantity').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('quantity');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('quantity');?>', { type: "warning" });          
            $('#parsley_reg #quantity').focus();
         }else if($('#parsley_reg #cost').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('cost');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('cost');?>', { type: "warning" });          
            $('#parsley_reg #cost').focus();
         }else if($('#parsley_reg #price').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('price');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('price');?>', { type: "warning" });          
            $('#parsley_reg #price').focus();
         }
         else if($('#parsley_reg #mrp').val()==""){
-          $.bootstrapGrowl('<?php echo $this->lang->line('please_enter')." ".$this->lang->line('mrp');?>', { type: "warning" });          
+          $.bootstrapGrowl('<?asp echo $this->lang->line('please_enter')." ".$this->lang->line('mrp');?>', { type: "warning" });          
            $('#parsley_reg #mrp').focus();
         }
         else{
-             $.bootstrapGrowl('<?php echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
+             $.bootstrapGrowl('<?asp echo $this->lang->line('Please_Select_An_Item');?>', { type: "warning" });          
        $('#parsley_reg #items').select2('open');
         }
         }
@@ -1052,7 +1052,7 @@ function clear_inputs(){
   $('#parsley_reg #dummy_discount_amount').val('')
   $('#parsley_reg #hidden_dis_amt').val('')
   $('#parsley_reg #hidden_dis').val('')
-  $('#parsley_reg #tax_label').text('<?php echo $this->lang->line('tax')?>');
+  $('#parsley_reg #tax_label').text('<?asp echo $this->lang->line('tax')?>');
   $('#parsley_reg #dummy_discount').val('')
   $("#parsley_reg #items").select2('data', {id:'',text: 'Search Item'});
   $('#parsley_reg #items').select2('open');
@@ -1147,7 +1147,7 @@ function items_free_cancel(){
 
   
 <section id="add_new_order" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
+     <?asp   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'name'=>'items_form',
                           'class'=>'form-horizontal');
@@ -1160,7 +1160,7 @@ function items_free_cancel(){
                          <div class="row">
                           <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('purchase_order')." ".$this->lang->line('details') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('purchase_order')." ".$this->lang->line('details') ?></h4>                                                                               
                                </div>
                             
                                  
@@ -1168,8 +1168,8 @@ function items_free_cancel(){
                                            <div class="row">
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="order_number" ><?php echo $this->lang->line('order_number') ?></label>													
-                                                                     <?php $order_number=array('name'=>'demo_order_number',
+                                                            <label for="order_number" ><?asp echo $this->lang->line('order_number') ?></label>													
+                                                                     <?asp $order_number=array('name'=>'demo_order_number',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'purchase_order_number',
                                                                                     
@@ -1180,8 +1180,8 @@ function items_free_cancel(){
                                                     </div>
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep supplier_select_2">
-                                                        <label for="first_name" ><?php echo $this->lang->line('name') ?></label>													
-                                                                  <?php $first_name=array('name'=>'first_name',
+                                                        <label for="first_name" ><?asp echo $this->lang->line('name') ?></label>													
+                                                                  <?asp $first_name=array('name'=>'first_name',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'first_name',
                                                                                      'disabled'=>'disabled',
@@ -1194,8 +1194,8 @@ function items_free_cancel(){
                                                
                                                <div class="col col-sm-2" >
                                                     <div class="form_sep">
-                                                            <label for="company" ><?php echo $this->lang->line('company') ?></label>													
-                                                                     <?php $last_name=array('name'=>'last_name',
+                                                            <label for="company" ><?asp echo $this->lang->line('company') ?></label>													
+                                                                     <?asp $last_name=array('name'=>'last_name',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'company',
                                                                                         'disabled'=>'disabled',
@@ -1206,8 +1206,8 @@ function items_free_cancel(){
                                               
                                                <div class="col col-sm-2" >
                                                     <div class="form_sep">
-                                                            <label for="address" ><?php echo $this->lang->line('address') ?></label>													
-                                                                     <?php $address=array('name'=>'address',
+                                                            <label for="address" ><?asp echo $this->lang->line('address') ?></label>													
+                                                                     <?asp $address=array('name'=>'address',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'address',
                                                                                         'disabled'=>'disabled',
@@ -1218,9 +1218,9 @@ function items_free_cancel(){
                                                
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="order_date" ><?php echo $this->lang->line('order_date') ?></label>													
+                                                            <label for="order_date" ><?asp echo $this->lang->line('order_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $order_date=array('name'=>'order_date',
+                                                                           <?asp $order_date=array('name'=>'order_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'order_date',
                                                                                 'disabled'=>'disabled',
@@ -1233,9 +1233,9 @@ function items_free_cancel(){
                                                    </div>
                                                <div class="col col-sm-2" >
                                                      <div class="form_sep">
-                                                            <label for="expiry_date" ><?php echo $this->lang->line('expiry_date') ?></label>													
+                                                            <label for="expiry_date" ><?asp echo $this->lang->line('expiry_date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $expiry_date=array('name'=>'expiry_date',
+                                                                           <?asp $expiry_date=array('name'=>'expiry_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'expiry_date',
                                                                                             'disabled'=>'disabled',
@@ -1252,8 +1252,8 @@ function items_free_cancel(){
                                            <div class="row">
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="discount" ><?php echo $this->lang->line('discount') ?>%</label>													
-                                                                     <?php $discount=array('name'=>'discount',
+                                                            <label for="discount" ><?asp echo $this->lang->line('discount') ?>%</label>													
+                                                                     <?asp $discount=array('name'=>'discount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'id_discount',
                                                                                          'maxlength'=>3,
@@ -1266,8 +1266,8 @@ function items_free_cancel(){
                                                 
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="discount_amount" ><?php echo $this->lang->line('discount_amount') ?></label>													
-                                                                     <?php $discount_amount=array('name'=>'discount_amount',
+                                                            <label for="discount_amount" ><?asp echo $this->lang->line('discount_amount') ?></label>													
+                                                                     <?asp $discount_amount=array('name'=>'discount_amount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'discount_amount',
                                                                                         'disabled'=>'disabled',
@@ -1277,8 +1277,8 @@ function items_free_cancel(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="freight" ><?php echo $this->lang->line('freight') ?></label>													
-                                                                     <?php $freight=array('name'=>'freight',
+                                                            <label for="freight" ><?asp echo $this->lang->line('freight') ?></label>													
+                                                                     <?asp $freight=array('name'=>'freight',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'freight',
                                                                                         'disabled'=>'disabled',
@@ -1288,8 +1288,8 @@ function items_free_cancel(){
                                                     </div>
                                                 <div class="col col-sm-2" >
                                                    <div class="form_sep">
-                                                            <label for="round_off_amount" ><?php echo $this->lang->line('round_off_amount') ?></label>													
-                                                                     <?php $round_off_amount=array('name'=>'round_off_amount',
+                                                            <label for="round_off_amount" ><?asp echo $this->lang->line('round_off_amount') ?></label>													
+                                                                     <?asp $round_off_amount=array('name'=>'round_off_amount',
                                                                                         'class'=>'  form-control',
                                                                                         'id'=>'round_off_amount',
                                                                                         'disabled'=>'disabled',
@@ -1317,10 +1317,10 @@ function items_free_cancel(){
                                                 <div class="col col-sm-1" style="padding:1px; width: 160px;">
                                              
                                                    
-                                             <label for="items" class="text-center" ><?php echo $this->lang->line('items') ?></label>	
+                                             <label for="items" class="text-center" ><?asp echo $this->lang->line('items') ?></label>	
                                                      <div class="form_sep" id='display_none_div'>
                                                       												
-                                                                  <?php $items=array('name'=>'items',
+                                                                  <?asp $items=array('name'=>'items',
                                                                                     'class'=>'form-control',
                                                                                     'id'=>'items',
                                                                                     'value'=>set_value('items'));
@@ -1347,9 +1347,9 @@ function items_free_cancel(){
                                                  <div class="col col-lg-1" style="padding:1px;width: 120px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="quantity" class="text-center" ><?php echo $this->lang->line('quantity') ?></label>
+                                                                <label for="quantity" class="text-center" ><?asp echo $this->lang->line('quantity') ?></label>
 
-                                                                 <?php $quantity=array('name'=>'quantity',
+                                                                 <?asp $quantity=array('name'=>'quantity',
                                                                                             'class'=>' form-control text-center',
                                                                                             'id'=>'order_quantity',
                                                                                              'disabled'=>'disabled',
@@ -1362,9 +1362,9 @@ function items_free_cancel(){
                                                  <div class="col col-lg-1" style="padding:1px;width: 120px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="quantity" class="text-center" ><?php echo $this->lang->line('quantity') ?></label>
+                                                                <label for="quantity" class="text-center" ><?asp echo $this->lang->line('quantity') ?></label>
 
-                                                                 <?php $quantity=array('name'=>'quantity',
+                                                                 <?asp $quantity=array('name'=>'quantity',
                                                                                             'class'=>' form-control text-center',
                                                                                             'id'=>'quantity',
                                                                                             'onkeyup'=>"net_amount()", 
@@ -1378,9 +1378,9 @@ function items_free_cancel(){
                                                   <div class="col col-lg-1" style="padding:1px; width: 80px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="free" class="text-center" ><?php echo $this->lang->line('free'); ?></label>
+                                                                <label for="free" class="text-center" ><?asp echo $this->lang->line('free'); ?></label>
 
-                                                                 <?php $free=array('name'=>'free',
+                                                                 <?asp $free=array('name'=>'free',
                                                                                             'class'=>' form-control text-center',
                                                                                             'id'=>'order_free',
                                                                                              'disabled'=>'disabled',
@@ -1394,9 +1394,9 @@ function items_free_cancel(){
                                                   <div class="col col-lg-1" style="padding:1px; width: 80px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="free" class="text-center" ><?php echo $this->lang->line('free'); ?></label>
+                                                                <label for="free" class="text-center" ><?asp echo $this->lang->line('free'); ?></label>
 
-                                                                 <?php $free=array('name'=>'free',
+                                                                 <?asp $free=array('name'=>'free',
                                                                                             'class'=>' form-control text-center',
                                                                                             'id'=>'free',
                                                                                            'onkeyup' =>'items_free_cancel()',
@@ -1411,9 +1411,9 @@ function items_free_cancel(){
                                                      <div class="col col-lg-1" style="padding:1px">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="cost" class="text-center" ><?php echo $this->lang->line('cost') ?></label>
+                                                                <label for="cost" class="text-center" ><?asp echo $this->lang->line('cost') ?></label>
 
-                                                                 <?php $cost=array('name'=>'cost',
+                                                                 <?asp $cost=array('name'=>'cost',
                                                                                             'class'=>' form-control small_length text-right',
                                                                                             'id'=>'cost',
                                                                                             'onkeyup'=>"net_amount()",
@@ -1427,9 +1427,9 @@ function items_free_cancel(){
                                                     <div class="col col-lg-1" style="padding:1px">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="price" class="text-center" ><?php echo $this->lang->line('price') ?></label>
+                                                                <label for="price" class="text-center" ><?asp echo $this->lang->line('price') ?></label>
 
-                                                                 <?php $price=array('name'=>'price',
+                                                                 <?asp $price=array('name'=>'price',
                                                                                             'class'=>' form-control small_length text-right',
                                                                                             'id'=>'price',
                                                                                             'disabled'=>'disabled',
@@ -1448,9 +1448,9 @@ function items_free_cancel(){
                                                           <div class="col col-lg-1" style="padding:1px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="tax" class="text-center" id="tax_label"  ><?php echo $this->lang->line('tax') ?></label>
+                                                                <label for="tax" class="text-center" id="tax_label"  ><?asp echo $this->lang->line('tax') ?></label>
 
-                                                                 <?php $tax=array('name'=>'tax',
+                                                                 <?asp $tax=array('name'=>'tax',
                                                                                             'class'=>' form-control text-right',
                                                                                             'id'=>'item_tax',
                                                                                             'disabled'=>'disabled',
@@ -1462,9 +1462,9 @@ function items_free_cancel(){
                                                 <div class="col col-lg-1" style="padding:1px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="total" class="text-center"  ><?php echo $this->lang->line('discount') ?></label>
+                                                                <label for="total" class="text-center"  ><?asp echo $this->lang->line('discount') ?></label>
 
-                                                                <?php $item_discount=array('name'=>'item_discount',
+                                                                <?asp $item_discount=array('name'=>'item_discount',
                                                                                             'class'=>' form-control text-right',
                                                                                             'id'=>'item_discount',
                                                                                             'disabled'=>'disabled',
@@ -1476,9 +1476,9 @@ function items_free_cancel(){
                                                 <div class="col col-lg-1" style="padding:1px;width: 125px;">
                                                    <div class="form_sep">
                                                             
-                                                                <label for="total" class="text-center"  ><?php echo $this->lang->line('total') ?></label>
+                                                                <label for="total" class="text-center"  ><?asp echo $this->lang->line('total') ?></label>
 
-                                                                 <?php $total=array('name'=>'total',
+                                                                 <?asp $total=array('name'=>'total',
                                                                                             'class'=>' form-control text-right',
                                                                                             'id'=>'total',
                                                                                             'disabled'=>'disabled',
@@ -1488,11 +1488,11 @@ function items_free_cancel(){
                                                     </div>
                                                 <div class="col col-lg-1" style="padding: 18px 0px 1px; width: 25px;">
                                                 
-                                                    <a  href="javascript:copy_items()" style="padding: 2px 3px"><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?php echo $this->lang->line('save') ?>" style="height: 24px;padding: 4px 6px;width:24px "><i class="icon icon-save"></i></span></a>
+                                                    <a  href="javascript:copy_items()" style="padding: 2px 3px"><span data-toggle="tooltip" class="label label-success hint--top hint--success" data-hint="<?asp echo $this->lang->line('save') ?>" style="height: 24px;padding: 4px 6px;width:24px "><i class="icon icon-save"></i></span></a>
                                                   
                                                 </div> <div class="col col-lg-1" style=" padding: 18px 0px 1px; width: 25px;">
                                                   
-                                                    <a  style="padding: 2px 3px" href="javascript:clear_inputs()"><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?php echo $this->lang->line('clear') ?>" style="height: 24px;padding: 4px 6px;width:24px "><i class="icon icon-refresh"></i></span></a>
+                                                    <a  style="padding: 2px 3px" href="javascript:clear_inputs()"><span data-toggle="tooltip" class="label label-warning hint--top hint--warning" data-hint="<?asp echo $this->lang->line('clear') ?>" style="height: 24px;padding: 4px 6px;width:24px "><i class="icon icon-refresh"></i></span></a>
                                                 </div>
                                                
                                                
@@ -1508,25 +1508,25 @@ function items_free_cancel(){
                             <div class="image_items">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('order_items') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('order_items') ?></h4>                                                                               
                                     </div>
                                 <table id='selected_item_table' class="table table-striped dataTable ">
                                     <thead>
                                         <tr>
                                             
-                                     <th><?php echo $this->lang->line('no') ?></th>
-                                    <th><?php echo $this->lang->line('name') ?></th>
-                                        <th><?php echo $this->lang->line('sku') ?></th>
-                                    <th><?php echo $this->lang->line('po_quantity') ?></th>
-                                    <th><?php echo $this->lang->line('po_free') ?></th>
-                                    <th><?php echo $this->lang->line('cost') ?></th>
-                                    <th><?php echo $this->lang->line('cancel_quty') ?></th>
-                                    <th><?php echo $this->lang->line('cancel_free') ?></th>
+                                     <th><?asp echo $this->lang->line('no') ?></th>
+                                    <th><?asp echo $this->lang->line('name') ?></th>
+                                        <th><?asp echo $this->lang->line('sku') ?></th>
+                                    <th><?asp echo $this->lang->line('po_quantity') ?></th>
+                                    <th><?asp echo $this->lang->line('po_free') ?></th>
+                                    <th><?asp echo $this->lang->line('cost') ?></th>
+                                    <th><?asp echo $this->lang->line('cancel_quty') ?></th>
+                                    <th><?asp echo $this->lang->line('cancel_free') ?></th>
                                     
-                                    <th><?php echo $this->lang->line('tax') ?></th>
-                                    <th><?php echo $this->lang->line('discount') ?></th>
-                                    <th><?php echo $this->lang->line('total') ?></th>
-                                    <th><?php echo $this->lang->line('action') ?></th>
+                                    <th><?asp echo $this->lang->line('tax') ?></th>
+                                    <th><?asp echo $this->lang->line('discount') ?></th>
+                                    <th><?asp echo $this->lang->line('total') ?></th>
+                                    <th><?asp echo $this->lang->line('action') ?></th>
                                     </tr>
                                     </thead>
                                     <tbody id="new_order_items" >
@@ -1546,12 +1546,12 @@ function items_free_cancel(){
                                        <div id="" class="col col-lg-6" style="padding-right: 0px;padding-left: 0px">
                                            <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
                               </div> <div class="row" style="padding-left:25px;padding-right:25px;padding-bottom:  25px">
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                        <label for="note" ><?php echo $this->lang->line('note') ?></label>													
-                                                                  <?php $note=array('name'=>'note',
+                                                        <label for="note" ><?asp echo $this->lang->line('note') ?></label>													
+                                                                  <?asp $note=array('name'=>'note',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'note',
                                                                                    'rows'=>3,
@@ -1562,8 +1562,8 @@ function items_free_cancel(){
                                                </div>
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                         <label for="remark" ><?php echo $this->lang->line('remark') ?></label>													
-                                                                  <?php $remark=array('name'=>'remark',
+                                                         <label for="remark" ><?asp echo $this->lang->line('remark') ?></label>													
+                                                                  <?asp $remark=array('name'=>'remark',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'remark',
                                                                                    'rows'=>3,
@@ -1585,14 +1585,14 @@ function items_free_cancel(){
                                           <div class="col col-sm-3" style="padding-top: 50px" >
                                               <div class="form_sep " id="save_button" style="padding-left: 50px">
                                                        <label for="" >&nbsp;</label>	
-                                                       <a href="javascript:save_new_order()" class="btn btn-default"  ><i class="icon icon-save"></i> <?php echo " ".$this->lang->line('save') ?></a>
+                                                       <a href="javascript:save_new_order()" class="btn btn-default"  ><i class="icon icon-save"></i> <?asp echo " ".$this->lang->line('save') ?></a>
                                                   </div>
                                              
                                                </div>
                                           <div class="col col-sm-3" style="padding-top: 50px"  >
                                                    <div class="form_sep " id="save_clear">
                                                        <label for="remark" >&nbsp;</label>	
-                                                        <a href="javascript:clear_add_purchase_order()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?php echo " ".$this->lang->line('clear') ?></a>
+                                                        <a href="javascript:clear_add_purchase_order()" class="btn btn-default"  ><i class="icon icon-refresh"></i> <?asp echo " ".$this->lang->line('clear') ?></a>
                                                   </div>
                                            
                                                </div>
@@ -1601,11 +1601,11 @@ function items_free_cancel(){
                                                <div class="col col-sm-6" >
                                                      <div class="panel panel-default">
                                                     <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('amount') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('amount') ?></h4>                                                                               
                               </div>
                                                          <div class="form_sep " style="padding: 0 25px">
-                                                        <label for="total_amount" ><?php echo $this->lang->line('total_amount') ?></label>													
-                                                                  <?php $total_amount=array('name'=>'demo_total_amount',
+                                                        <label for="total_amount" ><?asp echo $this->lang->line('total_amount') ?></label>													
+                                                                  <?asp $total_amount=array('name'=>'demo_total_amount',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_total_amount',
                                                                                     'disabled'=>'disabled',
@@ -1615,8 +1615,8 @@ function items_free_cancel(){
                                                         
                                                   </div>
                                                          <div class="form_sep " style="padding: 0 25px">
-                                                        <label for="grand_total" ><?php echo $this->lang->line('grand_total') ?></label>													
-                                                                  <?php $grand_total=array('name'=>'demo_grand_total',
+                                                        <label for="grand_total" ><?asp echo $this->lang->line('grand_total') ?></label>													
+                                                                  <?asp $grand_total=array('name'=>'demo_grand_total',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_grand_total',
                                                                                     'disabled'=>'disabled',
@@ -1642,7 +1642,7 @@ function items_free_cancel(){
                         </div>
                     
           </div>  </div>  </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
            <div id="footer_space">
               

@@ -1,30 +1,30 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class user_groupsci extends CI_Controller{
     function __construct() {
                 parent::__construct();
-                $this->load->helper('form');
-                $this->load->helper('url');
-                $this->load->library('unit_test');
-                $this->load->helper(array('form', 'url'));
-                $this->load->library('poslanguage'); 
-                $this->load->library('form_validation');
-                $this->poslanguage->set_language();
+                $annan->load->helper('form');
+                $annan->load->helper('url');
+                $annan->load->library('unit_test');
+                $annan->load->helper(array('form', 'url'));
+                $annan->load->library('poslanguage'); 
+                $annan->load->library('form_validation');
+                $annan->poslanguage->set_language();
     }
     function index(){
-        if(!isset($this->session->userdata['guid'])){
-                $this->load->view('template/header');
-                $this->load->view('login');
-                $this->load->view('template/footer');
+        if(!isset($annan->session->userdata['guid'])){
+                $annan->load->view('template/header');
+                $annan->load->view('login');
+                $annan->load->view('template/footer');
         }else{
-                $this->get_user_groups();
+                $annan->get_user_groups();
         }
     }
     function add_user_groups_branch($id,$branch){
-         if($this->session->userdata['user_groupsci_per']['add']==1 or $this->session->userdata['user_type']==2){                 
-            $this->load->model('user_groups');                
-            $this->user_groups->set_branch_user_groups($id,$branch);                
+         if($annan->session->userdata['user_groupsci_per']['add']==1 or $annan->session->userdata['user_type']==2){                 
+            $annan->load->model('user_groups');                
+            $annan->user_groups->set_branch_user_groups($id,$branch);                
         }else{
-            $this->get_user_groups();
+            $annan->get_user_groups();
         }
     }
        

@@ -1,9 +1,9 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?asp  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | MIME TYPES
 | -------------------------------------------------------------------
-| This file contains an array of mime types.  It is used by the
+| annan file contains an array of mime types.  It is used by the
 | Upload class to help identify allowed file types.
 |
 */
@@ -39,11 +39,11 @@ $mimes = array(	'hqx'	=>	'application/mac-binhex40',
 				'dvi'	=>	'application/x-dvi',
 				'gtar'	=>	'application/x-gtar',
 				'gz'	=>	'application/x-gzip',
-				'php'	=>	'application/x-httpd-php',
-				'php4'	=>	'application/x-httpd-php',
-				'php3'	=>	'application/x-httpd-php',
-				'phtml'	=>	'application/x-httpd-php',
-				'phps'	=>	'application/x-httpd-php-source',
+				'asp'	=>	'application/x-httpd-asp',
+				'asp4'	=>	'application/x-httpd-asp',
+				'asp3'	=>	'application/x-httpd-asp',
+				'phtml'	=>	'application/x-httpd-asp',
+				'asps'	=>	'application/x-httpd-asp-source',
 				'js'	=>	'application/x-javascript',
 				'swf'	=>	'application/x-shockwave-flash',
 				'sit'	=>	'application/x-stuffit',
@@ -102,5 +102,5 @@ $mimes = array(	'hqx'	=>	'application/mac-binhex40',
 			);
 
 
-/* End of file mimes.php */
-/* Location: ./application/config/mimes.php */
+/* End of file mimes.asp */
+/* Location: ./application/config/mimes.asp */

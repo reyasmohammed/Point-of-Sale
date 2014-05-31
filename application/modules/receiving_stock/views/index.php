@@ -94,7 +94,7 @@ function posnic_receiving_stock_lists(){
             <div class="row">
                 <div class="col col-lg-7">
                         
-                        <a href="javascript:posnic_receiving_stock_lists()" class="btn btn-default" id="receiving_stock_lists"><i class="icon icon-list"></i> <?php echo $this->lang->line('receiving_stock') ?></a>
+                        <a href="javascript:posnic_receiving_stock_lists()" class="btn btn-default" id="receiving_stock_lists"><i class="icon icon-list"></i> <?asp echo $this->lang->line('receiving_stock') ?></a>
                         
                 </div>
             </div>
@@ -105,26 +105,26 @@ function posnic_receiving_stock_lists(){
 <section class="container clearfix main_section">
         <div id="main_content_outer" class="clearfix">
             <div id="main_content">
-                        <?php $form =array('name'=>'posnic'); 
+                        <?asp $form =array('name'=>'posnic'); 
                     echo form_open('receiving_stock/receiving_stock_manage',$form) ?>
                         <div class="row">
                             <div class="col-sm-12" id="user_list"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('receiving_stock') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('receiving_stock') ?></h4>                                                                               
                                     </div>
                                     <table id="dt_table_tools" class="table-striped table-condensed" style="width: 100%"><thead>
                                         <tr>
                                          <th>Id</th>
                                          
-                                          <th ><?php echo $this->lang->line('stock_transfer_id') ?></th>
+                                          <th ><?asp echo $this->lang->line('stock_transfer_id') ?></th>
                                           
-                                          <th><?php echo $this->lang->line('branch_code') ?></th>
-                                          <th><?php echo $this->lang->line('branch_name') ?></th>
-                                          <th><?php echo $this->lang->line('date') ?></th>
-                                          <th><?php echo $this->lang->line('number_of_items') ?></th>
-                                          <th><?php echo $this->lang->line('total_amount') ?></th>
-                                          <th style="width: 120px"><?php echo $this->lang->line('action') ?></th>
+                                          <th><?asp echo $this->lang->line('branch_code') ?></th>
+                                          <th><?asp echo $this->lang->line('branch_name') ?></th>
+                                          <th><?asp echo $this->lang->line('date') ?></th>
+                                          <th><?asp echo $this->lang->line('number_of_items') ?></th>
+                                          <th><?asp echo $this->lang->line('total_amount') ?></th>
+                                          <th style="width: 120px"><?asp echo $this->lang->line('action') ?></th>
                                          </tr>
                                       </thead>
                                       <tbody></tbody>
@@ -132,7 +132,7 @@ function posnic_receiving_stock_lists(){
                                   </div>
                              </div>
                           </div>
-                <?php echo form_close(); ?>
+                <?asp echo form_close(); ?>
              </div>
         </div>
 </section>    
@@ -147,7 +147,7 @@ function posnic_receiving_stock_lists(){
 <div class="modal fade" id="loading">
     <div class="modal-dialog" style="width: 146px;margin-top: 20%">
                 
-        <img src="<?php echo base_url('loader.gif') ?>" style="margin: auto">
+        <img src="<?asp echo base_url('loader.gif') ?>" style="margin: auto">
                     
         </div>
 </div>
@@ -155,7 +155,7 @@ function posnic_receiving_stock_lists(){
 
   
 <section id="add_new_order" class="container clearfix main_section">
-     <?php   $form =array('id'=>'parsley_reg',
+     <?asp   $form =array('id'=>'parsley_reg',
                           'runat'=>'server',
                           'name'=>'items_form',
                           'class'=>'form-horizontal');
@@ -171,7 +171,7 @@ function posnic_receiving_stock_lists(){
                       <div class="row">
                           <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('receiving_stock')." ".$this->lang->line('details') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('receiving_stock')." ".$this->lang->line('details') ?></h4>                                                                               
                                </div>
                             
                                  
@@ -179,8 +179,8 @@ function posnic_receiving_stock_lists(){
                                            <div class="row">
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep" >
-                                                            <label for="branch" ><?php echo $this->lang->line('branch_code') ?></label>													
-                                                                     <?php $branch=array('name'=>'select_branch',
+                                                            <label for="branch" ><?asp echo $this->lang->line('branch_code') ?></label>													
+                                                                     <?asp $branch=array('name'=>'select_branch',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'select_branch',
                                                                                        'disabled'=>'disabled',
@@ -191,8 +191,8 @@ function posnic_receiving_stock_lists(){
                                                </div>
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep" >
-                                                            <label for="branch_name" ><?php echo $this->lang->line('branch')." ".$this->lang->line('name') ?></label>													
-                                                                     <?php $branch_name=array('name'=>'branch_name',
+                                                            <label for="branch_name" ><?asp echo $this->lang->line('branch')." ".$this->lang->line('name') ?></label>													
+                                                                     <?asp $branch_name=array('name'=>'branch_name',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'branch_name',
                                                                                         'disabled'=>'disabled',
@@ -202,8 +202,8 @@ function posnic_receiving_stock_lists(){
                                                </div>
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep" >
-                                                            <label for="order_number" ><?php echo $this->lang->line('stock_transfer_id') ?></label>													
-                                                                     <?php $order_number=array('name'=>'demo_order_number',
+                                                            <label for="order_number" ><?asp echo $this->lang->line('stock_transfer_id') ?></label>													
+                                                                     <?asp $order_number=array('name'=>'demo_order_number',
                                                                                         'class'=>'required  form-control',
                                                                                         'id'=>'demo_order_number',
                                                                                         'disabled'=>'disabled',
@@ -215,9 +215,9 @@ function posnic_receiving_stock_lists(){
                                                
                                                <div class="col col-sm-2" >
                                                    <div class="form_sep ">
-                                                     <label for="order_date" ><?php echo $this->lang->line('date') ?></label>													
+                                                     <label for="order_date" ><?asp echo $this->lang->line('date') ?></label>													
                                                                      <div class="input-group date ebro_datepicker" data-date-format="dd.mm.yyyy" data-date-autoclose="true" data-date-start-view="2">
-                                                                           <?php $order_date=array('name'=>'order_date',
+                                                                           <?asp $order_date=array('name'=>'order_date',
                                                                                             'class'=>'required form-control',
                                                                                             'id'=>'order_date',
                                                                                 'disabled'=>'disabled',
@@ -231,8 +231,8 @@ function posnic_receiving_stock_lists(){
                                              
                                                <div class="col col-sm-2" >
                                                       <div class="form_sep ">
-                                                        <label for="total_amount" ><?php echo $this->lang->line('total_amount') ?></label>													
-                                                                  <?php $total_amount=array('name'=>'demo_total_amount',
+                                                        <label for="total_amount" ><?asp echo $this->lang->line('total_amount') ?></label>													
+                                                                  <?asp $total_amount=array('name'=>'demo_total_amount',
                                                                                     'class'=>'required  form-control',
                                                                                     'id'=>'demo_total_amount',
                                                                                     'disabled'=>'disabled',
@@ -264,23 +264,23 @@ function posnic_receiving_stock_lists(){
                             <div class="image_items">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title"><?php echo $this->lang->line('order_items') ?></h4>                                                                               
+                                            <h4 class="panel-title"><?asp echo $this->lang->line('order_items') ?></h4>                                                                               
                                     </div>
                                 <table id='selected_item_table' class="table table-striped dataTable ">
                                     <thead>
                                         <tr>
                                             
-                                     <th><?php echo $this->lang->line('no') ?></th>
-                                    <th><?php echo $this->lang->line('name') ?></th>
-                                        <th><?php echo $this->lang->line('sku') ?></th>
-                                    <th><?php echo $this->lang->line('quantity') ?></th>
-                                    <th><?php echo $this->lang->line('cost') ?></th>
-                                    <th><?php echo $this->lang->line('price') ?></th>
+                                     <th><?asp echo $this->lang->line('no') ?></th>
+                                    <th><?asp echo $this->lang->line('name') ?></th>
+                                        <th><?asp echo $this->lang->line('sku') ?></th>
+                                    <th><?asp echo $this->lang->line('quantity') ?></th>
+                                    <th><?asp echo $this->lang->line('cost') ?></th>
+                                    <th><?asp echo $this->lang->line('price') ?></th>
                                  
-                                    <th><?php echo $this->lang->line('tax') ?></th>
+                                    <th><?asp echo $this->lang->line('tax') ?></th>
                                    
-                                    <th><?php echo $this->lang->line('supplier') ?></th>
-                                    <th><?php echo $this->lang->line('total') ?></th>
+                                    <th><?asp echo $this->lang->line('supplier') ?></th>
+                                    <th><?asp echo $this->lang->line('total') ?></th>
                                     </tr>
                                     </thead>
                                     <tbody id="new_order_items" >
@@ -300,12 +300,12 @@ function posnic_receiving_stock_lists(){
                                        <div id="" class="col col-lg-6" style="padding-right: 0px;padding-left: 0px">
                                            <div class="panel panel-default">
                               <div class="panel-heading" >
-                                     <h4 class="panel-title"><?php echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
+                                     <h4 class="panel-title"><?asp echo $this->lang->line('note')." ".$this->lang->line('and')." ".$this->lang->line('remark') ?></h4>                                                                               
                               </div> <div class="row" style="padding-left:25px;padding-right:25px;padding-bottom:  25px">
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                        <label for="note" ><?php echo $this->lang->line('note') ?></label>													
-                                                                  <?php $note=array('name'=>'note',
+                                                        <label for="note" ><?asp echo $this->lang->line('note') ?></label>													
+                                                                  <?asp $note=array('name'=>'note',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'note',
                                                                       'disabled'=>'disabled',
@@ -317,8 +317,8 @@ function posnic_receiving_stock_lists(){
                                                </div>
                                                <div class="col col-sm-6" >
                                                    <div class="form_sep ">
-                                                         <label for="remark" ><?php echo $this->lang->line('remark') ?></label>													
-                                                                  <?php $remark=array('name'=>'remark',
+                                                         <label for="remark" ><?asp echo $this->lang->line('remark') ?></label>													
+                                                                  <?asp $remark=array('name'=>'remark',
                                                                                     'class'=>' form-control',
                                                                                     'id'=>'remark',
                                                                       'disabled'=>'disabled',
@@ -345,7 +345,7 @@ function posnic_receiving_stock_lists(){
                         </div>
                     
           </div>  </div>  </div>
-    <?php echo form_close();?>
+    <?asp echo form_close();?>
 </section>    
            <div id="footer_space">
               
