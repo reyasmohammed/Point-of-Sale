@@ -1,4 +1,4 @@
-Ponit-of-Sale
+Point-of-Sale
 =============
 
 PHP Point of Sale - More details posnic.com
